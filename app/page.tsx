@@ -88,7 +88,7 @@ export default function Home() {
   }, [templates, searchQuery, selectedCategory, showOnlyBookmarks, bookmarks, sortBy]);
 
   return (
-    <div className="min-h-screen bg-slate-50/50 flex flex-col font-sans selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-amber-50/20 flex flex-col font-sans selection:bg-orange-500 selection:text-white">
       
       {/* Top Navbar */}
       <Navbar
@@ -132,7 +132,7 @@ export default function Home() {
         
         {/* Bookmarks Banner */}
         {bookmarks.length > 0 && (
-          <div className="mb-6 flex items-center justify-between bg-rose-50 border border-rose-200 p-3.5 rounded-2xl">
+          <div className="mb-6 flex items-center justify-between bg-rose-50 border-2 border-rose-200 p-3.5 rounded-2xl">
             <div className="flex items-center gap-2 text-rose-900 text-xs font-bold">
               <Heart className="w-4 h-4 fill-rose-500 text-rose-500" />
               <span>
@@ -144,7 +144,7 @@ export default function Home() {
 
             <button
               onClick={() => setShowOnlyBookmarks(!showOnlyBookmarks)}
-              className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-colors ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-colors cursor-pointer ${
                 showOnlyBookmarks
                   ? 'bg-rose-600 text-white'
                   : 'bg-white text-rose-700 border border-rose-300 hover:bg-rose-100'
@@ -174,14 +174,14 @@ export default function Home() {
           </div>
         ) : (
           /* Empty State */
-          <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 p-8 max-w-md mx-auto my-8">
+          <div className="text-center py-20 bg-white rounded-3xl border-2 border-orange-100 p-8 max-w-md mx-auto my-8 shadow-sm">
             <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">
+            <h3 className="text-xl font-bold text-stone-900 mb-2">
               {lang === 'nl' ? 'Geen concepten gevonden' : 'No website templates found'}
             </h3>
-            <p className="text-xs text-slate-500 mb-6 font-medium leading-relaxed">
+            <p className="text-xs text-stone-600 mb-6 font-medium leading-relaxed">
               {lang === 'nl'
                 ? 'Geen resultaten voor jouw zoekopdracht. Probeer een andere categorie of zoekterm.'
                 : 'No templates match your filters. Try clearing your search query.'}
@@ -192,7 +192,7 @@ export default function Home() {
                 setSelectedCategory('All');
                 setShowOnlyBookmarks(false);
               }}
-              className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md transition-colors"
+              className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md transition-colors cursor-pointer"
             >
               {lang === 'nl' ? 'Herstel Alle Filters' : 'Reset All Filters'}
             </button>

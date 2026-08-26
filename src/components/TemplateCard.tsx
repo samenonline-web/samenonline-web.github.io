@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Heart, Sparkles, Clock, Check, ArrowRight, MapPin } from 'lucide-react';
+import { Heart, Sparkles, Clock, Check, ArrowRight, MapPin, Star } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 
 interface TemplateCardProps {
@@ -26,7 +26,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
   const features = lang === 'nl' ? template.featuresNl : template.features;
 
   return (
-    <div className="group bg-white rounded-3xl p-6 border border-slate-200/80 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 flex flex-col justify-between relative">
+    <div className="group bg-white rounded-3xl p-6 border-2 border-orange-100/90 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 flex flex-col justify-between relative shadow-xs">
       
       {/* Top Header: Logo Avatar, Badges & Bookmark */}
       <div>
@@ -40,11 +40,11 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
 
             <div>
               <div className="flex items-center gap-1.5 flex-wrap">
-                <h3 className="font-extrabold text-lg text-slate-900 group-hover:text-orange-600 transition-colors">
+                <h3 className="font-extrabold text-lg text-stone-900 group-hover:text-orange-600 transition-colors">
                   {template.name}
                 </h3>
               </div>
-              <span className="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-md inline-block mt-0.5">
+              <span className="text-xs font-bold text-orange-700 bg-orange-50 px-2.5 py-0.5 rounded-md inline-block mt-0.5 border border-orange-200/60">
                 {template.priceTier} Concept
               </span>
             </div>
@@ -56,7 +56,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
             className={`p-2 rounded-xl border transition-colors cursor-pointer ${
               isBookmarked
                 ? 'bg-rose-50 text-rose-600 border-rose-200'
-                : 'bg-slate-50 text-slate-400 border-slate-200 hover:text-slate-600'
+                : 'bg-orange-50/50 text-stone-400 border-orange-100 hover:text-stone-700'
             }`}
             title={lang === 'nl' ? 'Bewaar in favorieten' : 'Save to bookmarks'}
           >
@@ -69,7 +69,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
           {template.badges.map((badge, idx) => (
             <span
               key={idx}
-              className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200"
+              className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200/80"
             >
               {badge}
             </span>
@@ -77,13 +77,13 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         </div>
 
         {/* Subtitle */}
-        <p className="text-sm font-semibold text-slate-800 leading-snug mb-3">
+        <p className="text-sm font-bold text-stone-800 leading-snug mb-3">
           {subtitle}
         </p>
 
         {/* Highlight Snippet Box */}
         {highlight && (
-          <div className="flex items-center gap-2 p-2.5 rounded-xl bg-orange-50/80 border border-orange-100 mb-4 text-xs font-medium text-orange-950">
+          <div className="flex items-center gap-2 p-2.5 rounded-xl bg-orange-50/80 border border-orange-200/70 mb-4 text-xs font-medium text-orange-950">
             <Sparkles className="w-3.5 h-3.5 text-orange-600 shrink-0" />
             <span className="line-clamp-1">{highlight}</span>
           </div>
@@ -92,8 +92,8 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         {/* Features list */}
         <div className="space-y-1.5 mb-6">
           {features.slice(0, 3).map((feat, idx) => (
-            <div key={idx} className="flex items-center gap-2 text-xs font-medium text-slate-600">
-              <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+            <div key={idx} className="flex items-center gap-2 text-xs font-medium text-stone-700">
+              <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
               <span>{feat}</span>
             </div>
           ))}
@@ -101,17 +101,17 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
       </div>
 
       {/* Footer Info & Actions */}
-      <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
+      <div className="pt-4 border-t border-orange-100 flex flex-col gap-3">
         
         {/* Build Days & Location */}
-        <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
-          <div className="flex items-center gap-1 text-slate-700">
-            <Clock className="w-3.5 h-3.5 text-orange-500" />
+        <div className="flex items-center justify-between text-xs text-stone-600 font-semibold">
+          <div className="flex items-center gap-1 text-stone-700">
+            <Clock className="w-3.5 h-3.5 text-orange-600" />
             <span>{template.estimatedBuildDays} {lang === 'nl' ? 'dagen bouwtijd' : 'days build'}</span>
           </div>
 
-          <div className="flex items-center gap-1 text-slate-600">
-            <MapPin className="w-3.5 h-3.5 text-orange-500" />
+          <div className="flex items-center gap-1 text-stone-600">
+            <MapPin className="w-3.5 h-3.5 text-orange-600" />
             <span>{template.city}, {template.province}</span>
           </div>
         </div>
@@ -120,7 +120,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => onOpenDetails(template)}
-            className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition-colors cursor-pointer"
+            className="w-full py-2.5 rounded-xl bg-orange-50/70 hover:bg-orange-100 text-stone-800 font-bold text-xs border border-orange-200/70 transition-colors cursor-pointer"
           >
             {lang === 'nl' ? 'Bekijk Details' : 'View Details'}
           </button>

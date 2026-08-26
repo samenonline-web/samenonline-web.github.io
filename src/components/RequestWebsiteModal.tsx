@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Send, Sparkles, CheckCircle2, Heart, ShieldCheck } from 'lucide-react';
+import { X, Send, CheckCircle2, Heart } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 
 interface RequestWebsiteModalProps {
@@ -51,18 +51,18 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
       
       <div 
-        className="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden border border-amber-200 flex flex-col"
+        className="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden border-2 border-orange-100 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Header */}
-        <div className="bg-gradient-to-r from-orange-500 to-amber-500 p-6 text-white relative">
+        <div className="bg-orange-600 p-6 text-white relative">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 text-white transition-colors"
+            className="absolute top-4 right-4 p-2 rounded-full bg-black/20 hover:bg-black/30 text-white transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -90,29 +90,29 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
             <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-bold text-slate-900">
+            <h3 className="text-xl font-bold text-stone-900">
               {lang === 'nl' ? 'Aanvraag Ontvangen!' : 'Request Received!'}
             </h3>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-stone-600">
               {lang === 'nl'
                 ? 'Bedankt! Wij nemen binnen 24 uur contact met je op voor een vrijblijvend gesprek.'
                 : 'Thank you! We will get in touch within 24 hours to discuss your website.'}
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+          <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-stone-900">
             
             {/* Selected Template Badge */}
             {formData.templateName && (
-              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs font-bold text-amber-900 flex items-center justify-between">
+              <div className="p-3 bg-orange-50 rounded-xl border border-orange-200 text-xs font-bold text-orange-950 flex items-center justify-between">
                 <span>{lang === 'nl' ? 'Geselecteerd Concept:' : 'Selected Template:'}</span>
-                <span className="text-orange-600">{formData.templateName}</span>
+                <span className="text-orange-600 font-extrabold">{formData.templateName}</span>
               </div>
             )}
 
             {/* Name */}
             <div>
-              <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+              <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
                 {lang === 'nl' ? 'Jouw Naam *' : 'Your Name *'}
               </label>
               <input
@@ -121,14 +121,14 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 value={formData.clientName}
                 onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
                 placeholder="Bijv. Jan de Vries"
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
             {/* Email & Phone */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+                <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
                   {lang === 'nl' ? 'E-mailadres *' : 'Email Address *'}
                 </label>
                 <input
@@ -137,12 +137,12 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="jan@onderneming.nl"
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+                <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
                   {lang === 'nl' ? 'Telefoonnummer' : 'Phone Number'}
                 </label>
                 <input
@@ -150,14 +150,14 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="06 12345678"
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
             </div>
 
             {/* Company Name */}
             <div>
-              <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+              <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
                 {lang === 'nl' ? 'Bedrijfsnaam / Projectnaam' : 'Company / Project Name'}
               </label>
               <input
@@ -165,19 +165,19 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 value={formData.companyName}
                 onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                 placeholder="Bijv. Bakkerij De Oranje Boer"
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
             {/* Budget Range */}
             <div>
-              <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+              <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
                 {lang === 'nl' ? 'Geschat Budget' : 'Estimated Budget'}
               </label>
               <select
                 value={formData.budget}
                 onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
               >
                 <option value="€750 - €1.500">€750 - €1.500 (Starter Website)</option>
                 <option value="€1.500 - €3.500">€1.500 - €3.500 (E-Commerce / Pro)</option>
@@ -187,7 +187,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
 
             {/* Message / Notes */}
             <div>
-              <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+              <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
                 {lang === 'nl' ? 'Specifieke Wensen / Toelichting' : 'Notes / Project details'}
               </label>
               <textarea
@@ -195,7 +195,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                 placeholder={lang === 'nl' ? 'Vertel kort wat je wilt bereiken met jouw nieuwe website...' : 'Briefly describe what features you need...'}
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
@@ -203,7 +203,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20 transition-all"
+                className="w-full py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 transition-all cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>{lang === 'nl' ? 'Verstuur Vrijblijvende Aanvraag' : 'Send Free Consultation Request'}</span>
