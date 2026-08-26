@@ -8,6 +8,7 @@ import { FilterBar } from '../src/components/FilterBar';
 import { TemplateCard } from '../src/components/TemplateCard';
 import { TemplateModal } from '../src/components/TemplateModal';
 import { RequestWebsiteModal } from '../src/components/RequestWebsiteModal';
+import { InfoModal } from '../src/components/InfoModal';
 import { AboutSection } from '../src/components/AboutSection';
 import { Footer } from '../src/components/Footer';
 
@@ -30,6 +31,11 @@ export default function Home() {
   const [activeModalTemplate, setActiveModalTemplate] = useState<WebTemplate | null>(null);
   const [requestModalTemplate, setRequestModalTemplate] = useState<WebTemplate | null>(null);
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const [infoModalData, setInfoModalData] = useState<{ isOpen: boolean; title: string; content: string }>({
+    isOpen: false,
+    title: '',
+    content: '',
+  });
 
   // Toggle Language
   const handleLanguageToggle = () => {
@@ -47,6 +53,15 @@ export default function Home() {
   const handleOpenRequestModal = (template?: WebTemplate) => {
     setRequestModalTemplate(template || null);
     setIsRequestModalOpen(true);
+  };
+
+  // Open Info Modal
+  const handleOpenInfoModal = (title: string, content: string) => {
+    setInfoModalData({
+      isOpen: true,
+      title,
+      content,
+    });
   };
 
   // Filter & Sort Logic
@@ -128,7 +143,7 @@ export default function Home() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main id="templates-section" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-mt-24">
         
         {/* Bookmarks Banner */}
         {bookmarks.length > 0 && (
@@ -205,7 +220,12 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <Footer lang={lang} />
+      <Footer
+        lang={lang}
+        onSelectCategory={setSelectedCategory}
+        onOpenRequestModal={() => handleOpenRequestModal()}
+        onOpenInfoModal={handleOpenInfoModal}
+      />
 
       {/* Template Details Modal */}
       <TemplateModal
@@ -226,6 +246,14 @@ export default function Home() {
           setIsRequestModalOpen(false);
           setRequestModalTemplate(null);
         }}
+      />
+
+      {/* Informational / Legal Modal */}
+      <InfoModal
+        isOpen={infoModalData.isOpen}
+        title={infoModalData.title}
+        content={infoModalData.content}
+        onClose={() => setInfoModalData({ isOpen: false, title: '', content: '' })}
       />
 
     </div>
