@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Send, CheckCircle2, Heart } from 'lucide-react';
+import { X, Send, CheckCircle2, Heart, AlertCircle, Loader2 } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 
 interface RequestWebsiteModalProps {
@@ -27,7 +27,9 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
     notes: '',
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (selectedTemplate) {
@@ -39,15 +41,47 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.clientName || !formData.email) return;
 
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      onClose();
-    }, 2500);
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      const payload = new FormData();
+      payload.append("access_key", "160db110-507f-40b0-910c-97b0a6bc2f9d");
+      payload.append("name", formData.clientName);
+      payload.append("email", formData.email);
+      payload.append("phone", formData.phone || "Niet opgegeven");
+      payload.append("company", formData.companyName || "Particulier / Nieuw project");
+      payload.append("template", formData.templateName);
+      payload.append("budget", formData.budget);
+      payload.append("message", formData.notes || "Geen extra toelichting");
+      payload.append("from_name", "Samen Online");
+      payload.append("subject", `Nieuwe Website Aanvraag: ${formData.clientName} (${formData.templateName})`);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: payload,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          onClose();
+        }, 3500);
+      } else {
+        setErrorMessage(data.message || (lang === 'nl' ? 'Er is iets misgegaan bij het versturen. Probeer het opnieuw.' : 'Something went wrong. Please try again.'));
+      }
+    } catch (err) {
+      setErrorMessage(lang === 'nl' ? 'Verbindingsfout. Controleer je internetverbinding en probeer het opnieuw.' : 'Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -90,18 +124,26 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
             <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-bold text-stone-900">
-              {lang === 'nl' ? 'Aanvraag Ontvangen!' : 'Request Received!'}
+            <h3 className="text-xl font-extrabold text-stone-900">
+              {lang === 'nl' ? 'Aanvraag Verzonden!' : 'Request Sent!'}
             </h3>
-            <p className="text-sm text-stone-600">
+            <p className="text-sm text-stone-600 font-medium">
               {lang === 'nl'
-                ? 'Bedankt! Wij nemen binnen 24 uur contact met je op voor een vrijblijvend gesprek.'
-                : 'Thank you! We will get in touch within 24 hours to discuss your website.'}
+                ? 'Bedankt! Jouw aanvraag is direct ontvangen. Wij nemen binnen 24 uur contact met je op.'
+                : 'Thank you! Your inquiry has been sent directly. We will get in touch within 24 hours.'}
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-stone-900">
             
+            {/* Error Message if any */}
+            {errorMessage && (
+              <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs font-bold text-rose-700 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
             {/* Selected Template Badge */}
             {formData.templateName && (
               <div className="p-3 bg-orange-50 rounded-xl border border-orange-200 text-xs font-bold text-orange-950 flex items-center justify-between">
@@ -117,6 +159,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               </label>
               <input
                 type="text"
+                name="name"
                 required
                 value={formData.clientName}
                 onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
@@ -133,6 +176,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 </label>
                 <input
                   type="email"
+                  name="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -147,6 +191,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 </label>
                 <input
                   type="tel"
+                  name="phone"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="06 12345678"
@@ -162,6 +207,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               </label>
               <input
                 type="text"
+                name="company"
                 value={formData.companyName}
                 onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                 placeholder="Bijv. Bakkerij De Oranje Boer"
@@ -175,6 +221,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 {lang === 'nl' ? 'Geschat Budget' : 'Estimated Budget'}
               </label>
               <select
+                name="budget"
                 value={formData.budget}
                 onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
@@ -192,6 +239,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               </label>
               <textarea
                 rows={3}
+                name="message"
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                 placeholder={lang === 'nl' ? 'Vertel kort wat je wilt bereiken met jouw nieuwe website...' : 'Briefly describe what features you need...'}
@@ -203,10 +251,20 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 transition-all cursor-pointer"
+                disabled={isSubmitting}
+                className="w-full py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 transition-all cursor-pointer"
               >
-                <Send className="w-4 h-4" />
-                <span>{lang === 'nl' ? 'Verstuur Vrijblijvende Aanvraag' : 'Send Free Consultation Request'}</span>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>{lang === 'nl' ? 'Bezig met verzenden...' : 'Sending...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>{lang === 'nl' ? 'Verstuur Vrijblijvende Aanvraag' : 'Send Free Consultation Request'}</span>
+                  </>
+                )}
               </button>
             </div>
 
