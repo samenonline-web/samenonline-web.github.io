@@ -23,7 +23,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
     companyName: '',
     phone: '',
     templateName: '',
-    budget: '€1.000 - €2.500',
+    budget: 'Vanaf €50 (Starter / Snelle Setup)',
     notes: '',
   });
 
@@ -111,10 +111,10 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
           <h2 className="text-2xl font-extrabold">
             {lang === 'nl' ? 'Vraag een Website Aan' : 'Request a Custom Website'}
           </h2>
-          <p className="text-xs text-orange-100 mt-1">
+          <p className="text-xs text-orange-100 mt-1 font-medium">
             {lang === 'nl'
-              ? 'Vrijblijvend advies & offerte voor jouw Nederlandse onderneming.'
-              : 'Free quote & consultation for your Dutch web project.'}
+              ? 'Vrijblijvend advies & offerte voor jouw onderneming of project.'
+              : 'Free quote & consultation for your web project.'}
           </p>
         </div>
 
@@ -129,8 +129,8 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
             </h3>
             <p className="text-sm text-stone-600 font-medium">
               {lang === 'nl'
-                ? 'Bedankt! Jouw aanvraag is direct ontvangen. Wij nemen binnen 24 uur contact met je op.'
-                : 'Thank you! Your inquiry has been sent directly. We will get in touch within 24 hours.'}
+                ? 'Bedankt! Jouw aanvraag is direct ontvangen. Wij nemen zo snel mogelijk contact met je op.'
+                : 'Thank you! Your inquiry has been sent directly. We will get in touch as soon as possible.'}
             </p>
           </div>
         ) : (
@@ -169,7 +169,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
             </div>
 
             {/* Email & Phone */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
                   {lang === 'nl' ? 'E-mailadres *' : 'Email Address *'}
@@ -192,9 +192,10 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 <input
                   type="tel"
                   name="phone"
+                  inputMode="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="06 12345678"
+                  placeholder="Bijv. 06 12345678"
                   className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
@@ -210,7 +211,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 name="company"
                 value={formData.companyName}
                 onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                placeholder="Bijv. Bakkerij De Oranje Boer"
+                placeholder="Bijv. Bakkerij De Oranje Boer (of particulier)"
                 className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
@@ -226,9 +227,10 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
               >
-                <option value="€750 - €1.500">€750 - €1.500 (Starter Website)</option>
-                <option value="€1.500 - €3.500">€1.500 - €3.500 (E-Commerce / Pro)</option>
-                <option value="€3.500+">€3.500+ (Maatwerk SaaS / Platform)</option>
+                <option value="Vanaf €50">Vanaf €50 (Starter / Snelle Setup)</option>
+                <option value="€50 - €150">€50 - €150 (Basis Website)</option>
+                <option value="€150 - €350">€150 - €350 (Webshop / Compleet)</option>
+                <option value="€350 - €750+">€350 - €750+ (Maatwerk / Uitgebreid)</option>
               </select>
             </div>
 
