@@ -138,7 +138,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                         className="px-6 py-3.5 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm shadow-md shadow-orange-600/20 flex items-center gap-2 transform active:scale-95 transition-all cursor-pointer"
                       >
                         <Globe className="w-4 h-4" />
-                        <span>{lang === 'nl' ? '🌐 Bekijk Live Template' : '🌐 View Live Template'}</span>
+                        <span>{lang === 'nl' ? 'Bekijk Live Template' : 'View Live Template'}</span>
                       </button>
 
                       <button
