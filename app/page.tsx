@@ -259,6 +259,55 @@ export default function Home() {
           </div>
         )}
 
+        {/* Custom Design / Website Redesign Callout Banner */}
+        <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-stone-900 to-stone-800 text-white border border-stone-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-2 text-center md:text-left max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold border border-orange-500/30">
+              <span>🎨 Geen template nodig?</span>
+              <span>•</span>
+              <span>100% Maatwerk</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black tracking-tight text-white">
+              {lang === 'nl'
+                ? 'Heb je al een bestaande website of een eigen ontwerp in gedachten?'
+                : 'Already have an existing site or your own custom design plan?'}
+            </h3>
+            <p className="text-xs sm:text-sm text-stone-300 leading-relaxed font-medium">
+              {lang === 'nl'
+                ? 'Je zit nergens aan vast. Wil je een gedateerde website laten moderniseren (redesign), of heb je al een eigen schets, wireframe of Figma-ontwerp? Wij bouwen jouw website exact zoals jij het wilt.'
+                : 'No template required. Need an existing website modernized, or already have your own wireframe/plan? We code your vision 1:1.'}
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
+            <button
+              onClick={() =>
+                handleOpenRequestModal(undefined, undefined, undefined, {
+                  templateName: 'Website Redesign (Bestaande Website)',
+                  budget: '€175 - €450 (Redesign Pakket)',
+                  notes: 'Aanvraag voor modernisering / redesign van mijn huidige website.',
+                })
+              }
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs shadow-md shadow-orange-600/30 transition-all cursor-pointer whitespace-nowrap text-center"
+            >
+              <span>🔄 Bestaande Website Redesign</span>
+            </button>
+
+            <button
+              onClick={() =>
+                handleOpenRequestModal(undefined, undefined, undefined, {
+                  templateName: 'Eigen Ontwerp / Schets / Figma Plan',
+                  budget: '€245 - €650 (Eigen Ontwerp)',
+                  notes: 'Ik heb al een eigen plan of schets voor mijn website.',
+                })
+              }
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-700 font-extrabold text-xs transition-all cursor-pointer whitespace-nowrap text-center"
+            >
+              <span>📐 Eigen Ontwerp Bespreken</span>
+            </button>
+          </div>
+        </div>
+
         {/* 60-Second Price Estimator Calculator */}
         <PriceEstimatorCalculator
           lang={lang}

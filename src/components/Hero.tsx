@@ -145,6 +145,17 @@ export const Hero: React.FC<HeroProps> = ({
           })}
         </div>
 
+        {/* Or Redesign / Custom Link */}
+        <div className="mt-5 text-xs text-stone-500 font-medium flex items-center justify-center gap-1.5 flex-wrap">
+          <span>🔄 {lang === 'nl' ? 'Heb je al een bestaande site of eigen schets?' : 'Have an existing site or your own plan?'}</span>
+          <a
+            href="#prijs-calculator"
+            className="text-orange-600 hover:text-orange-700 font-extrabold underline decoration-orange-300 underline-offset-2 transition-colors cursor-pointer"
+          >
+            {lang === 'nl' ? 'Vraag een Redesign of Maatwerk aan' : 'Request Redesign or Custom Build'}
+          </a>
+        </div>
+
       </div>
     </section>
   );

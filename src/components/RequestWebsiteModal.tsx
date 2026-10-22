@@ -38,6 +38,8 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
   });
 
   const [includeHosting, setIncludeHosting] = useState(true);
+  const [projectType, setProjectType] = useState<'template' | 'redesign' | 'custom_plan'>('template');
+  const [currentWebsiteUrl, setCurrentWebsiteUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -55,11 +57,17 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
       } else if (initialCustomData.notes?.includes('All-in Hosting')) {
         setIncludeHosting(true);
       }
+      if (initialCustomData.templateName?.toLowerCase().includes('redesign')) {
+        setProjectType('redesign');
+      } else if (initialCustomData.templateName?.toLowerCase().includes('eigen ontwerp') || initialCustomData.templateName?.toLowerCase().includes('figma')) {
+        setProjectType('custom_plan');
+      }
     } else if (selectedTemplate) {
       setFormData((prev) => ({
         ...prev,
         templateName: selectedTemplate.name,
       }));
+      setProjectType('template');
     } else {
       setFormData((prev) => ({ ...prev, templateName: 'Maatwerk Website Concept' }));
     }
@@ -91,6 +99,17 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
       payload.append('phone', formData.phone || 'Niet opgegeven');
       payload.append('company', formData.companyName || 'Particulier / Nieuw project');
       payload.append('template', formData.templateName);
+      payload.append(
+        'project_type',
+        projectType === 'redesign'
+          ? `Website Redesign (Bestaande site: ${currentWebsiteUrl || 'niet opgegeven'})`
+          : projectType === 'custom_plan'
+          ? 'Volledig Eigen Ontwerp / Schets / Figma'
+          : `Gekozen Concept: ${formData.templateName}`
+      );
+      if (currentWebsiteUrl) {
+        payload.append('existing_website_url', currentWebsiteUrl);
+      }
       payload.append('theme_configuration', `Thema: ${preferredTheme || 'Standaard'}, Font: ${preferredFont || 'Standaard'}`);
       payload.append('hosting_plan', includeHosting ? 'Ja, All-in Webhosting & .NL Domein (+€9,50/mnd)' : 'Nee, regelt zelf hosting (€0/mnd)');
       payload.append('budget', formData.budget);
@@ -215,21 +234,100 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               </div>
             )}
 
-            {/* Selected Template & Theme Config Badges */}
-            <div className="p-3 bg-orange-50/80 rounded-2xl border border-orange-200 text-xs space-y-1">
-              <div className="flex items-center justify-between font-bold">
-                <span className="text-stone-600">{lang === 'nl' ? 'Gekozen Concept:' : 'Selected Concept:'}</span>
-                <span className="text-orange-700 font-black">{formData.templateName}</span>
+            {/* Project Type Selector */}
+            <div>
+              <label className="block text-xs font-bold uppercase text-stone-700 mb-1.5">
+                {lang === 'nl' ? 'Wat voor project wil je starten?' : 'What type of project is this?'}
+              </label>
+              <div className="grid grid-cols-3 gap-1.5 text-xs font-bold">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setProjectType('template');
+                    setFormData((prev) => ({ ...prev, templateName: selectedTemplate?.name || 'Voorbeeldconcept' }));
+                  }}
+                  className={`py-2 px-2.5 rounded-xl border text-center transition-all cursor-pointer ${
+                    projectType === 'template'
+                      ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
+                      : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
+                  }`}
+                >
+                  ✨ Concept
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setProjectType('redesign');
+                    setFormData((prev) => ({ ...prev, templateName: 'Bestaande Website Redesign' }));
+                  }}
+                  className={`py-2 px-2.5 rounded-xl border text-center transition-all cursor-pointer ${
+                    projectType === 'redesign'
+                      ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
+                      : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
+                  }`}
+                >
+                  🔄 Redesign
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setProjectType('custom_plan');
+                    setFormData((prev) => ({ ...prev, templateName: 'Volledig Eigen Ontwerp / Schets' }));
+                  }}
+                  className={`py-2 px-2.5 rounded-xl border text-center transition-all cursor-pointer ${
+                    projectType === 'custom_plan'
+                      ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
+                      : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
+                  }`}
+                >
+                  📐 Eigen Plan
+                </button>
               </div>
-              {(preferredTheme || preferredFont) && (
-                <div className="flex items-center justify-between text-[11px] text-stone-500 font-medium pt-1 border-t border-orange-200/60">
-                  <span>Huisstijl configuratie:</span>
-                  <span className="font-bold text-stone-800">
-                    {preferredTheme ? `Kleur: ${preferredTheme}` : ''} {preferredFont ? `• Font: ${preferredFont}` : ''}
-                  </span>
-                </div>
-              )}
             </div>
+
+            {/* If Redesign: Current Website URL Input */}
+            {projectType === 'redesign' && (
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 animate-in fade-in duration-150">
+                <label className="block text-xs font-bold text-amber-950 mb-1">
+                  {lang === 'nl' ? 'Huidige Website URL (optioneel):' : 'Current Website URL:'}
+                </label>
+                <input
+                  type="text"
+                  value={currentWebsiteUrl}
+                  onChange={(e) => setCurrentWebsiteUrl(e.target.value)}
+                  placeholder="Bijv. https://www.mijnbedrijf.nl"
+                  className="w-full px-3 py-2 bg-white border border-amber-300 rounded-lg text-xs font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+                <span className="text-[10px] text-amber-800 font-medium block mt-1">
+                  Wij bekijken je huidige site en sturen een voorstel om deze sneller en moderner te maken.
+                </span>
+              </div>
+            )}
+
+            {/* If Custom Plan Tip */}
+            {projectType === 'custom_plan' && (
+              <div className="p-3 bg-sky-50 rounded-xl border border-sky-200 text-[11px] text-sky-950 font-medium animate-in fade-in duration-150">
+                💡 <strong>Heb je al een schets, wireframe of Figma-bestand?</strong> Beschrijf jouw visie hieronder bij de toelichting of stuur je bestanden na de aanvraag mee. Wij bouwen het 1-op-1!
+              </div>
+            )}
+
+            {/* Selected Template & Theme Config Badges (if template mode) */}
+            {projectType === 'template' && (
+              <div className="p-3 bg-orange-50/80 rounded-2xl border border-orange-200 text-xs space-y-1">
+                <div className="flex items-center justify-between font-bold">
+                  <span className="text-stone-600">{lang === 'nl' ? 'Gekozen Concept:' : 'Selected Concept:'}</span>
+                  <span className="text-orange-700 font-black">{formData.templateName}</span>
+                </div>
+                {(preferredTheme || preferredFont) && (
+                  <div className="flex items-center justify-between text-[11px] text-stone-500 font-medium pt-1 border-t border-orange-200/60">
+                    <span>Huisstijl configuratie:</span>
+                    <span className="font-bold text-stone-800">
+                      {preferredTheme ? `Kleur: ${preferredTheme}` : ''} {preferredFont ? `• Font: ${preferredFont}` : ''}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Name */}
             <div>

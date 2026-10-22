@@ -59,6 +59,12 @@ const FAQS: FaqItem[] = [
     aNl: 'Jazeker! Je ontvangt voor elk opgeleverd project een keurige factuur / specificatie die je direct kunt opvoeren als zakelijke kosten in je eigen boekhouding. Samen Online opereert momenteel als startend freelance portfolio-initiatief conform de Nederlandse fiscale richtlijnen (resultaat uit overige werkzaamheden / ROW). Doordat wij geen 21% btw hoeven door te rekenen, profiteer je als ondernemer van extra scherpe, transparante all-in tarieven! Een formele KvK-registratie volgt bij verdere doorgroei.',
     aEn: 'Yes absolutely! You will receive a clean invoice / specification for every delivered project that you can directly deduct as business expenses. Samen Online operates as a freelance starter initiative under Dutch tax guidelines (ROW, non-VAT). Because there is no 21% VAT markup, you benefit from sharp, transparent all-in rates! Formal KvK registration will follow upon expansion.',
   },
+  {
+    qNl: 'Kan ik ook bij jullie terecht voor een website redesign of als ik al een eigen plan heb?',
+    qEn: 'Can I also request a website redesign or if I already have my own design plan?',
+    aNl: 'Zeker weten! Je hoeft niet per se een van onze voorbeeldtemplates te kiezen. Heb je al een bestaande website die traag of verouderd is? Wij bouwen hem om naar een moderne, supersnelle Next.js website met behoud van je teksten en Google-posities. Heb je al een eigen lay-out, wireframe, schets of Figma-bestand? Dan bouwen we jouw website exact 1-op-1 zoals jij het voor ogen hebt.',
+    aEn: 'Absolutely! You do not have to pick one of our showcase templates. If you already have an existing slow or outdated website, we can redesign and modernize it to Next.js while preserving your rankings and copy. Already have a Figma file, wireframe, or visual plan? We build it exactly 1:1 to your specifications.',
+  },
 ];
 
 export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal }) => {
