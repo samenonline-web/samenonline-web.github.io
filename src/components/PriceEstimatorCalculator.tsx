@@ -61,7 +61,7 @@ const SITE_TYPES: SiteType[] = [
 const ADDONS = [
   { id: 'seo', nameNl: 'Lokale Google SEO & PageSpeed 95+', price: 45, icon: '🔍' },
   { id: 'booking', nameNl: 'Online Afsprakensysteem / Reserveringen', price: 65, icon: '📅' },
-  { id: 'branding', nameNl: 'Logo-ontwerp & Huisstijlpakket', price: 85, icon: '🎨' },
+  { id: 'contact', nameNl: 'Interactief Contact- & Offerteformulier', price: 35, icon: '📝' },
   { id: 'whatsapp', nameNl: 'Directe WhatsApp Chat Integratie', price: 35, icon: '💬' },
 ];
 
@@ -217,8 +217,8 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                   <strong className="text-stone-900">+€{addonsTotal}</strong>
                 </div>
                 <div className="flex justify-between text-emerald-700 font-bold">
-                  <span>Inclusief hosting setup & domein:</span>
-                  <span>Inbegrepen</span>
+                  <span>100% Volledig Eigendom:</span>
+                  <span>Geen Wurgcontracten</span>
                 </div>
               </div>
             </div>

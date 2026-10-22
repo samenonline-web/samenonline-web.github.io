@@ -25,8 +25,8 @@ const FAQS: FaqItem[] = [
   {
     qNl: 'Hoe snel staat mijn nieuwe website live op internet?',
     qEn: 'How fast will my new website be live on the internet?',
-    aNl: 'Dankzij onze geteste Nederlandse branche-templates kunnen we razendsnel schakelen. Een standaard oplevering duurt doorgaans slechts 2 tot 5 werkdagen nadat je jouw teksten, logo of voorkeuren hebt doorgegeven. Heb je haast voor een beurs of lancering? Spoedopleveringen zijn mogelijk binnen 48 uur.',
-    aEn: 'Thanks to our pre-built Dutch industry templates, we move exceptionally fast. Standard turnarounds are usually within 2 to 5 business days after receiving your texts, logo, or preferences. Need urgent launch for an exhibition? Rush deliveries within 48 hours are possible.',
+    aNl: 'Dankzij onze geteste Nederlandse branche-templates kunnen we razendsnel schakelen. Een standaard oplevering duurt doorgaans slechts 2 tot 5 werkdagen nadat je jouw teksten, voorkeuren of eventuele eigen foto’s hebt doorgegeven. Heb je haast voor een beurs of lancering? Spoedopleveringen zijn mogelijk binnen 48 uur.',
+    aEn: 'Thanks to our pre-built Dutch industry templates, we move exceptionally fast. Standard turnarounds are usually within 2 to 5 business days after receiving your copy, preferences, or photos. Need urgent launch for an exhibition? Rush deliveries within 48 hours are possible.',
   },
   {
     qNl: 'Wordt mijn website optimaal vindbaar in Google (SEO)?',
@@ -41,16 +41,16 @@ const FAQS: FaqItem[] = [
     aEn: 'Absolutely. All our websites are 100% modular. You can start with a clean landing page and activate an iDEAL webshop, allergen filter, instant quote calculator, or salon appointment booking engine whenever your business grows.',
   },
   {
-    qNl: 'Zit domeinnaam, hosting en zakelijke e-mail hierbij inbegrepen?',
-    qEn: 'Are domain registration, hosting, and business email included?',
-    aNl: 'Ja, wij ontzorgen het volledige technische traject. We koppelen jouw eigen .nl domeinnaam, regelen supersnelle ultra-veilige Nederlandse hosting met gratis SSL-beveiligingscertificaat (groen slotje) en configureren je zakelijke e-mailadressen (zoals info@jouwbedrijf.nl).',
-    aEn: 'Yes, we take care of the entire technical stack. We connect your custom domain name, set up high-speed secure hosting with automated SSL encryption certificates, and configure professional business email inboxes (e.g. info@yourcompany.nl).',
+    qNl: 'Hoe werkt het met domeinnaam en webhosting?',
+    qEn: 'How does it work with domain registration and web hosting?',
+    aNl: 'Bij Samen Online blijf je altijd 100% eigenaar van je eigen domeinnaam en website. Je registreert je domeinnaam en hosting eenvoudig op je eigen naam bij een betrouwbare registrar (zoals Vimexx, TransIP of Hostnet, of gratis via platforms zoals GitHub Pages/Vercel). Wij bouwen de complete website en kunnen assisteren bij het koppelen aan jouw domein. Zo zit je nooit vast aan dure servercontracten of wurgcontracten!',
+    aEn: 'With Samen Online, you always maintain 100% ownership of your website and domain. You easily register your own domain and hosting in your own name with a trusted provider (such as Vimexx, TransIP, or free platforms like GitHub Pages/Vercel). We build the complete website and assist in connecting it to your domain. This ensures you are never locked into expensive recurring server traps!',
   },
   {
     qNl: 'Wat moet ik zelf aanleveren om van start te gaan?',
     qEn: 'What do I need to provide to get started?',
-    aNl: 'Heel weinig! Als je al een logo, foto’s of teksten hebt kun je die eenvoudig uploaden of naar ons whatsappen. Heb je nog geen logo of tekst? Geen probleem: wij voorzien je website van professionele brancheteksten, stijlvolle iconen en rechtenvrije HD-fotografie die perfect aansluiten bij jouw doelgroep.',
-    aEn: 'Very little! If you already have a logo, photos, or rough copy, simply send them via WhatsApp or email. If you have nothing yet: we provide high-converting industry texts, tailored vector icons, and royalty-free HD imagery matched to your audience.',
+    aNl: 'Heel eenvoudig: je levert je eigen bedrijfslogo aan (indien je die al hebt) en eventuele eigen teksten of foto’s. Wij ontwerpen geen losse logo’s; heb je nog geen logo, dan presenteren we jouw bedrijfsnaam in een superstrak, stijlvol typografisch woordmerk in het gekozen lettertype. Ook vullen we de website desgewenst met professionele brancheteksten en rechtenvrije HD-fotografie.',
+    aEn: 'Very simple: you provide your own company logo (if you have one) and any copy or photos. We do not design standalone company logos; if you do not have a logo yet, we render your business name in a sleek, stylish typographic wordmark in your chosen font. We also provide industry copy and royalty-free HD imagery.',
   },
 ];
 
