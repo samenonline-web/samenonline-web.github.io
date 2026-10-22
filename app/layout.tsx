@@ -44,8 +44,8 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'ProfessionalService',
-      '@id': 'https://samenonline-web.github.io/#business',
+      '@type': ['LocalBusiness', 'ProfessionalService'],
+      '@id': 'https://samenonline-web.github.io/#localbusiness',
       name: 'Samen Online',
       url: 'https://samenonline-web.github.io',
       description:
@@ -55,7 +55,34 @@ const jsonLd = {
         '@type': 'PostalAddress',
         addressCountry: 'NL',
         addressRegion: 'Nederland',
+        addressLocality: 'Nederland',
       },
+      areaServed: [
+        {
+          '@type': 'AdministrativeArea',
+          name: 'Nederland',
+        },
+        {
+          '@type': 'AdministrativeArea',
+          name: 'Noord-Holland',
+        },
+        {
+          '@type': 'AdministrativeArea',
+          name: 'Zuid-Holland',
+        },
+        {
+          '@type': 'AdministrativeArea',
+          name: 'Utrecht',
+        },
+        {
+          '@type': 'AdministrativeArea',
+          name: 'Noord-Brabant',
+        },
+        {
+          '@type': 'AdministrativeArea',
+          name: 'Gelderland',
+        },
+      ],
       geo: {
         '@type': 'GeoCoordinates',
         latitude: 52.3676,
@@ -69,6 +96,11 @@ const jsonLd = {
           closes: '18:00',
         },
       ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        availableLanguage: ['Dutch', 'English'],
+      },
     },
     {
       '@type': 'WebSite',
@@ -76,9 +108,63 @@ const jsonLd = {
       url: 'https://samenonline-web.github.io',
       name: 'Samen Online',
       publisher: {
-        '@id': 'https://samenonline-web.github.io/#business',
+        '@id': 'https://samenonline-web.github.io/#localbusiness',
       },
       inLanguage: 'nl-NL',
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': 'https://samenonline-web.github.io/#faq',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Wat kost het laten maken van een professionele website bij Samen Online?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Onze startersetups beginnen al vanaf €50 voor een snelle oplevering van een werkend concept. Voor een compleet gepersonaliseerde bedrijfswebsite hanteren we vaste, transparante all-in tarieven tussen €350 en €1.250 afhankelijk van modules zoals iDEAL, offertetools of reserveringssystemen. Nooit verborgen kosten of wurgcontracten.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Hoe snel staat mijn nieuwe website live op internet?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Dankzij onze geteste Nederlandse branche-templates kunnen we razendsnel schakelen. Een standaard oplevering duurt doorgaans slechts 2 tot 5 werkdagen nadat je jouw teksten, voorkeuren of eventuele eigen foto’s hebt doorgegeven. Spoedopleveringen zijn mogelijk binnen 48 uur.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Wordt mijn website optimaal vindbaar in Google (SEO)?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Ja! Elk template is vanaf de grond opgebouwd volgens de strengste Google Core Web Vitals standaarden met semantische HTML5, snelle laadtijden (<0.8 sec), OpenGraph share cards en Schema.org structured data.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Kan ik later functies toevoegen, zoals iDEAL-betalingen of een afspraakplanner?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Absoluut. Al onze websites zijn 100% modulair ontworpen. Je kunt eenvoudig starten met een strakke landingspagina en later op elk moment een iDEAL-webshop, allergenenfilter, online offertecalculator of afspraakplanner toevoegen.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Hoe werkt het met domeinnaam en webhosting?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Bij Samen Online blijf je altijd 100% eigenaar van je eigen domeinnaam en website. Je registreert je domeinnaam en hosting eenvoudig op je eigen naam bij een betrouwbare registrar (zoals Vimexx, TransIP of Hostnet, of gratis via platforms zoals GitHub Pages/Vercel). Wij bouwen de complete website en assisteren bij het koppelen.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Kan ik als bedrijf een factuur ontvangen en hoe zit het met KvK en btw?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Jazeker! Je ontvangt voor elk project een keurige specificatie/factuur voor je eigen boekhouding. Doordat wij momenteel als freelance initiatief opereren onder de ROW-regeling zonder 21% btw-plicht, profiteer je als ondernemer van extra scherpe all-in tarieven zonder btw-opslag.',
+          },
+        },
+      ],
     },
   ],
 };
