@@ -42,6 +42,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://samenonline-web.github.io',
   },
+  verification: {
+    google: 'google049744f3c8e1307b',
+  },
 };
 
 const jsonLd = {
