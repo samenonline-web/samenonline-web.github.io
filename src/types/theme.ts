@@ -134,6 +134,9 @@ export interface TemplateProps {
   isDarkMode?: boolean;
   onToggleDarkMode?: () => void;
   onRequestQuote: () => void;
+  customBrandName?: string;
+  customCity?: string;
+  onOpenIdealCheckout?: (amount: number, shopName: string) => void;
 }
 
 

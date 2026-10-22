@@ -12,6 +12,9 @@ import { RequestWebsiteModal } from '../src/components/RequestWebsiteModal';
 import { InfoModal } from '../src/components/InfoModal';
 import { AboutSection } from '../src/components/AboutSection';
 import { Footer } from '../src/components/Footer';
+import { PriceEstimatorCalculator } from '../src/components/PriceEstimatorCalculator';
+import { FaqSection } from '../src/components/FaqSection';
+import { WhatsAppWidget } from '../src/components/WhatsAppWidget';
 
 import { INITIAL_TEMPLATES } from '../src/data/templates';
 import { WebTemplate, CategoryType, Language } from '../src/types/company';
@@ -20,7 +23,7 @@ import { Heart, Search } from 'lucide-react';
 export default function Home() {
   const [lang, setLang] = useState<Language>('nl');
   const [templates, setTemplates] = useState<WebTemplate[]>(INITIAL_TEMPLATES);
-  
+
   // Search & Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>('All');
@@ -32,6 +35,13 @@ export default function Home() {
   const [activeModalTemplate, setActiveModalTemplate] = useState<WebTemplate | null>(null);
   const [activePreviewTemplate, setActivePreviewTemplate] = useState<WebTemplate | null>(null);
   const [requestModalTemplate, setRequestModalTemplate] = useState<WebTemplate | null>(null);
+  const [requestModalTheme, setRequestModalTheme] = useState<string | undefined>(undefined);
+  const [requestModalFont, setRequestModalFont] = useState<string | undefined>(undefined);
+  const [requestModalCustomData, setRequestModalCustomData] = useState<{
+    templateName: string;
+    budget: string;
+    notes: string;
+  } | null>(null);
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [infoModalData, setInfoModalData] = useState<{ isOpen: boolean; title: string; content: string }>({
     isOpen: false,
@@ -73,9 +83,17 @@ export default function Home() {
     );
   };
 
-  // Open Request Modal
-  const handleOpenRequestModal = (template?: WebTemplate) => {
+  // Open Request Modal with dynamic prefill capability
+  const handleOpenRequestModal = (
+    template?: WebTemplate,
+    theme?: string,
+    font?: string,
+    customData?: { templateName: string; budget: string; notes: string }
+  ) => {
     setRequestModalTemplate(template || null);
+    setRequestModalTheme(theme);
+    setRequestModalFont(font);
+    setRequestModalCustomData(customData || null);
     setIsRequestModalOpen(true);
   };
 
@@ -100,7 +118,9 @@ export default function Home() {
           const matchDesc = (tmpl.description + ' ' + tmpl.descriptionNl).toLowerCase().includes(q);
           const matchCity = tmpl.city.toLowerCase().includes(q);
           const matchProvince = tmpl.province.toLowerCase().includes(q);
-          const matchFeat = tmpl.features.some((f) => f.toLowerCase().includes(q)) || tmpl.featuresNl.some((f) => f.toLowerCase().includes(q));
+          const matchFeat =
+            tmpl.features.some((f) => f.toLowerCase().includes(q)) ||
+            tmpl.featuresNl.some((f) => f.toLowerCase().includes(q));
           if (!matchName && !matchSub && !matchDesc && !matchCity && !matchProvince && !matchFeat) {
             return false;
           }
@@ -113,8 +133,6 @@ export default function Home() {
 
         // Bookmarks filter
         return !(showOnlyBookmarks && !bookmarks.includes(tmpl.id));
-
-
       })
       .sort((a, b) => {
         if (sortBy === 'rating') return b.rating - a.rating;
@@ -126,7 +144,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-amber-50/20 flex flex-col font-sans selection:bg-orange-500 selection:text-white">
-      
       {/* Top Navbar */}
       <Navbar
         lang={lang}
@@ -152,7 +169,7 @@ export default function Home() {
         lang={lang}
         onOpenDetails={setActiveModalTemplate}
         onOpenLivePreview={setActivePreviewTemplate}
-        onOpenRequestModal={handleOpenRequestModal}
+        onOpenRequestModal={(tmpl) => handleOpenRequestModal(tmpl)}
         isPaused={isAnyModalOpen}
       />
 
@@ -168,15 +185,14 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main id="templates-section" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-mt-24">
-        
         {/* Bookmarks Banner */}
         {bookmarks.length > 0 && (
           <div className="mb-6 flex items-center justify-between bg-rose-50 border-2 border-rose-200 p-3.5 rounded-2xl">
             <div className="flex items-center gap-2 text-rose-900 text-xs font-bold">
               <Heart className="w-4 h-4 fill-rose-500 text-rose-500" />
               <span>
-                {lang === 'nl' 
-                  ? `Je hebt ${bookmarks.length} favoriete concepten bewaard` 
+                {lang === 'nl'
+                  ? `Je hebt ${bookmarks.length} favoriete concepten bewaard`
                   : `You have saved ${bookmarks.length} bookmarked templates`}
               </span>
             </div>
@@ -190,8 +206,12 @@ export default function Home() {
               }`}
             >
               {showOnlyBookmarks
-                ? (lang === 'nl' ? 'Toon Alles' : 'Show All')
-                : (lang === 'nl' ? 'Toon Alleen Favorieten' : 'Show Bookmarks Only')}
+                ? lang === 'nl'
+                  ? 'Toon Alles'
+                  : 'Show All'
+                : lang === 'nl'
+                ? 'Toon Alleen Favorieten'
+                : 'Show Bookmarks Only'}
             </button>
           </div>
         )}
@@ -206,7 +226,7 @@ export default function Home() {
                 lang={lang}
                 onOpenDetails={setActiveModalTemplate}
                 onOpenLivePreview={setActivePreviewTemplate}
-                onOpenRequestModal={handleOpenRequestModal}
+                onOpenRequestModal={(tmpl) => handleOpenRequestModal(tmpl)}
                 isBookmarked={bookmarks.includes(template.id)}
                 onToggleBookmark={handleToggleBookmark}
               />
@@ -239,9 +259,19 @@ export default function Home() {
           </div>
         )}
 
+        {/* 60-Second Price Estimator Calculator */}
+        <PriceEstimatorCalculator
+          lang={lang}
+          onOpenRequestModal={(customData) => {
+            handleOpenRequestModal(undefined, undefined, undefined, customData);
+          }}
+        />
+
         {/* About Samen Online Section */}
         <AboutSection lang={lang} />
 
+        {/* SEO FAQ Section */}
+        <FaqSection lang={lang} />
       </main>
 
       {/* Footer */}
@@ -252,13 +282,16 @@ export default function Home() {
         onOpenInfoModal={handleOpenInfoModal}
       />
 
+      {/* Floating WhatsApp Contact Widget */}
+      <WhatsAppWidget lang={lang} />
+
       {/* Template Details Modal */}
       <TemplateModal
         template={activeModalTemplate}
         lang={lang}
         onClose={() => setActiveModalTemplate(null)}
         onOpenLivePreview={setActivePreviewTemplate}
-        onOpenRequestModal={handleOpenRequestModal}
+        onOpenRequestModal={(tmpl) => handleOpenRequestModal(tmpl)}
         isBookmarked={activeModalTemplate ? bookmarks.includes(activeModalTemplate.id) : false}
         onToggleBookmark={handleToggleBookmark}
       />
@@ -276,9 +309,15 @@ export default function Home() {
         isOpen={isRequestModalOpen}
         selectedTemplate={requestModalTemplate}
         lang={lang}
+        preferredTheme={requestModalTheme}
+        preferredFont={requestModalFont}
+        initialCustomData={requestModalCustomData}
         onClose={() => {
           setIsRequestModalOpen(false);
           setRequestModalTemplate(null);
+          setRequestModalTheme(undefined);
+          setRequestModalFont(undefined);
+          setRequestModalCustomData(null);
         }}
       />
 
@@ -289,7 +328,6 @@ export default function Home() {
         content={infoModalData.content}
         onClose={() => setInfoModalData({ isOpen: false, title: '', content: '' })}
       />
-
     </div>
   );
 }

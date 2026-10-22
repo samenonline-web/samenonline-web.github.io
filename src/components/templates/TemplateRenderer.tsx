@@ -10,6 +10,10 @@ import { FietsCraftConfigurator } from './FietsCraftConfigurator';
 import { AmbachtBakkerijDemo } from './AmbachtBakkerijDemo';
 import { ZonnePionierSolar } from './ZonnePionierSolar';
 import { StadskliniekFysio } from './StadskliniekFysio';
+import { BouwMeesterAannemer } from './BouwMeesterAannemer';
+import { DeVriesBoekhouding } from './DeVriesBoekhouding';
+import { StudioPuurSalon } from './StudioPuurSalon';
+import { BistroDeGracht } from './BistroDeGracht';
 
 interface TemplateRendererProps {
   templateId: string;
@@ -18,6 +22,9 @@ interface TemplateRendererProps {
   isDarkMode?: boolean;
   onToggleDarkMode?: () => void;
   onRequestQuote: () => void;
+  customBrandName?: string;
+  customCity?: string;
+  onOpenIdealCheckout?: (amount: number, shopName: string) => void;
 }
 
 export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
@@ -27,6 +34,9 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
   isDarkMode = false,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
+  onOpenIdealCheckout,
 }) => {
   const effectiveTheme: ColorTheme = isDarkMode
     ? {
@@ -43,6 +53,9 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
     isDarkMode,
     onToggleDarkMode,
     onRequestQuote,
+    customBrandName,
+    customCity,
+    onOpenIdealCheckout,
   };
 
   const renderContent = () => {
@@ -63,6 +76,14 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
         return <ZonnePionierSolar {...templateProps} />;
       case 'stadskliniek-fysio':
         return <StadskliniekFysio {...templateProps} />;
+      case 'bouwmeester-aannemer':
+        return <BouwMeesterAannemer {...templateProps} />;
+      case 'devries-boekhouding':
+        return <DeVriesBoekhouding {...templateProps} />;
+      case 'studiopuur-salon':
+        return <StudioPuurSalon {...templateProps} />;
+      case 'bistro-degracht':
+        return <BistroDeGracht {...templateProps} />;
       default:
         return <GrachtenWebAgency {...templateProps} />;
     }

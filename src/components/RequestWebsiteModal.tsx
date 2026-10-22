@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Send, CheckCircle2, Heart, AlertCircle, Loader2 } from 'lucide-react';
+import { X, Send, CheckCircle2, Heart, AlertCircle, Loader2, MessageCircle, ArrowRight } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 
 interface RequestWebsiteModalProps {
@@ -9,6 +9,13 @@ interface RequestWebsiteModalProps {
   selectedTemplate: WebTemplate | null;
   lang: Language;
   onClose: () => void;
+  preferredTheme?: string;
+  preferredFont?: string;
+  initialCustomData?: {
+    templateName: string;
+    budget: string;
+    notes: string;
+  } | null;
 }
 
 export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
@@ -16,6 +23,9 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
   selectedTemplate,
   lang,
   onClose,
+  preferredTheme,
+  preferredFont,
+  initialCustomData,
 }) => {
   const [formData, setFormData] = useState({
     clientName: '',
@@ -32,12 +42,22 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (selectedTemplate) {
-      setFormData((prev) => ({ ...prev, templateName: selectedTemplate.name }));
+    if (initialCustomData) {
+      setFormData((prev) => ({
+        ...prev,
+        templateName: initialCustomData.templateName || prev.templateName,
+        budget: initialCustomData.budget || prev.budget,
+        notes: initialCustomData.notes || prev.notes,
+      }));
+    } else if (selectedTemplate) {
+      setFormData((prev) => ({
+        ...prev,
+        templateName: selectedTemplate.name,
+      }));
     } else {
       setFormData((prev) => ({ ...prev, templateName: 'Maatwerk Website Concept' }));
     }
-  }, [selectedTemplate]);
+  }, [selectedTemplate, initialCustomData]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -59,19 +79,26 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
 
     try {
       const payload = new FormData();
-      payload.append("access_key", "160db110-507f-40b0-910c-97b0a6bc2f9d");
-      payload.append("name", formData.clientName);
-      payload.append("email", formData.email);
-      payload.append("phone", formData.phone || "Niet opgegeven");
-      payload.append("company", formData.companyName || "Particulier / Nieuw project");
-      payload.append("template", formData.templateName);
-      payload.append("budget", formData.budget);
-      payload.append("message", formData.notes || "Geen extra toelichting");
-      payload.append("from_name", "Samen Online");
-      payload.append("subject", `Nieuwe Website Aanvraag: ${formData.clientName} (${formData.templateName})`);
+      payload.append('access_key', '160db110-507f-40b0-910c-97b0a6bc2f9d');
+      payload.append('name', formData.clientName);
+      payload.append('email', formData.email);
+      payload.append('phone', formData.phone || 'Niet opgegeven');
+      payload.append('company', formData.companyName || 'Particulier / Nieuw project');
+      payload.append('template', formData.templateName);
+      payload.append('theme_configuration', `Thema: ${preferredTheme || 'Standaard'}, Font: ${preferredFont || 'Standaard'}`);
+      payload.append('budget', formData.budget);
+      payload.append(
+        'message',
+        `${formData.notes || 'Geen extra toelichting'}\n\n[Gekozen Huisstijl: ${preferredTheme || 'Standaard'}, Font: ${preferredFont || 'Standaard'}]`
+      );
+      payload.append('from_name', 'Samen Online');
+      payload.append(
+        'subject',
+        `Nieuwe Website Aanvraag: ${formData.clientName} (${formData.templateName})`
+      );
 
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
         body: payload,
       });
 
@@ -79,33 +106,36 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
 
       if (data.success) {
         setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-          onClose();
-        }, 3500);
       } else {
-        setErrorMessage(data.message || (lang === 'nl' ? 'Er is iets misgegaan bij het versturen. Probeer het opnieuw.' : 'Something went wrong. Please try again.'));
+        setErrorMessage(
+          data.message ||
+            (lang === 'nl'
+              ? 'Er is iets misgegaan bij het versturen. Probeer het opnieuw.'
+              : 'Something went wrong. Please try again.')
+        );
       }
     } catch (err) {
-      setErrorMessage(lang === 'nl' ? 'Verbindingsfout. Controleer je internetverbinding en probeer het opnieuw.' : 'Network error. Please check your connection and try again.');
+      setErrorMessage(
+        lang === 'nl'
+          ? 'Verbindingsfout. Controleer je internetverbinding en probeer het opnieuw.'
+          : 'Network error. Please check your connection and try again.'
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div 
+    <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200 cursor-pointer"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 cursor-pointer"
     >
-      
-      <div 
-        className="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden border-2 border-orange-100 flex flex-col cursor-default"
+      <div
+        className="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden border-2 border-orange-100 flex flex-col cursor-default max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
       >
-        
         {/* Header */}
-        <div className="bg-orange-600 p-6 text-white relative">
+        <div className="bg-gradient-to-r from-orange-600 to-amber-600 p-6 text-white relative shrink-0">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 p-2 rounded-full bg-black/20 hover:bg-black/30 text-white transition-colors cursor-pointer"
@@ -120,7 +150,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
             </span>
           </div>
 
-          <h2 className="text-2xl font-extrabold">
+          <h2 className="text-2xl font-black">
             {lang === 'nl' ? 'Vraag een Website Aan' : 'Request a Custom Website'}
           </h2>
           <p className="text-xs text-orange-100 mt-1 font-medium">
@@ -132,22 +162,53 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
 
         {/* Content */}
         {submitted ? (
-          <div className="p-10 text-center space-y-4">
+          <div className="p-8 text-center space-y-4 overflow-y-auto">
             <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-extrabold text-stone-900">
-              {lang === 'nl' ? 'Aanvraag Verzonden!' : 'Request Sent!'}
+            <h3 className="text-2xl font-black text-stone-900">
+              {lang === 'nl' ? 'Aanvraag Succesvol Ontvangen!' : 'Request Sent Successfully!'}
             </h3>
-            <p className="text-sm text-stone-600 font-medium">
+            <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed max-w-sm mx-auto">
               {lang === 'nl'
-                ? 'Bedankt! Jouw aanvraag is direct ontvangen. Wij nemen zo snel mogelijk contact met je op.'
-                : 'Thank you! Your inquiry has been sent directly. We will get in touch as soon as possible.'}
+                ? `Bedankt ${formData.clientName}! We hebben je gegevens ontvangen voor "${formData.templateName}". We nemen zo snel mogelijk (meestal binnen enkele uren) contact met je op.`
+                : `Thank you ${formData.clientName}! We have received your inquiry for "${formData.templateName}". We will contact you as soon as possible.`}
             </p>
+
+            {/* Direct WhatsApp Callout */}
+            <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-left space-y-2 mt-4">
+              <div className="flex items-center gap-2 text-emerald-900 font-bold text-xs">
+                <MessageCircle className="w-4 h-4 text-emerald-600" />
+                <span>Liever direct even informeel overleggen?</span>
+              </div>
+              <p className="text-[11px] text-emerald-800 font-medium">
+                Stuur ons direct een WhatsApp-bericht met je vragen, we denken graag meteen met je mee!
+              </p>
+              <a
+                href={`https://wa.me/31612345678?text=${encodeURIComponent(
+                  `Hallo Samen Online! Ik heb zojuist via het formulier een aanvraag ingediend voor ${formData.templateName} (${formData.clientName}).`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-xs transition-colors"
+              >
+                <span>Open WhatsApp Chat</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+            <button
+              onClick={() => {
+                setSubmitted(false);
+                onClose();
+              }}
+              className="px-6 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition-colors cursor-pointer mt-2"
+            >
+              Sluiten
+            </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-stone-900">
-            
+          <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto text-stone-900">
             {/* Error Message if any */}
             {errorMessage && (
               <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs font-bold text-rose-700 flex items-center gap-2">
@@ -156,13 +217,21 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               </div>
             )}
 
-            {/* Selected Template Badge */}
-            {formData.templateName && (
-              <div className="p-3 bg-orange-50 rounded-xl border border-orange-200 text-xs font-bold text-orange-950 flex items-center justify-between">
-                <span>{lang === 'nl' ? 'Geselecteerd Concept:' : 'Selected Template:'}</span>
-                <span className="text-orange-600 font-extrabold">{formData.templateName}</span>
+            {/* Selected Template & Theme Config Badges */}
+            <div className="p-3 bg-orange-50/80 rounded-2xl border border-orange-200 text-xs space-y-1">
+              <div className="flex items-center justify-between font-bold">
+                <span className="text-stone-600">{lang === 'nl' ? 'Gekozen Concept:' : 'Selected Concept:'}</span>
+                <span className="text-orange-700 font-black">{formData.templateName}</span>
               </div>
-            )}
+              {(preferredTheme || preferredFont) && (
+                <div className="flex items-center justify-between text-[11px] text-stone-500 font-medium pt-1 border-t border-orange-200/60">
+                  <span>Huisstijl configuratie:</span>
+                  <span className="font-bold text-stone-800">
+                    {preferredTheme ? `Kleur: ${preferredTheme}` : ''} {preferredFont ? `• Font: ${preferredFont}` : ''}
+                  </span>
+                </div>
+              )}
+            </div>
 
             {/* Name */}
             <div>
@@ -223,7 +292,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 name="company"
                 value={formData.companyName}
                 onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                placeholder="Bijv. Bakkerij De Oranje Boer (of particulier)"
+                placeholder="Bijv. Bouwbedrijf De Vries of Nieuw Project"
                 className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
@@ -233,17 +302,13 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
                 {lang === 'nl' ? 'Geschat Budget' : 'Estimated Budget'}
               </label>
-              <select
+              <input
+                type="text"
                 name="budget"
                 value={formData.budget}
                 onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
-              >
-                <option value="Vanaf €50">Vanaf €50 (Starter / Snelle Setup)</option>
-                <option value="€50 - €150">€50 - €150 (Basis Website)</option>
-                <option value="€150 - €350">€150 - €350 (Webshop / Compleet)</option>
-                <option value="€350 - €750+">€350 - €750+ (Maatwerk / Uitgebreid)</option>
-              </select>
+                className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
             </div>
 
             {/* Message / Notes */}
@@ -256,7 +321,11 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 name="message"
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                placeholder={lang === 'nl' ? 'Vertel kort wat je wilt bereiken met jouw nieuwe website...' : 'Briefly describe what features you need...'}
+                placeholder={
+                  lang === 'nl'
+                    ? 'Vertel kort wat je wilt bereiken met jouw nieuwe website...'
+                    : 'Briefly describe what features you need...'
+                }
                 className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
@@ -266,7 +335,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 transition-all cursor-pointer"
+                className="w-full py-4 rounded-xl bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 transition-all cursor-pointer"
               >
                 {isSubmitting ? (
                   <>
@@ -276,17 +345,16 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>{lang === 'nl' ? 'Verstuur Vrijblijvende Aanvraag' : 'Send Free Consultation Request'}</span>
+                    <span>
+                      {lang === 'nl' ? 'Verstuur Vrijblijvende Aanvraag' : 'Send Free Consultation Request'}
+                    </span>
                   </>
                 )}
               </button>
             </div>
-
           </form>
         )}
-
       </div>
-
     </div>
   );
 };

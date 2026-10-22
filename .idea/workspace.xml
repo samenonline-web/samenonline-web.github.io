@@ -37,6 +37,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
+    "npm.Next.js: server-side.executor": "Run",
     "ts.external.directory.path": "C:\\Users\\kenan\\Documents\\GitHub\\samenonline-web\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -72,6 +73,7 @@
       <updated>1787339835889</updated>
       <workItem from="1787339836845" duration="4255000" />
       <workItem from="1787768418981" duration="2050000" />
+      <workItem from="1792679176785" duration="129000" />
     </task>
     <servers />
   </component>

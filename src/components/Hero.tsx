@@ -20,11 +20,12 @@ export const Hero: React.FC<HeroProps> = ({
   onSelectCategory,
 }) => {
   const quickTags: { label: string; category: CategoryType; query: string }[] = [
+    { label: '🏗️ Bouw & Lokale Diensten', category: 'Local Services & Healthcare', query: '' },
+    { label: '🍽️ Horeca & Restaurant', category: 'Food & Hospitality', query: '' },
     { label: '🛒 Webshops & E-commerce', category: 'Webshops & E-commerce', query: '' },
+    { label: '⚖️ Boekhouding & Bureaus', category: 'Creative & Agencies', query: '' },
     { label: '🚀 SaaS & Tech', category: 'Tech & SaaS', query: '' },
-    { label: '🎨 Creatief & Bureau', category: 'Creative & Agencies', query: '' },
-    { label: '🌱 Duurzaam & Groen', category: 'Sustainable & Green', query: '' },
-    { label: '🥐 Horeca & Ambacht', category: 'Food & Hospitality', query: '' },
+    { label: '🌱 Duurzaam & Energie', category: 'Sustainable & Green', query: '' },
   ];
 
   return (
