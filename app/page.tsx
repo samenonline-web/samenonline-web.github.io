@@ -13,11 +13,14 @@ import { InfoModal } from '../src/components/InfoModal';
 import { AboutSection } from '../src/components/AboutSection';
 import { Footer } from '../src/components/Footer';
 import { PriceEstimatorCalculator } from '../src/components/PriceEstimatorCalculator';
+import { PricingPackagesSection } from '../src/components/PricingPackagesSection';
 import { HowItWorksSection } from '../src/components/HowItWorksSection';
 import { BeforeAfterRedesignSection } from '../src/components/BeforeAfterRedesignSection';
+import { WebsiteSpeedAuditSection } from '../src/components/WebsiteSpeedAuditSection';
 import { RoiEstimatorCalculator } from '../src/components/RoiEstimatorCalculator';
 import { ClientChecklistSection } from '../src/components/ClientChecklistSection';
 import { ProjectStatusTrackerModal } from '../src/components/ProjectStatusTrackerModal';
+import { ConceptWizardModal } from '../src/components/ConceptWizardModal';
 import { TemplateComparisonModal } from '../src/components/TemplateComparisonModal';
 import { FaqSection } from '../src/components/FaqSection';
 import { WhatsAppWidget } from '../src/components/WhatsAppWidget';
@@ -52,6 +55,7 @@ export default function Home() {
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
   const [isStatusTrackerOpen, setIsStatusTrackerOpen] = useState(false);
+  const [isWizardModalOpen, setIsWizardModalOpen] = useState(false);
   const [infoModalData, setInfoModalData] = useState<{ isOpen: boolean; title: string; content: string }>({
     isOpen: false,
     title: '',
@@ -64,6 +68,7 @@ export default function Home() {
     isRequestModalOpen ||
     isComparisonModalOpen ||
     isStatusTrackerOpen ||
+    isWizardModalOpen ||
     infoModalData.isOpen
   );
 
@@ -222,6 +227,7 @@ export default function Home() {
         totalFilteredCount={filteredTemplates.length}
         onOpenComparator={() => setIsComparisonModalOpen(true)}
         onOpenStatusTracker={() => setIsStatusTrackerOpen(true)}
+        onOpenWizard={() => setIsWizardModalOpen(true)}
         activeQuickFilter={quickFilter}
         onQuickFilterChange={setQuickFilter}
       />
@@ -363,6 +369,18 @@ export default function Home() {
           }
         />
 
+        {/* Website Speed & SEO QuickScan Tool */}
+        <WebsiteSpeedAuditSection
+          lang={lang}
+          onOpenRedesignRequest={(url) =>
+            handleOpenRequestModal(undefined, undefined, undefined, {
+              templateName: `Website Redesign (${url})`,
+              budget: 'Vanaf €175 (Redesign)',
+              notes: `Aanvraag via Website QuickScan voor domeinnaam "${url}". Ik wil graag mijn laadtijd en Google-posities laten optimaliseren met Next.js.`,
+            })
+          }
+        />
+
         {/* 4-Step "Hoe Wij Werken" Section */}
         <HowItWorksSection
           lang={lang}
@@ -377,6 +395,18 @@ export default function Home() {
         <ClientChecklistSection
           lang={lang}
           onOpenRequestModal={() => handleOpenRequestModal()}
+        />
+
+        {/* Transparante Vaste Pakkettentabel */}
+        <PricingPackagesSection
+          lang={lang}
+          onSelectPackage={(name, budget, notes) =>
+            handleOpenRequestModal(undefined, undefined, undefined, {
+              templateName: name,
+              budget,
+              notes,
+            })
+          }
         />
 
         {/* 60-Second Price Estimator Calculator */}
@@ -453,6 +483,16 @@ export default function Home() {
       <TemplateComparisonModal
         isOpen={isComparisonModalOpen}
         onClose={() => setIsComparisonModalOpen(false)}
+        templates={templates}
+        lang={lang}
+        onSelectTemplate={(tmpl) => handleOpenRequestModal(tmpl)}
+        onOpenLivePreview={(tmpl) => setActivePreviewTemplate(tmpl)}
+      />
+
+      {/* 3-Vragen Keuzehulp Wizard Modal */}
+      <ConceptWizardModal
+        isOpen={isWizardModalOpen}
+        onClose={() => setIsWizardModalOpen(false)}
         templates={templates}
         lang={lang}
         onSelectTemplate={(tmpl) => handleOpenRequestModal(tmpl)}

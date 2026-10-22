@@ -16,19 +16,28 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
   const [isSent, setIsSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const quickQuestionsNl = [
-    'Wat kost een website laten maken?',
-    'Hoe snel kan mijn site live staan?',
-    'Kan ik een bestaande template aanpassen?',
+  const quickTemplates = [
+    {
+      id: 'new',
+      label: '🚀 Nieuw Concept',
+      text: 'Beste Samen Online, ik wil graag een vrijblijvende offerte aanvragen voor een nieuwe professionele bedrijfswebsite.',
+    },
+    {
+      id: 'redesign',
+      label: '🔄 Website Redesign',
+      text: 'Beste Samen Online, ik heb al een bestaande website en wil deze graag laten moderniseren en versnellen naar Next.js.',
+    },
+    {
+      id: 'hosting',
+      label: '🌐 All-in Hosting & Domein',
+      text: 'Beste Samen Online, ik heb een vraag over het All-in Webhosting & .NL Domein pakket (+€9,50/mnd).',
+    },
+    {
+      id: 'general',
+      label: '💬 Algemene Vraag',
+      text: 'Beste Samen Online, wat is de geschatte levertijd en werkwijze voor mijn type bedrijf?',
+    },
   ];
-
-  const quickQuestionsEn = [
-    'How much does a website cost?',
-    'How fast can my site be live?',
-    'Can I customize a template?',
-  ];
-
-  const quickQuestions = lang === 'nl' ? quickQuestionsNl : quickQuestionsEn;
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -129,20 +138,24 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
                     : 'Hi! Have a question about a template or project? Drop your question here for a fast reply.'}
                 </div>
 
-                {/* Quick replies */}
-                <div className="space-y-1 pt-1">
+                {/* Quick topic buttons */}
+                <div className="space-y-1.5 pt-1">
                   <span className="text-[10px] font-bold text-stone-500 uppercase tracking-wider block">
-                    {lang === 'nl' ? 'Snelle vragen:' : 'Quick questions:'}
+                    {lang === 'nl' ? 'Kies een onderwerp of typ zelf:' : 'Choose a topic or type message:'}
                   </span>
-                  {quickQuestions.map((q, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setQuestion(q)}
-                      className="w-full text-left p-2 rounded-xl bg-white hover:bg-orange-50 text-[11px] font-bold text-stone-700 hover:text-orange-900 border border-stone-200 hover:border-orange-200 transition-colors cursor-pointer"
-                    >
-                      💬 {q}
-                    </button>
-                  ))}
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {quickTemplates.map((t) => (
+                      <button
+                        key={t.id}
+                        type="button"
+                        onClick={() => setQuestion(t.text)}
+                        className="text-left p-2 rounded-xl bg-white hover:bg-orange-50 text-[11px] font-bold text-stone-700 hover:text-orange-950 border border-stone-200 hover:border-orange-200 transition-colors cursor-pointer truncate"
+                        title={t.text}
+                      >
+                        {t.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Form fields */}

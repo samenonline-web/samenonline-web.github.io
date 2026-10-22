@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowUpDown, Scale, Clock, Sparkles, Zap, ShoppingCart, Calculator } from 'lucide-react';
+import { ArrowUpDown, Scale, Clock, Sparkles, Zap, ShoppingCart, Calculator, Compass } from 'lucide-react';
 import { CategoryType, Language } from '../types/company';
 
 export type QuickFilterType = 'all' | 'popular' | 'fast' | 'ideal' | 'calculator';
@@ -15,6 +15,7 @@ interface FilterBarProps {
   totalFilteredCount: number;
   onOpenComparator?: () => void;
   onOpenStatusTracker?: () => void;
+  onOpenWizard?: () => void;
   activeQuickFilter: QuickFilterType;
   onQuickFilterChange: (filter: QuickFilterType) => void;
 }
@@ -38,6 +39,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   totalFilteredCount,
   onOpenComparator,
   onOpenStatusTracker,
+  onOpenWizard,
   activeQuickFilter,
   onQuickFilterChange,
 }) => {
@@ -175,6 +177,17 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               >
                 <Scale className="w-3.5 h-3.5 text-orange-700" />
                 <span>{lang === 'nl' ? 'Vergelijk 2 Concepten' : 'Compare 2 Concepts'}</span>
+              </button>
+            )}
+
+            {onOpenWizard && (
+              <button
+                type="button"
+                onClick={onOpenWizard}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-100/90 hover:bg-amber-200 text-amber-950 font-bold border border-amber-300 transition-colors cursor-pointer"
+              >
+                <Compass className="w-3.5 h-3.5 text-amber-700" />
+                <span>{lang === 'nl' ? 'Keuzehulp (3 Vragen)' : 'Recommendation Wizard'}</span>
               </button>
             )}
           </div>
