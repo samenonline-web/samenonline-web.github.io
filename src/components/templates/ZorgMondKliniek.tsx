@@ -16,6 +16,9 @@ import {
   FileText,
   UserPlus,
   Stethoscope,
+  Sparkles,
+  ArrowRight,
+  Check,
 } from 'lucide-react';
 
 interface TariffItem {
@@ -77,6 +80,19 @@ export const ZorgMondKliniek: React.FC<TemplateProps> = ({
     previousDentist: '',
     urgency: 'Normale inschrijving',
   });
+
+  // 24/7 Online Afsprakenplanner State
+  const [bookingStep, setBookingStep] = useState<1 | 2 | 3>(1);
+  const [selectedTreatment, setSelectedTreatment] = useState<string>('Periodieke Gebitscontrole & Preventie');
+  const [selectedSlot, setSelectedSlot] = useState<string>('Morgen 09:30 - 10:00');
+  const [bookingData, setBookingData] = useState({ name: '', phone: '', email: '', isNewPatient: 'ja' });
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+
+  const handleBookingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bookingData.name || !bookingData.phone) return;
+    setBookingConfirmed(true);
+  };
 
   const handleRegisterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -335,6 +351,280 @@ export const ZorgMondKliniek: React.FC<TemplateProps> = ({
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      {/* 24/7 Online Afsprakenplanner Module */}
+      <section className={`py-16 px-4 sm:px-6 ${
+        isDarkMode ? 'bg-stone-950 text-white' : 'bg-stone-50 text-stone-900'
+      }`}>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center space-y-2 mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 text-xs font-black uppercase tracking-wider">
+              <Calendar className="w-4 h-4" />
+              <span>24/7 Zelfservice Agenda</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black">
+              Plan Direct Online Jouw Tandartsafspraak
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-500 max-w-lg mx-auto">
+              Kies jouw gewenste behandeling en direct een vrij tijdslot in de praktijkagenda.
+            </p>
+          </div>
+
+          <div className={`p-6 sm:p-8 rounded-3xl border-2 shadow-xl ${
+            isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200'
+          }`}>
+            {bookingConfirmed ? (
+              <div className="text-center py-10 space-y-4">
+                <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-10 h-10" />
+                </div>
+                <h3 className="text-2xl font-black text-stone-900 dark:text-white">
+                  Afspraak Succesvol Gereserveerd!
+                </h3>
+                <div className="p-4 rounded-2xl bg-stone-100 dark:bg-stone-800 max-w-md mx-auto text-xs space-y-1.5 text-left">
+                  <div className="flex justify-between">
+                    <span className="text-stone-500">Patiënt:</span>
+                    <strong className="text-stone-900 dark:text-white">{bookingData.name}</strong>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-stone-500">Behandeling:</span>
+                    <strong className="text-stone-900 dark:text-white">{selectedTreatment}</strong>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-stone-500">Gereserveerd Tijdslot:</span>
+                    <strong className="text-teal-600 dark:text-teal-400 font-black">{selectedSlot}</strong>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-stone-500">Locatie:</span>
+                    <strong className="text-stone-900 dark:text-white">{city}</strong>
+                  </div>
+                </div>
+                <p className="text-xs text-stone-500 max-w-sm mx-auto">
+                  Je ontvangt binnen 5 minuten een bevestigings-sms op <strong>{bookingData.phone}</strong> en een afspraakherinnering 24 uur voor aanvang.
+                </p>
+                <div className="pt-2">
+                  <button
+                    onClick={() => {
+                      setBookingConfirmed(false);
+                      setBookingStep(1);
+                    }}
+                    className="text-xs font-bold text-teal-600 underline cursor-pointer"
+                  >
+                    Nog een afspraak inplannen
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                {/* Step Indicators */}
+                <div className="grid grid-cols-3 gap-2 mb-8 text-center text-xs font-bold">
+                  <div className={`p-2.5 rounded-xl border transition-all ${
+                    bookingStep === 1
+                      ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300'
+                      : 'border-stone-200 dark:border-stone-800 text-stone-400'
+                  }`}>
+                    1. Behandeling
+                  </div>
+                  <div className={`p-2.5 rounded-xl border transition-all ${
+                    bookingStep === 2
+                      ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300'
+                      : 'border-stone-200 dark:border-stone-800 text-stone-400'
+                  }`}>
+                    2. Datum & Tijd
+                  </div>
+                  <div className={`p-2.5 rounded-xl border transition-all ${
+                    bookingStep === 3
+                      ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300'
+                      : 'border-stone-200 dark:border-stone-800 text-stone-400'
+                  }`}>
+                    3. Bevestigen
+                  </div>
+                </div>
+
+                {/* Step 1: Select Treatment */}
+                {bookingStep === 1 && (
+                  <div className="space-y-4">
+                    <label className="text-xs font-black uppercase text-stone-600 dark:text-stone-300 tracking-wider block">
+                      Selecteer het type afspraak:
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {[
+                        { title: 'Periodieke Gebitscontrole & Preventie', time: '20 min', desc: 'Halfjaarlijkse controle en tandvlees-evaluatie' },
+                        { title: 'Mondhygiëne & Tandsteen Verwijderen', time: '30 min', desc: 'Grondige professionele gebitsreiniging en polijsten' },
+                        { title: 'Pijnklacht / Kiespijn Spoed', time: '25 min', desc: 'Directe diagnose bij acute pijn of afgebroken stuk kies' },
+                        { title: 'Consult Esthetische Tandheelkunde', time: '30 min', desc: 'Adviesgesprek facings, bleken en glimlachrestauratie' },
+                      ].map((t) => (
+                        <button
+                          key={t.title}
+                          type="button"
+                          onClick={() => setSelectedTreatment(t.title)}
+                          className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
+                            selectedTreatment === t.title
+                              ? 'border-teal-500 bg-teal-50/70 dark:bg-teal-950/30'
+                              : 'border-stone-200 dark:border-stone-800 hover:border-teal-300'
+                          }`}
+                        >
+                          <div>
+                            <div className="flex items-center justify-between mb-1">
+                              <strong className="text-xs font-bold text-stone-900 dark:text-white">
+                                {t.title}
+                              </strong>
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-300">
+                                {t.time}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-stone-500 leading-relaxed font-medium">
+                              {t.desc}
+                            </p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="pt-4 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => setBookingStep(2)}
+                        className="px-6 py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs flex items-center gap-2 shadow-md transition-all cursor-pointer"
+                      >
+                        <span>Volgende Stap: Kies Tijdslot</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 2: Select Slot */}
+                {bookingStep === 2 && (
+                  <div className="space-y-4">
+                    <label className="text-xs font-black uppercase text-stone-600 dark:text-stone-300 tracking-wider block">
+                      Kies jouw gewenste tijdslot bij Tandartsenpraktijk Centrum:
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                      {[
+                        'Morgen 09:30 - 10:00',
+                        'Morgen 11:15 - 11:45',
+                        'Morgen 14:00 - 14:30',
+                        'Donderdag 10:00 - 10:30',
+                        'Donderdag 15:30 - 16:00',
+                        'Vrijdag 08:30 - 09:00',
+                        'Vrijdag 11:00 - 11:30',
+                        'Vrijdag 13:45 - 14:15',
+                      ].map((slot) => (
+                        <button
+                          key={slot}
+                          type="button"
+                          onClick={() => setSelectedSlot(slot)}
+                          className={`p-3 rounded-xl border text-center font-bold text-xs transition-all cursor-pointer ${
+                            selectedSlot === slot
+                              ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 shadow-xs'
+                              : 'border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-teal-300'
+                          }`}
+                        >
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="pt-4 flex justify-between items-center">
+                      <button
+                        type="button"
+                        onClick={() => setBookingStep(1)}
+                        className="text-xs font-bold text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 cursor-pointer"
+                      >
+                        ← Terug naar behandeling
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setBookingStep(3)}
+                        className="px-6 py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs flex items-center gap-2 shadow-md transition-all cursor-pointer"
+                      >
+                        <span>Volgende Stap: Gegevens</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 3: Contact & Confirm */}
+                {bookingStep === 3 && (
+                  <form onSubmit={handleBookingSubmit} className="space-y-4">
+                    <div className="p-3.5 rounded-2xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800 text-xs">
+                      <div className="flex justify-between items-center">
+                        <strong className="text-stone-900 dark:text-white">{selectedTreatment}</strong>
+                        <span className="font-bold text-teal-700 dark:text-teal-300">{selectedSlot}</span>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1">
+                          Volledige Naam
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={bookingData.name}
+                          onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
+                          placeholder="bijv. Daan Visser"
+                          className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-teal-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1">
+                          Mobiel Nummer (voor SMS-bevestiging)
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={bookingData.phone}
+                          onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
+                          placeholder="06 12345678"
+                          className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-teal-500"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1">
+                        E-mailadres
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={bookingData.email}
+                        onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
+                        placeholder="daan@voorbeeld.nl"
+                        className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-teal-500"
+                      />
+                    </div>
+
+                    <div className="pt-2 flex justify-between items-center">
+                      <button
+                        type="button"
+                        onClick={() => setBookingStep(2)}
+                        className="text-xs font-bold text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 cursor-pointer"
+                      >
+                        ← Tijdslot wijzigen
+                      </button>
+
+                      <button
+                        type="submit"
+                        className="px-6 py-3.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs flex items-center gap-2 shadow-lg transition-all cursor-pointer"
+                      >
+                        <span>Definitief Afspraak Bevestigen</span>
+                        <Check className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>

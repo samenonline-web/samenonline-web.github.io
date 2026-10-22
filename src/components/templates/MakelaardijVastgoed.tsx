@@ -17,6 +17,11 @@ import {
   BedDouble,
   Maximize2,
   Award,
+  Calendar,
+  Phone,
+  MessageCircle,
+  X,
+  Clock,
 } from 'lucide-react';
 
 interface PropertyItem {
@@ -65,6 +70,17 @@ const PROPERTIES: PropertyItem[] = [
     status: 'Verkocht o.v.',
     img: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80',
   },
+  {
+    id: 'p4',
+    title: 'Statig Grachtenappartement aan de Vecht',
+    address: 'Vechtoever 41 • Maarssen (Utrecht)',
+    price: 615000,
+    areaM2: 145,
+    bedrooms: 3,
+    energyLabel: 'A+',
+    status: 'Nieuw',
+    img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80',
+  },
 ];
 
 export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
@@ -78,7 +94,8 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
   const brandName = customBrandName || 'Van Houten Makelaardij & Taxaties';
   const city = customCity || 'Utrecht & Midden-Nederland';
 
-  const [priceMax, setPriceMax] = useState<number>(700000);
+  const [priceMax, setPriceMax] = useState<number>(750000);
+  const [statusFilter, setStatusFilter] = useState<'all' | 'Nieuw' | 'Open Huis' | 'Verkocht o.v.'>('all');
   const [valuationSubmitted, setValuationSubmitted] = useState(false);
   const [valuationData, setValuationData] = useState({
     name: '',
@@ -87,7 +104,28 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
     houseNumber: '',
   });
 
-  const filteredProperties = PROPERTIES.filter((p) => p.price <= priceMax);
+  // Viewing booking modal state
+  const [selectedViewingProperty, setSelectedViewingProperty] = useState<PropertyItem | null>(null);
+  const [viewingTime, setViewingTime] = useState<string>('Vrijdag 14:00 - 14:45');
+  const [viewingData, setViewingData] = useState({ name: '', phone: '', email: '' });
+  const [viewingConfirmed, setViewingConfirmed] = useState<boolean>(false);
+
+  const filteredProperties = PROPERTIES.filter((p) => {
+    const matchesPrice = p.price <= priceMax;
+    const matchesStatus = statusFilter === 'all' || p.status === statusFilter;
+    return matchesPrice && matchesStatus;
+  });
+
+  const handleViewingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!viewingData.name || !viewingData.phone) return;
+    setViewingConfirmed(true);
+  };
+
+  const handleWhatsAppProperty = (property: PropertyItem) => {
+    const msg = `Hallo ${brandName}, ik heb een vraag over '${property.title}' (${property.address}) met vraagprijs €${property.price.toLocaleString('nl-NL')}.`;
+    window.open(`https://wa.me/31302006140?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+  };
 
   const handleValuationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -286,7 +324,7 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
         isDarkMode ? 'bg-stone-900/60 border-stone-800' : 'bg-white border-stone-200'
       }`}>
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
               <span className="text-xs font-black uppercase tracking-wider text-orange-600">
                 Actueel Woningaanbod
@@ -296,30 +334,50 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
               </h2>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-bold text-stone-600 dark:text-stone-300">
-              <span>Max. Vraagprijs: €{priceMax.toLocaleString('nl-NL')}</span>
-              <input
-                type="range"
-                min={400000}
-                max={800000}
-                step={25000}
-                value={priceMax}
-                onChange={(e) => setPriceMax(Number(e.target.value))}
-                className="accent-orange-600 cursor-pointer w-32"
-              />
+            <div className="flex flex-wrap items-center gap-3 text-xs font-bold">
+              {/* Status Filter Buttons */}
+              <div className="flex items-center gap-1 bg-stone-100 dark:bg-stone-800 p-1 rounded-xl">
+                {(['all', 'Nieuw', 'Open Huis', 'Verkocht o.v.'] as const).map((st) => (
+                  <button
+                    key={st}
+                    onClick={() => setStatusFilter(st)}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      statusFilter === st
+                        ? 'bg-orange-600 text-white shadow-xs'
+                        : 'text-stone-600 dark:text-stone-300 hover:text-stone-900'
+                    }`}
+                  >
+                    {st === 'all' ? 'Alles' : st}
+                  </button>
+                ))}
+              </div>
+
+              {/* Price Slider */}
+              <div className="flex items-center gap-2 bg-stone-100 dark:bg-stone-800 px-3 py-1.5 rounded-xl text-stone-700 dark:text-stone-300">
+                <span className="text-[11px]">Max. €{priceMax.toLocaleString('nl-NL')}</span>
+                <input
+                  type="range"
+                  min={400000}
+                  max={850000}
+                  step={25000}
+                  value={priceMax}
+                  onChange={(e) => setPriceMax(Number(e.target.value))}
+                  className="accent-orange-600 cursor-pointer w-24"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredProperties.map((p) => (
               <div
                 key={p.id}
                 className={`rounded-3xl border overflow-hidden transition-all flex flex-col justify-between ${
-                  isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-stone-50 border-stone-200'
+                  isDarkMode ? 'bg-stone-900 border-stone-800 hover:border-orange-500/50' : 'bg-stone-50 border-stone-200 hover:border-orange-300'
                 }`}
               >
                 <div>
-                  <div className="relative h-48 w-full overflow-hidden bg-stone-200">
+                  <div className="relative h-44 w-full overflow-hidden bg-stone-200">
                     <img
                       src={p.img}
                       alt={p.title}
@@ -333,38 +391,50 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
                     </span>
                   </div>
 
-                  <div className="p-5">
-                    <div className="text-xl font-black text-stone-900 dark:text-stone-100 mb-1">
+                  <div className="p-4">
+                    <div className="text-lg font-black text-stone-900 dark:text-stone-100 mb-0.5">
                       € {p.price.toLocaleString('nl-NL')} k.k.
                     </div>
-                    <h4 className="font-bold text-sm text-stone-800 dark:text-stone-200 mb-1">
+                    <h4 className="font-bold text-xs text-stone-800 dark:text-stone-200 line-clamp-1 mb-1">
                       {p.title}
                     </h4>
-                    <span className="text-xs text-stone-500 block mb-4 flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-orange-500" />
+                    <span className="text-[11px] text-stone-500 block mb-3 flex items-center gap-1 truncate">
+                      <MapPin className="w-3.5 h-3.5 text-orange-500 shrink-0" />
                       {p.address}
                     </span>
 
-                    <div className="flex items-center gap-3 text-xs text-stone-600 dark:text-stone-400 font-semibold border-t border-stone-200 dark:border-stone-800 pt-3">
+                    <div className="flex items-center gap-2 text-[11px] text-stone-600 dark:text-stone-400 font-semibold border-t border-stone-200 dark:border-stone-800 pt-2.5">
                       <span className="flex items-center gap-1">
-                        <Maximize2 className="w-3.5 h-3.5" />
+                        <Maximize2 className="w-3 h-3" />
                         {p.areaM2} m²
                       </span>
                       <span>•</span>
                       <span className="flex items-center gap-1">
-                        <BedDouble className="w-3.5 h-3.5" />
-                        {p.bedrooms} kamers
+                        <BedDouble className="w-3 h-3" />
+                        {p.bedrooms} slp
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-5 pt-0">
+                <div className="p-4 pt-0 space-y-2">
                   <button
-                    onClick={onRequestQuote}
-                    className="w-full py-2.5 rounded-xl bg-stone-200 dark:bg-stone-800 hover:bg-orange-600 hover:text-white dark:hover:bg-orange-600 text-stone-800 dark:text-stone-200 font-bold text-xs transition-colors cursor-pointer"
+                    onClick={() => {
+                      setSelectedViewingProperty(p);
+                      setViewingConfirmed(false);
+                    }}
+                    className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-black text-xs flex items-center justify-center gap-1.5 shadow-sm transition-colors cursor-pointer"
                   >
-                    Bezichtiging Plannen
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>Bezichtiging Plannen</span>
+                  </button>
+
+                  <button
+                    onClick={() => handleWhatsAppProperty(p)}
+                    className="w-full py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 font-bold text-[11px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <MessageCircle className="w-3 h-3 text-emerald-600" />
+                    <span>Vraag via WhatsApp</span>
                   </button>
                 </div>
               </div>
@@ -372,6 +442,153 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
           </div>
         </div>
       </section>
+
+      {/* Interactive Bezichtiging Plannen Modal */}
+      {selectedViewingProperty && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fadeIn">
+          <div className="bg-white dark:bg-stone-900 border-2 border-stone-200 dark:border-stone-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+            <button
+              onClick={() => setSelectedViewingProperty(null)}
+              className="absolute top-5 right-5 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 cursor-pointer p-1"
+              aria-label="Sluiten"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {viewingConfirmed ? (
+              <div className="text-center py-6 space-y-3">
+                <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-black text-stone-900 dark:text-white">
+                  Bezichtiging Gereserveerd!
+                </h3>
+                <p className="text-xs text-stone-600 dark:text-stone-400 max-w-sm mx-auto leading-relaxed">
+                  Beste <strong>{viewingData.name}</strong>, je tijdslot op <strong>{viewingTime}</strong> voor <strong>{selectedViewingProperty.title}</strong> staat voorlopig vast. Onze makelaar stuurt de Funda-verkoopbrochure naar <strong>{viewingData.email}</strong>.
+                </p>
+                <div className="pt-4">
+                  <button
+                    onClick={() => setSelectedViewingProperty(null)}
+                    className="px-6 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
+                  >
+                    Venster Sluiten
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <Calendar className="w-5 h-5 text-orange-600" />
+                  <h3 className="text-lg font-black text-stone-900 dark:text-white">
+                    Plan Bezichtiging
+                  </h3>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-stone-100 dark:bg-stone-800/80 mb-5 flex items-center gap-3">
+                  <img
+                    src={selectedViewingProperty.img}
+                    alt={selectedViewingProperty.title}
+                    className="w-14 h-14 rounded-xl object-cover shrink-0"
+                  />
+                  <div className="min-w-0">
+                    <strong className="block text-xs font-bold text-stone-900 dark:text-white truncate">
+                      {selectedViewingProperty.title}
+                    </strong>
+                    <span className="text-[11px] text-stone-500 block truncate">
+                      {selectedViewingProperty.address}
+                    </span>
+                    <span className="text-xs font-black text-orange-600">
+                      € {selectedViewingProperty.price.toLocaleString('nl-NL')} k.k.
+                    </span>
+                  </div>
+                </div>
+
+                <form onSubmit={handleViewingSubmit} className="space-y-4">
+                  <div>
+                    <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1.5">
+                      Kies Voorkeursmoment
+                    </label>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      {[
+                        'Vrijdag 14:00 - 14:45',
+                        'Vrijdag 15:30 - 16:15',
+                        'Zaterdag 10:30 - 11:15',
+                        'Zaterdag 13:00 - 13:45',
+                      ].map((slot) => (
+                        <button
+                          key={slot}
+                          type="button"
+                          onClick={() => setViewingTime(slot)}
+                          className={`p-2 rounded-xl border text-center font-bold transition-all cursor-pointer ${
+                            viewingTime === slot
+                              ? 'border-orange-600 bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-400'
+                              : 'border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-orange-300'
+                          }`}
+                        >
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    <div>
+                      <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1">
+                        Jouw Naam
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={viewingData.name}
+                        onChange={(e) => setViewingData({ ...viewingData, name: e.target.value })}
+                        placeholder="bijv. Sophie van Dijk"
+                        className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-orange-500"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1">
+                          Telefoonnummer
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={viewingData.phone}
+                          onChange={(e) => setViewingData({ ...viewingData, phone: e.target.value })}
+                          placeholder="06 12345678"
+                          className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-orange-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1">
+                          E-mailadres
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={viewingData.email}
+                          onChange={(e) => setViewingData({ ...viewingData, email: e.target.value })}
+                          placeholder="sophie@voorbeeld.nl"
+                          className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-orange-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer mt-2"
+                  >
+                    <span>Bevestig Tijdslot Reservering</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </form>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Footer Demo Note */}
       <footer className="py-8 px-4 text-center text-xs text-stone-500 border-t border-stone-200 dark:border-stone-800">
