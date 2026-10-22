@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { TrendingUp, Calculator, ArrowRight, CheckCircle2, DollarSign, Sparkles, Clock, Target } from 'lucide-react';
+import { TrendingUp, Calculator, ArrowRight, CheckCircle2, DollarSign, Sparkles, Clock, Target, MessageCircle } from 'lucide-react';
 import { Language } from '../types/company';
 
 interface RoiEstimatorCalculatorProps {
@@ -41,6 +41,19 @@ export const RoiEstimatorCalculator: React.FC<RoiEstimatorCalculatorProps> = ({
       budget: 'Vanaf €195 (Investering)',
       notes: `Aanvraag via ROI Rendement-calculator: ${monthlyVisitors} maandelijkse bezoekers, gemiddelde klantwaarde €${avgDealValue}, gewenste conversiegroei van ${currentConversion}% naar ${newConversion}%. Geschat omzetpotentieel: +€${extraMonthlyRevenue}/mnd (+€${extraYearlyRevenue}/jr).`,
     });
+  };
+
+  const handleWhatsAppRoi = () => {
+    const message = `Hallo Samen Online! Ik heb zojuist de ROI-calculator bekeken:
+- Geschat aantal bezoekers/mnd: ${monthlyVisitors.toLocaleString('nl-NL')}
+- Gemiddelde orderwaarde: €${avgDealValue}
+- Huidige conversie: ${currentConversion}%
+- Potentiële meeropbrengst: +€${extraMonthlyRevenue.toLocaleString('nl-NL')}/mnd (+€${extraYearlyRevenue.toLocaleString('nl-NL')}/jr)
+- Geschatte terugverdientijd: ~${paybackDays} dagen
+
+Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
+    const url = `https://wa.me/31302006140?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -186,7 +199,7 @@ export const RoiEstimatorCalculator: React.FC<RoiEstimatorCalculatorProps> = ({
               </div>
             </div>
 
-            <div className="pt-6 space-y-3">
+            <div className="pt-6 space-y-2.5">
               <button
                 type="button"
                 onClick={handleApplyRoi}
@@ -196,7 +209,16 @@ export const RoiEstimatorCalculator: React.FC<RoiEstimatorCalculatorProps> = ({
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-stone-400 text-center">
+              <button
+                type="button"
+                onClick={handleWhatsAppRoi}
+                className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>{lang === 'nl' ? 'Bespreek Direct via WhatsApp' : 'Discuss Directly via WhatsApp'}</span>
+              </button>
+
+              <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-stone-400 text-center pt-1">
                 <span>🛡️ 100% Jouw Eigendom</span>
                 <span>•</span>
                 <span>⚡ Binnen 2 tot 5 dagen live</span>

@@ -14,6 +14,8 @@ import {
   AlertCircle,
   XCircle,
   Loader2,
+  Copy,
+  MessageCircle,
 } from 'lucide-react';
 import { Language } from '../types/company';
 import { QuotePdfModal, QuotePdfData } from './QuotePdfModal';
@@ -123,6 +125,7 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
   const [hostingPlan, setHostingPlan] = useState<'managed' | 'self'>('managed');
   const [domainInput, setDomainInput] = useState<string>('');
   const [isQuotePdfOpen, setIsQuotePdfOpen] = useState<boolean>(false);
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const activeTypeObj = SITE_TYPES.find((t) => t.id === selectedType) || SITE_TYPES[1];
   const activePageOption = PAGE_OPTIONS.find((p) => p.id === pageCount) || PAGE_OPTIONS[2];
@@ -301,6 +304,55 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
       budget: `Indicatie: €${totalPrice} eenmalig${hostingPlan === 'managed' ? ' + €9,50/mnd all-in hosting' : ''}`,
       notes: `Aanvraag via 60-seconden calculator: Type: ${activeTypeObj.nameNl}, Pagina's: ${activePageOption.labelNl}, Extra opties: ${addonNames || 'Geen'}, Gewenste domeinnaam: ${domainStatusText}, Hosting: ${hostingText}, Verwachte levertijd: ~${estimatedDays} dagen.`,
     });
+  };
+
+  const handleCopyQuote = () => {
+    const addonNames = selectedAddons
+      .map((id) => ADDONS.find((a) => a.id === id)?.nameNl)
+      .filter(Boolean)
+      .join(', ');
+
+    const domainText = cleanDomain ? `${cleanDomain}.nl` : 'Nog te bepalen';
+    const hostingText =
+      hostingPlan === 'managed'
+        ? 'Inclusief All-in Hosting & .nl domein (+€9,50/mnd)'
+        : 'Zelf regelen (€0/mnd)';
+
+    const quoteSummary = `Specificatie Samen Online Website:
+• Type: ${activeTypeObj.nameNl} (${activePageOption.labelNl})
+• Investering: €${totalPrice} eenmalig${hostingPlan === 'managed' ? ' + €9,50/mnd all-in hosting' : ''}
+• Extra opties: ${addonNames || 'Geen'}
+• Domeinnaam: ${domainText}
+• Webhosting: ${hostingText}
+• Geschatte levertijd: ~${estimatedDays} werkdagen
+• Eigendom: 100% eigendom van klant, geen wurgcontracten.`;
+
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(quoteSummary);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2500);
+    }
+  };
+
+  const handleWhatsAppQuote = () => {
+    const addonNames = selectedAddons
+      .map((id) => ADDONS.find((a) => a.id === id)?.nameNl)
+      .filter(Boolean)
+      .join(', ');
+
+    const domainText = cleanDomain ? `${cleanDomain}.nl` : 'Nog te bepalen';
+
+    const message = `Hallo Samen Online! Ik heb zojuist via de calculator een website samengesteld:
+- Type: ${activeTypeObj.nameNl} (${activePageOption.labelNl})
+- Indicatie: €${totalPrice} eenmalig${hostingPlan === 'managed' ? ' + €9,50/mnd all-in hosting' : ''}
+- Extra modules: ${addonNames || 'Geen'}
+- Gewenst domein: ${domainText}
+- Verwachte levertijd: ~${estimatedDays} werkdagen
+
+Kunnen we de mogelijkheden en startdatum bespreken?`;
+
+    const url = `https://wa.me/31302006140?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -639,13 +691,42 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                 <ArrowRight className="w-4 h-4" />
               </button>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={handleWhatsAppQuote}
+                  className="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
+                >
+                  <MessageCircle className="w-4 h-4 shrink-0" />
+                  <span className="truncate">{lang === 'nl' ? 'Deel via WhatsApp' : 'Share via WhatsApp'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleCopyQuote}
+                  className="w-full py-2.5 px-3 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-2xs transition-all cursor-pointer"
+                >
+                  {isCopied ? (
+                    <>
+                      <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span className="text-emerald-700 font-black">{lang === 'nl' ? 'Gekopieerd!' : 'Copied!'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4 text-stone-500 shrink-0" />
+                      <span className="truncate">{lang === 'nl' ? 'Kopieer Specificatie' : 'Copy Breakdown'}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
               <button
                 type="button"
                 onClick={() => setIsQuotePdfOpen(true)}
-                className="w-full py-3 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border-2 border-stone-300 font-extrabold text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+                className="w-full py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-200 font-extrabold text-xs flex items-center justify-center gap-2 shadow-2xs transition-all cursor-pointer"
               >
                 <Download className="w-4 h-4 text-orange-600" />
-                <span>{lang === 'nl' ? 'Download Offerte als PDF (1-Klik)' : 'Download Quote as PDF'}</span>
+                <span>{lang === 'nl' ? 'Download Offerte als PDF' : 'Download Quote as PDF'}</span>
               </button>
 
               <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-stone-500 pt-1">
