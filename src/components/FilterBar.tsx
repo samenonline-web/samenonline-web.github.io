@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, Scale } from 'lucide-react';
 import { CategoryType, Language } from '../types/company';
 
 interface FilterBarProps {
@@ -11,6 +11,7 @@ interface FilterBarProps {
   sortBy: 'rating' | 'name' | 'buildDays';
   onSortChange: (sort: 'rating' | 'name' | 'buildDays') => void;
   totalFilteredCount: number;
+  onOpenComparator?: () => void;
 }
 
 const CATEGORIES: CategoryType[] = [
@@ -30,6 +31,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   sortBy,
   onSortChange,
   totalFilteredCount,
+  onOpenComparator,
 }) => {
   const getCategoryName = (cat: CategoryType) => {
     if (lang === 'en') return cat;
@@ -69,11 +71,24 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         </div>
 
         {/* Secondary Filter Controls */}
-        <div className="flex items-center justify-between gap-3 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
           
-          <span className="font-bold text-stone-500">
-            {totalFilteredCount} {lang === 'nl' ? 'concepten' : 'concepts'}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="font-bold text-stone-500">
+              {totalFilteredCount} {lang === 'nl' ? 'concepten' : 'concepts'}
+            </span>
+
+            {onOpenComparator && (
+              <button
+                type="button"
+                onClick={onOpenComparator}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-100/90 hover:bg-orange-200 text-orange-950 font-bold border border-orange-300 transition-colors cursor-pointer"
+              >
+                <Scale className="w-3.5 h-3.5 text-orange-700" />
+                <span>{lang === 'nl' ? 'Vergelijk 2 Concepten' : 'Compare 2 Concepts'}</span>
+              </button>
+            )}
+          </div>
 
           <div className="flex items-center gap-1.5 bg-orange-50/50 border border-orange-200/80 rounded-xl px-3 py-1.5">
             <ArrowUpDown className="w-3.5 h-3.5 text-orange-500" />

@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Send, CheckCircle2, Heart, AlertCircle, Loader2, MessageCircle, ArrowRight } from 'lucide-react';
+import { X, Send, CheckCircle2, Heart, AlertCircle, Loader2, MessageCircle, ArrowRight, Download } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
+import { QuotePdfModal, QuotePdfData } from './QuotePdfModal';
 
 interface RequestWebsiteModalProps {
   isOpen: boolean;
@@ -43,6 +44,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isQuotePdfOpen, setIsQuotePdfOpen] = useState(false);
 
   useEffect(() => {
     if (initialCustomData) {
@@ -214,15 +216,27 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               </ul>
             </div>
 
-            <button
-              onClick={() => {
-                setSubmitted(false);
-                onClose();
-              }}
-              className="px-6 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition-colors cursor-pointer mt-2"
-            >
-              Sluiten
-            </button>
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => setIsQuotePdfOpen(true)}
+                className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-600/20 transition-all cursor-pointer"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download Offerte als PDF</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSubmitted(false);
+                  onClose();
+                }}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition-colors cursor-pointer"
+              >
+                Sluiten
+              </button>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto text-stone-900">
@@ -473,6 +487,31 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
           </form>
         )}
       </div>
+
+      {/* Quote PDF Modal */}
+      <QuotePdfModal
+        isOpen={isQuotePdfOpen}
+        onClose={() => setIsQuotePdfOpen(false)}
+        lang={lang}
+        quoteData={{
+          clientName: formData.clientName,
+          companyName: formData.companyName,
+          email: formData.email,
+          phone: formData.phone,
+          templateOrProjectType:
+            projectType === 'redesign'
+              ? 'Website Redesign (Bestaande site moderniseren)'
+              : projectType === 'custom_plan'
+              ? 'Eigen Ontwerp / Figma Schets'
+              : formData.templateName || 'Samen Online Webdesign',
+          selectedModules: includeHosting ? ['All-in Webhosting & .NL Domein (+€9,50/mnd)'] : ['Zelf hosting regelen (€0)'],
+          hostingPlan: includeHosting ? 'managed' : 'self',
+          basePrice: 195,
+          addonsPrice: 0,
+          totalPrice: 195,
+          estimatedDays: 5,
+        }}
+      />
     </div>
   );
 };

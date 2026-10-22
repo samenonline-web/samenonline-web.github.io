@@ -14,6 +14,10 @@ import { BouwMeesterAannemer } from './BouwMeesterAannemer';
 import { DeVriesBoekhouding } from './DeVriesBoekhouding';
 import { StudioPuurSalon } from './StudioPuurSalon';
 import { BistroDeGracht } from './BistroDeGracht';
+import { RijschoolVlot } from './RijschoolVlot';
+import { GlansHelderSchoonmaak } from './GlansHelderSchoonmaak';
+import { StudioFlowYoga } from './StudioFlowYoga';
+import { ZorgMondKliniek } from './ZorgMondKliniek';
 
 interface TemplateRendererProps {
   templateId: string;
@@ -84,6 +88,14 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
         return <StudioPuurSalon {...templateProps} />;
       case 'bistro-degracht':
         return <BistroDeGracht {...templateProps} />;
+      case 'rijschool-vlot':
+        return <RijschoolVlot {...templateProps} />;
+      case 'glanshelder-schoonmaak':
+        return <GlansHelderSchoonmaak {...templateProps} />;
+      case 'studioflow-yoga':
+        return <StudioFlowYoga {...templateProps} />;
+      case 'zorgmond-kliniek':
+        return <ZorgMondKliniek {...templateProps} />;
       default:
         return <GrachtenWebAgency {...templateProps} />;
     }

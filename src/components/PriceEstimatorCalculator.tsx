@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Calculator, Check, ArrowRight, Sparkles, Clock, ShieldCheck } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Calculator, Check, ArrowRight, Sparkles, Clock, ShieldCheck, Globe, Download, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Language } from '../types/company';
+import { QuotePdfModal, QuotePdfData } from './QuotePdfModal';
 
 interface PriceEstimatorCalculatorProps {
   lang: Language;
@@ -90,8 +91,47 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
   const [selectedType, setSelectedType] = useState<string>('business');
   const [selectedAddons, setSelectedAddons] = useState<string[]>(['seo', 'whatsapp']);
   const [hostingPlan, setHostingPlan] = useState<'managed' | 'self'>('managed');
+  const [domainInput, setDomainInput] = useState<string>('');
+  const [isQuotePdfOpen, setIsQuotePdfOpen] = useState<boolean>(false);
 
   const activeTypeObj = SITE_TYPES.find((t) => t.id === selectedType) || SITE_TYPES[1];
+
+  const cleanDomain = useMemo(() => {
+    let clean = domainInput.trim().toLowerCase();
+    // remove protocol
+    clean = clean.replace(/^https?:\/\//, '');
+    clean = clean.replace(/^www\./, '');
+    // remove .nl if user typed it
+    clean = clean.replace(/\.nl$/, '');
+    // replace spaces with hyphens
+    clean = clean.replace(/\s+/g, '-');
+    return clean;
+  }, [domainInput]);
+
+  const domainValidation = useMemo(() => {
+    if (!cleanDomain) {
+      return { status: 'empty', message: '' };
+    }
+    // SIDN standard rules: length 2-63, letters, digits, hyphen, not starting or ending with hyphen
+    const validCharsRegex = /^[a-z0-9-]+$/;
+    if (cleanDomain.length < 2) {
+      return { status: 'invalid', message: 'Minimaal 2 tekens vereist' };
+    }
+    if (cleanDomain.length > 63) {
+      return { status: 'invalid', message: 'Maximaal 63 tekens toegestaan' };
+    }
+    if (!validCharsRegex.test(cleanDomain)) {
+      return { status: 'invalid', message: 'Alleen letters, cijfers en koppeltekens toegestaan' };
+    }
+    if (cleanDomain.startsWith('-') || cleanDomain.endsWith('-')) {
+      return { status: 'invalid', message: 'Mag niet beginnen of eindigen met een koppelteken' };
+    }
+    return {
+      status: 'valid',
+      fullName: `${cleanDomain}.nl`,
+      message: `${cleanDomain}.nl is beschikbaar voor registratie & inbegrepen bij All-in Webhosting!`,
+    };
+  }, [cleanDomain]);
 
   const toggleAddon = (id: string) => {
     setSelectedAddons((prev) =>
@@ -107,6 +147,19 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
   const totalPrice = activeTypeObj.basePrice + addonsTotal;
   const estimatedDays = activeTypeObj.days + Math.floor(selectedAddons.length * 0.7);
 
+  const quotePdfData: QuotePdfData = {
+    templateOrProjectType: activeTypeObj.nameNl,
+    selectedModules: selectedAddons
+      .map((id) => ADDONS.find((a) => a.id === id)?.nameNl)
+      .filter(Boolean) as string[],
+    hostingPlan,
+    chosenDomain: cleanDomain ? `${cleanDomain}.nl` : undefined,
+    basePrice: activeTypeObj.basePrice,
+    addonsPrice: addonsTotal,
+    totalPrice,
+    estimatedDays,
+  };
+
   const handleApply = () => {
     const addonNames = selectedAddons
       .map((id) => ADDONS.find((a) => a.id === id)?.nameNl)
@@ -115,13 +168,13 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
 
     const hostingText =
       hostingPlan === 'managed'
-        ? 'Inclusief All-in Hosting, .nl domein en zakelijke e-mail (+€9,50/mnd)'
+        ? `Inclusief All-in Hosting, .nl domein (${cleanDomain ? cleanDomain + '.nl' : 'nog te bepalen'}) en zakelijke e-mail (+€9,50/mnd)`
         : 'Klant regelt zelf hosting (€0/mnd)';
 
     onOpenRequestModal({
       templateName: activeTypeObj.nameNl,
       budget: `Indicatie: €${totalPrice} eenmalig${hostingPlan === 'managed' ? ' + €9,50/mnd all-in hosting' : ''}`,
-      notes: `Aanvraag via 60-seconden calculator: Type: ${activeTypeObj.nameNl}, Extra opties: ${addonNames || 'Geen'}, Hosting: ${hostingText}, Verwachte levertijd: ~${estimatedDays} dagen.`,
+      notes: `Aanvraag via 60-seconden calculator: Type: ${activeTypeObj.nameNl}, Extra opties: ${addonNames || 'Geen'}, Gewenste domeinnaam: ${cleanDomain ? cleanDomain + '.nl' : 'Nog niet ingevuld'}, Hosting: ${hostingText}, Verwachte levertijd: ~${estimatedDays} dagen.`,
     });
   };
 
@@ -213,12 +266,12 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
               </div>
             </div>
 
-            {/* Step 3: Webhosting & Domeinnaam Keuze */}
+            {/* Step 3: Webhosting & Domeinnaam Keuze + Live .NL Domeinchecker */}
             <div>
               <label className="text-xs font-black uppercase text-stone-700 tracking-wider block mb-3">
-                3. {lang === 'nl' ? 'Webhosting & Domeinnaam:' : 'Hosting & Domain Registration:'}
+                3. {lang === 'nl' ? 'Webhosting & .NL Domeinnaam:' : 'Hosting & .NL Domain Registration:'}
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-3">
                 <button
                   type="button"
                   onClick={() => setHostingPlan('managed')}
@@ -263,6 +316,63 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                   </p>
                 </button>
               </div>
+
+              {/* Live .NL Domein-beschikbaarheidschecker */}
+              {hostingPlan === 'managed' ? (
+                <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200 text-stone-800 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="domain-input" className="text-xs font-black text-emerald-950 flex items-center gap-1.5">
+                      <Globe className="w-4 h-4 text-emerald-700" />
+                      <span>{lang === 'nl' ? 'Live .NL Domeinchecker:' : 'Live .NL Domain Checker:'}</span>
+                    </label>
+                    <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-md border border-emerald-300">
+                      Inbegrepen in hosting
+                    </span>
+                  </div>
+
+                  <div className="relative flex items-center">
+                    <input
+                      id="domain-input"
+                      type="text"
+                      value={domainInput}
+                      onChange={(e) => setDomainInput(e.target.value)}
+                      placeholder={lang === 'nl' ? 'jouw-bedrijfsnaam' : 'your-company-name'}
+                      className="w-full pl-3.5 pr-14 py-2.5 rounded-xl border border-emerald-300 bg-white text-xs text-stone-900 placeholder:text-stone-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 font-semibold"
+                    />
+                    <span className="absolute right-3 text-xs font-black text-stone-400 pointer-events-none">
+                      .nl
+                    </span>
+                  </div>
+
+                  {domainValidation.status === 'valid' && (
+                    <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-bold bg-emerald-100/70 p-2 rounded-xl border border-emerald-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                      <span>{domainValidation.message}</span>
+                    </div>
+                  )}
+
+                  {domainValidation.status === 'invalid' && (
+                    <div className="flex items-center gap-1.5 text-xs text-amber-900 font-bold bg-amber-50 p-2 rounded-xl border border-amber-300">
+                      <AlertCircle className="w-4 h-4 text-amber-700 shrink-0" />
+                      <span>{domainValidation.message}</span>
+                    </div>
+                  )}
+
+                  {domainValidation.status === 'empty' && (
+                    <p className="text-[11px] text-stone-500 font-medium">
+                      {lang === 'nl'
+                        ? 'Typ je gewenste domeinnaam (bijv. "bouwbedrijf-jansen") om direct de geldigheid te controleren.'
+                        : 'Type your preferred domain name (e.g. "my-brand") to check formatting.'}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="p-3 rounded-2xl bg-stone-100 border border-stone-200 text-[11px] text-stone-600 font-medium">
+                  {lang === 'nl'
+                    ? '💡 Wil je dat wij een .nl domeinnaam en supersnelle hosting voor je verzorgen? Schakel hierboven om naar All-in Hosting.'
+                    : '💡 Need us to manage your domain & NVMe hosting? Switch to All-in Hosting above.'}
+                </div>
+              )}
             </div>
           </div>
 
@@ -311,6 +421,12 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                     {hostingPlan === 'managed' ? '€9,50 /mnd' : 'Zelf regelen (€0)'}
                   </strong>
                 </div>
+                {hostingPlan === 'managed' && cleanDomain && (
+                  <div className="flex justify-between text-emerald-800 font-semibold">
+                    <span>Domeinnaam:</span>
+                    <span>{cleanDomain}.nl</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-emerald-700 font-bold pt-1 border-t border-stone-200/60">
                   <span>Garantie & Eigendom:</span>
                   <span>100% Jouw Eigendom</span>
@@ -327,7 +443,16 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-stone-500 pt-2">
+              <button
+                type="button"
+                onClick={() => setIsQuotePdfOpen(true)}
+                className="w-full py-3 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border-2 border-stone-300 font-extrabold text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+              >
+                <Download className="w-4 h-4 text-orange-600" />
+                <span>{lang === 'nl' ? 'Download Offerte als PDF (1-Klik)' : 'Download Quote as PDF'}</span>
+              </button>
+
+              <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-stone-500 pt-1">
                 <span>🛡️ Geen kleine lettertjes</span>
                 <span>•</span>
                 <span>⚡ Binnen 24u reactie</span>
@@ -337,6 +462,14 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
 
         </div>
       </div>
+
+      {/* Quote PDF Preview & Download Modal */}
+      <QuotePdfModal
+        isOpen={isQuotePdfOpen}
+        onClose={() => setIsQuotePdfOpen(false)}
+        lang={lang}
+        quoteData={quotePdfData}
+      />
     </section>
   );
 };

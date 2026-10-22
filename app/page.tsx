@@ -13,6 +13,8 @@ import { InfoModal } from '../src/components/InfoModal';
 import { AboutSection } from '../src/components/AboutSection';
 import { Footer } from '../src/components/Footer';
 import { PriceEstimatorCalculator } from '../src/components/PriceEstimatorCalculator';
+import { HowItWorksSection } from '../src/components/HowItWorksSection';
+import { TemplateComparisonModal } from '../src/components/TemplateComparisonModal';
 import { FaqSection } from '../src/components/FaqSection';
 import { WhatsAppWidget } from '../src/components/WhatsAppWidget';
 
@@ -43,6 +45,7 @@ export default function Home() {
     notes: string;
   } | null>(null);
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
   const [infoModalData, setInfoModalData] = useState<{ isOpen: boolean; title: string; content: string }>({
     isOpen: false,
     title: '',
@@ -53,6 +56,7 @@ export default function Home() {
     activeModalTemplate ||
     activePreviewTemplate ||
     isRequestModalOpen ||
+    isComparisonModalOpen ||
     infoModalData.isOpen
   );
 
@@ -181,6 +185,7 @@ export default function Home() {
         sortBy={sortBy}
         onSortChange={setSortBy}
         totalFilteredCount={filteredTemplates.length}
+        onOpenComparator={() => setIsComparisonModalOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -308,6 +313,16 @@ export default function Home() {
           </div>
         </div>
 
+        {/* 4-Step "Hoe Wij Werken" Section */}
+        <HowItWorksSection
+          lang={lang}
+          onOpenRequestModal={() => handleOpenRequestModal()}
+          onScrollToTemplates={() => {
+            const el = document.getElementById('templates-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+
         {/* 60-Second Price Estimator Calculator */}
         <PriceEstimatorCalculator
           lang={lang}
@@ -368,6 +383,16 @@ export default function Home() {
           setRequestModalFont(undefined);
           setRequestModalCustomData(null);
         }}
+      />
+
+      {/* Template Comparison Modal */}
+      <TemplateComparisonModal
+        isOpen={isComparisonModalOpen}
+        onClose={() => setIsComparisonModalOpen(false)}
+        templates={templates}
+        lang={lang}
+        onSelectTemplate={(tmpl) => handleOpenRequestModal(tmpl)}
+        onOpenLivePreview={(tmpl) => setActivePreviewTemplate(tmpl)}
       />
 
       {/* Informational / Legal Modal */}
