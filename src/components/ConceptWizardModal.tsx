@@ -365,7 +365,7 @@ export const ConceptWizardModal: React.FC<ConceptWizardModalProps> = ({
                     💰 Prijsklasse: {recommendation.main.priceTier}
                   </span>
                   <span className="px-2.5 py-1 rounded-lg bg-white border border-stone-200">
-                    🇳🇱 100% Jouw Eigendom
+                    🛡️ 100% Jouw Eigendom
                   </span>
                 </div>
               </div>

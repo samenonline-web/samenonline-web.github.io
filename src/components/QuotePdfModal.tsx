@@ -107,7 +107,7 @@ export const QuotePdfModal: React.FC<QuotePdfModalProps> = ({
                   <Heart className="w-4 h-4 fill-white" />
                 </div>
                 <span className="font-black text-2xl tracking-tight text-stone-900">
-                  Samen<span className="text-orange-600">Online</span> 🇳🇱
+                  Samen<span className="text-orange-600">Online</span>
                 </span>
               </div>
               <p className="text-xs text-stone-500 font-medium max-w-xs">

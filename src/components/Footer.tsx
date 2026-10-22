@@ -81,7 +81,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <Heart className="w-5 h-5 fill-white" />
               </div>
               <span className="font-extrabold text-xl text-stone-900">
-                Samen<span className="text-orange-600">Online</span> 🇳🇱
+                Samen<span className="text-orange-600">Online</span>
               </span>
             </div>
 
