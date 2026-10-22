@@ -56,13 +56,13 @@ const jsonLd = {
       name: 'Samen Online',
       url: 'https://samenonline-web.github.io',
       description:
-        "Dé partner voor professionele websites, webshops en online vindbaarheid voor Nederlandse MKB'ers en zzp'ers.",
+        "Gevestigd in Utrecht, actief in heel Nederland. Dé partner voor professionele Next.js websites, webshops en online vindbaarheid voor MKB'ers en zzp'ers.",
       priceRange: '€€',
       address: {
         '@type': 'PostalAddress',
         addressCountry: 'NL',
-        addressRegion: 'Nederland',
-        addressLocality: 'Nederland',
+        addressRegion: 'Utrecht',
+        addressLocality: 'Utrecht',
       },
       areaServed: [
         {
@@ -92,8 +92,8 @@ const jsonLd = {
       ],
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: 52.3676,
-        longitude: 4.9041,
+        latitude: 52.0907,
+        longitude: 5.1214,
       },
       openingHoursSpecification: [
         {

@@ -93,7 +93,11 @@ export const Footer: React.FC<FooterProps> = ({
 
             <div className="flex items-center gap-2 text-xs font-bold text-orange-700">
               <MapPin className="w-3.5 h-3.5" />
-              <span>Gemaakt met ❤️ in Nederland</span>
+              <span>
+                {lang === 'nl'
+                  ? 'Gevestigd in Utrecht • Actief in heel Nederland'
+                  : 'Based in Utrecht • Serving all of the Netherlands'}
+              </span>
             </div>
 
             <p className="text-[11px] text-stone-500 font-medium">

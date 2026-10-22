@@ -19,7 +19,6 @@ import { BeforeAfterRedesignSection } from '../src/components/BeforeAfterRedesig
 import { WebsiteSpeedAuditSection } from '../src/components/WebsiteSpeedAuditSection';
 import { CmsComparisonSection } from '../src/components/CmsComparisonSection';
 import { GuaranteesSection } from '../src/components/GuaranteesSection';
-import { RegionalSelectorSection } from '../src/components/RegionalSelectorSection';
 import { RoiEstimatorCalculator } from '../src/components/RoiEstimatorCalculator';
 import { ClientChecklistSection } from '../src/components/ClientChecklistSection';
 import { ProjectStatusTrackerModal } from '../src/components/ProjectStatusTrackerModal';
@@ -29,7 +28,7 @@ import { FaqSection } from '../src/components/FaqSection';
 import { WhatsAppWidget } from '../src/components/WhatsAppWidget';
 
 import { INITIAL_TEMPLATES } from '../src/data/templates';
-import { WebTemplate, CategoryType, Language, ProvinceType } from '../src/types/company';
+import { WebTemplate, CategoryType, Language } from '../src/types/company';
 import { Heart, Search } from 'lucide-react';
 
 export default function Home() {
@@ -521,18 +520,6 @@ export default function Home() {
           onOpenRequestModal={(customData) => {
             handleOpenRequestModal(undefined, undefined, undefined, customData);
           }}
-        />
-
-        {/* Lokale SEO & Regiokiezer */}
-        <RegionalSelectorSection
-          lang={lang}
-          onOpenRequestModal={(notes) =>
-            handleOpenRequestModal(undefined, undefined, undefined, {
-              templateName: 'Lokale Bedrijfswebsite',
-              budget: 'Vanaf €75 - €195',
-              notes,
-            })
-          }
         />
 
         {/* About Samen Online Section */}
