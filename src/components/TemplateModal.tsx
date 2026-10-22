@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, MapPin, Heart, Sparkles, Check, Clock, ArrowRight } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 
@@ -21,6 +21,15 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
   isBookmarked,
   onToggleBookmark,
 }) => {
+  useEffect(() => {
+    if (!template) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [template, onClose]);
+
   if (!template) return null;
 
   const description = lang === 'nl' ? template.descriptionNl : template.description;
@@ -29,11 +38,14 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
   const features = lang === 'nl' ? template.featuresNl : template.features;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
+    <div 
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200 cursor-pointer"
+    >
       
       {/* Modal Card */}
       <div 
-        className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden border-2 border-orange-100 flex flex-col max-h-[90vh]"
+        className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden border-2 border-orange-100 flex flex-col max-h-[90vh] cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         
