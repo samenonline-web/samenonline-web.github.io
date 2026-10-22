@@ -42,6 +42,22 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://samenonline-web.github.io',
   },
+  applicationName: 'Samen Online',
+  appleWebApp: {
+    title: 'Samen Online',
+    statusBarStyle: 'default',
+  },
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '48x48' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   verification: {
     google: 'google049744f3c8e1307b',
   },
@@ -166,6 +182,7 @@ const jsonLd = {
       '@id': 'https://samenonline-web.github.io/#website',
       url: 'https://samenonline-web.github.io',
       name: 'Samen Online',
+      alternateName: ['SamenOnline', 'Samen Online Webdesign', 'samenonline-web.github.io'],
       publisher: {
         '@id': 'https://samenonline-web.github.io/#localbusiness',
       },
@@ -236,6 +253,12 @@ export default function RootLayout({
   return (
     <html lang="nl" className="h-full antialiased scroll-smooth">
       <head>
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/icon-48x48.png" sizes="48x48" type="image/png" />
+        <link rel="icon" href="/icon-192x192.png" sizes="192x192" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        <meta name="apple-mobile-web-app-title" content="Samen Online" />
+        <meta name="application-name" content="Samen Online" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
