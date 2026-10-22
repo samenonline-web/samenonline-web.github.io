@@ -29,7 +29,7 @@ body {
 
 /* ==========================================================================
    Template Live Dark Mode Scoping
-   Transforms all templates into a high-contrast, modern dark aesthetic.
+   Ultra-clean, modern obsidian palette. No muddy gradients or clashing text.
    ========================================================================== */
 .template-dark-mode {
   color-scheme: dark !important;
@@ -37,22 +37,23 @@ body {
   color: #f5f5f4 !important;
 }
 
-/* 1. Base Canvas & Section Surfaces */
+/* 1. Base Canvas - Deep, Solid, Clean Obsidian (No muddy gradients) */
 .template-dark-mode,
 .template-dark-mode > div,
 .template-dark-mode section,
 .template-dark-mode main {
   background-color: #0c0a09 !important;
+  background-image: none !important;
   color: #f5f5f4 !important;
 }
 
-/* Replace bright pastel section gradients with deep charcoal gradients */
+/* Strip all background gradients in dark mode to keep surfaces sleek and cohesive */
 .template-dark-mode [class*="bg-gradient-to-"] {
-  background-image: linear-gradient(to bottom, #1c1917, #0c0a09) !important;
+  background-image: none !important;
   background-color: #0c0a09 !important;
 }
 
-/* 2. Text Color Overrides: Crisp, High-Contrast Light Typography */
+/* 2. Text Color: Pure White Headings & Clear Secondary Text */
 .template-dark-mode h1,
 .template-dark-mode h2,
 .template-dark-mode h3,
@@ -91,19 +92,60 @@ body {
   color: #a8a29e !important;
 }
 
-/* Ensure white text utility remains pure white */
 .template-dark-mode .text-white,
 .template-dark-mode [class*="text-white"] {
   color: #ffffff !important;
 }
 
-/* 3. Headers & Sticky Navigation Bars */
+/* 3. Luminous Badge & Highlight Text in Dark Mode (No more dark-on-dark!) */
+.template-dark-mode .text-orange-900,
+.template-dark-mode .text-orange-800,
+.template-dark-mode [class*="text-orange-900"],
+.template-dark-mode [class*="text-orange-800"] {
+  color: #fdba74 !important;
+}
+
+.template-dark-mode .text-amber-950,
+.template-dark-mode .text-amber-900,
+.template-dark-mode .text-amber-800,
+.template-dark-mode [class*="text-amber-950"],
+.template-dark-mode [class*="text-amber-900"],
+.template-dark-mode [class*="text-amber-800"] {
+  color: #fde047 !important;
+}
+
+.template-dark-mode .text-emerald-900,
+.template-dark-mode .text-emerald-800,
+.template-dark-mode .text-emerald-700,
+.template-dark-mode [class*="text-emerald-900"],
+.template-dark-mode [class*="text-emerald-800"],
+.template-dark-mode [class*="text-emerald-700"] {
+  color: #6ee7b7 !important;
+}
+
+.template-dark-mode .text-rose-900,
+.template-dark-mode .text-rose-800,
+.template-dark-mode .text-rose-700,
+.template-dark-mode [class*="text-rose-900"],
+.template-dark-mode [class*="text-rose-800"],
+.template-dark-mode [class*="text-rose-700"] {
+  color: #fda4af !important;
+}
+
+.template-dark-mode .text-sky-900,
+.template-dark-mode .text-sky-800,
+.template-dark-mode [class*="text-sky-900"],
+.template-dark-mode [class*="text-sky-800"] {
+  color: #7dd3fc !important;
+}
+
+/* 4. Headers: Sleek Obsidian Header */
 .template-dark-mode header,
 .template-dark-mode header.bg-white,
 .template-dark-mode header[class*="bg-white"] {
-  background-color: rgba(28, 25, 23, 0.96) !important;
-  border-color: #292524 !important;
-  color: #fafaf9 !important;
+  background-color: rgba(18, 16, 14, 0.96) !important;
+  border-color: #262320 !important;
+  color: #ffffff !important;
   backdrop-filter: blur(12px) !important;
 }
 
@@ -117,15 +159,15 @@ body {
   color: #ffffff !important;
 }
 
-/* 4. Cards, Drawers & Elevated Modules */
+/* 5. Cards & Elevated Containers */
 .template-dark-mode .bg-white,
 .template-dark-mode [class*="bg-white/"] {
-  background-color: #1c1917 !important;
-  border-color: #292524 !important;
+  background-color: #171513 !important;
+  border-color: #262320 !important;
   color: #f5f5f4 !important;
 }
 
-/* Nested Panels, Item Cards & Metric Blocks */
+/* Nested Panels, Item Cards & Inputs */
 .template-dark-mode .bg-stone-50,
 .template-dark-mode .bg-stone-100,
 .template-dark-mode .bg-stone-200,
@@ -134,8 +176,8 @@ body {
 .template-dark-mode [class*="bg-stone-200"],
 .template-dark-mode [class*="bg-amber-50"],
 .template-dark-mode [class*="bg-emerald-50"] {
-  background-color: #292524 !important;
-  border-color: #44403c !important;
+  background-color: #211e1b !important;
+  border-color: #2e2a26 !important;
   color: #f5f5f4 !important;
 }
 
@@ -144,24 +186,24 @@ body {
 .template-dark-mode .hover\:bg-stone-100:hover,
 .template-dark-mode .hover\:bg-stone-200:hover,
 .template-dark-mode .hover\:bg-white:hover {
-  background-color: #44403c !important;
+  background-color: #2e2a26 !important;
   color: #ffffff !important;
 }
 
-/* 5. Borders & Dividers */
+/* 6. Hairline Borders */
 .template-dark-mode [class*="border-stone-"],
 .template-dark-mode [class*="border-orange-100"],
 .template-dark-mode [class*="border-amber-200"],
 .template-dark-mode [class*="border-emerald-200"] {
-  border-color: #292524 !important;
+  border-color: #262320 !important;
 }
 
-/* 6. Form Controls, Inputs & Selects */
+/* 7. Form Controls, Inputs & Selects */
 .template-dark-mode input,
 .template-dark-mode select,
 .template-dark-mode textarea {
-  background-color: #1c1917 !important;
-  border-color: #44403c !important;
+  background-color: #171513 !important;
+  border-color: #383430 !important;
   color: #fafaf9 !important;
 }
 
@@ -171,16 +213,16 @@ body {
 }
 
 .template-dark-mode input[type="range"] {
-  background-color: #44403c !important;
+  background-color: #383430 !important;
 }
 
-/* 7. Secondary / Outlined Buttons */
+/* 8. Secondary Buttons */
 .template-dark-mode button.border,
 .template-dark-mode a.border,
 .template-dark-mode button[class*="border-stone-300"],
 .template-dark-mode a[class*="border-stone-300"] {
-  background-color: #292524 !important;
-  border-color: #44403c !important;
+  background-color: #211e1b !important;
+  border-color: #383430 !important;
   color: #fafaf9 !important;
 }
 
@@ -188,68 +230,44 @@ body {
 .template-dark-mode a.border:hover,
 .template-dark-mode button[class*="border-stone-300"]:hover,
 .template-dark-mode a[class*="border-stone-300"]:hover {
-  background-color: #44403c !important;
-  border-color: #57534e !important;
+  background-color: #2e2a26 !important;
+  border-color: #4a4540 !important;
   color: #ffffff !important;
 }
 
-/* 8. Accent Badges & Trust Pills in Dark Mode */
+/* 9. Soft Glowing Pill Badges */
 .template-dark-mode .bg-emerald-50,
 .template-dark-mode .bg-emerald-100,
 .template-dark-mode [class*="bg-emerald-50"],
 .template-dark-mode [class*="bg-emerald-100"] {
-  background-color: rgba(16, 185, 129, 0.16) !important;
-  border-color: rgba(16, 185, 129, 0.3) !important;
-}
-
-.template-dark-mode .text-emerald-700,
-.template-dark-mode .text-emerald-800,
-.template-dark-mode [class*="text-emerald-700"],
-.template-dark-mode [class*="text-emerald-800"] {
-  color: #34d399 !important;
+  background-color: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(16, 185, 129, 0.28) !important;
 }
 
 .template-dark-mode .bg-amber-50,
 .template-dark-mode .bg-amber-100,
 .template-dark-mode [class*="bg-amber-50"],
 .template-dark-mode [class*="bg-amber-100"] {
-  background-color: rgba(245, 158, 11, 0.16) !important;
-  border-color: rgba(245, 158, 11, 0.3) !important;
-}
-
-.template-dark-mode .text-amber-800,
-.template-dark-mode .text-amber-900,
-.template-dark-mode [class*="text-amber-800"],
-.template-dark-mode [class*="text-amber-900"] {
-  color: #fbbf24 !important;
+  background-color: rgba(245, 158, 11, 0.14) !important;
+  border-color: rgba(245, 158, 11, 0.28) !important;
 }
 
 .template-dark-mode .bg-rose-50,
 .template-dark-mode .bg-rose-100,
 .template-dark-mode [class*="bg-rose-50"] {
-  background-color: rgba(244, 63, 94, 0.16) !important;
-  border-color: rgba(244, 63, 94, 0.3) !important;
-}
-
-.template-dark-mode .text-rose-700,
-.template-dark-mode .text-rose-800,
-.template-dark-mode [class*="text-rose-700"],
-.template-dark-mode [class*="text-rose-800"] {
-  color: #fb7185 !important;
+  background-color: rgba(244, 63, 94, 0.14) !important;
+  border-color: rgba(244, 63, 94, 0.28) !important;
 }
 
 .template-dark-mode .bg-orange-50,
-.template-dark-mode [class*="bg-orange-50"] {
-  background-color: rgba(249, 115, 22, 0.16) !important;
-  border-color: rgba(249, 115, 22, 0.3) !important;
+.template-dark-mode .bg-orange-100,
+.template-dark-mode [class*="bg-orange-50"],
+.template-dark-mode [class*="bg-orange-100"] {
+  background-color: rgba(249, 115, 22, 0.14) !important;
+  border-color: rgba(249, 115, 22, 0.28) !important;
 }
 
-.template-dark-mode .text-orange-700,
-.template-dark-mode [class*="text-orange-700"] {
-  color: #fb923c !important;
-}
-
-/* 9. Preserve Primary Gradient / Solid Buttons */
+/* 10. Preserve Solid Primary Action Buttons */
 .template-dark-mode button[class*="bg-orange-600"],
 .template-dark-mode a[class*="bg-orange-600"],
 .template-dark-mode button[class*="bg-blue-600"],
@@ -263,7 +281,7 @@ body {
   color: #ffffff !important;
 }
 
-/* 10. SVGs & Icon Tints */
+/* 11. SVGs & Icons */
 .template-dark-mode svg.text-stone-700,
 .template-dark-mode svg.text-stone-600,
 .template-dark-mode svg.text-stone-500,

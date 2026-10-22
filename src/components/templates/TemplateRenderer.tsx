@@ -28,8 +28,18 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
   onToggleDarkMode,
   onRequestQuote,
 }) => {
+  const effectiveTheme: ColorTheme = isDarkMode
+    ? {
+        ...theme,
+        bgLight: 'bg-stone-900/90 border border-stone-800 text-stone-100',
+        borderLight: 'border-stone-800',
+        badgeBg: 'bg-stone-800/80 border border-stone-700',
+        badgeText: 'text-stone-200',
+      }
+    : theme;
+
   const templateProps: TemplateProps = {
-    theme,
+    theme: effectiveTheme,
     isDarkMode,
     onToggleDarkMode,
     onRequestQuote,
