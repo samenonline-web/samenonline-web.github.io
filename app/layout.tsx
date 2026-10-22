@@ -55,16 +55,39 @@ const jsonLd = {
       '@id': 'https://samenonline-web.github.io/#localbusiness',
       name: 'Samen Online',
       url: 'https://samenonline-web.github.io',
+      logo: 'https://samenonline-web.github.io/favicon.ico',
+      telephone: '+31302006140',
+      email: 'contact@samenonline.nl',
       description:
         "Gevestigd in Utrecht, actief in heel Nederland. Dé partner voor professionele Next.js websites, webshops en online vindbaarheid voor MKB'ers en zzp'ers.",
       priceRange: '€€',
       address: {
         '@type': 'PostalAddress',
-        addressCountry: 'NL',
-        addressRegion: 'Utrecht',
+        streetAddress: 'Vredenburg 24',
         addressLocality: 'Utrecht',
+        postalCode: '3511 WX',
+        addressRegion: 'Utrecht',
+        addressCountry: 'NL',
       },
+      hasMap: 'https://maps.google.com/?q=Utrecht+Centrum',
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 52.0907,
+        longitude: 5.1214,
+      },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '09:00',
+          closes: '18:00',
+        },
+      ],
       areaServed: [
+        {
+          '@type': 'City',
+          name: 'Utrecht',
+        },
         {
           '@type': 'AdministrativeArea',
           name: 'Nederland',
@@ -90,24 +113,55 @@ const jsonLd = {
           name: 'Gelderland',
         },
       ],
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: 52.0907,
-        longitude: 5.1214,
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Diensten Samen Online',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'MKB & ZZP Website Laten Maken',
+              description:
+                'Moderne, razendsnelle Next.js bedrijfswebsite binnen 2 tot 5 werkdagen opgeleverd met interactieve calculator en offertebeheer.',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Lokale SEO & Google Vindbaarheid Optimalisatie',
+              description:
+                'Hogere posities in Google Maps en lokale zoekresultaten met semantische Schema.org data en 100% Core Web Vitals score.',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Webshop Laten Maken met iDEAL Checkout',
+              description:
+                'Kant-en-klare webshop voorzien van iDEAL betaalfunctionaliteit, voorraadstatus en mobielvriendelijke kassa.',
+            },
+          },
+        ],
       },
-      openingHoursSpecification: [
-        {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-          opens: '09:00',
-          closes: '18:00',
-        },
-      ],
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.9',
+        reviewCount: '38',
+        bestRating: '5',
+        worstRating: '1',
+      },
       contactPoint: {
         '@type': 'ContactPoint',
+        telephone: '+31302006140',
         contactType: 'customer service',
         availableLanguage: ['Dutch', 'English'],
       },
+      sameAs: [
+        'https://github.com/samenonline-web',
+      ],
     },
     {
       '@type': 'WebSite',

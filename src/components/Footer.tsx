@@ -100,6 +100,16 @@ export const Footer: React.FC<FooterProps> = ({
               </span>
             </div>
 
+            <p className="text-xs text-stone-600 font-semibold">
+              <a href="tel:+31302006140" className="hover:text-orange-700 transition-colors">
+                +31 30 200 6140
+              </a>
+              <span className="mx-2">•</span>
+              <a href="mailto:contact@samenonline.nl" className="hover:text-orange-700 transition-colors">
+                contact@samenonline.nl
+              </a>
+            </p>
+
             <p className="text-[11px] text-stone-500 font-medium">
               {lang === 'nl'
                 ? 'Onafhankelijk freelance initiatief • Facturatie conform ROW (vrijgesteld van btw)'

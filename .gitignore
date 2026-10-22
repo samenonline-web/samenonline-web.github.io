@@ -42,4 +42,5 @@ next-env.d.ts
 
 # agent session data & memory
 .godkiller-session/
+.godkiller/
 .agentMemory/
