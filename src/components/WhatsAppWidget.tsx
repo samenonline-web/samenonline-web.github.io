@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle, X, Send, CheckCircle2, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
 import { Language } from '../types/company';
 
@@ -15,6 +15,31 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Check business hours: 09:00 - 19:00 Dutch local time
+  const [isOnline, setIsOnline] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkBusinessHours = () => {
+      try {
+        const now = new Date();
+        const hourStr = now.toLocaleTimeString('nl-NL', {
+          timeZone: 'Europe/Amsterdam',
+          hour: '2-digit',
+          hour12: false,
+        });
+        const hour = parseInt(hourStr, 10);
+        setIsOnline(hour >= 9 && hour < 19);
+      } catch {
+        const h = new Date().getHours();
+        setIsOnline(h >= 9 && h < 19);
+      }
+    };
+
+    checkBusinessHours();
+    const interval = setInterval(checkBusinessHours, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   const quickTemplates = [
     {
@@ -98,13 +123,21 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
                 <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center font-black text-sm">
                   SO
                 </div>
-                <span className="w-3 h-3 rounded-full bg-emerald-400 border-2 border-white absolute bottom-0 right-0"></span>
+                <span
+                  className={`w-3 h-3 rounded-full border-2 border-white absolute bottom-0 right-0 ${
+                    isOnline ? 'bg-emerald-400' : 'bg-amber-400'
+                  }`}
+                ></span>
               </div>
               <div>
                 <p className="font-black text-sm leading-tight">Samen Online Direct</p>
                 <div className="flex items-center gap-1 text-[11px] text-orange-100 font-medium">
                   <ShieldCheck className="w-3 h-3" />
-                  <span>Veilig & Binnen 24u reactie</span>
+                  <span>
+                    {isOnline
+                      ? (lang === 'nl' ? 'Nu online (09:00 - 19:00) • Direct antwoord' : 'Online now (09:00 - 19:00) • Fast reply')
+                      : (lang === 'nl' ? 'Bereikbaar: 09:00 - 19:00 • Reactie per mail' : 'Hours: 09:00 - 19:00 • Reply via email')}
+                  </span>
                 </div>
               </div>
             </div>
@@ -133,9 +166,13 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
             ) : (
               <>
                 <div className="bg-white p-3 rounded-2xl rounded-tl-none border border-stone-200 text-xs text-stone-700 leading-relaxed shadow-2xs">
-                  👋 {lang === 'nl'
-                    ? 'Hoi! Heb je een vraag over een website, concept of prijs? Stel hem hier direct en je ontvangt snel antwoord per mail.'
-                    : 'Hi! Have a question about a template or project? Drop your question here for a fast reply.'}
+                  {isOnline
+                    ? (lang === 'nl'
+                        ? '👋 Hoi! We zijn nu online. Heb je een vraag over een website, concept of prijs? Stel hem hier direct en je ontvangt snel antwoord.'
+                        : '👋 Hi! We are online right now. Ask any question about a template or quote for a quick response.')
+                    : (lang === 'nl'
+                        ? '👋 Hoi! We zijn momenteel buiten onze openingstijden (bereikbaar tussen 09:00 en 19:00). Laat gerust je vraag en e-mail achter, dan beantwoorden we hem direct tijdens onze openingstijden!'
+                        : '👋 Hi! We are currently outside operating hours (active between 09:00 and 19:00). Feel free to leave your question and email, and we will reply promptly!')}
                 </div>
 
                 {/* Quick topic buttons */}
@@ -210,15 +247,29 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="group flex items-center gap-2.5 px-4 py-3 rounded-full bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-xs shadow-xl shadow-orange-700/30 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-        title="Stel een vraag"
-        aria-label="Stel een vraag"
+        title={
+          isOnline
+            ? (lang === 'nl' ? 'Stel een vraag (Nu online: 09:00 - 19:00)' : 'Ask a question (Online now: 09:00 - 19:00)')
+            : (lang === 'nl' ? 'Laat een vraag achter (Bereikbaar: 09:00 - 19:00)' : 'Leave a question (Available: 09:00 - 19:00)')
+        }
+        aria-label={lang === 'nl' ? 'Stel een vraag' : 'Ask a question'}
       >
-        <span className="relative flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-300 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-        </span>
+        {isOnline ? (
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-300 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400"></span>
+          </span>
+        ) : (
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="inline-flex rounded-full h-2.5 w-2.5 bg-stone-300"></span>
+          </span>
+        )}
         <MessageCircle className="w-5 h-5 fill-white text-orange-700" />
-        <span>{lang === 'nl' ? 'Stel een Vraag' : 'Ask a Question'}</span>
+        <span>
+          {isOnline
+            ? (lang === 'nl' ? 'Stel een Vraag' : 'Ask a Question')
+            : (lang === 'nl' ? 'Vraag Achterlaten' : 'Leave a Question')}
+        </span>
       </button>
     </div>
   );

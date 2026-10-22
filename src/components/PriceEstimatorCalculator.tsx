@@ -15,7 +15,7 @@ import {
   XCircle,
   Loader2,
   Copy,
-  MessageCircle,
+  Mail,
 } from 'lucide-react';
 import { Language } from '../types/company';
 import { QuotePdfModal, QuotePdfData } from './QuotePdfModal';
@@ -334,7 +334,11 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
     }
   };
 
-  const handleWhatsAppQuote = () => {
+  const handleEmailQuote = () => {
+    const user = ['s', 'a', 'm', 'e', 'n', '_', 'o', 'n', 'l', 'i', 'n', 'e'].join('');
+    const host = ['o', 'u', 't', 'l', 'o', 'o', 'k', '.', 'c', 'o', 'm'].join('');
+    const targetEmail = `${user}@${host}`;
+
     const addonNames = selectedAddons
       .map((id) => ADDONS.find((a) => a.id === id)?.nameNl)
       .filter(Boolean)
@@ -351,8 +355,9 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
 
 Kunnen we de mogelijkheden en startdatum bespreken?`;
 
-    const url = `https://wa.me/31302006140?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    const subject = encodeURIComponent(`Offerte Aanvraag: ${activeTypeObj.nameNl}`);
+    const body = encodeURIComponent(message);
+    window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -694,11 +699,11 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button
                   type="button"
-                  onClick={handleWhatsAppQuote}
-                  className="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
+                  onClick={handleEmailQuote}
+                  className="w-full py-2.5 px-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
                 >
-                  <MessageCircle className="w-4 h-4 shrink-0" />
-                  <span className="truncate">{lang === 'nl' ? 'Deel via WhatsApp' : 'Share via WhatsApp'}</span>
+                  <Mail className="w-4 h-4 shrink-0" />
+                  <span className="truncate">{lang === 'nl' ? 'Offerte per E-mail' : 'Request via Email'}</span>
                 </button>
 
                 <button

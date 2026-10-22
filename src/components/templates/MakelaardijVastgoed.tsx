@@ -122,9 +122,9 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
     setViewingConfirmed(true);
   };
 
-  const handleWhatsAppProperty = (property: PropertyItem) => {
-    const msg = `Hallo ${brandName}, ik heb een vraag over '${property.title}' (${property.address}) met vraagprijs €${property.price.toLocaleString('nl-NL')}.`;
-    window.open(`https://wa.me/31302006140?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+  const handleInquireProperty = (property: PropertyItem) => {
+    setSelectedViewingProperty(property);
+    setViewingConfirmed(false);
   };
 
   const handleValuationSubmit = (e: React.FormEvent) => {
@@ -430,11 +430,11 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
                   </button>
 
                   <button
-                    onClick={() => handleWhatsAppProperty(p)}
+                    onClick={() => handleInquireProperty(p)}
                     className="w-full py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 font-bold text-[11px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
-                    <MessageCircle className="w-3 h-3 text-emerald-600" />
-                    <span>Vraag via WhatsApp</span>
+                    <Home className="w-3 h-3 text-orange-600" />
+                    <span>Informatie Aanvragen</span>
                   </button>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Heart, MapPin } from 'lucide-react';
+import React, { useState } from 'react';
+import { Heart, MapPin, ShieldCheck, Mail, Check, Copy } from 'lucide-react';
 import { CategoryType, Language } from '../types/company';
 
 interface FooterProps {
@@ -17,6 +17,30 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenRequestModal,
   onOpenInfoModal,
 }) => {
+  const [isEmailRevealed, setIsEmailRevealed] = useState(false);
+  const [isEmailCopied, setIsEmailCopied] = useState(false);
+
+  // Deobfuscate email strictly on user interaction so scraping crawlers cannot extract it from static HTML
+  const getProtectedEmail = () => {
+    const user = ['s', 'a', 'm', 'e', 'n', '_', 'o', 'n', 'l', 'i', 'n', 'e'].join('');
+    const host = ['o', 'u', 't', 'l', 'o', 'o', 'k', '.', 'c', 'o', 'm'].join('');
+    return `${user}@${host}`;
+  };
+
+  const handleOpenMail = () => {
+    const email = getProtectedEmail();
+    window.location.href = `mailto:${email}`;
+  };
+
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const email = getProtectedEmail();
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(email);
+      setIsEmailCopied(true);
+      setTimeout(() => setIsEmailCopied(false), 2000);
+    }
+  };
   const handleCategoryClick = (cat: CategoryType) => {
     onSelectCategory(cat);
     const element = document.getElementById('templates-section');
@@ -100,15 +124,46 @@ export const Footer: React.FC<FooterProps> = ({
               </span>
             </div>
 
-            <p className="text-xs text-stone-600 font-semibold">
-              <a href="tel:+31302006140" className="hover:text-orange-700 transition-colors">
-                +31 30 200 6140
-              </a>
-              <span className="mx-2">•</span>
-              <a href="mailto:contact@samenonline.nl" className="hover:text-orange-700 transition-colors">
-                contact@samenonline.nl
-              </a>
-            </p>
+            {/* Bot-Shielded Email Component (No plaintext email in static HTML) */}
+            <div className="pt-1">
+              {!isEmailRevealed ? (
+                <button
+                  type="button"
+                  onClick={() => setIsEmailRevealed(true)}
+                  className="inline-flex items-center gap-2 text-xs font-bold text-stone-700 hover:text-orange-800 bg-orange-50/80 hover:bg-orange-100/90 px-3 py-1.5 rounded-xl border border-orange-200 transition-all cursor-pointer shadow-2xs"
+                  title={lang === 'nl' ? 'Klik om direct e-mailadres te tonen (beveiligd tegen bots)' : 'Click to reveal email (protected from bots)'}
+                >
+                  <ShieldCheck className="w-4 h-4 text-orange-700" />
+                  <span>{lang === 'nl' ? 'Toon E-mailadres (Bot-beveiligd)' : 'Show Email (Anti-bot)'}</span>
+                </button>
+              ) : (
+                <div className="inline-flex items-center gap-2 p-1.5 rounded-xl bg-stone-100 border border-stone-200 text-xs">
+                  <Mail className="w-4 h-4 text-orange-700 shrink-0 ml-1" />
+                  <span className="font-mono font-bold text-stone-900 select-all">
+                    {getProtectedEmail()}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleOpenMail}
+                    className="px-2.5 py-1 rounded-lg bg-orange-700 hover:bg-orange-800 text-white font-bold text-[11px] cursor-pointer transition-colors"
+                  >
+                    {lang === 'nl' ? 'Stuur Mail' : 'Open Mail'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    className="p-1 rounded-lg bg-white hover:bg-stone-200 text-stone-700 border border-stone-300 cursor-pointer transition-colors"
+                    title={lang === 'nl' ? 'Kopieer e-mailadres' : 'Copy email'}
+                  >
+                    {isEmailCopied ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5 text-stone-600" />
+                    )}
+                  </button>
+                </div>
+              )}
+            </div>
 
             <p className="text-[11px] text-stone-500 font-medium">
               {lang === 'nl'

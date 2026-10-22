@@ -56,8 +56,6 @@ const jsonLd = {
       name: 'Samen Online',
       url: 'https://samenonline-web.github.io',
       logo: 'https://samenonline-web.github.io/favicon.ico',
-      telephone: '+31302006140',
-      email: 'contact@samenonline.nl',
       description:
         "Gevestigd in Utrecht, actief in heel Nederland. Dé partner voor professionele Next.js websites, webshops en online vindbaarheid voor MKB'ers en zzp'ers.",
       priceRange: '€€',
@@ -155,9 +153,9 @@ const jsonLd = {
       },
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: '+31302006140',
         contactType: 'customer service',
         availableLanguage: ['Dutch', 'English'],
+        url: 'https://samenonline-web.github.io',
       },
       sameAs: [
         'https://github.com/samenonline-web',

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { TrendingUp, Calculator, ArrowRight, CheckCircle2, DollarSign, Sparkles, Clock, Target, MessageCircle } from 'lucide-react';
+import { TrendingUp, Calculator, ArrowRight, CheckCircle2, DollarSign, Sparkles, Clock, Target, Mail } from 'lucide-react';
 import { Language } from '../types/company';
 
 interface RoiEstimatorCalculatorProps {
@@ -43,7 +43,11 @@ export const RoiEstimatorCalculator: React.FC<RoiEstimatorCalculatorProps> = ({
     });
   };
 
-  const handleWhatsAppRoi = () => {
+  const handleEmailRoi = () => {
+    const user = ['s', 'a', 'm', 'e', 'n', '_', 'o', 'n', 'l', 'i', 'n', 'e'].join('');
+    const host = ['o', 'u', 't', 'l', 'o', 'o', 'k', '.', 'c', 'o', 'm'].join('');
+    const targetEmail = `${user}@${host}`;
+
     const message = `Hallo Samen Online! Ik heb zojuist de ROI-calculator bekeken:
 - Geschat aantal bezoekers/mnd: ${monthlyVisitors.toLocaleString('nl-NL')}
 - Gemiddelde orderwaarde: €${avgDealValue}
@@ -52,8 +56,10 @@ export const RoiEstimatorCalculator: React.FC<RoiEstimatorCalculatorProps> = ({
 - Geschatte terugverdientijd: ~${paybackDays} dagen
 
 Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
-    const url = `https://wa.me/31302006140?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+
+    const subject = encodeURIComponent('Vrijblijvend advies: ROI & Rendement Website');
+    const body = encodeURIComponent(message);
+    window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -211,11 +217,11 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
 
               <button
                 type="button"
-                onClick={handleWhatsAppRoi}
-                className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                onClick={handleEmailRoi}
+                className="w-full py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4" />
-                <span>{lang === 'nl' ? 'Bespreek Direct via WhatsApp' : 'Discuss Directly via WhatsApp'}</span>
+                <Mail className="w-4 h-4 text-orange-400" />
+                <span>{lang === 'nl' ? 'Bespreek Direct per E-mail' : 'Discuss Directly via Email'}</span>
               </button>
 
               <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-stone-400 text-center pt-1">
