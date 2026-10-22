@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Navbar } from '@/src/components/Navbar';
 import { Hero } from '../src/components/Hero';
 import { TemplateCarousel } from '../src/components/TemplateCarousel';
-import { FilterBar, QuickFilterType } from '../src/components/FilterBar';
+import { FilterBar, QuickFilterType, SortByType } from '../src/components/FilterBar';
 import { TemplateCard } from '../src/components/TemplateCard';
 import { TemplateModal } from '../src/components/TemplateModal';
 import { LivePreviewModal } from '../src/components/LivePreviewModal';
@@ -29,7 +29,7 @@ import { FaqSection } from '../src/components/FaqSection';
 import { WhatsAppWidget } from '../src/components/WhatsAppWidget';
 
 import { INITIAL_TEMPLATES } from '../src/data/templates';
-import { WebTemplate, CategoryType, Language } from '../src/types/company';
+import { WebTemplate, CategoryType, Language, ProvinceType } from '../src/types/company';
 import { Heart, Search } from 'lucide-react';
 
 export default function Home() {
@@ -40,8 +40,10 @@ export default function Home() {
   // Search & Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>('All');
+  const [selectedProvince, setSelectedProvince] = useState<ProvinceType>('All');
+  const [selectedPriceTier, setSelectedPriceTier] = useState<string>('All');
   const [quickFilter, setQuickFilter] = useState<QuickFilterType>('all');
-  const [sortBy, setSortBy] = useState<'rating' | 'name' | 'buildDays'>('rating');
+  const [sortBy, setSortBy] = useState<SortByType>('rating');
   const [showOnlyBookmarks, setShowOnlyBookmarks] = useState(false);
 
   // Modals & Bookmarks
@@ -126,6 +128,35 @@ export default function Home() {
     });
   };
 
+  // Category counts memo
+  const categoryCounts = useMemo(() => {
+    const counts: Record<CategoryType, number> = {
+      'All': templates.length,
+      'Webshops & E-commerce': 0,
+      'Tech & SaaS': 0,
+      'Creative & Agencies': 0,
+      'Sustainable & Green': 0,
+      'Food & Hospitality': 0,
+      'Local Services & Healthcare': 0,
+    };
+    templates.forEach((t) => {
+      if (counts[t.category] !== undefined) {
+        counts[t.category]++;
+      }
+    });
+    return counts;
+  }, [templates]);
+
+  // Master reset for all filters
+  const handleResetAllFilters = () => {
+    setSearchQuery('');
+    setSelectedCategory('All');
+    setSelectedProvince('All');
+    setSelectedPriceTier('All');
+    setQuickFilter('all');
+    setShowOnlyBookmarks(false);
+  };
+
   // Filter & Sort Logic
   const filteredTemplates = useMemo(() => {
     return templates
@@ -151,6 +182,16 @@ export default function Home() {
           return false;
         }
 
+        // Province Filter
+        if (selectedProvince !== 'All' && tmpl.province !== selectedProvince) {
+          return false;
+        }
+
+        // Price Tier Filter
+        if (selectedPriceTier !== 'All' && tmpl.priceTier !== selectedPriceTier) {
+          return false;
+        }
+
         // Quick Filter
         if (quickFilter === 'popular' && !tmpl.isFeatured) {
           return false;
@@ -173,10 +214,24 @@ export default function Home() {
             'studioflow-yoga',
             'devries-boekhouding',
             'bistro-degracht',
+            'zonne-pionier-energy',
+            'advocaten-justitia',
+            'dierenkliniek-devennen',
+            'makelaardij-vastgoed',
+            'inkt-en-naald-studio',
           ];
           if (!calculatorTemplates.includes(tmpl.id)) {
             return false;
           }
+        }
+        if (quickFilter === 'starter' && tmpl.priceTier !== 'Starter') {
+          return false;
+        }
+        if (quickFilter === 'pro' && tmpl.priceTier !== 'Professional' && tmpl.priceTier !== 'Custom Enterprise') {
+          return false;
+        }
+        if (quickFilter === 'multilingual' && !tmpl.multilingual) {
+          return false;
         }
 
         // Bookmarks filter
@@ -185,10 +240,19 @@ export default function Home() {
       .sort((a, b) => {
         if (sortBy === 'rating') return b.rating - a.rating;
         if (sortBy === 'name') return a.name.localeCompare(b.name);
+        if (sortBy === 'nameDesc') return b.name.localeCompare(a.name);
         if (sortBy === 'buildDays') return a.estimatedBuildDays - b.estimatedBuildDays;
+        if (sortBy === 'priceAsc') {
+          const getPrice = (tier: string) => (tier === 'Starter' ? 75 : tier === 'Professional' ? 195 : 385);
+          return getPrice(a.priceTier) - getPrice(b.priceTier);
+        }
+        if (sortBy === 'priceDesc') {
+          const getPrice = (tier: string) => (tier === 'Starter' ? 75 : tier === 'Professional' ? 195 : 385);
+          return getPrice(b.priceTier) - getPrice(a.priceTier);
+        }
         return 0;
       });
-  }, [templates, searchQuery, selectedCategory, quickFilter, showOnlyBookmarks, bookmarks, sortBy]);
+  }, [templates, searchQuery, selectedCategory, selectedProvince, selectedPriceTier, quickFilter, showOnlyBookmarks, bookmarks, sortBy]);
 
   return (
     <div
@@ -234,14 +298,23 @@ export default function Home() {
         lang={lang}
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
+        selectedProvince={selectedProvince}
+        onSelectProvince={setSelectedProvince}
+        selectedPriceTier={selectedPriceTier}
+        onSelectPriceTier={setSelectedPriceTier}
         sortBy={sortBy}
         onSortChange={setSortBy}
         totalFilteredCount={filteredTemplates.length}
+        totalAllCount={templates.length}
+        categoryCounts={categoryCounts}
         onOpenComparator={() => setIsComparisonModalOpen(true)}
         onOpenStatusTracker={() => setIsStatusTrackerOpen(true)}
         onOpenWizard={() => setIsWizardModalOpen(true)}
         activeQuickFilter={quickFilter}
         onQuickFilterChange={setQuickFilter}
+        searchQuery={searchQuery}
+        onResetSearchQuery={() => setSearchQuery('')}
+        onResetAllFilters={handleResetAllFilters}
       />
 
       {/* Main Content Area */}
@@ -308,11 +381,7 @@ export default function Home() {
                 : 'No templates match your filters. Try clearing your search query.'}
             </p>
             <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('All');
-                setShowOnlyBookmarks(false);
-              }}
+              onClick={handleResetAllFilters}
               className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md transition-colors cursor-pointer"
             >
               {lang === 'nl' ? 'Herstel Alle Filters' : 'Reset All Filters'}
