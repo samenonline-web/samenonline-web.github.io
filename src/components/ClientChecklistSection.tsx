@@ -42,14 +42,14 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
     <section id="aanlever-checklist" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider">
-          <ClipboardCheck className="w-4 h-4 text-emerald-600" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-300 text-xs font-black uppercase tracking-wider">
+          <ClipboardCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           <span>{lang === 'nl' ? 'Zorgeloze Voorbereiding' : 'Worry-free Preparation'}</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-black text-stone-900 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-white tracking-tight">
           {lang === 'nl' ? 'Wat Moet Jij Zelf Aanleveren? (Bijna Niets!)' : 'What Do You Need to Supply? (Almost Nothing!)'}
         </h2>
-        <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed max-w-xl mx-auto">
+        <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium leading-relaxed max-w-xl mx-auto">
           {lang === 'nl'
             ? 'Geen ingewikkelde technische vraagstukken of stapels werk. Binnen 15 minuten heb je alles verzameld en wij regelen de complete technische bouw en livegang.'
             : 'No technical headaches or heavy workload. You provide the basics, and we take care of all coding, hosting, and launch.'}
@@ -60,24 +60,24 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
         
         {/* Column 1: What Client Supplies */}
-        <div className="bg-white rounded-3xl border-2 border-stone-200/90 p-6 sm:p-8 shadow-sm flex flex-col justify-between">
+        <div className="bg-white dark:bg-slate-900/90 rounded-3xl border-2 border-stone-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-sm flex flex-col justify-between transition-colors">
           <div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-black">
+                <div className="w-10 h-10 rounded-2xl bg-orange-100 dark:bg-orange-950/70 text-orange-600 dark:text-orange-400 flex items-center justify-center font-black">
                   <UserCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-black text-lg text-stone-900">1. Wat Jij Aanlevert</h3>
-                  <span className="text-[11px] text-stone-500 font-medium">Binnen 15 minuten verzameld</span>
+                  <h3 className="font-black text-lg text-stone-900 dark:text-white">1. Wat Jij Aanlevert</h3>
+                  <span className="text-[11px] text-stone-500 dark:text-slate-400 font-medium">Binnen 15 minuten verzameld</span>
                 </div>
               </div>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-800">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-orange-100 dark:bg-orange-950/70 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60">
                 Jouw Inbreng
               </span>
             </div>
 
-            <p className="text-xs text-stone-600 mb-6 leading-relaxed">
+            <p className="text-xs text-stone-600 dark:text-slate-300 mb-6 leading-relaxed">
               Vink af wat je al klaar hebt liggen. Mis je iets? Geen enkel probleem; wij denken altijd kosteloos met je mee!
             </p>
 
@@ -86,8 +86,8 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
                 onClick={() => toggleCheck('logo')}
                 className={`p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all ${
                   clientChecks.logo
-                    ? 'border-emerald-500 bg-emerald-50/50'
-                    : 'border-stone-200 hover:border-orange-200 bg-stone-50/50'
+                    ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/40 dark:border-emerald-500'
+                    : 'border-stone-200 dark:border-slate-800 hover:border-orange-200 dark:hover:border-slate-700 bg-stone-50/50 dark:bg-slate-950/50'
                 }`}
               >
                 <input
@@ -97,8 +97,8 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
                   className="mt-0.5 rounded accent-emerald-600"
                 />
                 <div>
-                  <strong className="block text-stone-900 font-bold">Je Bedrijfslogo</strong>
-                  <span className="text-stone-500 text-[11px]">
+                  <strong className="block text-stone-900 dark:text-white font-bold">Je Bedrijfslogo</strong>
+                  <span className="text-stone-500 dark:text-slate-400 text-[11px]">
                     In PNG, SVG of JPG. Heb je nog geen logo? Dan ontwerpen we kosteloos een strak, modern tekstlogo voor je.
                   </span>
                 </div>
@@ -108,8 +108,8 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
                 onClick={() => toggleCheck('photos')}
                 className={`p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all ${
                   clientChecks.photos
-                    ? 'border-emerald-500 bg-emerald-50/50'
-                    : 'border-stone-200 hover:border-orange-200 bg-stone-50/50'
+                    ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/40 dark:border-emerald-500'
+                    : 'border-stone-200 dark:border-slate-800 hover:border-orange-200 dark:hover:border-slate-700 bg-stone-50/50 dark:bg-slate-950/50'
                 }`}
               >
                 <input
@@ -119,8 +119,8 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
                   className="mt-0.5 rounded accent-emerald-600"
                 />
                 <div>
-                  <strong className="block text-stone-900 font-bold">Foto&apos;s van je werk of bedrijf</strong>
-                  <span className="text-stone-500 text-[11px]">
+                  <strong className="block text-stone-900 dark:text-white font-bold">Foto&apos;s van je werk of bedrijf</strong>
+                  <span className="text-stone-500 dark:text-slate-400 text-[11px]">
                     Foto&apos;s gemaakt met je smartphone zijn al uitstekend. Heb je geen eigen foto&apos;s? Wij selecteren passende professionele rechtenvrije beelden.
                   </span>
                 </div>
@@ -130,8 +130,8 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
                 onClick={() => toggleCheck('texts')}
                 className={`p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all ${
                   clientChecks.texts
-                    ? 'border-emerald-500 bg-emerald-50/50'
-                    : 'border-stone-200 hover:border-orange-200 bg-stone-50/50'
+                    ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/40 dark:border-emerald-500'
+                    : 'border-stone-200 dark:border-slate-800 hover:border-orange-200 dark:hover:border-slate-700 bg-stone-50/50 dark:bg-slate-950/50'
                 }`}
               >
                 <input
@@ -141,8 +141,8 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
                   className="mt-0.5 rounded accent-emerald-600"
                 />
                 <div>
-                  <strong className="block text-stone-900 font-bold">Korte omschrijving van je diensten</strong>
-                  <span className="text-stone-500 text-[11px]">
+                  <strong className="block text-stone-900 dark:text-white font-bold">Korte omschrijving van je diensten</strong>
+                  <span className="text-stone-500 dark:text-slate-400 text-[11px]">
                     Een paar steekwoorden per dienst is al genoeg. Heb je al een bestaande site of social media? Wij kopiëren en moderniseren de teksten automatisch.
                   </span>
                 </div>
@@ -152,8 +152,8 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
                 onClick={() => toggleCheck('contact')}
                 className={`p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all ${
                   clientChecks.contact
-                    ? 'border-emerald-500 bg-emerald-50/50'
-                    : 'border-stone-200 hover:border-orange-200 bg-stone-50/50'
+                    ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/40 dark:border-emerald-500'
+                    : 'border-stone-200 dark:border-slate-800 hover:border-orange-200 dark:hover:border-slate-700 bg-stone-50/50 dark:bg-slate-950/50'
                 }`}
               >
                 <input
@@ -163,17 +163,17 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
                   className="mt-0.5 rounded accent-emerald-600"
                 />
                 <div>
-                  <strong className="block text-stone-900 font-bold">Contactgegevens & Openingstijden</strong>
-                  <span className="text-stone-500 text-[11px]">
-                    Je telefoonnummer, WhatsApp, e-mailadres en werkgebied/stad voor de lokale Google vindbaarheid.
+                  <strong className="block text-stone-900 dark:text-white font-bold">Contactgegevens & Openingstijden</strong>
+                  <span className="text-stone-500 dark:text-slate-400 text-[11px]">
+                    Je contactmogelijkheden, e-mailadres en werkgebied/stad voor de lokale Google vindbaarheid.
                   </span>
                 </div>
               </label>
             </div>
           </div>
 
-          <div className="pt-6 mt-6 border-t border-stone-200 flex items-center justify-between">
-            <span className="text-xs font-bold text-stone-500">
+          <div className="pt-6 mt-6 border-t border-stone-200 dark:border-slate-800 flex items-center justify-between">
+            <span className="text-xs font-bold text-stone-500 dark:text-slate-400">
               Klaar om dit door te geven?
             </span>
             <button

@@ -52,14 +52,14 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
     <section id="redesign-slider" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-black uppercase tracking-wider">
-          <SplitSquareVertical className="w-4 h-4 text-orange-600" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-black uppercase tracking-wider">
+          <SplitSquareVertical className="w-4 h-4 text-orange-600 dark:text-orange-400" />
           <span>{lang === 'nl' ? 'Interactieve Transformatie' : 'Interactive Transformation'}</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-black text-stone-900 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-white tracking-tight">
           {lang === 'nl' ? 'Oude Trage Website vs. Razendsnelle Next.js Site' : 'Old Slow Website vs. Blazing Fast Next.js'}
         </h2>
-        <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed max-w-xl mx-auto">
+        <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium leading-relaxed max-w-xl mx-auto">
           {lang === 'nl'
             ? 'Sleep de hendel hieronder naar links en rechts en ontdek hoe wij verouderde WordPress- of Wix-websites ombouwen naar moderne, conversiegerichte platforms.'
             : 'Drag the slider below to see how we modernize slow websites into lightning-fast, high-converting platforms.'}
@@ -72,8 +72,8 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
             onClick={() => setSliderPosition(15)}
             className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
               sliderPosition < 30
-                ? 'bg-rose-100 text-rose-800 border border-rose-300'
-                : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                ? 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-800'
+                : 'bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 hover:bg-stone-200 dark:hover:bg-slate-700'
             }`}
           >
             {lang === 'nl' ? 'Toon Oude Site' : 'Show Old Site'}
@@ -84,7 +84,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
             className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
               sliderPosition >= 30 && sliderPosition <= 70
                 ? 'bg-orange-700 text-white shadow-xs'
-                : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                : 'bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 hover:bg-stone-200 dark:hover:bg-slate-700'
             }`}
           >
             {lang === 'nl' ? '50 / 50 Vergelijking' : '50 / 50 Comparison'}
@@ -94,8 +94,8 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
             onClick={() => setSliderPosition(85)}
             className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
               sliderPosition > 70
-                ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800'
+                : 'bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 hover:bg-stone-200 dark:hover:bg-slate-700'
             }`}
           >
             {lang === 'nl' ? 'Toon Nieuwe Site' : 'Show New Site'}
@@ -242,100 +242,100 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
 
       {/* Benchmark Comparison Scorecard */}
       <div className="mt-10 text-center">
-        <span className="text-[11px] font-bold text-stone-600 bg-stone-100 px-3.5 py-1 rounded-full border border-stone-200 inline-block mb-4">
+        <span className="text-[11px] font-bold text-stone-600 dark:text-slate-300 bg-stone-100 dark:bg-slate-800 px-3.5 py-1 rounded-full border border-stone-200 dark:border-slate-700 inline-block mb-4">
           📊 Typische Prestatie Benchmark (Traditioneel CMS vs. Next.js 16)
         </span>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1 */}
-        <div className="p-5 rounded-2xl bg-white border-2 border-stone-200/90 shadow-sm flex flex-col justify-between">
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-stone-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-stone-500">Google PageSpeed Score</span>
-            <Gauge className="w-4 h-4 text-orange-600" />
+            <span className="text-xs font-bold text-stone-500 dark:text-slate-400">Google PageSpeed Score</span>
+            <Gauge className="w-4 h-4 text-orange-600 dark:text-orange-400" />
           </div>
           <div className="space-y-1">
             <div className="flex justify-between items-baseline">
-              <span className="text-xs font-bold text-rose-700">Oud: ~34 / 100</span>
-              <span className="text-xl font-black text-emerald-600">Nieuw: 99 / 100</span>
+              <span className="text-xs font-bold text-rose-700 dark:text-rose-400">Oud: ~34 / 100</span>
+              <span className="text-xl font-black text-emerald-600 dark:text-emerald-400">Nieuw: 99 / 100</span>
             </div>
-            <div className="w-full bg-stone-100 h-2 rounded-full overflow-hidden flex">
+            <div className="w-full bg-stone-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden flex">
               <div className="bg-rose-500 h-full w-[34%]" />
               <div className="bg-emerald-500 h-full w-[65%]" />
             </div>
           </div>
-          <span className="text-[10px] text-stone-400 mt-2 font-medium">
+          <span className="text-[10px] text-stone-400 dark:text-slate-500 mt-2 font-medium">
             Next.js levert razendsnelle statische caching
           </span>
         </div>
 
         {/* Metric 2 */}
-        <div className="p-5 rounded-2xl bg-white border-2 border-stone-200/90 shadow-sm flex flex-col justify-between">
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-stone-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-stone-500">Laadtijd (LCP Benchmark)</span>
-            <Clock className="w-4 h-4 text-orange-600" />
+            <span className="text-xs font-bold text-stone-500 dark:text-slate-400">Laadtijd (LCP Benchmark)</span>
+            <Clock className="w-4 h-4 text-orange-600 dark:text-orange-400" />
           </div>
           <div className="space-y-1">
             <div className="flex justify-between items-baseline">
-              <span className="text-xs font-bold text-rose-700">Oud: 4.8 sec</span>
-              <span className="text-xl font-black text-emerald-600">Nieuw: 0.3 sec</span>
+              <span className="text-xs font-bold text-rose-700 dark:text-rose-400">Oud: 4.8 sec</span>
+              <span className="text-xl font-black text-emerald-600 dark:text-emerald-400">Nieuw: 0.3 sec</span>
             </div>
-            <span className="text-xs font-black text-emerald-700 block">
+            <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 block">
               ⚡ 16x snellere gebruikerservaring
             </span>
           </div>
-          <span className="text-[10px] text-stone-400 mt-2 font-medium">
+          <span className="text-[10px] text-stone-400 dark:text-slate-500 mt-2 font-medium">
             Bezoekers haken niet meer af tijdens het laden
           </span>
         </div>
 
         {/* Metric 3 */}
-        <div className="p-5 rounded-2xl bg-white border-2 border-stone-200/90 shadow-sm flex flex-col justify-between">
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-stone-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-stone-500">Mobiele Conversie</span>
-            <Smartphone className="w-4 h-4 text-orange-600" />
+            <span className="text-xs font-bold text-stone-500 dark:text-slate-400">Mobiele Conversie</span>
+            <Smartphone className="w-4 h-4 text-orange-600 dark:text-orange-400" />
           </div>
           <div className="space-y-1">
             <div className="flex justify-between items-baseline">
-              <span className="text-xs font-bold text-rose-700">Oud: 48% haakt af</span>
-              <span className="text-xl font-black text-emerald-600">Nieuw: +64% leads</span>
+              <span className="text-xs font-bold text-rose-700 dark:text-rose-400">Oud: 48% haakt af</span>
+              <span className="text-xl font-black text-emerald-600 dark:text-emerald-400">Nieuw: +64% leads</span>
             </div>
-            <span className="text-xs font-black text-emerald-700 block">
+            <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 block">
               1-klik WhatsApp & belknop
             </span>
           </div>
-          <span className="text-[10px] text-stone-400 mt-2 font-medium">
+          <span className="text-[10px] text-stone-400 dark:text-slate-500 mt-2 font-medium">
             Perfect geoptimaliseerd voor smartphones
           </span>
         </div>
 
         {/* Metric 4 */}
-        <div className="p-5 rounded-2xl bg-white border-2 border-stone-200/90 shadow-sm flex flex-col justify-between">
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-stone-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-stone-500">Veiligheid & Onderhoud</span>
-            <ShieldCheck className="w-4 h-4 text-orange-600" />
+            <span className="text-xs font-bold text-stone-500 dark:text-slate-400">Veiligheid & Onderhoud</span>
+            <ShieldCheck className="w-4 h-4 text-orange-600 dark:text-orange-400" />
           </div>
           <div className="space-y-1">
             <div className="flex justify-between items-baseline">
-              <span className="text-xs font-bold text-rose-700">Oud: Lekke plugins</span>
-              <span className="text-xl font-black text-emerald-600">Nieuw: 100% Veilig</span>
+              <span className="text-xs font-bold text-rose-700 dark:text-rose-400">Oud: Lekke plugins</span>
+              <span className="text-xl font-black text-emerald-600 dark:text-emerald-400">Nieuw: 100% Veilig</span>
             </div>
-            <span className="text-xs font-black text-emerald-700 block">
+            <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 block">
               Geen kwetsbare database
             </span>
           </div>
-          <span className="text-[10px] text-stone-400 mt-2 font-medium">
+          <span className="text-[10px] text-stone-400 dark:text-slate-500 mt-2 font-medium">
             Gratis A+ SSL certificaat inbegrepen
           </span>
         </div>
       </div>
 
       {/* CTA Box */}
-      <div className="mt-8 text-center bg-orange-50/80 border-2 border-orange-200 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="mt-8 text-center bg-orange-50/80 dark:bg-slate-900/80 border-2 border-orange-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 transition-colors">
         <div className="text-left space-y-1">
-          <h3 className="font-black text-stone-900 text-base sm:text-lg">
+          <h3 className="font-black text-stone-900 dark:text-white text-base sm:text-lg">
             {lang === 'nl' ? 'Heb je al een bestaande website die traag of verouderd is?' : 'Have an existing slow or outdated website?'}
           </h3>
-          <p className="text-xs text-stone-600 font-medium">
+          <p className="text-xs text-stone-600 dark:text-slate-300 font-medium">
             {lang === 'nl'
               ? 'Wij migreren al jouw bestaande teksten en afbeeldingen kosteloos naar een gloednieuwe Next.js site vanaf €175.'
               : 'We migrate all your texts and photos into a fresh Next.js website starting at €175.'}
@@ -346,9 +346,9 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
           <button
             type="button"
             onClick={() => setIsCaseStudyOpen(true)}
-            className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border-2 border-stone-300 font-extrabold text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer whitespace-nowrap"
+            className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-stone-100 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-200 border-2 border-stone-300 dark:border-slate-700 font-extrabold text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer whitespace-nowrap"
           >
-            <FileText className="w-4 h-4 text-orange-600" />
+            <FileText className="w-4 h-4 text-orange-600 dark:text-orange-400" />
             <span>{lang === 'nl' ? 'Bekijk Casestudie (+64% Leads)' : 'View Case Study (+64%)'}</span>
           </button>
 

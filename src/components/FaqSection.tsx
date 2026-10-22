@@ -128,16 +128,16 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-950/70 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-bold mb-3">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>{lang === 'nl' ? 'Duidelijkheid & Zekerheid' : 'Clarity & Peace of Mind'}</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight mb-3">
+          <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white tracking-tight mb-3">
             {lang === 'nl'
               ? 'Veelgestelde Vragen over een Website Laten Maken'
               : 'Frequently Asked Questions about Website Creation'}
           </h2>
-          <p className="text-sm text-stone-600 font-medium leading-relaxed">
+          <p className="text-sm text-stone-600 dark:text-slate-300 font-medium leading-relaxed">
             {lang === 'nl'
               ? 'Alles wat je als Nederlandse ondernemer wilt weten over oplevertijd, kosten, hosting en Google vindbaarheid.'
               : 'Everything you need to know about turnaround times, investments, hosting, and Google search ranking.'}
@@ -155,13 +155,13 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={lang === 'nl' ? 'Typ een vraag of zoekwoord (bijv. "hosting", "kosten", "redesign")...' : 'Search questions...'}
-              className="w-full pl-11 pr-4 py-3 rounded-2xl border border-stone-300 bg-stone-50/50 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 focus:outline-hidden focus:ring-2 focus:ring-orange-500 font-medium"
+              className="w-full pl-11 pr-4 py-3 rounded-2xl border border-stone-300 dark:border-slate-800 bg-stone-50/50 dark:bg-slate-900 text-xs sm:text-sm text-stone-900 dark:text-white placeholder:text-stone-400 dark:placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-orange-500 font-medium"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-3 text-xs text-stone-400 hover:text-stone-600 font-bold"
+                className="absolute right-3.5 top-3 text-xs text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 font-bold"
               >
                 ✕ Wis
               </button>
@@ -184,7 +184,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
                 className={`px-3.5 py-1.5 rounded-xl border transition-all cursor-pointer ${
                   selectedCategory === cat.id
                     ? 'bg-orange-700 text-white border-orange-700 shadow-xs'
-                    : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
+                    : 'bg-stone-50 dark:bg-slate-900 hover:bg-stone-100 dark:hover:bg-slate-800 text-stone-700 dark:text-slate-200 border-stone-200 dark:border-slate-800'
                 }`}
               >
                 {lang === 'nl' ? cat.labelNl : cat.labelEn}
@@ -207,8 +207,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
                   key={faq.id}
                   className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
                     isOpen
-                      ? 'border-orange-300 bg-orange-50/30 shadow-xs'
-                      : 'border-stone-200/90 bg-stone-50/50 hover:bg-stone-100/60'
+                      ? 'border-orange-300 dark:border-orange-500/50 bg-orange-50/30 dark:bg-orange-950/20 shadow-xs'
+                      : 'border-stone-200/90 dark:border-slate-800 bg-stone-50/50 dark:bg-slate-900/60 hover:bg-stone-100/60 dark:hover:bg-slate-800/80'
                   }`}
                 >
                   <button
@@ -217,15 +217,15 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
                     className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-hidden"
                     aria-expanded={isOpen}
                   >
-                    <span className="font-extrabold text-sm sm:text-base text-stone-900 flex items-center gap-2.5">
-                      <span className="w-6 h-6 rounded-lg bg-orange-500/10 text-orange-600 flex items-center justify-center text-xs font-black shrink-0">
+                    <span className="font-extrabold text-sm sm:text-base text-stone-900 dark:text-white flex items-center gap-2.5">
+                      <span className="w-6 h-6 rounded-lg bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center text-xs font-black shrink-0">
                         {index + 1}
                       </span>
                       <span>{question}</span>
                     </span>
                     <div
                       className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'bg-orange-700 text-white rotate-180' : 'bg-stone-200 text-stone-600'
+                        isOpen ? 'bg-orange-700 text-white rotate-180' : 'bg-stone-200 dark:bg-slate-800 text-stone-600 dark:text-slate-300'
                       }`}
                     >
                       <ChevronDown className="w-4 h-4" />
@@ -233,7 +233,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
                   </button>
 
                   {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-stone-700 leading-relaxed font-normal border-t border-orange-100/60 animate-in fade-in duration-200">
+                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-stone-700 dark:text-slate-300 leading-relaxed font-normal border-t border-orange-100/60 dark:border-slate-800 animate-in fade-in duration-200">
                       <p className="pl-8.5">{answer}</p>
                     </div>
                   )}

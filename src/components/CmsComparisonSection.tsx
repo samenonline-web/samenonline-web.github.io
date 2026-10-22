@@ -111,14 +111,14 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
     <section id="waarom-nextjs" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-black uppercase tracking-wider">
-          <Zap className="w-4 h-4 text-orange-600" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-black uppercase tracking-wider">
+          <Zap className="w-4 h-4 text-orange-600 dark:text-orange-400" />
           <span>{lang === 'nl' ? 'Technologische Voorsprong' : 'Modern Tech Stack'}</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-black text-stone-900 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-white tracking-tight">
           {lang === 'nl' ? 'Waarom Next.js i.p.v. WordPress of Wix?' : 'Why Next.js Beats WordPress and Wix'}
         </h2>
-        <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed max-w-xl mx-auto">
+        <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium leading-relaxed max-w-xl mx-auto">
           {lang === 'nl'
             ? 'Ontdek waarom moderne Nederlandse bedrijven afstappen van trage, kwetsbare CMS-systemen en kiezen voor de bliksemsnelle Next.js technologie van Samen Online.'
             : 'Discover why modern businesses leave slow, vulnerable CMS tools behind for lightning-fast Next.js.'}
@@ -126,16 +126,16 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
       </div>
 
       {/* Comparison Table */}
-      <div className="overflow-x-auto rounded-3xl border-2 border-stone-200 shadow-xl bg-white">
+      <div className="overflow-x-auto rounded-3xl border-2 border-stone-200 dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900/90 transition-colors">
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="border-b border-stone-200">
-              <th className="p-4 sm:p-5 font-black text-stone-500 uppercase tracking-wider w-1/4 text-[11px] bg-stone-50">
+            <tr className="border-b border-stone-200 dark:border-slate-800">
+              <th className="p-4 sm:p-5 font-black text-stone-500 dark:text-slate-400 uppercase tracking-wider w-1/4 text-[11px] bg-stone-50 dark:bg-slate-950/60">
                 Eigenschap
               </th>
-              <th className="p-4 sm:p-5 font-black text-stone-900 w-2/5 border-l-2 border-r-2 border-orange-500 bg-orange-50/60 relative">
+              <th className="p-4 sm:p-5 font-black text-stone-900 dark:text-white w-2/5 border-l-2 border-r-2 border-orange-500 bg-orange-50/60 dark:bg-orange-950/30 relative">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-black text-orange-950 flex items-center gap-1.5">
+                  <span className="text-sm font-black text-orange-950 dark:text-orange-300 flex items-center gap-1.5">
                     <span>🚀 Samen Online (Next.js)</span>
                   </span>
                   <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-orange-600 text-white">
@@ -143,31 +143,31 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
                   </span>
                 </div>
               </th>
-              <th className="p-4 sm:p-5 font-black text-stone-700 w-1/5 bg-stone-50/80">
+              <th className="p-4 sm:p-5 font-black text-stone-700 dark:text-slate-300 w-1/5 bg-stone-50/80 dark:bg-slate-950/80">
                 <span>Traditioneel WordPress</span>
               </th>
-              <th className="p-4 sm:p-5 font-black text-stone-700 w-1/5 bg-stone-50/80">
+              <th className="p-4 sm:p-5 font-black text-stone-700 dark:text-slate-300 w-1/5 bg-stone-50/80 dark:bg-slate-950/80">
                 <span>Wix / Squarespace</span>
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-stone-200 text-stone-700">
+          <tbody className="divide-y divide-stone-200 dark:divide-slate-800 text-stone-700 dark:text-slate-300">
             {COMPARISON_DATA.map((row, idx) => (
-              <tr key={idx} className="hover:bg-stone-50/50 transition-colors">
+              <tr key={idx} className="hover:bg-stone-50/50 dark:hover:bg-slate-800/40 transition-colors">
                 {/* Category Name */}
-                <td className="p-4 sm:p-5 font-bold text-stone-900 bg-stone-50/30 align-top">
+                <td className="p-4 sm:p-5 font-bold text-stone-900 dark:text-white bg-stone-50/30 dark:bg-slate-950/40 align-top">
                   {row.category}
                 </td>
 
                 {/* Next.js Column */}
-                <td className="p-4 sm:p-5 border-l-2 border-r-2 border-orange-500 bg-orange-50/20 align-top">
+                <td className="p-4 sm:p-5 border-l-2 border-r-2 border-orange-500 bg-orange-50/20 dark:bg-orange-950/20 align-top">
                   <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="block text-stone-950 text-xs font-black">
+                      <strong className="block text-stone-950 dark:text-white text-xs font-black">
                         {row.nextjs.title}
                       </strong>
-                      <span className="text-stone-600 text-[11px] font-medium leading-relaxed mt-0.5 block">
+                      <span className="text-stone-600 dark:text-slate-300 text-[11px] font-medium leading-relaxed mt-0.5 block">
                         {row.nextjs.desc}
                       </span>
                     </div>
@@ -175,14 +175,14 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
                 </td>
 
                 {/* WordPress Column */}
-                <td className="p-4 sm:p-5 align-top bg-stone-50/20">
+                <td className="p-4 sm:p-5 align-top bg-stone-50/20 dark:bg-slate-950/20">
                   <div className="flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="block text-stone-800 text-xs font-bold">
+                      <strong className="block text-stone-800 dark:text-slate-200 text-xs font-bold">
                         {row.wordpress.title}
                       </strong>
-                      <span className="text-stone-500 text-[11px] leading-relaxed mt-0.5 block">
+                      <span className="text-stone-500 dark:text-slate-400 text-[11px] leading-relaxed mt-0.5 block">
                         {row.wordpress.desc}
                       </span>
                     </div>
@@ -190,14 +190,14 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
                 </td>
 
                 {/* Wix Column */}
-                <td className="p-4 sm:p-5 align-top bg-stone-50/20">
+                <td className="p-4 sm:p-5 align-top bg-stone-50/20 dark:bg-slate-950/20">
                   <div className="flex items-start gap-2">
                     <X className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="block text-stone-800 text-xs font-bold">
+                      <strong className="block text-stone-800 dark:text-slate-200 text-xs font-bold">
                         {row.wix.title}
                       </strong>
-                      <span className="text-stone-500 text-[11px] leading-relaxed mt-0.5 block">
+                      <span className="text-stone-500 dark:text-slate-400 text-[11px] leading-relaxed mt-0.5 block">
                         {row.wix.desc}
                       </span>
                     </div>
@@ -210,12 +210,12 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
       </div>
 
       {/* Bottom CTA Banner */}
-      <div className="mt-8 p-6 rounded-3xl bg-stone-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="mt-8 p-6 rounded-3xl bg-stone-900 dark:bg-slate-950 dark:border dark:border-slate-800 text-white flex flex-col sm:flex-row items-center justify-between gap-4 transition-colors">
         <div className="space-y-1 text-center sm:text-left">
-          <h3 className="font-black text-sm sm:text-base">
+          <h3 className="font-black text-sm sm:text-base text-white">
             Klaar om jouw trage WordPress website in te ruilen voor razendsnelle Next.js technologie?
           </h3>
-          <p className="text-xs text-stone-300 font-medium">
+          <p className="text-xs text-stone-300 dark:text-slate-300 font-medium">
             Wij migreren al jouw bestaande teksten en afbeeldingen zonder verlies van Google posities.
           </p>
         </div>

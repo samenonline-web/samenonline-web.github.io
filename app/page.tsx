@@ -281,7 +281,7 @@ export default function Home() {
     <div
       className={`min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white transition-colors duration-200 ${
         isDarkMode
-          ? 'global-dark-mode dark bg-stone-950 text-stone-100'
+          ? 'global-dark-mode dark bg-[#07090e] text-slate-100'
           : 'bg-amber-50/20 text-stone-900'
       }`}
     >
@@ -342,8 +342,8 @@ export default function Home() {
       <main id="templates-section" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-mt-24">
         {/* Bookmarks Banner */}
         {bookmarks.length > 0 && (
-          <div className="mb-6 flex items-center justify-between bg-rose-50 border-2 border-rose-200 p-3.5 rounded-2xl">
-            <div className="flex items-center gap-2 text-rose-900 text-xs font-bold">
+          <div className="mb-6 flex items-center justify-between bg-rose-50 dark:bg-rose-950/60 border-2 border-rose-200 dark:border-rose-900/60 p-3.5 rounded-2xl transition-colors">
+            <div className="flex items-center gap-2 text-rose-900 dark:text-rose-200 text-xs font-bold">
               <Heart className="w-4 h-4 fill-rose-500 text-rose-500" />
               <span>
                 {lang === 'nl'
@@ -357,7 +357,7 @@ export default function Home() {
               className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-colors cursor-pointer ${
                 showOnlyBookmarks
                   ? 'bg-rose-600 text-white'
-                  : 'bg-white text-rose-700 border border-rose-300 hover:bg-rose-100'
+                  : 'bg-white dark:bg-slate-800 text-rose-700 dark:text-rose-300 border border-rose-300 dark:border-rose-800 hover:bg-rose-100 dark:hover:bg-slate-700'
               }`}
             >
               {showOnlyBookmarks
@@ -389,14 +389,14 @@ export default function Home() {
           </div>
         ) : (
           /* Empty State */
-          <div className="text-center py-20 bg-white rounded-3xl border-2 border-orange-100 p-8 max-w-md mx-auto my-8 shadow-sm">
-            <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-3xl border-2 border-orange-100 dark:border-slate-800 p-8 max-w-md mx-auto my-8 shadow-sm transition-colors">
+            <div className="w-16 h-16 bg-orange-100 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-bold text-stone-900 mb-2">
+            <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-2">
               {lang === 'nl' ? 'Geen concepten gevonden' : 'No website templates found'}
             </h3>
-            <p className="text-xs text-stone-600 mb-6 font-medium leading-relaxed">
+            <p className="text-xs text-stone-600 dark:text-slate-300 mb-6 font-medium leading-relaxed">
               {lang === 'nl'
                 ? 'Geen resultaten voor jouw zoekopdracht. Probeer een andere categorie of zoekterm.'
                 : 'No templates match your filters. Try clearing your search query.'}
@@ -411,7 +411,7 @@ export default function Home() {
         )}
 
         {/* Custom Design / Website Redesign Callout Banner */}
-        <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-stone-900 to-stone-800 text-white border border-stone-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-stone-900 to-stone-800 dark:from-slate-950 dark:to-slate-900 text-white border border-stone-800 dark:border-slate-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
           <div className="space-y-2 text-center md:text-left max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold border border-orange-500/30">
               <span>🎨 Geen template nodig?</span>
@@ -452,7 +452,7 @@ export default function Home() {
                   notes: 'Ik heb al een eigen plan of schets voor mijn website.',
                 })
               }
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-700 font-extrabold text-xs transition-all cursor-pointer whitespace-nowrap text-center"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 dark:bg-slate-800 dark:hover:bg-slate-700 text-stone-200 dark:text-slate-200 border border-stone-700 dark:border-slate-700 font-extrabold text-xs transition-all cursor-pointer whitespace-nowrap text-center"
             >
               <span>📐 Eigen Ontwerp Bespreken</span>
             </button>

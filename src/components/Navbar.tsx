@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleDarkMode,
 }) => {
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-orange-100/80 shadow-xs">
+    <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b-2 border-orange-100/80 dark:border-slate-800 shadow-xs transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         
         {/* Brand Logo & Name - Clickable to scroll to top */}
@@ -50,15 +50,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xl tracking-tight text-stone-900 group-hover:text-stone-950 font-sans transition-colors">
-                Samen<span className="text-orange-700">Online</span>
+              <span className="font-extrabold text-xl tracking-tight text-stone-900 dark:text-white group-hover:text-stone-950 dark:group-hover:text-slate-100 font-sans transition-colors">
+                Samen<span className="text-orange-700 dark:text-orange-500">Online</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 border border-orange-200">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold px-2 py-0.5 rounded-full bg-orange-100 dark:bg-orange-950/70 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60">
                 <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
                 Showcase
               </span>
             </div>
-            <p className="text-xs text-stone-600 font-medium hidden sm:block">
+            <p className="text-xs text-stone-600 dark:text-slate-400 font-medium hidden sm:block">
               {lang === 'nl' ? 'Website Concepts & Webdesign voor Nederland' : 'Dutch Website Concepts & Custom Design'}
             </p>
           </div>
@@ -86,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 ? 'Zoek op concept of categorie...'
                 : 'Search concept or category...'
             }
-            className="w-full pl-10 pr-4 py-2 bg-orange-50/50 border border-orange-200/80 rounded-full text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all shadow-2xs"
+            className="w-full pl-10 pr-4 py-2 bg-orange-50/50 dark:bg-slate-900 border border-orange-200/80 dark:border-slate-800 rounded-full text-sm text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all shadow-2xs"
           />
         </form>
 
@@ -97,16 +97,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div
             role="group"
             aria-label={lang === 'nl' ? 'Taalkeuze' : 'Language selection'}
-            className="flex items-center p-0.5 rounded-xl bg-orange-50/70 border border-orange-200/80 text-xs font-bold shadow-2xs"
+            className="flex items-center p-0.5 rounded-xl bg-orange-50/70 dark:bg-slate-900 border border-orange-200/80 dark:border-slate-800 text-xs font-bold shadow-2xs"
           >
-            <Globe className="w-3.5 h-3.5 text-orange-700 ml-1.5 mr-1 pointer-events-none hidden sm:block" />
+            <Globe className="w-3.5 h-3.5 text-orange-700 dark:text-orange-400 ml-1.5 mr-1 pointer-events-none hidden sm:block" />
             <button
               type="button"
               onClick={() => lang !== 'nl' && onLanguageToggle()}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer min-h-[36px] ${
                 lang === 'nl'
                   ? 'bg-orange-700 text-white shadow-xs font-extrabold'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-orange-100/60'
+                  : 'text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white hover:bg-orange-100/60 dark:hover:bg-slate-800'
               }`}
               title="Nederlands"
               aria-pressed={lang === 'nl'}
@@ -119,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer min-h-[36px] ${
                 lang === 'en'
                   ? 'bg-orange-700 text-white shadow-xs font-extrabold'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-orange-100/60'
+                  : 'text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white hover:bg-orange-100/60 dark:hover:bg-slate-800'
               }`}
               title="English"
               aria-pressed={lang === 'en'}
@@ -132,12 +132,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           {onToggleDarkMode && (
             <button
               onClick={onToggleDarkMode}
-              className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-stone-700 bg-orange-50/50 border border-orange-200/80 hover:bg-orange-100/70 transition-colors shadow-2xs cursor-pointer"
+              className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-stone-700 dark:text-slate-200 bg-orange-50/50 dark:bg-slate-900 border border-orange-200/80 dark:border-slate-800 hover:bg-orange-100/70 dark:hover:bg-slate-800 transition-colors shadow-2xs cursor-pointer"
               title={isDarkMode ? (lang === 'nl' ? 'Schakel naar Lichte Modus' : 'Switch to Light Mode') : (lang === 'nl' ? 'Schakel naar Donkere Modus' : 'Switch to Dark Mode')}
               aria-label="Toggle Dark Mode"
             >
               {isDarkMode ? (
-                <Sun className="w-4 h-4 text-amber-500" />
+                <Sun className="w-4 h-4 text-amber-400" />
               ) : (
                 <Moon className="w-4 h-4 text-stone-700" />
               )}

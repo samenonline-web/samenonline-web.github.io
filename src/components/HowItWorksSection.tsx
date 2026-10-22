@@ -70,14 +70,14 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
     <section id="hoe-wij-werken" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-black uppercase tracking-wider">
-          <CheckCircle2 className="w-4 h-4 text-orange-600" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-black uppercase tracking-wider">
+          <CheckCircle2 className="w-4 h-4 text-orange-600 dark:text-orange-400" />
           <span>{lang === 'nl' ? 'Transparante Werkwijze' : 'How We Work'}</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-black text-stone-900 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-white tracking-tight">
           {lang === 'nl' ? 'Van Eerste Idee Tot Live Website in 4 Stappen' : 'From Idea to Live Website in 4 Simple Steps'}
         </h2>
-        <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed max-w-xl mx-auto">
+        <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium leading-relaxed max-w-xl mx-auto">
           {lang === 'nl'
             ? 'Geen maandenlange trajecten of ondoorzichtige uurtarieven. Samen Online staat voor snelheid, heldere communicatie en 100% eigendom.'
             : 'No endless meetings or opaque hourly billing. We offer fast turnaround, transparent communication, and 100% ownership.'}
@@ -91,34 +91,34 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
           return (
             <div
               key={item.step}
-              className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-stone-200/90 shadow-sm hover:shadow-md hover:border-orange-300 transition-all flex flex-col justify-between relative group"
+              className="bg-white dark:bg-slate-900/90 rounded-3xl p-6 sm:p-7 border-2 border-stone-200/90 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-orange-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between relative group"
             >
               <div>
                 {/* Step Top Bar */}
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-3xl font-black text-stone-300 group-hover:text-orange-500 transition-colors font-mono">
+                  <span className="text-3xl font-black text-stone-300 dark:text-slate-700 group-hover:text-orange-500 transition-colors font-mono">
                     {item.step}
                   </span>
-                  <div className="w-12 h-12 rounded-2xl bg-orange-50 border border-orange-200 text-orange-600 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-orange-600 dark:text-orange-400 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                     <Icon className="w-6 h-6" />
                   </div>
                 </div>
 
-                <span className="text-[10px] font-black uppercase tracking-wider text-orange-700 bg-orange-100 px-2.5 py-0.5 rounded-full inline-block mb-3">
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange-700 dark:text-orange-300 bg-orange-100 dark:bg-orange-950/80 px-2.5 py-0.5 rounded-full inline-block mb-3">
                   {lang === 'nl' ? item.badgeNl : item.badgeEn}
                 </span>
 
-                <h3 className="font-black text-base sm:text-lg text-stone-900 leading-snug mb-2">
+                <h3 className="font-black text-base sm:text-lg text-stone-900 dark:text-white leading-snug mb-2">
                   {lang === 'nl' ? item.titleNl : item.titleEn}
                 </h3>
 
-                <p className="text-xs text-stone-600 font-medium leading-relaxed">
+                <p className="text-xs text-stone-600 dark:text-slate-300 font-medium leading-relaxed">
                   {lang === 'nl' ? item.descNl : item.descEn}
                 </p>
               </div>
 
               {/* Step Footer Indicator */}
-              <div className="pt-4 mt-4 border-t border-stone-100 flex items-center text-[11px] font-bold text-stone-500">
+              <div className="pt-4 mt-4 border-t border-stone-100 dark:border-slate-800 flex items-center text-[11px] font-bold text-stone-500 dark:text-slate-400">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mr-1.5 shrink-0" />
                 <span>{lang === 'nl' ? '100% Tevredenheidsgarantie' : 'Satisfaction Guaranteed'}</span>
               </div>
@@ -128,12 +128,12 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
       </div>
 
       {/* Bottom CTA Banner */}
-      <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-stone-900 to-stone-800 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+      <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-stone-900 to-stone-800 dark:from-slate-950 dark:to-slate-900 dark:border dark:border-slate-800 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl transition-colors">
         <div className="space-y-1 text-center sm:text-left">
-          <h3 className="text-lg sm:text-xl font-black">
+          <h3 className="text-lg sm:text-xl font-black text-white">
             {lang === 'nl' ? 'Klaar om jouw onderneming online te laten schitteren?' : 'Ready to launch your business online?'}
           </h3>
-          <p className="text-xs text-stone-300 font-medium">
+          <p className="text-xs text-stone-300 dark:text-slate-300 font-medium">
             {lang === 'nl'
               ? 'Kies een concept sjabloon of vraag direct een vrijblijvend adviesgesprek aan.'
               : 'Choose a template or request a free consultation today.'}
@@ -143,7 +143,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={onScrollToTemplates}
-            className="px-5 py-3 rounded-xl bg-white hover:bg-stone-100 text-stone-900 font-black text-xs transition-all cursor-pointer shadow-sm"
+            className="px-5 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-stone-100 dark:hover:bg-slate-700 text-stone-900 dark:text-slate-200 font-black text-xs transition-all cursor-pointer shadow-sm border border-stone-200 dark:border-slate-700"
           >
             {lang === 'nl' ? 'Bekijk Alle 16 Concepten' : 'View All 16 Concepts'}
           </button>

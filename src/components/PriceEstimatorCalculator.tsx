@@ -362,7 +362,7 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
 
   return (
     <section id="prijs-calculator" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-14 scroll-mt-24">
-      <div className="bg-white rounded-3xl border-2 border-orange-200/90 shadow-xl overflow-hidden">
+      <div className="bg-white dark:bg-slate-950 rounded-3xl border-2 border-orange-200/90 dark:border-slate-800 shadow-xl overflow-hidden transition-colors">
         {/* Header */}
         <div className="bg-gradient-to-r from-orange-600 to-amber-600 p-6 sm:p-8 text-white text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/20 text-orange-100 text-xs font-bold mb-3">
@@ -386,7 +386,7 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
           <div className="lg:col-span-7 space-y-6">
             {/* Step 1: Website Type */}
             <div>
-              <label className="text-xs font-black uppercase text-stone-700 tracking-wider block mb-3">
+              <label className="text-xs font-black uppercase text-stone-700 dark:text-slate-300 tracking-wider block mb-3">
                 1. {lang === 'nl' ? 'Kies Type Website:' : 'Choose Website Type:'}
               </label>
               <div className="space-y-2.5">
@@ -398,19 +398,19 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
                       onClick={() => setSelectedType(type.id)}
                       className={`w-full p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex items-center justify-between ${
                         isSelected
-                          ? 'border-orange-500 bg-orange-50/50 shadow-xs'
-                          : 'border-stone-200 hover:border-orange-300 bg-white'
+                          ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-950/40 dark:border-orange-500 shadow-xs'
+                          : 'border-stone-200 dark:border-slate-800 hover:border-orange-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900/80'
                       }`}
                     >
                       <div>
-                        <span className="font-black text-sm text-stone-900 block">
+                        <span className="font-black text-sm text-stone-900 dark:text-white block">
                           {lang === 'nl' ? type.nameNl : type.nameEn}
                         </span>
-                        <span className="text-xs text-stone-500 font-medium">
+                        <span className="text-xs text-stone-500 dark:text-slate-400 font-medium">
                           {lang === 'nl' ? type.descNl : type.descEn}
                         </span>
                       </div>
-                      <span className="font-black text-sm text-orange-700 shrink-0 ml-3">
+                      <span className="font-black text-sm text-orange-700 dark:text-orange-400 shrink-0 ml-3">
                         vanaf €{type.basePrice}
                       </span>
                     </button>
@@ -434,19 +434,19 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
                       onClick={() => setPageCount(opt.id)}
                       className={`p-3 rounded-2xl border-2 text-center transition-all cursor-pointer flex flex-col justify-between ${
                         isSelected
-                          ? 'border-orange-500 bg-orange-50/70 shadow-xs'
-                          : 'border-stone-200 hover:border-orange-300 bg-white'
+                          ? 'border-orange-500 bg-orange-50/70 dark:bg-orange-950/40 dark:border-orange-500 shadow-xs'
+                          : 'border-stone-200 dark:border-slate-800 hover:border-orange-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900/80'
                       }`}
                     >
                       <div>
-                        <span className="font-black text-xs text-stone-900 block">
+                        <span className="font-black text-xs text-stone-900 dark:text-white block">
                           {opt.id === '1' ? '1 Pagina' : `${opt.id} Pagina's`}
                         </span>
-                        <span className="text-[10px] text-stone-500 font-medium line-clamp-1 mt-0.5">
+                        <span className="text-[10px] text-stone-500 dark:text-slate-400 font-medium line-clamp-1 mt-0.5">
                           {opt.labelNl.replace(/^[0-9+]+ Pagina’s? ?/, '') || 'One-page'}
                         </span>
                       </div>
-                      <span className="text-[11px] font-black text-orange-700 mt-2">
+                      <span className="text-[11px] font-black text-orange-700 dark:text-orange-400 mt-2">
                         {opt.price === 0 ? 'Inbegrepen' : `+€${opt.price}`}
                       </span>
                     </button>
@@ -457,7 +457,7 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
 
             {/* Step 3: Extra Modules */}
             <div>
-              <label className="text-xs font-black uppercase text-stone-700 tracking-wider block mb-3">
+              <label className="text-xs font-black uppercase text-stone-700 dark:text-slate-300 tracking-wider block mb-3">
                 3. {lang === 'nl' ? 'Optionele Extra Modules:' : 'Optional Extra Modules:'}
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -469,15 +469,15 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
                       onClick={() => toggleAddon(addon.id)}
                       className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer flex items-center justify-between text-xs ${
                         active
-                          ? 'border-orange-500 bg-orange-50/50 shadow-2xs'
-                          : 'border-stone-200 hover:border-orange-200 bg-white'
+                          ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-950/40 dark:border-orange-500 shadow-2xs'
+                          : 'border-stone-200 dark:border-slate-800 hover:border-orange-200 dark:hover:border-slate-700 bg-white dark:bg-slate-900/80'
                       }`}
                     >
                       <div className="flex items-center gap-2">
                         <span className="text-lg">{addon.icon}</span>
-                        <span className="font-bold text-stone-800">{addon.nameNl}</span>
+                        <span className="font-bold text-stone-800 dark:text-slate-200">{addon.nameNl}</span>
                       </div>
-                      <span className="font-black text-stone-700 shrink-0 ml-2">+€{addon.price}</span>
+                      <span className="font-black text-stone-700 dark:text-slate-300 shrink-0 ml-2">+€{addon.price}</span>
                     </button>
                   );
                 })}
@@ -495,17 +495,17 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
                   onClick={() => setHostingPlan('managed')}
                   className={`p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                     hostingPlan === 'managed'
-                      ? 'border-emerald-600 bg-emerald-50/60 shadow-2xs ring-1 ring-emerald-500/30'
-                      : 'border-stone-200 hover:border-emerald-300 bg-white'
+                      ? 'border-emerald-600 bg-emerald-50/60 dark:bg-emerald-950/40 dark:border-emerald-500 shadow-2xs ring-1 ring-emerald-500/30'
+                      : 'border-stone-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-700 bg-white dark:bg-slate-900/80'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-black text-xs text-emerald-950 flex items-center gap-1">
+                    <span className="font-black text-xs text-emerald-950 dark:text-emerald-300 flex items-center gap-1">
                       <span>🚀 All-in Hosting & .NL Domein</span>
                     </span>
-                    <span className="text-xs font-black text-emerald-700">+€9,50 /mnd</span>
+                    <span className="text-xs font-black text-emerald-700 dark:text-emerald-400">+€9,50 /mnd</span>
                   </div>
-                  <p className="text-[11px] text-emerald-800 leading-relaxed font-medium">
+                  <p className="text-[11px] text-emerald-800 dark:text-emerald-200/80 leading-relaxed font-medium">
                     {lang === 'nl'
                       ? 'Inclusief .nl domein, supersnelle NVMe SSD hosting, gratis SSL en zakelijke e-mail (info@jouwbedrijf.nl).'
                       : 'Includes .nl domain, NVMe SSD hosting, free SSL, and business email.'}
@@ -517,17 +517,17 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
                   onClick={() => setHostingPlan('self')}
                   className={`p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                     hostingPlan === 'self'
-                      ? 'border-orange-500 bg-orange-50/50 shadow-2xs ring-1 ring-orange-500/30'
-                      : 'border-stone-200 hover:border-orange-200 bg-white'
+                      ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-950/40 dark:border-orange-500 shadow-2xs ring-1 ring-orange-500/30'
+                      : 'border-stone-200 dark:border-slate-800 hover:border-orange-200 dark:hover:border-slate-700 bg-white dark:bg-slate-900/80'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-black text-xs text-stone-900">
+                    <span className="font-black text-xs text-stone-900 dark:text-white">
                       {lang === 'nl' ? 'Zelf hosting regelen' : 'Arrange own hosting'}
                     </span>
-                    <span className="text-xs font-black text-stone-500">€0 /mnd</span>
+                    <span className="text-xs font-black text-stone-500 dark:text-slate-400">€0 /mnd</span>
                   </div>
-                  <p className="text-[11px] text-stone-500 leading-relaxed font-medium">
+                  <p className="text-[11px] text-stone-500 dark:text-slate-400 leading-relaxed font-medium">
                     {lang === 'nl'
                       ? 'Je regelt zelf je hosting en domeinnaam bij een eigen registrar. Wij leveren de site netjes op.'
                       : 'You register your own hosting and domain. We provide complete setup delivery.'}
@@ -622,15 +622,15 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
           </div>
 
           {/* Right: Realtime Summary Card */}
-          <div className="lg:col-span-5 bg-stone-50 p-6 sm:p-8 rounded-3xl border-2 border-stone-200 flex flex-col justify-between">
+          <div className="lg:col-span-5 bg-stone-50 dark:bg-slate-900/90 p-6 sm:p-8 rounded-3xl border-2 border-stone-200 dark:border-slate-800 flex flex-col justify-between transition-colors">
             <div>
-              <span className="text-[11px] font-black uppercase tracking-wider text-orange-700 bg-orange-100 px-3 py-1 rounded-full inline-block mb-4">
+              <span className="text-[11px] font-black uppercase tracking-wider text-orange-700 dark:text-orange-300 bg-orange-100 dark:bg-orange-950/70 border border-orange-200 dark:border-orange-800/60 px-3 py-1 rounded-full inline-block mb-4">
                 {lang === 'nl' ? 'Jouw Indicatieve Prijs' : 'Your Estimated Price'}
               </span>
 
-              <div className="text-4xl sm:text-5xl font-black text-stone-900 tracking-tight mb-1">
+              <div className="text-4xl sm:text-5xl font-black text-stone-900 dark:text-white tracking-tight mb-1">
                 €{totalPrice}
-                <span className="text-xs font-bold text-stone-400"> (eenmalig)</span>
+                <span className="text-xs font-bold text-stone-400 dark:text-slate-400"> (eenmalig)</span>
               </div>
 
               {hostingPlan === 'managed' ? (
@@ -651,24 +651,24 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
                 <span>Geschatte levertijd: ~{estimatedDays} werkdagen</span>
               </div>
 
-              <div className="space-y-2 text-xs font-medium text-stone-600 border-t border-stone-200 pt-4 mb-6">
+              <div className="space-y-2 text-xs font-medium text-stone-600 dark:text-slate-300 border-t border-stone-200 dark:border-slate-800 pt-4 mb-6">
                 <div className="flex justify-between">
                   <span>Basis website:</span>
-                  <strong className="text-stone-900">€{activeTypeObj.basePrice}</strong>
+                  <strong className="text-stone-900 dark:text-white">€{activeTypeObj.basePrice}</strong>
                 </div>
                 <div className="flex justify-between">
                   <span>Aantal pagina&apos;s ({activePageOption.id}):</span>
-                  <strong className="text-stone-900">
+                  <strong className="text-stone-900 dark:text-white">
                     {pagesPrice === 0 ? 'Inbegrepen' : `+€${pagesPrice}`}
                   </strong>
                 </div>
                 <div className="flex justify-between">
                   <span>Geselecteerde extra&apos;s ({selectedAddons.length}):</span>
-                  <strong className="text-stone-900">+€{addonsTotal}</strong>
+                  <strong className="text-stone-900 dark:text-white">+€{addonsTotal}</strong>
                 </div>
                 <div className="flex justify-between">
                   <span>Webhosting & .nl domein:</span>
-                  <strong className={hostingPlan === 'managed' ? 'text-emerald-700' : 'text-stone-700'}>
+                  <strong className={hostingPlan === 'managed' ? 'text-emerald-700 dark:text-emerald-400' : 'text-stone-700 dark:text-slate-300'}>
                     {hostingPlan === 'managed' ? '€9,50 /mnd' : 'Zelf regelen (€0)'}
                   </strong>
                 </div>
@@ -709,16 +709,16 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
                 <button
                   type="button"
                   onClick={handleCopyQuote}
-                  className="w-full py-2.5 px-3 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-2xs transition-all cursor-pointer"
+                  className="w-full py-2.5 px-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-stone-100 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-100 border border-stone-300 dark:border-slate-700 font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-2xs transition-all cursor-pointer"
                 >
                   {isCopied ? (
                     <>
                       <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <span className="text-emerald-700 font-black">{lang === 'nl' ? 'Gekopieerd!' : 'Copied!'}</span>
+                      <span className="text-emerald-700 dark:text-emerald-400 font-black">{lang === 'nl' ? 'Gekopieerd!' : 'Copied!'}</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-4 h-4 text-stone-500 shrink-0" />
+                      <Copy className="w-4 h-4 text-stone-500 dark:text-slate-400 shrink-0" />
                       <span className="truncate">{lang === 'nl' ? 'Kopieer Specificatie' : 'Copy Breakdown'}</span>
                     </>
                   )}
@@ -728,9 +728,9 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
               <button
                 type="button"
                 onClick={() => setIsQuotePdfOpen(true)}
-                className="w-full py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-200 font-extrabold text-xs flex items-center justify-center gap-2 shadow-2xs transition-all cursor-pointer"
+                className="w-full py-2.5 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-100 border border-stone-200 dark:border-slate-700 font-extrabold text-xs flex items-center justify-center gap-2 shadow-2xs transition-all cursor-pointer"
               >
-                <Download className="w-4 h-4 text-orange-600" />
+                <Download className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                 <span>{lang === 'nl' ? 'Download Offerte als PDF' : 'Download Quote as PDF'}</span>
               </button>
 

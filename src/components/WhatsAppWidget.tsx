@@ -115,7 +115,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
     <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end print:hidden">
       {/* Popover Bubble */}
       {isOpen && (
-        <div className="mb-3 w-84 sm:w-96 bg-white rounded-3xl shadow-2xl border-2 border-orange-200 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200 text-stone-900">
+        <div className="mb-3 w-84 sm:w-96 bg-white dark:bg-slate-950 rounded-3xl shadow-2xl border-2 border-orange-200 dark:border-slate-800 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200 text-stone-900 dark:text-white transition-colors">
           {/* Header */}
           <div className="bg-gradient-to-r from-orange-700 to-amber-700 p-4 text-white flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -130,7 +130,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
                 ></span>
               </div>
               <div>
-                <p className="font-black text-sm leading-tight">Samen Online Direct</p>
+                <p className="font-black text-sm leading-tight text-white">Samen Online Direct</p>
                 <div className="flex items-center gap-1 text-[11px] text-orange-100 font-medium">
                   <ShieldCheck className="w-3 h-3" />
                   <span>
@@ -150,14 +150,14 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
           </div>
 
           {/* Body */}
-          <div className="p-4 bg-stone-50 space-y-3">
+          <div className="p-4 bg-stone-50 dark:bg-slate-900/90 space-y-3 transition-colors">
             {isSent ? (
-              <div className="p-6 bg-white rounded-2xl border border-emerald-200 text-center space-y-2">
-                <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-                <p className="font-extrabold text-sm text-stone-900">
+              <div className="p-6 bg-white dark:bg-slate-950 rounded-2xl border border-emerald-200 dark:border-emerald-800 text-center space-y-2">
+                <CheckCircle2 className="w-10 h-10 text-emerald-600 dark:text-emerald-400 mx-auto" />
+                <p className="font-extrabold text-sm text-stone-900 dark:text-white">
                   {lang === 'nl' ? 'Vraag Verzonden!' : 'Message Sent!'}
                 </p>
-                <p className="text-xs text-stone-600 leading-relaxed font-medium">
+                <p className="text-xs text-stone-600 dark:text-slate-300 leading-relaxed font-medium">
                   {lang === 'nl'
                     ? 'Bedankt! We hebben je vraag ontvangen en sturen je z.s.m. een reactie per e-mail.'
                     : 'Thank you! We received your question and will reply via email shortly.'}
@@ -165,7 +165,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
               </div>
             ) : (
               <>
-                <div className="bg-white p-3 rounded-2xl rounded-tl-none border border-stone-200 text-xs text-stone-700 leading-relaxed shadow-2xs">
+                <div className="bg-white dark:bg-slate-950 p-3 rounded-2xl rounded-tl-none border border-stone-200 dark:border-slate-800 text-xs text-stone-700 dark:text-slate-300 leading-relaxed shadow-2xs">
                   {isOnline
                     ? (lang === 'nl'
                         ? '👋 Hoi! We zijn nu online. Heb je een vraag over een website, concept of prijs? Stel hem hier direct en je ontvangt snel antwoord.'
@@ -177,7 +177,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
 
                 {/* Quick topic buttons */}
                 <div className="space-y-1.5 pt-1">
-                  <span className="text-[10px] font-bold text-stone-500 uppercase tracking-wider block">
+                  <span className="text-[10px] font-bold text-stone-500 dark:text-slate-400 uppercase tracking-wider block">
                     {lang === 'nl' ? 'Kies een onderwerp of typ zelf:' : 'Choose a topic or type message:'}
                   </span>
                   <div className="grid grid-cols-2 gap-1.5">
@@ -186,7 +186,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
                         key={t.id}
                         type="button"
                         onClick={() => setQuestion(t.text)}
-                        className="text-left p-2 rounded-xl bg-white hover:bg-orange-50 text-[11px] font-bold text-stone-700 hover:text-orange-950 border border-stone-200 hover:border-orange-200 transition-colors cursor-pointer truncate"
+                        className="text-left p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-slate-700 text-[11px] font-bold text-stone-700 dark:text-slate-200 hover:text-orange-950 dark:hover:text-white border border-stone-200 dark:border-slate-700 hover:border-orange-200 transition-colors cursor-pointer truncate"
                         title={t.text}
                       >
                         {t.label}
@@ -198,7 +198,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
                 {/* Form fields */}
                 <form onSubmit={handleSubmit} className="space-y-2 pt-1">
                   {errorMessage && (
-                    <div className="p-2 rounded-lg bg-rose-50 text-rose-700 text-[11px] font-bold border border-rose-200">
+                    <div className="p-2 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 text-[11px] font-bold border border-rose-200 dark:border-rose-800">
                       {errorMessage}
                     </div>
                   )}
@@ -208,7 +208,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     placeholder={lang === 'nl' ? 'Typ je vraag hier...' : 'Type your question here...'}
-                    className="w-full p-2.5 bg-white rounded-xl border border-stone-300 text-xs font-medium text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none"
+                    className="w-full p-2.5 bg-white dark:bg-slate-950 rounded-xl border border-stone-300 dark:border-slate-700 text-xs font-medium text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none"
                     required
                   />
 
@@ -218,7 +218,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={lang === 'nl' ? 'Jouw e-mailadres...' : 'Your email address...'}
-                      className="flex-1 px-3 py-2 bg-white rounded-xl border border-stone-300 text-xs font-medium text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="flex-1 px-3 py-2 bg-white dark:bg-slate-950 rounded-xl border border-stone-300 dark:border-slate-700 text-xs font-medium text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
                       required
                     />
                     <button

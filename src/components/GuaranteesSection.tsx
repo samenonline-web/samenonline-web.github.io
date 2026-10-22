@@ -74,20 +74,20 @@ export const GuaranteesSection: React.FC<GuaranteesSectionProps> = ({
     <section id="garanties" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 text-xs font-black uppercase tracking-wider mb-4 shadow-xs">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 text-xs font-black uppercase tracking-wider mb-4 shadow-xs">
+          <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           <span>{lang === 'nl' ? '4 Harde Samen Online Zekerheden' : '4 Firm Guarantees'}</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-black text-stone-900 tracking-tight leading-tight">
+        <h2 className="text-3xl sm:text-5xl font-black text-stone-900 dark:text-white tracking-tight leading-tight">
           {lang === 'nl' ? (
             <>
-              Webdesign Zónder <span className="text-orange-600 underline decoration-orange-300 decoration-wavy">Wurgcontracten</span> of Verrassingen
+              Webdesign Zónder <span className="text-orange-600 dark:text-orange-400 underline decoration-orange-300 dark:decoration-orange-500/50 decoration-wavy">Wurgcontracten</span> of Verrassingen
             </>
           ) : (
             'Websites Built with Total Transparency'
           )}
         </h2>
-        <p className="mt-4 text-stone-600 text-sm sm:text-base font-medium max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-stone-600 dark:text-slate-300 text-sm sm:text-base font-medium max-w-2xl mx-auto leading-relaxed">
           {lang === 'nl'
             ? 'Veel ondernemers zijn bang voor dure bureaus die maanden werk rekenen of maandelijkse abonnementen die je website gijzelen. Wij doen het radicaal anders.'
             : 'Clear delivery times, full ownership, and transparent pricing without predatory vendor lock-in.'}
@@ -101,44 +101,44 @@ export const GuaranteesSection: React.FC<GuaranteesSectionProps> = ({
           return (
             <div
               key={item.id}
-              className="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-stone-200/80 shadow-md hover:shadow-xl hover:border-orange-400/80 transition-all duration-300 flex flex-col justify-between"
+              className="group relative bg-white dark:bg-slate-900/90 rounded-3xl p-6 sm:p-7 border-2 border-stone-200/80 dark:border-slate-800 shadow-md hover:shadow-xl hover:border-orange-400/80 dark:hover:border-slate-700 transition-all duration-300 flex flex-col justify-between"
             >
               <div className="space-y-4">
                 {/* Top Badge & Number */}
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 border border-stone-200">
+                  <span className="text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-stone-100 dark:bg-slate-800 text-stone-700 dark:text-slate-300 border border-stone-200 dark:border-slate-700">
                     {item.badge}
                   </span>
-                  <span className="text-2xl font-black text-stone-200 group-hover:text-orange-200 transition-colors">
+                  <span className="text-2xl font-black text-stone-200 dark:text-slate-700 group-hover:text-orange-200 dark:group-hover:text-orange-400 transition-colors">
                     0{idx + 1}
                   </span>
                 </div>
 
                 {/* Icon */}
-                <div className="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 border border-orange-200 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 border border-orange-200 dark:border-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform">
                   <Icon className="w-6 h-6" />
                 </div>
 
                 {/* Title & Subtitle */}
                 <div>
-                  <h3 className="text-base sm:text-lg font-black text-stone-900 leading-snug">
+                  <h3 className="text-base sm:text-lg font-black text-stone-900 dark:text-white leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-xs font-bold text-orange-600 mt-0.5">
+                  <p className="text-xs font-bold text-orange-600 dark:text-orange-400 mt-0.5">
                     {item.subtitle}
                   </p>
                 </div>
 
                 {/* Description */}
-                <p className="text-xs text-stone-600 leading-relaxed font-medium">
+                <p className="text-xs text-stone-600 dark:text-slate-300 leading-relaxed font-medium">
                   {item.description}
                 </p>
               </div>
 
               {/* Bottom Feature Pill */}
-              <div className="mt-6 pt-4 border-t border-stone-100 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span className="text-[11px] font-black text-stone-800">
+              <div className="mt-6 pt-4 border-t border-stone-100 dark:border-slate-800 flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <span className="text-[11px] font-black text-stone-800 dark:text-slate-200">
                   {item.highlight}
                 </span>
               </div>
@@ -148,7 +148,7 @@ export const GuaranteesSection: React.FC<GuaranteesSectionProps> = ({
       </div>
 
       {/* Trust Quote Bar */}
-      <div className="mt-10 p-5 sm:p-6 rounded-3xl bg-stone-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+      <div className="mt-10 p-5 sm:p-6 rounded-3xl bg-stone-900 dark:bg-slate-950 border border-stone-800 dark:border-slate-800 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl transition-colors">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 border border-orange-500/30 flex items-center justify-center shrink-0">
             <Lock className="w-5 h-5" />

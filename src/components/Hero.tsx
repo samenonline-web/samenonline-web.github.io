@@ -29,11 +29,11 @@ export const Hero: React.FC<HeroProps> = ({
   ];
 
   return (
-    <section className="bg-white py-14 lg:py-18 border-b border-orange-100">
+    <section className="bg-white dark:bg-[#07090e] py-14 lg:py-18 border-b border-orange-100 dark:border-slate-800 transition-colors">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200 text-orange-800 font-extrabold text-xs mb-6">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 dark:bg-orange-950/70 border border-orange-200 dark:border-orange-800/60 text-orange-800 dark:text-orange-300 font-extrabold text-xs mb-6">
           <Sparkles className="w-3.5 h-3.5 text-orange-600" />
           <span>
             {lang === 'nl' 
@@ -43,27 +43,27 @@ export const Hero: React.FC<HeroProps> = ({
         </div>
 
         {/* Hero Title (Solid, crisp, friendly typography) */}
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-stone-900 tracking-tight leading-tight mb-6">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-stone-900 dark:text-white tracking-tight leading-tight mb-6">
           {lang === 'nl' ? (
             <>
-              Originele <span className="text-orange-700">Website Concepts</span> voor Nederlandse bedrijven
+              Originele <span className="text-orange-700 dark:text-orange-500">Website Concepts</span> voor Nederlandse bedrijven
             </>
           ) : (
             <>
-              Original <span className="text-orange-700">Website Concepts</span> for Dutch web projects
+              Original <span className="text-orange-700 dark:text-orange-500">Website Concepts</span> for Dutch web projects
             </>
           )}
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto mb-4 leading-relaxed font-normal">
+        <p className="text-lg sm:text-xl text-stone-600 dark:text-slate-300 max-w-2xl mx-auto mb-4 leading-relaxed font-normal">
           {lang === 'nl'
             ? 'Bekijk onze interactieve voorbeeldconcepten ter inspiratie voor jouw eigen website. Alle ontwerpen zijn demonstratie-modellen en worden 100% op maat ingericht voor jouw eigen bedrijf!'
             : 'Explore our interactive showcase concepts for your web project. All layouts are demonstration models customized entirely for your brand!'}
         </p>
 
         {/* Transparency Disclaimer Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-100 border border-stone-200 text-stone-600 text-xs font-medium mb-8">
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-100 dark:bg-slate-900 border border-stone-200 dark:border-slate-800 text-stone-600 dark:text-slate-400 text-xs font-medium mb-8">
           <span>💡</span>
           <span>
             {lang === 'nl'
@@ -81,7 +81,7 @@ export const Hero: React.FC<HeroProps> = ({
               element.scrollIntoView({ behavior: 'smooth' });
             }
           }}
-          className="max-w-2xl mx-auto bg-white p-2.5 rounded-2xl border-2 border-orange-100 shadow-lg shadow-orange-500/5 flex flex-col sm:flex-row items-center gap-2 mb-8"
+          className="max-w-2xl mx-auto bg-white dark:bg-slate-900/90 p-2.5 rounded-2xl border-2 border-orange-100 dark:border-slate-800 shadow-lg shadow-orange-500/5 flex flex-col sm:flex-row items-center gap-2 mb-8 backdrop-blur-md"
         >
           <div className="relative flex-1 w-full flex items-center">
             <Search className="w-5 h-5 text-orange-500 absolute left-4 pointer-events-none" />
@@ -94,14 +94,14 @@ export const Hero: React.FC<HeroProps> = ({
                   ? 'Zoek op concept, branche of zoekterm...'
                   : 'Search by concept, industry or keyword...'
               }
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-transparent text-stone-900 placeholder-stone-400 font-medium focus:outline-none text-sm sm:text-base"
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-transparent text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-400 font-medium focus:outline-none text-sm sm:text-base"
             />
           </div>
           {searchQuery && (
             <button
               type="button"
               onClick={() => onSearchChange('')}
-              className="text-xs text-orange-700 hover:text-orange-900 px-3 py-1 font-bold cursor-pointer"
+              className="text-xs text-orange-700 dark:text-orange-400 hover:text-orange-900 dark:hover:text-orange-300 px-3 py-1 font-bold cursor-pointer"
             >
               {lang === 'nl' ? 'Wis' : 'Clear'}
             </button>
@@ -136,7 +136,7 @@ export const Hero: React.FC<HeroProps> = ({
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-2xs ${
                   isActive
                     ? 'bg-orange-700 text-white border border-orange-700 shadow-md scale-105'
-                    : 'bg-orange-50/70 hover:bg-orange-100 border border-orange-200/80 text-orange-950 hover:border-orange-300'
+                    : 'bg-orange-50/70 dark:bg-slate-900 hover:bg-orange-100 dark:hover:bg-slate-800 border border-orange-200/80 dark:border-slate-800 text-orange-950 dark:text-slate-200 hover:border-orange-300 dark:hover:border-slate-700'
                 }`}
               >
                 {tag.label}

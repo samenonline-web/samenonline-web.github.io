@@ -93,7 +93,7 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className="bg-white text-stone-600 py-14 border-t-2 border-orange-100 font-sans">
+    <footer className="bg-white dark:bg-[#07090e] text-stone-600 dark:text-slate-400 py-14 border-t-2 border-orange-100 dark:border-slate-800 font-sans transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
@@ -104,18 +104,18 @@ export const Footer: React.FC<FooterProps> = ({
               <div className="w-9 h-9 rounded-xl bg-orange-700 flex items-center justify-center text-white font-bold shadow-md shadow-orange-700/20">
                 <Heart className="w-5 h-5 fill-white" />
               </div>
-              <span className="font-extrabold text-xl text-stone-900">
-                Samen<span className="text-orange-700">Online</span>
+              <span className="font-extrabold text-xl text-stone-900 dark:text-white">
+                Samen<span className="text-orange-700 dark:text-orange-500">Online</span>
               </span>
             </div>
 
-            <p className="text-xs text-stone-600 max-w-md leading-relaxed font-medium">
+            <p className="text-xs text-stone-600 dark:text-slate-400 max-w-md leading-relaxed font-medium">
               {lang === 'nl'
                 ? 'Samen Online is dé vriendelijke gids voor Nederlandse bedrijven, webwinkels en digitale initiatieven. Ontworpen met oog voor gemeenschap, toegankelijkheid en vakmanschap.'
                 : 'Samen Online is the friendly directory for companies, webshops, and digital initiatives based in & for the Netherlands.'}
             </p>
 
-            <div className="flex items-center gap-2 text-xs font-bold text-orange-700">
+            <div className="flex items-center gap-2 text-xs font-bold text-orange-700 dark:text-orange-400">
               <MapPin className="w-3.5 h-3.5" />
               <span>
                 {lang === 'nl'
@@ -130,16 +130,16 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsEmailRevealed(true)}
-                  className="inline-flex items-center gap-2 text-xs font-bold text-stone-700 hover:text-orange-800 bg-orange-50/80 hover:bg-orange-100/90 px-3 py-1.5 rounded-xl border border-orange-200 transition-all cursor-pointer shadow-2xs"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-stone-700 dark:text-slate-300 hover:text-orange-800 dark:hover:text-orange-400 bg-orange-50/80 dark:bg-slate-900 hover:bg-orange-100/90 dark:hover:bg-slate-800 px-3 py-1.5 rounded-xl border border-orange-200 dark:border-slate-800 transition-all cursor-pointer shadow-2xs"
                   title={lang === 'nl' ? 'Klik om direct e-mailadres te tonen (beveiligd tegen bots)' : 'Click to reveal email (protected from bots)'}
                 >
-                  <ShieldCheck className="w-4 h-4 text-orange-700" />
+                  <ShieldCheck className="w-4 h-4 text-orange-700 dark:text-orange-400" />
                   <span>{lang === 'nl' ? 'Toon E-mailadres (Bot-beveiligd)' : 'Show Email (Anti-bot)'}</span>
                 </button>
               ) : (
-                <div className="inline-flex items-center gap-2 p-1.5 rounded-xl bg-stone-100 border border-stone-200 text-xs">
-                  <Mail className="w-4 h-4 text-orange-700 shrink-0 ml-1" />
-                  <span className="font-mono font-bold text-stone-900 select-all">
+                <div className="inline-flex items-center gap-2 p-1.5 rounded-xl bg-stone-100 dark:bg-slate-900 border border-stone-200 dark:border-slate-800 text-xs">
+                  <Mail className="w-4 h-4 text-orange-700 dark:text-orange-400 shrink-0 ml-1" />
+                  <span className="font-mono font-bold text-stone-900 dark:text-white select-all">
                     {getProtectedEmail()}
                   </span>
                   <button
@@ -152,20 +152,20 @@ export const Footer: React.FC<FooterProps> = ({
                   <button
                     type="button"
                     onClick={handleCopyEmail}
-                    className="p-1 rounded-lg bg-white hover:bg-stone-200 text-stone-700 border border-stone-300 cursor-pointer transition-colors"
+                    className="p-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 text-stone-700 dark:text-slate-200 border border-stone-300 dark:border-slate-700 cursor-pointer transition-colors"
                     title={lang === 'nl' ? 'Kopieer e-mailadres' : 'Copy email'}
                   >
                     {isEmailCopied ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     ) : (
-                      <Copy className="w-3.5 h-3.5 text-stone-600" />
+                      <Copy className="w-3.5 h-3.5 text-stone-600 dark:text-slate-400" />
                     )}
                   </button>
                 </div>
               )}
             </div>
 
-            <p className="text-[11px] text-stone-500 font-medium">
+            <p className="text-[11px] text-stone-500 dark:text-slate-400 font-medium">
               {lang === 'nl'
                 ? 'Onafhankelijk freelance initiatief • Facturatie conform ROW (vrijgesteld van btw)'
                 : 'Independent freelance initiative • Operating under Dutch non-VAT regulations'}
@@ -174,14 +174,14 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 2: Quick Links */}
           <div>
-            <p className="font-bold text-stone-900 text-xs uppercase tracking-wider mb-4">
+            <p className="font-bold text-stone-900 dark:text-white text-xs uppercase tracking-wider mb-4">
               {lang === 'nl' ? 'Categorieën' : 'Categories'}
             </p>
             <ul className="space-y-2.5 text-xs font-bold">
               <li>
                 <button
                   onClick={() => handleCategoryClick('Tech & SaaS')}
-                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 dark:hover:text-orange-400 text-stone-600 dark:text-slate-300 transition-colors cursor-pointer text-left"
                 >
                   Tech & SaaS Platforms
                 </button>
@@ -189,7 +189,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => handleCategoryClick('Webshops & E-commerce')}
-                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 dark:hover:text-orange-400 text-stone-600 dark:text-slate-300 transition-colors cursor-pointer text-left"
                 >
                   Webshops & E-commerce
                 </button>
@@ -197,7 +197,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => handleCategoryClick('Sustainable & Green')}
-                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 dark:hover:text-orange-400 text-stone-600 dark:text-slate-300 transition-colors cursor-pointer text-left"
                 >
                   Duurzaam & Groen
                 </button>
@@ -205,7 +205,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => handleCategoryClick('Creative & Agencies')}
-                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 dark:hover:text-orange-400 text-stone-600 dark:text-slate-300 transition-colors cursor-pointer text-left"
                 >
                   Creatief & Bureaus
                 </button>
@@ -213,7 +213,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => handleCategoryClick('Food & Hospitality')}
-                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 dark:hover:text-orange-400 text-stone-600 dark:text-slate-300 transition-colors cursor-pointer text-left"
                 >
                   Voeding & Horeca
                 </button>
@@ -223,14 +223,14 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 3: Community & Support */}
           <div>
-            <p className="font-bold text-stone-900 text-xs uppercase tracking-wider mb-4">
+            <p className="font-bold text-stone-900 dark:text-white text-xs uppercase tracking-wider mb-4">
               {lang === 'nl' ? 'Platform' : 'Platform'}
             </p>
             <ul className="space-y-2.5 text-xs font-bold">
               <li>
                 <button
                   onClick={handleAboutClick}
-                  className="hover:text-orange-600 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-600 dark:hover:text-orange-400 text-stone-600 dark:text-slate-300 transition-colors cursor-pointer text-left"
                 >
                   {lang === 'nl' ? 'Over Samen Online' : 'About Samen Online'}
                 </button>
@@ -238,7 +238,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={onOpenRequestModal}
-                  className="hover:text-orange-600 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-600 dark:hover:text-orange-400 text-stone-600 dark:text-slate-300 transition-colors cursor-pointer text-left"
                 >
                   {lang === 'nl' ? 'Website Aanvragen' : 'Request Website'}
                 </button>
@@ -246,7 +246,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={handleGuidelinesClick}
-                  className="hover:text-orange-600 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-600 dark:hover:text-orange-400 text-stone-600 dark:text-slate-300 transition-colors cursor-pointer text-left"
                 >
                   {lang === 'nl' ? 'Richtlijnen & Transparantie' : 'Guidelines & Transparency'}
                 </button>
@@ -254,7 +254,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={onOpenRequestModal}
-                  className="hover:text-orange-600 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-600 dark:hover:text-orange-400 text-stone-600 dark:text-slate-300 transition-colors cursor-pointer text-left"
                 >
                   {lang === 'nl' ? 'Contact & Vragen' : 'Contact & Questions'}
                 </button>
@@ -265,7 +265,7 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Legal Transparency Disclaimer note */}
-        <div className="pt-8 pb-4 text-center sm:text-left text-[11px] text-stone-600 font-medium border-t border-orange-100">
+        <div className="pt-8 pb-4 text-center sm:text-left text-[11px] text-stone-600 dark:text-slate-400 font-medium border-t border-orange-100 dark:border-slate-800">
           <p>
             {lang === 'nl'
               ? 'Juridische mededeling: Alle op deze website getoonde bedrijfsnamen, sjablonen en review-elementen zijn fictieve voorbeeldconcepten ter demonstratie van webdesign en technische mogelijkheden. Samen Online levert unieke websites op maat gebaseerd op deze ontwerpen.'
@@ -274,26 +274,26 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Bottom copyright line */}
-        <div className="pt-4 border-t border-orange-100/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-stone-500">
+        <div className="pt-4 border-t border-orange-100/60 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-stone-500 dark:text-slate-400">
           <p>© {new Date().getFullYear()} Samen Online. {lang === 'nl' ? 'Alle rechten voorbehouden.' : 'All rights reserved.'}</p>
           <div className="flex items-center gap-4">
             <button
               onClick={handlePrivacyClick}
-              className="hover:text-orange-600 transition-colors cursor-pointer"
+              className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors cursor-pointer"
             >
               {lang === 'nl' ? 'Privacybeleid' : 'Privacy Policy'}
             </button>
             <span>•</span>
             <button
               onClick={handleTermsClick}
-              className="hover:text-orange-600 transition-colors cursor-pointer"
+              className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors cursor-pointer"
             >
               {lang === 'nl' ? 'Voorwaarden' : 'Terms'}
             </button>
             <span>•</span>
             <button
               onClick={handleCookiesClick}
-              className="hover:text-orange-600 transition-colors cursor-pointer"
+              className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors cursor-pointer"
             >
               Cookies
             </button>

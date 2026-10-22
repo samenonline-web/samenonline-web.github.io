@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #1c1917;
@@ -298,31 +300,31 @@ body {
 .global-dark-mode,
 html.dark {
   color-scheme: dark !important;
-  background-color: #0c0a09 !important;
-  color: #f5f5f4 !important;
+  background-color: #07090e !important;
+  color: #f8fafc !important;
 }
 
 /* 1. Header & Sticky Filter Navigation */
 .global-dark-mode header,
 html.dark header {
-  background-color: rgba(18, 16, 14, 0.94) !important;
-  border-color: #292524 !important;
+  background-color: rgba(11, 15, 25, 0.92) !important;
+  border-color: #1e293b !important;
   backdrop-filter: blur(16px) !important;
 }
 
 .global-dark-mode #filter-section,
 html.dark #filter-section {
-  background-color: rgba(18, 16, 14, 0.94) !important;
-  border-color: #292524 !important;
+  background-color: rgba(11, 15, 25, 0.92) !important;
+  border-color: #1e293b !important;
   backdrop-filter: blur(16px) !important;
 }
 
-/* 2. Surfaces, Cards & Containers */
+/* 2. Surfaces, Cards & Containers (Layered Slate over Obsidian) */
 .global-dark-mode .bg-white,
 html.dark .bg-white {
-  background-color: #171513 !important;
-  color: #f5f5f4 !important;
-  border-color: #292524 !important;
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
 }
 
 .global-dark-mode .bg-stone-50,
@@ -331,8 +333,9 @@ html.dark .bg-white {
 html.dark .bg-stone-50,
 html.dark [class*="bg-stone-50/"],
 html.dark .bg-stone-100 {
-  background-color: #1e1b18 !important;
-  color: #f5f5f4 !important;
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
 }
 
 /* Warm Orange/Amber Callout Boxes & Banners */
@@ -348,9 +351,9 @@ html.dark .bg-orange-100,
 html.dark .bg-amber-50,
 html.dark [class*="bg-amber-50/"],
 html.dark .bg-amber-100 {
-  background-color: rgba(234, 88, 12, 0.08) !important;
-  border-color: rgba(234, 88, 12, 0.22) !important;
-  color: #f5f5f4 !important;
+  background-color: rgba(234, 88, 12, 0.12) !important;
+  border-color: rgba(234, 88, 12, 0.35) !important;
+  color: #fed7aa !important;
 }
 
 /* Emerald / Green Callouts & Badges */
@@ -360,8 +363,8 @@ html.dark .bg-amber-100 {
 html.dark .bg-emerald-50,
 html.dark [class*="bg-emerald-50/"],
 html.dark .bg-emerald-100 {
-  background-color: rgba(5, 150, 105, 0.12) !important;
-  border-color: rgba(5, 150, 105, 0.25) !important;
+  background-color: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
   color: #6ee7b7 !important;
 }
 
@@ -372,8 +375,8 @@ html.dark .bg-emerald-100 {
 html.dark .bg-rose-50,
 html.dark [class*="bg-rose-50/"],
 html.dark .bg-rose-100 {
-  background-color: rgba(225, 29, 72, 0.12) !important;
-  border-color: rgba(225, 29, 72, 0.3) !important;
+  background-color: rgba(244, 63, 94, 0.14) !important;
+  border-color: rgba(244, 63, 94, 0.35) !important;
   color: #fda4af !important;
 }
 
@@ -427,7 +430,7 @@ html.dark .text-stone-700,
 html.dark .text-stone-600,
 html.dark .text-slate-700,
 html.dark .text-slate-600 {
-  color: #d6d3d1 !important;
+  color: #cbd5e1 !important;
 }
 
 .global-dark-mode .text-stone-500,
@@ -438,7 +441,7 @@ html.dark .text-stone-500,
 html.dark .text-stone-400,
 html.dark .text-slate-500,
 html.dark .text-slate-400 {
-  color: #a8a29e !important;
+  color: #94a3b8 !important;
 }
 
 /* Accent Colors */
@@ -464,7 +467,7 @@ html.dark .text-emerald-800 {
 .global-dark-mode .text-rose-800,
 html.dark .text-rose-700,
 html.dark .text-rose-800 {
-  color: #f87171 !important;
+  color: #fb7185 !important;
 }
 
 /* 4. Borders & Lines */
@@ -488,12 +491,12 @@ html.dark .border-amber-200,
 html.dark [class*="border-stone-200"],
 html.dark [class*="border-orange-100"],
 html.dark [class*="border-orange-200"] {
-  border-color: #292524 !important;
+  border-color: #1e293b !important;
 }
 
 .global-dark-mode .divide-stone-200 > :not([hidden]) ~ :not([hidden]),
 html.dark .divide-stone-200 > :not([hidden]) ~ :not([hidden]) {
-  border-color: #292524 !important;
+  border-color: #1e293b !important;
 }
 
 /* 5. Interactive Form Inputs & Selects */
@@ -503,16 +506,16 @@ html.dark .divide-stone-200 > :not([hidden]) ~ :not([hidden]) {
 html.dark input,
 html.dark select,
 html.dark textarea {
-  background-color: #1e1b18 !important;
+  background-color: #0b0f19 !important;
   color: #ffffff !important;
-  border-color: #383431 !important;
+  border-color: #334155 !important;
 }
 
 .global-dark-mode input::placeholder,
 .global-dark-mode textarea::placeholder,
 html.dark input::placeholder,
 html.dark textarea::placeholder {
-  color: #78716c !important;
+  color: #64748b !important;
 }
 
 .global-dark-mode input:focus,
@@ -521,19 +524,20 @@ html.dark textarea::placeholder {
 html.dark input:focus,
 html.dark select:focus,
 html.dark textarea:focus {
-  border-color: #ea580c !important;
-  box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.3) !important;
+  border-color: #f97316 !important;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.25) !important;
+  outline: none !important;
 }
 
 .global-dark-mode select option,
 html.dark select option {
-  background-color: #1e1b18 !important;
+  background-color: #0f172a !important;
   color: #ffffff !important;
 }
 
 .global-dark-mode input[type="range"],
 html.dark input[type="range"] {
-  accent-color: #ea580c !important;
+  accent-color: #f97316 !important;
 }
 
 /* 6. High-Contrast Buttons & Filter Pills */
@@ -542,24 +546,24 @@ html.dark input[type="range"] {
 .global-dark-mode a.bg-stone-900,
 html.dark button.bg-stone-900,
 html.dark a.bg-stone-900 {
-  background-color: #262320 !important;
+  background-color: #1e293b !important;
   color: #ffffff !important;
-  border: 1px solid #44403c !important;
+  border: 1px solid #334155 !important;
 }
 
 .global-dark-mode button.bg-stone-900:hover,
 .global-dark-mode a.bg-stone-900:hover,
 html.dark button.bg-stone-900:hover,
 html.dark a.bg-stone-900:hover {
-  background-color: #383431 !important;
-  border-color: #57534e !important;
+  background-color: #334155 !important;
+  border-color: #475569 !important;
 }
 
 /* Active Category Pill in FilterBar */
 .global-dark-mode #filter-section button.bg-stone-900,
 html.dark #filter-section button.bg-stone-900 {
-  background-color: #f5f5f4 !important;
-  color: #0c0a09 !important;
+  background-color: #f8fafc !important;
+  color: #020617 !important;
   border-color: #ffffff !important;
   font-weight: 800 !important;
 }
@@ -573,7 +577,7 @@ html.dark .hover\:bg-stone-100:hover,
 html.dark .hover\:bg-stone-50:hover,
 html.dark .hover\:bg-orange-50:hover,
 html.dark .hover\:bg-orange-100:hover {
-  background-color: #2a2622 !important;
+  background-color: #1e293b !important;
   color: #ffffff !important;
 }
 
@@ -581,37 +585,37 @@ html.dark .hover\:bg-orange-100:hover {
 /* About Section */
 .global-dark-mode #about-section,
 html.dark #about-section {
-  background-color: #141210 !important;
-  border-color: #292524 !important;
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7) !important;
+  background-color: #0b0f19 !important;
+  border-color: #1e293b !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8) !important;
 }
 
 .global-dark-mode #about-section .bg-white,
 html.dark #about-section .bg-white {
-  background-color: #1c1917 !important;
-  border-color: #292524 !important;
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
 }
 
 /* Carousel Section */
 .global-dark-mode .carousel-container,
 html.dark .carousel-container {
-  background-color: #141210 !important;
-  border-color: #292524 !important;
+  background-color: #0b0f19 !important;
+  border-color: #1e293b !important;
 }
 
 /* Footer */
 .global-dark-mode footer,
 html.dark footer {
-  background-color: #110f0e !important;
-  border-color: #292524 !important;
-  color: #a8a29e !important;
+  background-color: #07090e !important;
+  border-color: #1e293b !important;
+  color: #94a3b8 !important;
 }
 
 /* Modals */
 .global-dark-mode .fixed .bg-white,
 html.dark .fixed .bg-white {
-  background-color: #171513 !important;
-  border: 1px solid #292524 !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9) !important;
+  background-color: #0f172a !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.95) !important;
 }
 
