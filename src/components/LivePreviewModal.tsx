@@ -55,10 +55,10 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
       onClick={onClose}
       onWheel={(e) => e.stopPropagation()}
       onTouchMove={(e) => e.stopPropagation()}
-      className="fixed inset-0 z-50 flex items-center justify-center p-1 sm:p-2 bg-black/80 backdrop-blur-md animate-in fade-in duration-200 cursor-pointer overscroll-none"
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-1.5 bg-black/98 sm:bg-black/95 backdrop-blur-2xl animate-in fade-in duration-200 cursor-pointer overscroll-none"
     >
       <div
-        className="bg-stone-900 w-[99vw] max-w-[1650px] h-[98vh] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-stone-800 flex flex-col cursor-default"
+        className="bg-stone-900 w-full sm:w-[99.5vw] max-w-[1780px] h-full sm:h-[99vh] rounded-none sm:rounded-2xl shadow-2xl overflow-hidden border border-stone-800 flex flex-col cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Bar 1: Template Info & Main Actions */}
@@ -70,27 +70,23 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
               {template.logoText}
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-sm sm:text-base tracking-tight text-white">{template.name}</span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                  ● Live Template
-                </span>
-              </div>
+              <span className="font-extrabold text-sm sm:text-base tracking-tight text-white block">{template.name}</span>
               <span className="text-[11px] text-stone-400 font-medium hidden sm:block">
                 {template.subtitleNl || template.subtitle}
               </span>
             </div>
           </div>
 
-          {/* Right: Fullscreen, Request, Close */}
-          <div className="flex items-center gap-2">
+          {/* Right: Fullscreen (Orange), Request, Close with text */}
+          <div className="flex items-center gap-2.5">
+            {/* Orange Fullscreen Button */}
             <Link
               href={`/demo/${template.id}`}
               target="_blank"
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-extrabold shadow-md shadow-orange-600/30 transition-all cursor-pointer"
               title="Open template in nieuw tabblad fullscreen"
             >
-              <span className="hidden sm:inline">Fullscreen Openen</span>
+              <span>Fullscreen Openen</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </Link>
 
@@ -99,18 +95,20 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
                 onClose();
                 onOpenRequestModal(template);
               }}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-extrabold shadow-sm transition-all cursor-pointer whitespace-nowrap"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-white border border-stone-700 text-xs font-bold transition-all cursor-pointer whitespace-nowrap"
             >
               <span>{lang === 'nl' ? 'Website Aanvragen' : 'Get This Website'}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
 
+            {/* Close button with clear text & icon */}
             <button
               onClick={onClose}
-              className="p-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-400 hover:text-white transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-rose-600 text-stone-300 hover:text-white border border-stone-700 hover:border-rose-500 transition-all cursor-pointer text-xs font-extrabold"
               title="Sluiten (ESC)"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
+              <span>Sluiten</span>
             </button>
           </div>
 
@@ -199,13 +197,13 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
 
         </div>
 
-        {/* Live Canvas Area with Large Width & overscroll-contain */}
-        <div className="flex-1 bg-stone-950/80 overflow-y-auto overscroll-contain p-1 sm:p-3 flex justify-center items-start">
+        {/* Live Canvas Area with Maximum Screen Width & overscroll-contain */}
+        <div className="flex-1 bg-black overflow-y-auto overscroll-contain p-0 sm:p-1.5 flex justify-center items-start">
           <div
-            className={`transition-all duration-300 bg-white shadow-2xl overflow-hidden border border-stone-200 ${
+            className={`transition-all duration-300 bg-white shadow-2xl overflow-hidden ${
               viewportMode === 'mobile'
-                ? 'w-full max-w-[390px] min-h-[700px] my-4 ring-8 ring-stone-950 rounded-[44px]'
-                : 'w-full min-h-full rounded-xl sm:rounded-2xl'
+                ? 'w-full max-w-[390px] min-h-[700px] my-4 ring-8 ring-stone-950 rounded-[44px] border border-stone-800'
+                : 'w-full min-h-full rounded-none sm:rounded-xl border-x-0 sm:border border-stone-200'
             }`}
           >
             <TemplateRenderer
