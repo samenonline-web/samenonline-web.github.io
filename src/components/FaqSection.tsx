@@ -42,10 +42,10 @@ const FAQS: FaqItem[] = [
     aEn: 'Absolutely. All our websites are 100% modular. You can start with a clean landing page and activate an iDEAL webshop, allergen filter, instant quote calculator, or salon appointment booking engine whenever your business grows.',
   },
   {
-    qNl: 'Hoe werkt het met domeinnaam en webhosting?',
-    qEn: 'How does it work with domain registration and web hosting?',
-    aNl: 'Bij Samen Online blijf je altijd 100% eigenaar van je eigen domeinnaam en website. Je registreert je domeinnaam en hosting eenvoudig op je eigen naam bij een betrouwbare registrar (zoals Vimexx, TransIP of Hostnet, of gratis via platforms zoals GitHub Pages/Vercel). Wij bouwen de complete website en kunnen assisteren bij het koppelen aan jouw domein. Zo zit je nooit vast aan dure servercontracten of wurgcontracten!',
-    aEn: 'With Samen Online, you always maintain 100% ownership of your website and domain. You easily register your own domain and hosting in your own name with a trusted provider (such as Vimexx, TransIP, or free platforms like GitHub Pages/Vercel). We build the complete website and assist in connecting it to your domain. This ensures you are never locked into expensive recurring server traps!',
+    qNl: 'Zit een domeinnaam, webhosting en zakelijke e-mail hierbij inbegrepen?',
+    qEn: 'Are domain registration, web hosting, and business email included?',
+    aNl: 'Ja, dat kan! Wij bieden een compleet All-in Webhostingpakket aan voor slechts €9,50 per maand. Wij regelen dan jouw eigen .nl domeinnaam, razendsnelle Nederlandse NVMe SSD webhosting, gratis SSL-beveiliging (het groene slotje) én een zakelijk e-mailadres (zoals info@jouwbedrijf.nl). Wil je liever zelf je hosting beheren bij een eigen provider? Dat kan uiteraard ook; dan leveren we de website compleet voor je op zonder maandelijkse hostingkosten.',
+    aEn: 'Yes! We offer a complete All-in Web Hosting package for just €9.50 per month. We take care of your custom .nl domain, high-speed Dutch NVMe SSD hosting, automated SSL encryption, and your business email inbox (e.g. info@yourcompany.nl). Prefer managing your own host? That is also fully supported with zero recurring hosting costs.',
   },
   {
     qNl: 'Wat moet ik zelf aanleveren om van start te gaan?',

@@ -150,10 +150,10 @@ const jsonLd = {
         },
         {
           '@type': 'Question',
-          name: 'Hoe werkt het met domeinnaam en webhosting?',
+          name: 'Zit een domeinnaam, webhosting en zakelijke e-mail hierbij inbegrepen?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Bij Samen Online blijf je altijd 100% eigenaar van je eigen domeinnaam en website. Je registreert je domeinnaam en hosting eenvoudig op je eigen naam bij een betrouwbare registrar (zoals Vimexx, TransIP of Hostnet, of gratis via platforms zoals GitHub Pages/Vercel). Wij bouwen de complete website en assisteren bij het koppelen.',
+            text: 'Ja! Met ons All-in Webhostingpakket voor €9,50 per maand ontzorgen wij alles: jouw eigen .nl domeinnaam, razendsnelle Nederlandse NVMe SSD webhosting, gratis SSL-certificaat én een zakelijk e-mailadres (zoals info@jouwbedrijf.nl). Zelf hosting beheren bij een eigen provider kan uiteraard ook.',
           },
         },
         {

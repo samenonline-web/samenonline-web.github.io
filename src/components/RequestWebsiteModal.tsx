@@ -37,6 +37,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
     notes: '',
   });
 
+  const [includeHosting, setIncludeHosting] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -49,6 +50,11 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
         budget: initialCustomData.budget || prev.budget,
         notes: initialCustomData.notes || prev.notes,
       }));
+      if (initialCustomData.notes?.includes('Zelf hosting regelen')) {
+        setIncludeHosting(false);
+      } else if (initialCustomData.notes?.includes('All-in Hosting')) {
+        setIncludeHosting(true);
+      }
     } else if (selectedTemplate) {
       setFormData((prev) => ({
         ...prev,
@@ -86,6 +92,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
       payload.append('company', formData.companyName || 'Particulier / Nieuw project');
       payload.append('template', formData.templateName);
       payload.append('theme_configuration', `Thema: ${preferredTheme || 'Standaard'}, Font: ${preferredFont || 'Standaard'}`);
+      payload.append('hosting_plan', includeHosting ? 'Ja, All-in Webhosting & .NL Domein (+€9,50/mnd)' : 'Nee, regelt zelf hosting (€0/mnd)');
       payload.append('budget', formData.budget);
       payload.append(
         'message',
@@ -320,6 +327,28 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
+
+            {/* Include Hosting Checkbox */}
+            <label className="flex items-start gap-2.5 p-3 rounded-2xl bg-emerald-50 border border-emerald-200 cursor-pointer text-xs font-semibold text-emerald-950">
+              <input
+                type="checkbox"
+                checked={includeHosting}
+                onChange={(e) => setIncludeHosting(e.target.checked)}
+                className="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4 cursor-pointer"
+              />
+              <div>
+                <span className="font-extrabold block text-stone-900">
+                  {lang === 'nl'
+                    ? 'All-in Webhosting & .NL Domein Verzorgen (+€9,50/mnd)'
+                    : 'Include All-in Web Hosting & Domain (+€9.50/mo)'}
+                </span>
+                <span className="text-[11px] text-emerald-800 font-normal leading-tight block mt-0.5">
+                  {lang === 'nl'
+                    ? 'Ontzorgd op Nederlandse NVMe SSD-servers met gratis SSL en zakelijke e-mail (info@jouwbedrijf.nl).'
+                    : 'Hosted on Dutch NVMe SSD servers with automated SSL and business email.'}
+                </span>
+              </div>
+            </label>
 
             {/* Submit Button */}
             <div className="pt-2">

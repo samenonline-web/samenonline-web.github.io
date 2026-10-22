@@ -71,6 +71,7 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
 }) => {
   const [selectedType, setSelectedType] = useState<string>('business');
   const [selectedAddons, setSelectedAddons] = useState<string[]>(['seo', 'whatsapp']);
+  const [hostingPlan, setHostingPlan] = useState<'managed' | 'self'>('managed');
 
   const activeTypeObj = SITE_TYPES.find((t) => t.id === selectedType) || SITE_TYPES[1];
 
@@ -94,10 +95,15 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
       .filter(Boolean)
       .join(', ');
 
+    const hostingText =
+      hostingPlan === 'managed'
+        ? 'Inclusief All-in Hosting, .nl domein en zakelijke e-mail (+€9,50/mnd)'
+        : 'Klant regelt zelf hosting (€0/mnd)';
+
     onOpenRequestModal({
       templateName: activeTypeObj.nameNl,
-      budget: `Indicatie: €${totalPrice} (Inclusief: ${addonNames || 'Geen extra’s'})`,
-      notes: `Aanvraag via 60-seconden calculator: Type: ${activeTypeObj.nameNl}, Extra opties: ${addonNames || 'Geen'}, Verwachte levertijd: ~${estimatedDays} dagen.`,
+      budget: `Indicatie: €${totalPrice} eenmalig${hostingPlan === 'managed' ? ' + €9,50/mnd all-in hosting' : ''}`,
+      notes: `Aanvraag via 60-seconden calculator: Type: ${activeTypeObj.nameNl}, Extra opties: ${addonNames || 'Geen'}, Hosting: ${hostingText}, Verwachte levertijd: ~${estimatedDays} dagen.`,
     });
   };
 
@@ -188,6 +194,58 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                 })}
               </div>
             </div>
+
+            {/* Step 3: Webhosting & Domeinnaam Keuze */}
+            <div>
+              <label className="text-xs font-black uppercase text-stone-700 tracking-wider block mb-3">
+                3. {lang === 'nl' ? 'Webhosting & Domeinnaam:' : 'Hosting & Domain Registration:'}
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setHostingPlan('managed')}
+                  className={`p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
+                    hostingPlan === 'managed'
+                      ? 'border-emerald-600 bg-emerald-50/60 shadow-2xs ring-1 ring-emerald-500/30'
+                      : 'border-stone-200 hover:border-emerald-300 bg-white'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="font-black text-xs text-emerald-950 flex items-center gap-1">
+                      <span>🚀 All-in Hosting & .NL Domein</span>
+                    </span>
+                    <span className="text-xs font-black text-emerald-700">+€9,50 /mnd</span>
+                  </div>
+                  <p className="text-[11px] text-emerald-800 leading-relaxed font-medium">
+                    {lang === 'nl'
+                      ? 'Inclusief .nl domein, supersnelle NVMe SSD hosting, gratis SSL en zakelijke e-mail (info@jouwbedrijf.nl).'
+                      : 'Includes .nl domain, NVMe SSD hosting, free SSL, and business email.'}
+                  </p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setHostingPlan('self')}
+                  className={`p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
+                    hostingPlan === 'self'
+                      ? 'border-orange-500 bg-orange-50/50 shadow-2xs ring-1 ring-orange-500/30'
+                      : 'border-stone-200 hover:border-orange-200 bg-white'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="font-black text-xs text-stone-900">
+                      {lang === 'nl' ? 'Zelf hosting regelen' : 'Arrange own hosting'}
+                    </span>
+                    <span className="text-xs font-black text-stone-500">€0 /mnd</span>
+                  </div>
+                  <p className="text-[11px] text-stone-500 leading-relaxed font-medium">
+                    {lang === 'nl'
+                      ? 'Je regelt zelf je hosting en domeinnaam bij een eigen registrar. Wij leveren de site netjes op.'
+                      : 'You register your own hosting and domain. We provide complete setup delivery.'}
+                  </p>
+                </button>
+              </div>
+            </div>
           </div>
 
           {/* Right: Realtime Summary Card */}
@@ -202,7 +260,20 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                 <span className="text-xs font-bold text-stone-400"> (eenmalig)</span>
               </div>
 
-              <div className="flex items-center gap-2 text-xs font-bold text-stone-600 mb-6">
+              {hostingPlan === 'managed' ? (
+                <div className="text-sm font-extrabold text-emerald-700 mt-1 flex items-center gap-2">
+                  <span>+ €9,50 per maand</span>
+                  <span className="text-[10px] text-emerald-800 font-bold bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-full">
+                    All-in ontzorgd
+                  </span>
+                </div>
+              ) : (
+                <div className="text-xs font-bold text-stone-500 mt-1">
+                  Geen maandelijkse hostingkosten via ons
+                </div>
+              )}
+
+              <div className="flex items-center gap-2 text-xs font-bold text-stone-600 mt-4 mb-6">
                 <Clock className="w-4 h-4 text-orange-600" />
                 <span>Geschatte levertijd: ~{estimatedDays} werkdagen</span>
               </div>
@@ -216,9 +287,15 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                   <span>Geselecteerde extra&apos;s ({selectedAddons.length}):</span>
                   <strong className="text-stone-900">+€{addonsTotal}</strong>
                 </div>
-                <div className="flex justify-between text-emerald-700 font-bold">
-                  <span>100% Volledig Eigendom:</span>
-                  <span>Geen Wurgcontracten</span>
+                <div className="flex justify-between">
+                  <span>Webhosting & .nl domein:</span>
+                  <strong className={hostingPlan === 'managed' ? 'text-emerald-700' : 'text-stone-700'}>
+                    {hostingPlan === 'managed' ? '€9,50 /mnd' : 'Zelf regelen (€0)'}
+                  </strong>
+                </div>
+                <div className="flex justify-between text-emerald-700 font-bold pt-1 border-t border-stone-200/60">
+                  <span>Garantie & Eigendom:</span>
+                  <span>100% Jouw Eigendom</span>
                 </div>
               </div>
             </div>
