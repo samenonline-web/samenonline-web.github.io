@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Sparkles, Check, ArrowRight, Clock, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles, Check, ArrowRight, Clock, Star, Globe } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 
 interface TemplateCarouselProps {
   templates: WebTemplate[];
   lang: Language;
   onOpenDetails: (template: WebTemplate) => void;
+  onOpenLivePreview: (template: WebTemplate) => void;
   onOpenRequestModal: (template?: WebTemplate) => void;
 }
 
@@ -15,6 +16,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
   templates,
   lang,
   onOpenDetails,
+  onOpenLivePreview,
   onOpenRequestModal,
 }) => {
   const featuredTemplates = templates.filter((t) => t.isFeatured);
@@ -130,16 +132,16 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                     {/* Action Buttons */}
                     <div className="flex flex-wrap items-center gap-3 pt-4">
                       <button
-                        onClick={() => onOpenRequestModal(template)}
+                        onClick={() => onOpenLivePreview(template)}
                         className="px-6 py-3.5 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm shadow-md shadow-orange-600/20 flex items-center gap-2 transform active:scale-95 transition-all cursor-pointer"
                       >
-                        <span>{lang === 'nl' ? 'Offerte Aanvragen' : 'Request Web Design'}</span>
-                        <ArrowRight className="w-4 h-4" />
+                        <Globe className="w-4 h-4" />
+                        <span>{lang === 'nl' ? '🌐 Bekijk Live Template' : '🌐 View Live Template'}</span>
                       </button>
 
                       <button
                         onClick={() => onOpenDetails(template)}
-                        className="px-5 py-3.5 rounded-2xl bg-white hover:bg-orange-50 text-slate-800 font-bold text-sm border-2 border-orange-200 hover:border-orange-300 transition-colors cursor-pointer"
+                        className="px-5 py-3.5 rounded-2xl bg-white hover:bg-orange-50 text-stone-800 font-bold text-sm border-2 border-orange-200 hover:border-orange-300 transition-colors cursor-pointer"
                       >
                         {lang === 'nl' ? 'Bekijk Details' : 'View Details'}
                       </button>

@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { X, MapPin, Heart, Sparkles, Check, Clock, ArrowRight } from 'lucide-react';
+import { X, MapPin, Heart, Sparkles, Check, Clock, ArrowRight, Globe } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 
 interface TemplateModalProps {
   template: WebTemplate | null;
   lang: Language;
   onClose: () => void;
+  onOpenLivePreview: (template: WebTemplate) => void;
   onOpenRequestModal: (template: WebTemplate) => void;
   isBookmarked: boolean;
   onToggleBookmark: (id: string) => void;
@@ -17,6 +18,7 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
   template,
   lang,
   onClose,
+  onOpenLivePreview,
   onOpenRequestModal,
   isBookmarked,
   onToggleBookmark,
@@ -146,7 +148,7 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 bg-orange-50/30 border-t border-orange-100 flex items-center justify-between gap-3">
+        <div className="p-4 bg-orange-50/30 border-t border-orange-100 flex flex-wrap items-center justify-between gap-3">
           <button
             onClick={() => onToggleBookmark(template.id)}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
@@ -163,16 +165,29 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
             </span>
           </button>
 
-          <button
-            onClick={() => {
-              onClose();
-              onOpenRequestModal(template);
-            }}
-            className="px-6 py-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm flex items-center gap-2 shadow-md shadow-orange-600/20 transition-all cursor-pointer"
-          >
-            <span>{lang === 'nl' ? 'Vraag Deze Template Aan' : 'Request This Template'}</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                onClose();
+                onOpenLivePreview(template);
+              }}
+              className="px-5 py-3 rounded-xl bg-white hover:bg-orange-50 text-orange-700 border-2 border-orange-300 font-extrabold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+            >
+              <Globe className="w-4 h-4" />
+              <span>{lang === 'nl' ? 'Bekijk Live Demo' : 'Live Demo'}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                onClose();
+                onOpenRequestModal(template);
+              }}
+              className="px-6 py-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-md shadow-orange-600/20 transition-all cursor-pointer"
+            >
+              <span>{lang === 'nl' ? 'Vraag Deze Template Aan' : 'Request This Template'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
       </div>

@@ -7,6 +7,7 @@ import { TemplateCarousel } from '../src/components/TemplateCarousel';
 import { FilterBar } from '../src/components/FilterBar';
 import { TemplateCard } from '../src/components/TemplateCard';
 import { TemplateModal } from '../src/components/TemplateModal';
+import { LivePreviewModal } from '../src/components/LivePreviewModal';
 import { RequestWebsiteModal } from '../src/components/RequestWebsiteModal';
 import { InfoModal } from '../src/components/InfoModal';
 import { AboutSection } from '../src/components/AboutSection';
@@ -29,6 +30,7 @@ export default function Home() {
   // Modals & Bookmarks
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [activeModalTemplate, setActiveModalTemplate] = useState<WebTemplate | null>(null);
+  const [activePreviewTemplate, setActivePreviewTemplate] = useState<WebTemplate | null>(null);
   const [requestModalTemplate, setRequestModalTemplate] = useState<WebTemplate | null>(null);
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [infoModalData, setInfoModalData] = useState<{ isOpen: boolean; title: string; content: string }>({
@@ -129,6 +131,7 @@ export default function Home() {
         templates={templates}
         lang={lang}
         onOpenDetails={setActiveModalTemplate}
+        onOpenLivePreview={setActivePreviewTemplate}
         onOpenRequestModal={handleOpenRequestModal}
       />
 
@@ -181,6 +184,7 @@ export default function Home() {
                 template={template}
                 lang={lang}
                 onOpenDetails={setActiveModalTemplate}
+                onOpenLivePreview={setActivePreviewTemplate}
                 onOpenRequestModal={handleOpenRequestModal}
                 isBookmarked={bookmarks.includes(template.id)}
                 onToggleBookmark={handleToggleBookmark}
@@ -232,9 +236,18 @@ export default function Home() {
         template={activeModalTemplate}
         lang={lang}
         onClose={() => setActiveModalTemplate(null)}
+        onOpenLivePreview={setActivePreviewTemplate}
         onOpenRequestModal={handleOpenRequestModal}
         isBookmarked={activeModalTemplate ? bookmarks.includes(activeModalTemplate.id) : false}
         onToggleBookmark={handleToggleBookmark}
+      />
+
+      {/* Live Interactive Preview Modal with Live Color Theme Customizer */}
+      <LivePreviewModal
+        template={activePreviewTemplate}
+        lang={lang}
+        onClose={() => setActivePreviewTemplate(null)}
+        onOpenRequestModal={handleOpenRequestModal}
       />
 
       {/* Request Website Modal */}

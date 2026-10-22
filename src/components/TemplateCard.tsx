@@ -1,13 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Heart, Sparkles, Clock, Check, ArrowRight, MapPin, Star } from 'lucide-react';
+import { Heart, Sparkles, Clock, Check, ArrowRight, MapPin, Globe } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 
 interface TemplateCardProps {
   template: WebTemplate;
   lang: Language;
   onOpenDetails: (template: WebTemplate) => void;
+  onOpenLivePreview: (template: WebTemplate) => void;
   onOpenRequestModal: (template: WebTemplate) => void;
   isBookmarked: boolean;
   onToggleBookmark: (id: string) => void;
@@ -17,6 +18,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
   template,
   lang,
   onOpenDetails,
+  onOpenLivePreview,
   onOpenRequestModal,
   isBookmarked,
   onToggleBookmark,
@@ -117,21 +119,31 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         </div>
 
         {/* Actions */}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="space-y-2">
           <button
-            onClick={() => onOpenDetails(template)}
-            className="w-full py-2.5 rounded-xl bg-orange-50/70 hover:bg-orange-100 text-stone-800 font-bold text-xs border border-orange-200/70 transition-colors cursor-pointer"
+            onClick={() => onOpenLivePreview(template)}
+            className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm shadow-orange-600/20 cursor-pointer"
           >
-            {lang === 'nl' ? 'Bekijk Details' : 'View Details'}
+            <Globe className="w-3.5 h-3.5" />
+            <span>{lang === 'nl' ? '🌐 Bekijk Live Template' : '🌐 View Live Template'}</span>
           </button>
-          
-          <button
-            onClick={() => onOpenRequestModal(template)}
-            className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer"
-          >
-            <span>{lang === 'nl' ? 'Offerte' : 'Get Quote'}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              onClick={() => onOpenDetails(template)}
+              className="w-full py-2 rounded-xl bg-orange-50/70 hover:bg-orange-100 text-stone-800 font-bold text-xs border border-orange-200/70 transition-colors cursor-pointer"
+            >
+              {lang === 'nl' ? 'Details' : 'Details'}
+            </button>
+            
+            <button
+              onClick={() => onOpenRequestModal(template)}
+              className="w-full py-2 rounded-xl bg-white hover:bg-orange-50 text-orange-700 font-bold text-xs border border-orange-300 flex items-center justify-center gap-1 transition-colors cursor-pointer"
+            >
+              <span>{lang === 'nl' ? 'Offerte' : 'Get Quote'}</span>
+              <ArrowRight className="w-3 h-3" />
+            </button>
+          </div>
         </div>
 
       </div>
