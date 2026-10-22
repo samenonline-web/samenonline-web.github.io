@@ -91,14 +91,14 @@ export default function Home() {
     };
   }, [isAnyModalOpen]);
 
-  // Initialize theme from storage or system preference
+  // Initialize theme from storage (defaults to light mode)
   React.useEffect(() => {
     try {
       const savedTheme = localStorage.getItem('samenonline-theme');
       if (savedTheme === 'dark') {
         setIsDarkMode(true);
-      } else if (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        setIsDarkMode(true);
+      } else {
+        setIsDarkMode(false);
       }
     } catch {}
   }, []);
