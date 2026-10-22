@@ -1,15 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ColorTheme } from '../../types/theme';
-import { Clock, Check, ShoppingBag, Heart, ArrowRight } from 'lucide-react';
+import { TemplateProps } from '../../types/theme';
+import { Clock, Check, ShoppingBag, Heart, ArrowRight, Sun, Moon } from 'lucide-react';
 
-interface TemplateProps {
-  theme: ColorTheme;
-  onRequestQuote: () => void;
-}
-
-export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({ theme, onRequestQuote }) => {
+export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({ theme, isDarkMode, onToggleDarkMode, onRequestQuote }) => {
   const [selectedSlot, setSelectedSlot] = useState('08:30 - 09:30');
   const [cartItems, setCartItems] = useState<{ name: string; price: number }[]>([]);
 
@@ -38,12 +33,21 @@ export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({ theme, onRequestQ
             <span className="block text-[10px] text-stone-500 font-medium">Haarlem • Sinds 1934</span>
           </div>
         </div>
-        <div className="flex items-center gap-4 text-xs font-bold">
+        <div className="flex items-center gap-3 text-xs font-bold">
           <nav className="hidden sm:flex items-center gap-5 text-stone-600">
             <a href="#assortiment" className="hover:text-stone-900">Vers Assortiment</a>
             <a href="#tijdslot" className="hover:text-stone-900">Afhaaltijden</a>
             <a href="#verhaal" className="hover:text-stone-900">Ons Verhaal</a>
           </nav>
+          {onToggleDarkMode && (
+            <button
+              onClick={onToggleDarkMode}
+              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors cursor-pointer border border-stone-200"
+              title={isDarkMode ? 'Lichte Modus' : 'Donkere Modus'}
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
+            </button>
+          )}
           <button
             onClick={onRequestQuote}
             className={`px-4 py-2 rounded-xl ${theme.primary} ${theme.primaryHover} text-white text-xs font-bold shadow-xs cursor-pointer`}

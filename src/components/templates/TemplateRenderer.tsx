@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ColorTheme, FontStyle } from '../../types/theme';
+import { ColorTheme, FontStyle, TemplateProps } from '../../types/theme';
 import { GrachtenWebAgency } from './GrachtenWebAgency';
 import { DuurzaamKledingShop } from './DuurzaamKledingShop';
 import { VersVogelBoerderij } from './VersVogelBoerderij';
@@ -15,6 +15,8 @@ interface TemplateRendererProps {
   templateId: string;
   theme: ColorTheme;
   fontStyle?: FontStyle;
+  isDarkMode?: boolean;
+  onToggleDarkMode?: () => void;
   onRequestQuote: () => void;
 }
 
@@ -22,38 +24,50 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
   templateId,
   theme,
   fontStyle,
+  isDarkMode = false,
+  onToggleDarkMode,
   onRequestQuote,
 }) => {
+  const templateProps: TemplateProps = {
+    theme,
+    isDarkMode,
+    onToggleDarkMode,
+    onRequestQuote,
+  };
+
   const renderContent = () => {
     switch (templateId) {
       case 'grachten-web-agency':
-        return <GrachtenWebAgency theme={theme} onRequestQuote={onRequestQuote} />;
+        return <GrachtenWebAgency {...templateProps} />;
       case 'duurzaam-kleding-webshop':
-        return <DuurzaamKledingShop theme={theme} onRequestQuote={onRequestQuote} />;
+        return <DuurzaamKledingShop {...templateProps} />;
       case 'versvogel-boerenwinkel':
-        return <VersVogelBoerderij theme={theme} onRequestQuote={onRequestQuote} />;
+        return <VersVogelBoerderij {...templateProps} />;
       case 'stroom-delen-saas':
-        return <StroomDelenSaaS theme={theme} onRequestQuote={onRequestQuote} />;
+        return <StroomDelenSaaS {...templateProps} />;
       case 'fiets-craft-bv':
-        return <FietsCraftConfigurator theme={theme} onRequestQuote={onRequestQuote} />;
+        return <FietsCraftConfigurator {...templateProps} />;
       case 'ambacht-bakkerij':
-        return <AmbachtBakkerijDemo theme={theme} onRequestQuote={onRequestQuote} />;
+        return <AmbachtBakkerijDemo {...templateProps} />;
       case 'zonne-pionier-energy':
-        return <ZonnePionierSolar theme={theme} onRequestQuote={onRequestQuote} />;
+        return <ZonnePionierSolar {...templateProps} />;
       case 'stadskliniek-fysio':
-        return <StadskliniekFysio theme={theme} onRequestQuote={onRequestQuote} />;
+        return <StadskliniekFysio {...templateProps} />;
       default:
-        return <GrachtenWebAgency theme={theme} onRequestQuote={onRequestQuote} />;
+        return <GrachtenWebAgency {...templateProps} />;
     }
   };
 
   return (
     <div
       style={{ fontFamily: fontStyle?.fontFamily || 'inherit' }}
-      className="template-font-scope min-h-full"
+      className={`template-font-scope min-h-full transition-colors duration-200 ${
+        isDarkMode ? 'template-dark-mode' : ''
+      }`}
     >
       {renderContent()}
     </div>
   );
 };
+
 

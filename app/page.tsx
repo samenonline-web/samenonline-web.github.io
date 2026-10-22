@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Navbar } from '../src/components/Navbar';
+import { Navbar } from '@/src/components/Navbar';
 import { Hero } from '../src/components/Hero';
 import { TemplateCarousel } from '../src/components/TemplateCarousel';
 import { FilterBar } from '../src/components/FilterBar';
@@ -112,11 +112,9 @@ export default function Home() {
         }
 
         // Bookmarks filter
-        if (showOnlyBookmarks && !bookmarks.includes(tmpl.id)) {
-          return false;
-        }
+        return !(showOnlyBookmarks && !bookmarks.includes(tmpl.id));
 
-        return true;
+
       })
       .sort((a, b) => {
         if (sortBy === 'rating') return b.rating - a.rating;

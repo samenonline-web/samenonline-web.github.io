@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Palette, ArrowRight, Heart, Type } from 'lucide-react';
+import { ArrowLeft, Palette, ArrowRight, Heart, Type, Sun, Moon } from 'lucide-react';
 import { WebTemplate } from '../../../src/types/company';
 import { COLOR_THEMES, ColorThemeId, FONT_STYLES, FontStyleId } from '../../../src/types/theme';
 import { TemplateRenderer } from '../../../src/components/templates/TemplateRenderer';
@@ -15,6 +15,7 @@ interface DemoClientViewProps {
 export const DemoClientView: React.FC<DemoClientViewProps> = ({ template }) => {
   const [selectedThemeId, setSelectedThemeId] = useState<ColorThemeId>('orange');
   const [selectedFontId, setSelectedFontId] = useState<FontStyleId>('sans');
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
 
   const currentTheme = COLOR_THEMES[selectedThemeId];
@@ -100,6 +101,29 @@ export const DemoClientView: React.FC<DemoClientViewProps> = ({ template }) => {
             </div>
           </div>
 
+          {/* Dark / Light Mode Toggle */}
+          <button
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-extrabold transition-all cursor-pointer ${
+              isDarkMode
+                ? 'bg-amber-400/20 text-amber-300 border-amber-400/40 hover:bg-amber-400/30'
+                : 'bg-stone-950 text-stone-300 border-stone-800 hover:bg-stone-800 hover:text-white'
+            }`}
+            title={isDarkMode ? 'Schakel naar Light mode' : 'Schakel naar Dark mode'}
+          >
+            {isDarkMode ? (
+              <>
+                <Sun className="w-3.5 h-3.5 text-amber-300" />
+                <span>Light</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-3.5 h-3.5 text-stone-300" />
+                <span>Dark</span>
+              </>
+            )}
+          </button>
+
         </div>
 
         {/* Request CTA */}
@@ -116,11 +140,13 @@ export const DemoClientView: React.FC<DemoClientViewProps> = ({ template }) => {
       </header>
 
       {/* Main Fullscreen Template Canvas */}
-      <main className="flex-1 bg-white">
+      <main className={`flex-1 ${isDarkMode ? 'bg-stone-950 text-white' : 'bg-white'}`}>
         <TemplateRenderer
           templateId={template.id}
           theme={currentTheme}
           fontStyle={currentFont}
+          isDarkMode={isDarkMode}
+          onToggleDarkMode={() => setIsDarkMode((prev) => !prev)}
           onRequestQuote={() => setIsRequestModalOpen(true)}
         />
       </main>

@@ -1,15 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ColorTheme } from '../../types/theme';
-import { Check, ArrowRight, ShieldCheck, Wrench, MapPin } from 'lucide-react';
+import { TemplateProps } from '../../types/theme';
+import { Check, ArrowRight, ShieldCheck, Wrench, MapPin, Sun, Moon } from 'lucide-react';
 
-interface TemplateProps {
-  theme: ColorTheme;
-  onRequestQuote: () => void;
-}
-
-export const FietsCraftConfigurator: React.FC<TemplateProps> = ({ theme, onRequestQuote }) => {
+export const FietsCraftConfigurator: React.FC<TemplateProps> = ({ theme, isDarkMode, onToggleDarkMode, onRequestQuote }) => {
   const [frameColor, setFrameColor] = useState<'matzwart' | 'koningsblauw' | 'bosgroen' | 'oranje'>('matzwart');
   const [motorType, setMotorType] = useState<'city' | 'sport' | 'cargo'>('city');
   const [batterySize, setBatterySize] = useState<'standard' | 'extra'>('standard');
@@ -34,12 +29,21 @@ export const FietsCraftConfigurator: React.FC<TemplateProps> = ({ theme, onReque
             <span className="block text-[10px] text-stone-500 font-medium">Rotterdam • Handgemaakte E-Bikes</span>
           </div>
         </div>
-        <div className="flex items-center gap-4 text-xs font-bold">
+        <div className="flex items-center gap-3 text-xs font-bold">
           <nav className="hidden sm:flex items-center gap-5 text-stone-600">
             <a href="#configurator" className="hover:text-stone-900">Stel Jouw Fiets Samen</a>
             <a href="#proefrit" className="hover:text-stone-900">Boek Proefrit</a>
             <a href="#garantie" className="hover:text-stone-900">5 Jaar Garantie</a>
           </nav>
+          {onToggleDarkMode && (
+            <button
+              onClick={onToggleDarkMode}
+              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors cursor-pointer border border-stone-200"
+              title={isDarkMode ? 'Lichte Modus' : 'Donkere Modus'}
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
+            </button>
+          )}
           <button
             onClick={onRequestQuote}
             className={`px-4 py-2 rounded-xl ${theme.primary} ${theme.primaryHover} text-white text-xs font-bold shadow-xs cursor-pointer`}

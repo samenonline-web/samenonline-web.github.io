@@ -1,15 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ColorTheme } from '../../types/theme';
-import { Zap, Check, ArrowRight, BarChart3, ShieldCheck, Activity, Users } from 'lucide-react';
+import { TemplateProps } from '../../types/theme';
+import { Zap, Check, ArrowRight, BarChart3, ShieldCheck, Activity, Users, Sun, Moon } from 'lucide-react';
 
-interface TemplateProps {
-  theme: ColorTheme;
-  onRequestQuote: () => void;
-}
-
-export const StroomDelenSaaS: React.FC<TemplateProps> = ({ theme, onRequestQuote }) => {
+export const StroomDelenSaaS: React.FC<TemplateProps> = ({ theme, isDarkMode, onToggleDarkMode, onRequestQuote }) => {
   const [kwhMonthly, setKwhMonthly] = useState(450);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
 
@@ -38,6 +33,16 @@ export const StroomDelenSaaS: React.FC<TemplateProps> = ({ theme, onRequestQuote
         </nav>
 
         <div className="flex items-center gap-3">
+          {onToggleDarkMode && (
+            <button
+              onClick={onToggleDarkMode}
+              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors cursor-pointer border border-stone-200"
+              title={isDarkMode ? 'Lichte Modus' : 'Donkere Modus'}
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
+            </button>
+          )}
+
           <button
             onClick={onRequestQuote}
             className={`px-4 py-2 rounded-xl ${theme.primary} ${theme.primaryHover} text-white text-xs font-bold shadow-xs cursor-pointer`}

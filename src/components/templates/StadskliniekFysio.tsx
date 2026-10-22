@@ -1,15 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ColorTheme } from '../../types/theme';
-import { Heart, Calendar, Check, ArrowRight, ShieldCheck, UserCheck, Clock } from 'lucide-react';
+import { TemplateProps } from '../../types/theme';
+import { Heart, Calendar, Check, ArrowRight, ShieldCheck, UserCheck, Clock, Sun, Moon } from 'lucide-react';
 
-interface TemplateProps {
-  theme: ColorTheme;
-  onRequestQuote: () => void;
-}
-
-export const StadskliniekFysio: React.FC<TemplateProps> = ({ theme, onRequestQuote }) => {
+export const StadskliniekFysio: React.FC<TemplateProps> = ({ theme, isDarkMode, onToggleDarkMode, onRequestQuote }) => {
   const [selectedTherapy, setSelectedTherapy] = useState('Fysiotherapie Algemeen');
   const [selectedDay, setSelectedDay] = useState('Morgen');
   const [selectedTime, setSelectedTime] = useState('10:00');
@@ -34,12 +29,21 @@ export const StadskliniekFysio: React.FC<TemplateProps> = ({ theme, onRequestQuo
             <span className="block text-[10px] text-stone-500 font-medium">Maastricht • Praktijk voor Beweging & Zorg</span>
           </div>
         </div>
-        <div className="flex items-center gap-4 text-xs font-bold">
+        <div className="flex items-center gap-3 text-xs font-bold">
           <nav className="hidden sm:flex items-center gap-5 text-stone-600">
             <a href="#afspraak" className="hover:text-stone-900">Afspraak Maken</a>
             <a href="#behandelingen" className="hover:text-stone-900">Behandelingen</a>
             <a href="#vergoeding" className="hover:text-stone-900">Vergoeding & Zorg</a>
           </nav>
+          {onToggleDarkMode && (
+            <button
+              onClick={onToggleDarkMode}
+              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors cursor-pointer border border-stone-200"
+              title={isDarkMode ? 'Lichte Modus' : 'Donkere Modus'}
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
+            </button>
+          )}
           <button
             onClick={onRequestQuote}
             className={`px-4 py-2 rounded-xl ${theme.primary} ${theme.primaryHover} text-white text-xs font-bold shadow-xs cursor-pointer`}

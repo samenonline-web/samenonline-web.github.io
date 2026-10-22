@@ -129,3 +129,11 @@ export const FONT_STYLES: Record<FontStyleId, FontStyle> = {
   },
 };
 
+export interface TemplateProps {
+  theme: ColorTheme;
+  isDarkMode?: boolean;
+  onToggleDarkMode?: () => void;
+  onRequestQuote: () => void;
+}
+
+

@@ -1,15 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ColorTheme } from '../../types/theme';
-import { ShoppingBag, Heart, Check, Star, ShieldCheck, Truck, RefreshCw, X } from 'lucide-react';
+import { TemplateProps } from '../../types/theme';
+import { ShoppingBag, Heart, Check, Star, ShieldCheck, Truck, RefreshCw, X, Sun, Moon } from 'lucide-react';
 
-interface TemplateProps {
-  theme: ColorTheme;
-  onRequestQuote: () => void;
-}
-
-export const DuurzaamKledingShop: React.FC<TemplateProps> = ({ theme, onRequestQuote }) => {
+export const DuurzaamKledingShop: React.FC<TemplateProps> = ({ theme, isDarkMode, onToggleDarkMode, onRequestQuote }) => {
   const [cart, setCart] = useState<{ id: string; name: string; price: number }[]>([]);
   const [selectedSize, setSelectedSize] = useState<Record<string, string>>({
     p1: 'M',
@@ -83,6 +78,16 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({ theme, onRequestQ
         </nav>
 
         <div className="flex items-center gap-3">
+          {onToggleDarkMode && (
+            <button
+              onClick={onToggleDarkMode}
+              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors cursor-pointer border border-stone-200"
+              title={isDarkMode ? 'Lichte Modus' : 'Donkere Modus'}
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
+            </button>
+          )}
+
           <button
             onClick={() => setIsCartOpen(!isCartOpen)}
             className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 transition-colors text-xs font-bold text-stone-800 cursor-pointer relative"

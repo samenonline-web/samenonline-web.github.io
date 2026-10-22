@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, ExternalLink, Smartphone, Monitor, Palette, ArrowRight, Type, Check } from 'lucide-react';
+import { X, ExternalLink, Smartphone, Monitor, Palette, ArrowRight, Type, Check, Sun, Moon } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 import { COLOR_THEMES, ColorThemeId, FONT_STYLES, FontStyleId } from '../types/theme';
 import { TemplateRenderer } from './templates/TemplateRenderer';
@@ -23,6 +23,7 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
   const [selectedThemeId, setSelectedThemeId] = useState<ColorThemeId>('orange');
   const [selectedFontId, setSelectedFontId] = useState<FontStyleId>('sans');
   const [viewportMode, setViewportMode] = useState<'desktop' | 'mobile'>('desktop');
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     if (!template) return;
@@ -173,25 +174,50 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
             </div>
           </div>
 
-          {/* 3. Viewport Toggles (Desktop vs Mobile) */}
-          <div className="flex items-center gap-1.5 bg-stone-950 p-1 rounded-xl border border-stone-800 text-xs font-bold">
+          {/* 3. Viewport Toggles (Desktop vs Mobile) & Dark Mode Toggle */}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 bg-stone-950 p-1 rounded-xl border border-stone-800 text-xs font-bold">
+              <button
+                onClick={() => setViewportMode('desktop')}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
+                  viewportMode === 'desktop' ? 'bg-stone-800 text-white font-extrabold' : 'text-stone-400 hover:text-white'
+                }`}
+              >
+                <Monitor className="w-3.5 h-3.5" />
+                <span>Desktop</span>
+              </button>
+              <button
+                onClick={() => setViewportMode('mobile')}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
+                  viewportMode === 'mobile' ? 'bg-stone-800 text-white font-extrabold' : 'text-stone-400 hover:text-white'
+                }`}
+              >
+                <Smartphone className="w-3.5 h-3.5" />
+                <span>Mobiel</span>
+              </button>
+            </div>
+
+            {/* Dark / Light Mode Toggle */}
             <button
-              onClick={() => setViewportMode('desktop')}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                viewportMode === 'desktop' ? 'bg-stone-800 text-white font-extrabold' : 'text-stone-400 hover:text-white'
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-extrabold transition-all cursor-pointer ${
+                isDarkMode
+                  ? 'bg-amber-400/20 text-amber-300 border-amber-400/40 hover:bg-amber-400/30'
+                  : 'bg-stone-950 text-stone-300 border-stone-800 hover:bg-stone-800 hover:text-white'
               }`}
+              title={isDarkMode ? 'Schakel naar Light mode' : 'Schakel naar Dark mode'}
             >
-              <Monitor className="w-3.5 h-3.5" />
-              <span>Desktop</span>
-            </button>
-            <button
-              onClick={() => setViewportMode('mobile')}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                viewportMode === 'mobile' ? 'bg-stone-800 text-white font-extrabold' : 'text-stone-400 hover:text-white'
-              }`}
-            >
-              <Smartphone className="w-3.5 h-3.5" />
-              <span>Mobiel</span>
+              {isDarkMode ? (
+                <>
+                  <Sun className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Light</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-3.5 h-3.5 text-stone-300" />
+                  <span>Dark</span>
+                </>
+              )}
             </button>
           </div>
 
@@ -200,16 +226,18 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
         {/* Live Canvas Area with Maximum Screen Width & overscroll-contain */}
         <div className="flex-1 bg-black overflow-y-auto overscroll-contain p-0 sm:p-1.5 flex justify-center items-start">
           <div
-            className={`transition-all duration-300 bg-white shadow-2xl overflow-hidden ${
+            className={`transition-all duration-300 ${isDarkMode ? 'bg-stone-950 text-white' : 'bg-white text-stone-900'} shadow-2xl overflow-hidden ${
               viewportMode === 'mobile'
                 ? 'w-full max-w-[390px] min-h-[700px] my-4 ring-8 ring-stone-950 rounded-[44px] border border-stone-800'
-                : 'w-full min-h-full rounded-none sm:rounded-xl border-x-0 sm:border border-stone-200'
+                : 'w-full min-h-full rounded-none sm:rounded-xl border-x-0 sm:border border-stone-800'
             }`}
           >
             <TemplateRenderer
               templateId={template.id}
               theme={currentTheme}
               fontStyle={currentFont}
+              isDarkMode={isDarkMode}
+              onToggleDarkMode={() => setIsDarkMode((prev) => !prev)}
               onRequestQuote={() => {
                 onClose();
                 onOpenRequestModal(template);
