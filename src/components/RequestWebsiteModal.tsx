@@ -175,26 +175,17 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 : `Thank you ${formData.clientName}! We have received your inquiry for "${formData.templateName}". We will contact you as soon as possible.`}
             </p>
 
-            {/* Direct WhatsApp Callout */}
-            <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-left space-y-2 mt-4">
-              <div className="flex items-center gap-2 text-emerald-900 font-bold text-xs">
-                <MessageCircle className="w-4 h-4 text-emerald-600" />
-                <span>Liever direct even informeel overleggen?</span>
+            {/* Reassurance Callout */}
+            <div className="p-4 bg-orange-50 rounded-2xl border border-orange-200 text-left space-y-2 mt-4">
+              <div className="flex items-center gap-2 text-orange-950 font-bold text-xs">
+                <CheckCircle2 className="w-4 h-4 text-orange-600" />
+                <span>Wat gebeurt er nu?</span>
               </div>
-              <p className="text-[11px] text-emerald-800 font-medium">
-                Stuur ons direct een WhatsApp-bericht met je vragen, we denken graag meteen met je mee!
-              </p>
-              <a
-                href={`https://wa.me/31612345678?text=${encodeURIComponent(
-                  `Hallo Samen Online! Ik heb zojuist via het formulier een aanvraag ingediend voor ${formData.templateName} (${formData.clientName}).`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-xs transition-colors"
-              >
-                <span>Open WhatsApp Chat</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+              <ul className="text-[11px] text-stone-700 font-medium space-y-1 list-disc list-inside">
+                <li>We bekijken jouw gekozen concept en wensen aandachtig.</li>
+                <li>Je ontvangt binnen 24 uur een heldere reactie & vrijblijvende prijsindicatie per e-mail.</li>
+                <li>Geen spam, geen ongewenste telefoontjes — jij behoudt de controle.</li>
+              </ul>
             </div>
 
             <button

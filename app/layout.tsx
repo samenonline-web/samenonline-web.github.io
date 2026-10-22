@@ -50,7 +50,6 @@ const jsonLd = {
       url: 'https://samenonline-web.github.io',
       description:
         "Dé partner voor professionele websites, webshops en online vindbaarheid voor Nederlandse MKB'ers en zzp'ers.",
-      telephone: '+31612345678',
       priceRange: '€€',
       address: {
         '@type': 'PostalAddress',
@@ -70,7 +69,6 @@ const jsonLd = {
           closes: '18:00',
         },
       ],
-      sameAs: ['https://wa.me/31612345678'],
     },
     {
       '@type': 'WebSite',

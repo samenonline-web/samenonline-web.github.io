@@ -6,6 +6,7 @@ import { Language } from '../types/company';
 
 interface FaqSectionProps {
   lang: Language;
+  onOpenContactModal?: () => void;
 }
 
 interface FaqItem {
@@ -60,11 +61,20 @@ const FAQS: FaqItem[] = [
   },
 ];
 
-export const FaqSection: React.FC<FaqSectionProps> = ({ lang }) => {
+export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleAccordion = (index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
+  };
+
+  const handleCtaClick = () => {
+    if (onOpenContactModal) {
+      onOpenContactModal();
+    } else {
+      const el = document.getElementById('prijs-calculator') || document.getElementById('templates-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -147,19 +157,17 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang }) => {
               </div>
               <div className="text-xs text-stone-600 font-medium">
                 {lang === 'nl'
-                  ? 'Stel hem direct via WhatsApp of vraag vrijblijvend advies aan.'
-                  : 'Ask directly through WhatsApp or request an obligation-free quote.'}
+                  ? 'Vraag vrijblijvend advies aan of laat een bericht achter via ons formulier.'
+                  : 'Request an obligation-free consultation or leave a message through our form.'}
               </div>
             </div>
           </div>
-          <a
-            href="https://wa.me/31612345678?text=Hallo%20Samen%20Online,%20ik%20heb%20een%20vraag%20over%20een%20website%20voor%20mijn%20bedrijf!"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm shrink-0 inline-flex items-center gap-1.5"
+          <button
+            onClick={handleCtaClick}
+            className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition-all shadow-sm shrink-0 inline-flex items-center gap-1.5 cursor-pointer"
           >
-            <span>{lang === 'nl' ? 'Stel vraag op WhatsApp' : 'Ask on WhatsApp'}</span>
-          </a>
+            <span>{lang === 'nl' ? 'Stel je vraag direct' : 'Ask a question'}</span>
+          </button>
         </div>
       </div>
     </section>

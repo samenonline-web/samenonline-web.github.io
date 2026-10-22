@@ -271,7 +271,7 @@ export default function Home() {
         <AboutSection lang={lang} />
 
         {/* SEO FAQ Section */}
-        <FaqSection lang={lang} />
+        <FaqSection lang={lang} onOpenContactModal={() => handleOpenRequestModal()} />
       </main>
 
       {/* Footer */}
