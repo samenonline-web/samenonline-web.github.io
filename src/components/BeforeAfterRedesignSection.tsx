@@ -240,8 +240,13 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
         <span>Nieuwe Next.js Site</span>
       </div>
 
-      {/* Realtime Performance Audit Scorecard */}
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Benchmark Comparison Scorecard */}
+      <div className="mt-10 text-center">
+        <span className="text-[11px] font-bold text-stone-600 bg-stone-100 px-3.5 py-1 rounded-full border border-stone-200 inline-block mb-4">
+          📊 Typische Prestatie Benchmark (Traditioneel CMS vs. Next.js 16)
+        </span>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1 */}
         <div className="p-5 rounded-2xl bg-white border-2 border-stone-200/90 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
@@ -250,7 +255,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
           </div>
           <div className="space-y-1">
             <div className="flex justify-between items-baseline">
-              <span className="text-xs font-bold text-rose-700">Oud: 34 / 100</span>
+              <span className="text-xs font-bold text-rose-700">Oud: ~34 / 100</span>
               <span className="text-xl font-black text-emerald-600">Nieuw: 99 / 100</span>
             </div>
             <div className="w-full bg-stone-100 h-2 rounded-full overflow-hidden flex">

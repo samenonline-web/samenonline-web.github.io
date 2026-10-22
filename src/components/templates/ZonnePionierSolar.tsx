@@ -154,7 +154,7 @@ export const ZonnePionierSolar: React.FC<TemplateProps> = ({
             <span>•</span>
             <span className="text-stone-800 font-extrabold">⚡ Enphase & SolarEdge Partner</span>
             <span>•</span>
-            <span className="text-stone-800 font-extrabold">⭐ 4.9/5 op Trustpilot (420+ reviews)</span>
+            <span className="text-stone-800 font-extrabold">☀️ Vakkundige Installatie Binnen 3 Weken</span>
           </div>
         </div>
       </section>

@@ -181,7 +181,7 @@ export const RoiEstimatorCalculator: React.FC<RoiEstimatorCalculatorProps> = ({
               <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-3 rounded-xl border border-white/10">
                 <Clock className="w-4 h-4 text-orange-400 shrink-0" />
                 <span>
-                  Bij een website-investering van <strong>€195</strong> is je site al binnen <strong>~{paybackDays} dagen</strong> volledig terugverdiend!
+                  Bij een website-investering van <strong>€195</strong> is je site bij deze indicatie al binnen <strong>~{paybackDays} dagen</strong> terugverdiend.*
                 </span>
               </div>
             </div>
@@ -192,7 +192,7 @@ export const RoiEstimatorCalculator: React.FC<RoiEstimatorCalculatorProps> = ({
                 onClick={handleApplyRoi}
                 className="w-full py-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/30 transition-all cursor-pointer"
               >
-                <span>{lang === 'nl' ? 'Verzilver Dit Rendement (Vraag Offerte Aan)' : 'Claim This Growth (Request Quote)'}</span>
+                <span>{lang === 'nl' ? 'Bereken Jouw Investering (Vraag Offerte Aan)' : 'Calculate Investment (Request Quote)'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -201,6 +201,10 @@ export const RoiEstimatorCalculator: React.FC<RoiEstimatorCalculatorProps> = ({
                 <span>•</span>
                 <span>⚡ Binnen 2 tot 5 dagen live</span>
               </div>
+
+              <p className="text-[10px] text-stone-500 text-center leading-normal">
+                * Indicatieve berekening ter illustratie van conversiewinst. Werkelijke resultaten variëren per branche en aanbod.
+              </p>
             </div>
 
           </div>

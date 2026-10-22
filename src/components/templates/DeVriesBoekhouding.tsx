@@ -178,7 +178,7 @@ export const DeVriesBoekhouding: React.FC<TemplateProps> = ({
             <span>•</span>
             <span className="text-stone-800 font-extrabold">💼 Exact, Moneybird & SnelStart Partner</span>
             <span>•</span>
-            <span className="text-stone-800 font-extrabold">⭐ 4.95/5 op Google Reviews (120+ klanten)</span>
+            <span className="text-stone-800 font-extrabold">📋 Vaste All-In Maandtarieven Zonder Nacalculatie</span>
           </div>
         </div>
       </section>

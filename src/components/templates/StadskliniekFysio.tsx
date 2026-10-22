@@ -193,7 +193,7 @@ export const StadskliniekFysio: React.FC<TemplateProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-bold text-stone-500 pt-6 border-t border-stone-200">
-            <span className="text-stone-800 font-extrabold">⭐ 4.9/5 (310+ Patiëntreviews)</span>
+            <span className="text-stone-800 font-extrabold">🩺 BIG-Geregistreerd & KNGF Aangesloten</span>
             <span>•</span>
             <span className="text-stone-800 font-extrabold">🏥 Contracten met alle zorgverzekeraars</span>
             <span>•</span>

@@ -106,7 +106,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                   : 'bg-amber-50 text-amber-900 border border-amber-200/80 hover:bg-amber-100'
               }`}
             >
-              <span>⭐ Populairste Concepten</span>
+              <span>✨ Populaire Concepten</span>
             </button>
 
             <button
@@ -202,7 +202,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               onChange={(e) => onSortChange(e.target.value as any)}
               className="bg-transparent font-bold text-orange-950 focus:outline-none cursor-pointer"
             >
-              <option value="rating">{lang === 'nl' ? 'Hoogste Score' : 'Top Rated'}</option>
+              <option value="rating">{lang === 'nl' ? 'Aanbevolen Volgorde' : 'Featured First'}</option>
               <option value="name">{lang === 'nl' ? 'Naam (A-Z)' : 'Name (A-Z)'}</option>
               <option value="buildDays">{lang === 'nl' ? 'Snelste Oplevering' : 'Fastest Build'}</option>
             </select>

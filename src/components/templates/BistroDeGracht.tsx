@@ -188,7 +188,7 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
             <span>•</span>
             <span className="text-stone-800 font-extrabold">🌊 Terras direct aan het water</span>
             <span>•</span>
-            <span className="text-stone-800 font-extrabold">⭐ 4.9/5 op Google (530+ reviews)</span>
+            <span className="text-stone-800 font-extrabold">🍽️ Seizoensgebonden Dagspecialiteiten</span>
           </div>
         </div>
       </section>

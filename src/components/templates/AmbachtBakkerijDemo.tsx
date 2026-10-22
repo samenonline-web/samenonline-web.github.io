@@ -257,8 +257,8 @@ export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({
                 <span>36u Fermentatie</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="text-amber-500">⭐</span>
-                <span>4.9 / 5 (Haarlem)</span>
+                <span className="text-amber-500">🌾</span>
+                <span>100% Lokale Granen</span>
               </div>
             </div>
           </div>

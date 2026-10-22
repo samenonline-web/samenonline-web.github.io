@@ -193,7 +193,7 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
             <span>•</span>
             <span className="text-stone-800 font-extrabold">☕ Verse Cappuccino & Ontspanning</span>
             <span>•</span>
-            <span className="text-stone-800 font-extrabold">⭐ 4.9/5 op Treatwell (410+ reviews)</span>
+            <span className="text-stone-800 font-extrabold">✨ 100% Vegan & Dierproefvrije Verzorging</span>
           </div>
         </div>
       </section>

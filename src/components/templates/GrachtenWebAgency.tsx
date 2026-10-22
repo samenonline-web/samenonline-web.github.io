@@ -198,14 +198,11 @@ export const GrachtenWebAgency: React.FC<TemplateProps> = ({
 
           {/* Social Proof */}
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-bold text-stone-500 pt-6 border-t border-stone-200">
-            <div className="flex items-center gap-1.5">
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-              <span>4.9 / 5 op basis van 68+ B2B reviews</span>
-            </div>
+            <span className="text-stone-800 font-extrabold">🚀 Next.js 16 &amp; Headless Architectuur</span>
             <span>•</span>
             <span className="text-stone-800 font-extrabold">⚡ Google PageSpeed 98/100</span>
             <span>•</span>
-            <span className="text-stone-800 font-extrabold">🏆 Awwwards Nominee 2026</span>
+            <span className="text-stone-800 font-extrabold">🔒 100% AVG / GDPR Proof</span>
           </div>
         </div>
       </section>

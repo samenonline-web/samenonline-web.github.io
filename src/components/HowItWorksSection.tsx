@@ -22,9 +22,9 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
       titleNl: 'Kies een Concept of Lever Eigen Plan Aan',
       titleEn: 'Choose a Concept or Submit Your Own Plan',
       descNl:
-        'Kies uit 16 interactieve branche-templates, vraag een redesign aan van je huidige trage website, of lever een eigen Figma schets aan.',
+        'Kies uit 20 interactieve branche-templates, vraag een redesign aan van je huidige trage website, of lever een eigen Figma schets aan.',
       descEn:
-        'Select from 16 industry templates, request an existing site redesign, or supply your own wireframe or Figma plan.',
+        'Select from 20 industry templates, request an existing site redesign, or supply your own wireframe or Figma plan.',
       badgeNl: 'Stap 1: Jouw Keuze',
       badgeEn: 'Step 1: Your Choice',
     },

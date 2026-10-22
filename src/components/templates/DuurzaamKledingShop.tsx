@@ -454,15 +454,10 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
                 {/* Details */}
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    {/* Rating */}
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <div className="flex text-amber-400">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                        ))}
-                      </div>
-                      <span className="text-[11px] font-bold text-stone-500">
-                        {product.rating} ({product.reviewCount})
+                    {/* Eco Quality Badge */}
+                    <div className="flex items-center gap-1.5 mb-2 text-[11px] font-bold text-emerald-800">
+                      <span className="px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200">
+                        🌿 100% Duurzaam Katoen
                       </span>
                     </div>
 
@@ -513,19 +508,19 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
         </div>
       </section>
 
-      {/* Customer Reviews Section */}
+      {/* Customer Reviews Section (Demo Widget) */}
       <section className="bg-stone-100/70 py-12 px-4 sm:px-8 border-t border-stone-200">
         <div className="max-w-5xl mx-auto">
           <div className="text-center max-w-xl mx-auto mb-8">
-            <div className="flex justify-center text-amber-400 mb-2">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400" />
-              ))}
-            </div>
+            <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full inline-block mb-2">
+              Voorbeeld Review Integratie
+            </span>
             <h2 className="text-xl sm:text-2xl font-black text-stone-900 mb-1">
-              Beoordeeld met een 4.9 / 5 door 1.200+ klanten
+              Klaar voor Echte Klantbeoordelingen
             </h2>
-            <p className="text-xs text-stone-500 font-medium">Eerlijke meningen van geverifieerde kopers in Nederland</p>
+            <p className="text-xs text-stone-500 font-medium">
+              In jouw uiteindelijke webshop koppelen we dit 1-op-1 aan jouw geverifieerde reviews via WebwinkelKeur, Trustpilot of Google.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -536,11 +531,11 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
                 ))}
               </div>
               <p className="text-xs text-stone-700 leading-relaxed font-medium mb-3">
-                &ldquo;De hoodie zit heerlijk zacht en behoudt perfect zijn vorm na het wassen. Geweldig dat de impact direct zichtbaar is!&rdquo;
+                &ldquo;Voorbeeld van een productreview: De hoodie zit heerlijk zacht en behoudt perfect zijn pasvorm.&rdquo;
               </p>
               <div className="flex items-center justify-between text-[11px] font-bold">
-                <span className="text-stone-900">Sophie van D. (Amsterdam)</span>
-                <span className="text-emerald-600 font-extrabold">✓ Geverifieerd</span>
+                <span className="text-stone-900">Voorbeeld Klantreview 1</span>
+                <span className="text-stone-500 font-bold">Demo sjabloon</span>
               </div>
             </div>
 
@@ -551,11 +546,11 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
                 ))}
               </div>
               <p className="text-xs text-stone-700 leading-relaxed font-medium mb-3">
-                &ldquo;Snelle levering en plasticvrije verpakking. De jeans zit als gegoten en voelt steviger aan dan reguliere merken.&rdquo;
+                &ldquo;Voorbeeld van een verzendreview: Snelle PostNL levering en plasticvrije verpakking.&rdquo;
               </p>
               <div className="flex items-center justify-between text-[11px] font-bold">
-                <span className="text-stone-900">Mark T. (Rotterdam)</span>
-                <span className="text-emerald-600 font-extrabold">✓ Geverifieerd</span>
+                <span className="text-stone-900">Voorbeeld Klantreview 2</span>
+                <span className="text-stone-500 font-bold">Demo sjabloon</span>
               </div>
             </div>
 
@@ -566,11 +561,11 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
                 ))}
               </div>
               <p className="text-xs text-stone-700 leading-relaxed font-medium mb-3">
-                &ldquo;Eindelijk een webshop waar duurzaamheid geen marketingpraatje is. Transparant, mooi en eerlijk geprijsd.&rdquo;
+                &ldquo;Voorbeeld van een algemene review: Transparante communicatie, mooie webshop en eerlijke prijzen.&rdquo;
               </p>
               <div className="flex items-center justify-between text-[11px] font-bold">
-                <span className="text-stone-900">Emma de K. (Utrecht)</span>
-                <span className="text-emerald-600 font-extrabold">✓ Geverifieerd</span>
+                <span className="text-stone-900">Voorbeeld Klantreview 3</span>
+                <span className="text-stone-500 font-bold">Demo sjabloon</span>
               </div>
             </div>
           </div>

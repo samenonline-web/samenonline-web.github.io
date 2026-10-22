@@ -55,11 +55,11 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
             Van 4.8s naar 0.3s: De Next.js Transformatie
           </h2>
           <p className="text-xs sm:text-sm text-stone-300 mt-1 max-w-xl">
-            Hoe een traditionele aannemer 64% meer offerte-aanvragen genereerde door over te stappen van een logge PHP-site naar een moderne Next.js website.
+            Voorbeeldscenario: Hoe een technische modernisering van een trage WordPress site naar Next.js kan leiden tot aanzienlijk meer offerte-aanvragen en betere mobiele scores.
           </p>
 
           <div className="mt-3 inline-block px-3 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-bold">
-            ℹ️ Fictief voorbeeldconcept ter illustratie van de meetbare technische voordelen.
+            ℹ️ Fictief demonstratiescenario ter illustratie van de meetbare technische voordelen.
           </div>
         </div>
 

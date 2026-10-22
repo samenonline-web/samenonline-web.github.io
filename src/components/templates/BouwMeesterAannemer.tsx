@@ -183,7 +183,7 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
             <span>•</span>
             <span className="text-stone-800 font-extrabold">🔨 VCA** Veiligheidsnormen</span>
             <span>•</span>
-            <span className="text-stone-800 font-extrabold">⭐ 4.9/5 op Werkspot (180+ reviews)</span>
+            <span className="text-stone-800 font-extrabold">🛡️ 10 Jaar Bouwgarantie op Constructies</span>
           </div>
         </div>
       </section>
