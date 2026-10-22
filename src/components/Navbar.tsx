@@ -78,6 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <Search className="w-4 h-4 text-orange-500 absolute left-3.5 pointer-events-none" />
           <input
             type="text"
+            aria-label={lang === 'nl' ? 'Zoek concept of categorie' : 'Search concept or category'}
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder={
@@ -102,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => lang !== 'nl' && onLanguageToggle()}
-              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer min-h-[36px] ${
                 lang === 'nl'
                   ? 'bg-orange-700 text-white shadow-xs font-extrabold'
                   : 'text-stone-600 hover:text-stone-900 hover:bg-orange-100/60'
@@ -115,7 +116,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => lang !== 'en' && onLanguageToggle()}
-              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer min-h-[36px] ${
                 lang === 'en'
                   ? 'bg-orange-700 text-white shadow-xs font-extrabold'
                   : 'text-stone-600 hover:text-stone-900 hover:bg-orange-100/60'
@@ -131,7 +132,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {onToggleDarkMode && (
             <button
               onClick={onToggleDarkMode}
-              className="flex items-center justify-center w-9 h-9 rounded-xl text-stone-700 bg-orange-50/50 border border-orange-200/80 hover:bg-orange-100/70 transition-colors shadow-2xs cursor-pointer"
+              className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-stone-700 bg-orange-50/50 border border-orange-200/80 hover:bg-orange-100/70 transition-colors shadow-2xs cursor-pointer"
               title={isDarkMode ? (lang === 'nl' ? 'Schakel naar Lichte Modus' : 'Switch to Light Mode') : (lang === 'nl' ? 'Schakel naar Donkere Modus' : 'Switch to Dark Mode')}
               aria-label="Toggle Dark Mode"
             >
