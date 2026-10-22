@@ -119,31 +119,21 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         </div>
 
         {/* Actions */}
-        <div className="space-y-2">
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => onOpenDetails(template)}
+            className="w-full py-2.5 rounded-xl bg-orange-50/70 hover:bg-orange-100 text-stone-800 font-bold text-xs border border-orange-200/70 transition-colors cursor-pointer"
+          >
+            {lang === 'nl' ? 'Bekijk Details' : 'View Details'}
+          </button>
+          
           <button
             onClick={() => onOpenLivePreview(template)}
-            className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm shadow-orange-600/20 cursor-pointer"
+            className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-orange-600/20 cursor-pointer"
           >
             <Globe className="w-3.5 h-3.5" />
-            <span>{lang === 'nl' ? '🌐 Bekijk Live Template' : '🌐 View Live Template'}</span>
+            <span>{lang === 'nl' ? 'Bekijk Template' : 'View Template'}</span>
           </button>
-
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => onOpenDetails(template)}
-              className="w-full py-2 rounded-xl bg-orange-50/70 hover:bg-orange-100 text-stone-800 font-bold text-xs border border-orange-200/70 transition-colors cursor-pointer"
-            >
-              {lang === 'nl' ? 'Details' : 'Details'}
-            </button>
-            
-            <button
-              onClick={() => onOpenRequestModal(template)}
-              className="w-full py-2 rounded-xl bg-white hover:bg-orange-50 text-orange-700 font-bold text-xs border border-orange-300 flex items-center justify-center gap-1 transition-colors cursor-pointer"
-            >
-              <span>{lang === 'nl' ? 'Offerte' : 'Get Quote'}</span>
-              <ArrowRight className="w-3 h-3" />
-            </button>
-          </div>
         </div>
 
       </div>
