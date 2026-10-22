@@ -45,13 +45,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           title={lang === 'nl' ? 'Scroll naar boven' : 'Scroll to top'}
           aria-label={lang === 'nl' ? 'Samen Online home - Terug naar boven' : 'Samen Online home - Scroll to top'}
         >
-          <div className="w-11 h-11 rounded-2xl bg-orange-600 flex items-center justify-center text-white shadow-md shadow-orange-600/20 transform group-hover:scale-105 transition-transform">
+          <div className="w-11 h-11 rounded-2xl bg-orange-700 flex items-center justify-center text-white shadow-md shadow-orange-700/20 transform group-hover:scale-105 transition-transform">
             <Heart className="w-6 h-6 fill-white text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-xl tracking-tight text-stone-900 group-hover:text-stone-950 font-sans transition-colors">
-                Samen<span className="text-orange-600">Online</span>
+                Samen<span className="text-orange-700">Online</span>
               </span>
               <span className="inline-flex items-center gap-1.5 text-xs font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 border border-orange-200">
                 <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
@@ -98,13 +98,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-label={lang === 'nl' ? 'Taalkeuze' : 'Language selection'}
             className="flex items-center p-0.5 rounded-xl bg-orange-50/70 border border-orange-200/80 text-xs font-bold shadow-2xs"
           >
-            <Globe className="w-3.5 h-3.5 text-orange-600 ml-1.5 mr-1 pointer-events-none hidden sm:block" />
+            <Globe className="w-3.5 h-3.5 text-orange-700 ml-1.5 mr-1 pointer-events-none hidden sm:block" />
             <button
               type="button"
               onClick={() => lang !== 'nl' && onLanguageToggle()}
               className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
                 lang === 'nl'
-                  ? 'bg-orange-600 text-white shadow-xs font-extrabold'
+                  ? 'bg-orange-700 text-white shadow-xs font-extrabold'
                   : 'text-stone-600 hover:text-stone-900 hover:bg-orange-100/60'
               }`}
               title="Nederlands"
@@ -117,7 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => lang !== 'en' && onLanguageToggle()}
               className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
                 lang === 'en'
-                  ? 'bg-orange-600 text-white shadow-xs font-extrabold'
+                  ? 'bg-orange-700 text-white shadow-xs font-extrabold'
                   : 'text-stone-600 hover:text-stone-900 hover:bg-orange-100/60'
               }`}
               title="English"
@@ -146,7 +146,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Request Website Button */}
           <button
             onClick={() => onOpenRequestModal()}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md shadow-orange-600/20 hover:shadow-lg transition-all transform active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-bold text-sm shadow-md shadow-orange-700/20 hover:shadow-lg transition-all transform active:scale-95 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">

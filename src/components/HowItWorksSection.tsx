@@ -130,9 +130,9 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
       {/* Bottom CTA Banner */}
       <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-stone-900 to-stone-800 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
         <div className="space-y-1 text-center sm:text-left">
-          <h4 className="text-lg sm:text-xl font-black">
+          <h3 className="text-lg sm:text-xl font-black">
             {lang === 'nl' ? 'Klaar om jouw onderneming online te laten schitteren?' : 'Ready to launch your business online?'}
-          </h4>
+          </h3>
           <p className="text-xs text-stone-300 font-medium">
             {lang === 'nl'
               ? 'Kies een concept sjabloon of vraag direct een vrijblijvend adviesgesprek aan.'

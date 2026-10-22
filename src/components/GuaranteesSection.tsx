@@ -154,9 +154,9 @@ export const GuaranteesSection: React.FC<GuaranteesSectionProps> = ({
             <Lock className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-sm font-black text-white">
+            <h3 className="text-sm font-black text-white">
               {lang === 'nl' ? 'Transparantie gegarandeerd in elke offerte' : 'Full transparency on every estimate'}
-            </h4>
+            </h3>
             <p className="text-xs text-stone-400">
               {lang === 'nl'
                 ? 'Geen automatische stilzwijgende verlengingen. Je betaalt eenmalig de bouwkosten en eventueel €9,50/mnd voor all-in hosting.'

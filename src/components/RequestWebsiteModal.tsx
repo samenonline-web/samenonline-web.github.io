@@ -285,7 +285,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               <button
                 type="button"
                 onClick={() => setIsQuotePdfOpen(true)}
-                className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-600/20 transition-all cursor-pointer"
+                className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-700/20 transition-all cursor-pointer"
               >
                 <Download className="w-4 h-4" />
                 <span>Download Offerte als PDF</span>
@@ -327,7 +327,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                   }}
                   className={`py-2 px-2.5 rounded-xl border text-center transition-all cursor-pointer ${
                     projectType === 'template'
-                      ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
+                      ? 'bg-orange-700 text-white border-orange-700 shadow-xs'
                       : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
                   }`}
                 >
@@ -341,7 +341,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                   }}
                   className={`py-2 px-2.5 rounded-xl border text-center transition-all cursor-pointer ${
                     projectType === 'redesign'
-                      ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
+                      ? 'bg-orange-700 text-white border-orange-700 shadow-xs'
                       : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
                   }`}
                 >
@@ -355,7 +355,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                   }}
                   className={`py-2 px-2.5 rounded-xl border text-center transition-all cursor-pointer ${
                     projectType === 'custom_plan'
-                      ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
+                      ? 'bg-orange-700 text-white border-orange-700 shadow-xs'
                       : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
                   }`}
                 >
@@ -624,7 +624,7 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 rounded-xl bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 transition-all cursor-pointer"
+                className="w-full py-4 rounded-xl bg-orange-700 hover:bg-orange-800 disabled:bg-orange-400 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-700/20 transition-all cursor-pointer"
               >
                 {isSubmitting ? (
                   <>

@@ -111,7 +111,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-2">
                         {template.name}
                       </h2>
-                      <p className="text-lg font-bold text-orange-600">
+                      <p className="text-lg font-bold text-orange-700">
                         {subtitle}
                       </p>
                     </div>
@@ -135,7 +135,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                     <div className="flex flex-wrap items-center gap-3 pt-4">
                       <button
                         onClick={() => onOpenLivePreview(template)}
-                        className="px-6 py-3.5 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm shadow-md shadow-orange-600/20 flex items-center gap-2 transform active:scale-95 transition-all cursor-pointer"
+                        className="px-6 py-3.5 rounded-2xl bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-sm shadow-md shadow-orange-700/20 flex items-center gap-2 transform active:scale-95 transition-all cursor-pointer"
                       >
                         <Globe className="w-4 h-4" />
                         <span>{lang === 'nl' ? 'Bekijk Live Template' : 'View Live Template'}</span>
@@ -178,7 +178,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                               {template.logoText}
                             </div>
                             <div>
-                              <h4 className="font-bold text-base text-slate-900">{template.name}</h4>
+                              <p className="font-bold text-base text-slate-900">{template.name}</p>
                               <p className="text-xs text-slate-500 font-medium">{template.city}, {template.province}</p>
                             </div>
                           </div>
@@ -224,35 +224,47 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
           
           {/* Left Arrow */}
           <button
+            type="button"
             onClick={handlePrev}
-            className="p-2.5 rounded-xl bg-white hover:bg-orange-100 active:scale-95 text-slate-700 hover:text-orange-600 transition-all border border-orange-200 shadow-xs cursor-pointer"
+            className="p-3 rounded-xl bg-white hover:bg-orange-100 active:scale-95 text-slate-700 hover:text-orange-700 transition-all border border-orange-200 shadow-xs cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
             title="Vorige template"
+            aria-label="Vorige template"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
 
-          {/* Dots Indicator */}
-          <div className="flex items-center gap-2">
+          {/* Dots Indicator with accessible touch targets (min 44x44px target area) */}
+          <div className="flex items-center gap-1 sm:gap-2">
             {featuredTemplates.map((tmpl, idx) => (
               <button
                 key={idx}
+                type="button"
                 onClick={() => {
                   setIsAutoPlay(false);
                   setCurrentIndex(idx);
                 }}
-                className={`h-2.5 rounded-full transition-all duration-500 cursor-pointer ${
-                  idx === currentIndex ? 'w-8 bg-orange-600 shadow-md shadow-orange-600/30' : 'w-2.5 bg-orange-200 hover:bg-orange-300'
-                }`}
+                className="p-2 sm:p-2.5 flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-full min-w-[36px] min-h-[36px]"
                 title={tmpl.name}
-              />
+                aria-label={lang === 'nl' ? `Toon slide ${idx + 1}: ${tmpl.name}` : `Show slide ${idx + 1}: ${tmpl.name}`}
+              >
+                <span
+                  className={`h-2.5 rounded-full transition-all duration-500 block ${
+                    idx === currentIndex
+                      ? 'w-8 bg-orange-700 shadow-md shadow-orange-700/30'
+                      : 'w-2.5 bg-stone-300 hover:bg-orange-300'
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
           {/* Right Arrow */}
           <button
+            type="button"
             onClick={handleNext}
-            className="p-2.5 rounded-xl bg-white hover:bg-orange-100 active:scale-95 text-slate-700 hover:text-orange-600 transition-all border border-orange-200 shadow-xs cursor-pointer"
+            className="p-3 rounded-xl bg-white hover:bg-orange-100 active:scale-95 text-slate-700 hover:text-orange-700 transition-all border border-orange-200 shadow-xs cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
             title="Volgende template"
+            aria-label="Volgende template"
           >
             <ChevronRight className="w-5 h-5" />
           </button>

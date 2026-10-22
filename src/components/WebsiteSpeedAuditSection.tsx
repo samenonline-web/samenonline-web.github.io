@@ -107,9 +107,9 @@ export const WebsiteSpeedAuditSection: React.FC<WebsiteSpeedAuditSectionProps> =
                   <ExternalLink className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-black text-stone-900 text-sm sm:text-base">
+                  <h3 className="font-black text-stone-900 text-sm sm:text-base">
                     Officiële Google PageSpeed Geopend voor: <strong>{analyzedDomain}</strong>
-                  </h4>
+                  </h3>
                   <span className="text-xs text-emerald-800 font-medium block">
                     Google analyseert nu jouw live website op Core Web Vitals en mobiele laadtijd.
                   </span>

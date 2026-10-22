@@ -269,7 +269,9 @@ body {
 
 /* 10. Preserve Solid Primary Action Buttons */
 .template-dark-mode button[class*="bg-orange-600"],
+.template-dark-mode button[class*="bg-orange-700"],
 .template-dark-mode a[class*="bg-orange-600"],
+.template-dark-mode a[class*="bg-orange-700"],
 .template-dark-mode button[class*="bg-blue-600"],
 .template-dark-mode a[class*="bg-blue-600"],
 .template-dark-mode button[class*="bg-emerald-600"],

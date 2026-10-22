@@ -183,7 +183,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
                 onClick={() => setSelectedCategory(cat.id as any)}
                 className={`px-3.5 py-1.5 rounded-xl border transition-all cursor-pointer ${
                   selectedCategory === cat.id
-                    ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
+                    ? 'bg-orange-700 text-white border-orange-700 shadow-xs'
                     : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
                 }`}
               >
@@ -225,7 +225,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
                     </span>
                     <div
                       className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'bg-orange-600 text-white rotate-180' : 'bg-stone-200 text-stone-600'
+                        isOpen ? 'bg-orange-700 text-white rotate-180' : 'bg-stone-200 text-stone-600'
                       }`}
                     >
                       <ChevronDown className="w-4 h-4" />
@@ -277,7 +277,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
           </div>
           <button
             onClick={handleCtaClick}
-            className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition-all shadow-xs shrink-0 inline-flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-orange-700 hover:bg-orange-800 text-white text-xs font-bold transition-all shadow-xs shrink-0 inline-flex items-center gap-1.5 cursor-pointer"
           >
             <span>{lang === 'nl' ? 'Stel je vraag direct' : 'Ask a question'}</span>
           </button>

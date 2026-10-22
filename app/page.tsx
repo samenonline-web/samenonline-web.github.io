@@ -382,7 +382,7 @@ export default function Home() {
             </p>
             <button
               onClick={handleResetAllFilters}
-              className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-bold text-xs shadow-md transition-colors cursor-pointer"
             >
               {lang === 'nl' ? 'Herstel Alle Filters' : 'Reset All Filters'}
             </button>
@@ -418,7 +418,7 @@ export default function Home() {
                   notes: 'Aanvraag voor modernisering / redesign van mijn huidige website.',
                 })
               }
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs shadow-md shadow-orange-600/30 transition-all cursor-pointer whitespace-nowrap text-center"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-xs shadow-md shadow-orange-700/30 transition-all cursor-pointer whitespace-nowrap text-center"
             >
               <span>🔄 Bestaande Website Redesign</span>
             </button>

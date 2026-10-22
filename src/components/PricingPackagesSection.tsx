@@ -103,7 +103,7 @@ export const PricingPackagesSection: React.FC<PricingPackagesSectionProps> = ({
             }`}
           >
             {pkg.badge && (
-              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-orange-600 text-white font-black text-[11px] uppercase tracking-wider shadow-md">
+              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-orange-700 text-white font-black text-[11px] uppercase tracking-wider shadow-md">
                 {pkg.badge}
               </span>
             )}
@@ -154,7 +154,7 @@ export const PricingPackagesSection: React.FC<PricingPackagesSectionProps> = ({
                 }
                 className={`w-full py-4 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
                   pkg.highlight
-                    ? 'bg-orange-600 hover:bg-orange-700 text-white shadow-orange-600/30'
+                    ? 'bg-orange-700 hover:bg-orange-800 text-white shadow-orange-700/30'
                     : 'bg-stone-900 hover:bg-stone-800 text-white shadow-stone-900/20'
                 }`}
               >

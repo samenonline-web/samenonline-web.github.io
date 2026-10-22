@@ -59,13 +59,15 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
 
           {/* Bookmark Button */}
           <button
+            type="button"
             onClick={() => onToggleBookmark(template.id)}
-            className={`p-2 rounded-xl border transition-colors cursor-pointer ${
+            className={`p-2 rounded-xl border transition-colors cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center ${
               isBookmarked
                 ? 'bg-rose-50 text-rose-600 border-rose-200'
                 : 'bg-orange-50/50 text-stone-400 border-orange-100 hover:text-stone-700'
             }`}
             title={lang === 'nl' ? 'Bewaar in favorieten' : 'Save to bookmarks'}
+            aria-label={lang === 'nl' ? `Bewaar ${template.name} in favorieten` : `Bookmark ${template.name}`}
           >
             <Heart className={`w-4 h-4 ${isBookmarked ? 'fill-rose-500' : ''}`} />
           </button>
@@ -134,7 +136,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
           
           <button
             onClick={() => onOpenLivePreview(template)}
-            className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-orange-600/20 cursor-pointer"
+            className="w-full py-2.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-orange-700/20 cursor-pointer"
           >
             <Globe className="w-3.5 h-3.5" />
             <span>{lang === 'nl' ? 'Bekijk Template' : 'View Template'}</span>

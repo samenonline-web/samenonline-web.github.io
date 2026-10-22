@@ -212,9 +212,9 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
       {/* Bottom CTA Banner */}
       <div className="mt-8 p-6 rounded-3xl bg-stone-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="space-y-1 text-center sm:text-left">
-          <h4 className="font-black text-sm sm:text-base">
+          <h3 className="font-black text-sm sm:text-base">
             Klaar om jouw trage WordPress website in te ruilen voor razendsnelle Next.js technologie?
-          </h4>
+          </h3>
           <p className="text-xs text-stone-300 font-medium">
             Wij migreren al jouw bestaande teksten en afbeeldingen zonder verlies van Google posities.
           </p>
@@ -222,7 +222,7 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
 
         <button
           onClick={onOpenRedesignRequest || onOpenRequestModal}
-          className="px-6 py-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shadow-md shadow-orange-600/30 shrink-0"
+          className="px-6 py-3 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-xs transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shadow-md shadow-orange-700/30 shrink-0"
         >
           <span>Vraag Next.js Website Aan</span>
           <ArrowRight className="w-4 h-4" />

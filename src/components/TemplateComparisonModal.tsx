@@ -81,10 +81,12 @@ export const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Concept A Picker */}
             <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-200 space-y-2">
-              <label className="text-xs font-black uppercase text-orange-900 tracking-wider block">
+              <label htmlFor="compare-concept-a" className="text-xs font-black uppercase text-orange-900 tracking-wider block cursor-pointer">
                 Concept A:
               </label>
               <select
+                id="compare-concept-a"
+                aria-label="Kies eerste concept om te vergelijken"
                 value={templateAId}
                 onChange={(e) => setTemplateAId(e.target.value)}
                 className="w-full p-2.5 rounded-xl border border-orange-300 bg-white text-xs font-bold text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-orange-500 cursor-pointer"
@@ -99,10 +101,12 @@ export const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = (
 
             {/* Concept B Picker */}
             <div className="p-4 rounded-2xl bg-stone-100 border border-stone-200 space-y-2">
-              <label className="text-xs font-black uppercase text-stone-700 tracking-wider block">
+              <label htmlFor="compare-concept-b" className="text-xs font-black uppercase text-stone-700 tracking-wider block cursor-pointer">
                 Concept B:
               </label>
               <select
+                id="compare-concept-b"
+                aria-label="Kies tweede concept om te vergelijken"
                 value={templateBId}
                 onChange={(e) => setTemplateBId(e.target.value)}
                 className="w-full p-2.5 rounded-xl border border-stone-300 bg-white text-xs font-bold text-stone-800 focus:outline-hidden focus:ring-2 focus:ring-orange-500 cursor-pointer"

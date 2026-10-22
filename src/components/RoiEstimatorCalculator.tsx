@@ -190,7 +190,7 @@ export const RoiEstimatorCalculator: React.FC<RoiEstimatorCalculatorProps> = ({
               <button
                 type="button"
                 onClick={handleApplyRoi}
-                className="w-full py-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/30 transition-all cursor-pointer"
+                className="w-full py-4 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-700/30 transition-all cursor-pointer"
               >
                 <span>{lang === 'nl' ? 'Bereken Jouw Investering (Vraag Offerte Aan)' : 'Calculate Investment (Request Quote)'}</span>
                 <ArrowRight className="w-4 h-4" />

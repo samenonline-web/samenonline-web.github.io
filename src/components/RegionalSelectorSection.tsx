@@ -251,9 +251,9 @@ export const RegionalSelectorSection: React.FC<RegionalSelectorSectionProps> = (
               <span className="text-[11px] font-black uppercase tracking-wider text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200 inline-block mb-1">
                 Lokale Oplevergarantie
               </span>
-              <h4 className="text-xl font-black text-stone-900">
+              <h3 className="text-xl font-black text-stone-900">
                 Start Jouw Project in {currentRegion.name.split('&')[0].trim()}
-              </h4>
+              </h3>
               <p className="text-xs text-stone-600">
                 Binnen 2 tot 5 werkdagen staat jouw website professioneel live. 100% eigendom zonder abonnementsverplichting.
               </p>

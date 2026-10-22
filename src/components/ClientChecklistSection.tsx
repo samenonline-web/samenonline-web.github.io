@@ -178,7 +178,7 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
             </span>
             <button
               onClick={onOpenRequestModal}
-              className="px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+              className="px-4 py-2.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
             >
               <span>Start Vrijblijvend</span>
               <ArrowRight className="w-3.5 h-3.5" />

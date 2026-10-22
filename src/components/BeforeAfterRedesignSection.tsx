@@ -83,7 +83,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
             onClick={() => setSliderPosition(50)}
             className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
               sliderPosition >= 30 && sliderPosition <= 70
-                ? 'bg-orange-600 text-white shadow-xs'
+                ? 'bg-orange-700 text-white shadow-xs'
                 : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
             }`}
           >
@@ -211,7 +211,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
           style={{ left: `${sliderPosition}%` }}
           className="absolute top-0 bottom-0 w-1 bg-white shadow-2xl pointer-events-none transform -translate-x-1/2 flex items-center justify-center z-20"
         >
-          <div className="w-10 h-10 rounded-full bg-orange-600 text-white font-black text-xs flex items-center justify-center shadow-xl border-2 border-white pointer-events-auto cursor-ew-resize transform hover:scale-110 active:scale-95 transition-transform">
+          <div className="w-10 h-10 rounded-full bg-orange-700 text-white font-black text-xs flex items-center justify-center shadow-xl border-2 border-white pointer-events-auto cursor-ew-resize transform hover:scale-110 active:scale-95 transition-transform">
             ⇄
           </div>
         </div>
@@ -332,9 +332,9 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
       {/* CTA Box */}
       <div className="mt-8 text-center bg-orange-50/80 border-2 border-orange-200 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="text-left space-y-1">
-          <h4 className="font-black text-stone-900 text-base sm:text-lg">
+          <h3 className="font-black text-stone-900 text-base sm:text-lg">
             {lang === 'nl' ? 'Heb je al een bestaande website die traag of verouderd is?' : 'Have an existing slow or outdated website?'}
-          </h4>
+          </h3>
           <p className="text-xs text-stone-600 font-medium">
             {lang === 'nl'
               ? 'Wij migreren al jouw bestaande teksten en afbeeldingen kosteloos naar een gloednieuwe Next.js site vanaf €175.'
@@ -354,7 +354,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
 
           <button
             onClick={onOpenRedesignRequest}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-orange-600/30 transition-all cursor-pointer whitespace-nowrap"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-orange-700/30 transition-all cursor-pointer whitespace-nowrap"
           >
             <span>{lang === 'nl' ? 'Gratis Redesign Scan' : 'Free Redesign Scan'}</span>
             <ArrowRight className="w-4 h-4" />

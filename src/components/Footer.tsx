@@ -77,11 +77,11 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Col 1: Brand & Tagline */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-orange-600 flex items-center justify-center text-white font-bold shadow-md shadow-orange-600/20">
+              <div className="w-9 h-9 rounded-xl bg-orange-700 flex items-center justify-center text-white font-bold shadow-md shadow-orange-700/20">
                 <Heart className="w-5 h-5 fill-white" />
               </div>
               <span className="font-extrabold text-xl text-stone-900">
-                Samen<span className="text-orange-600">Online</span>
+                Samen<span className="text-orange-700">Online</span>
               </span>
             </div>
 
@@ -91,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({
                 : 'Samen Online is the friendly directory for companies, webshops, and digital initiatives based in & for the Netherlands.'}
             </p>
 
-            <div className="flex items-center gap-2 text-xs font-bold text-orange-600">
+            <div className="flex items-center gap-2 text-xs font-bold text-orange-700">
               <MapPin className="w-3.5 h-3.5" />
               <span>Gemaakt met ❤️ in Nederland</span>
             </div>
@@ -105,14 +105,14 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 2: Quick Links */}
           <div>
-            <h4 className="font-bold text-stone-900 text-xs uppercase tracking-wider mb-4">
+            <p className="font-bold text-stone-900 text-xs uppercase tracking-wider mb-4">
               {lang === 'nl' ? 'Categorieën' : 'Categories'}
-            </h4>
+            </p>
             <ul className="space-y-2.5 text-xs font-bold">
               <li>
                 <button
                   onClick={() => handleCategoryClick('Tech & SaaS')}
-                  className="hover:text-orange-600 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
                 >
                   Tech & SaaS Platforms
                 </button>
@@ -120,7 +120,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => handleCategoryClick('Webshops & E-commerce')}
-                  className="hover:text-orange-600 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
                 >
                   Webshops & E-commerce
                 </button>
@@ -128,7 +128,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => handleCategoryClick('Sustainable & Green')}
-                  className="hover:text-orange-600 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
                 >
                   Duurzaam & Groen
                 </button>
@@ -136,7 +136,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => handleCategoryClick('Creative & Agencies')}
-                  className="hover:text-orange-600 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
                 >
                   Creatief & Bureaus
                 </button>
@@ -144,7 +144,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => handleCategoryClick('Food & Hospitality')}
-                  className="hover:text-orange-600 text-stone-600 transition-colors cursor-pointer text-left"
+                  className="hover:text-orange-700 text-stone-600 transition-colors cursor-pointer text-left"
                 >
                   Voeding & Horeca
                 </button>
@@ -154,9 +154,9 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 3: Community & Support */}
           <div>
-            <h4 className="font-bold text-stone-900 text-xs uppercase tracking-wider mb-4">
+            <p className="font-bold text-stone-900 text-xs uppercase tracking-wider mb-4">
               {lang === 'nl' ? 'Platform' : 'Platform'}
-            </h4>
+            </p>
             <ul className="space-y-2.5 text-xs font-bold">
               <li>
                 <button

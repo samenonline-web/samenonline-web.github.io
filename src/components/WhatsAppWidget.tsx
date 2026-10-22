@@ -92,7 +92,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
       {isOpen && (
         <div className="mb-3 w-84 sm:w-96 bg-white rounded-3xl shadow-2xl border-2 border-orange-200 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200 text-stone-900">
           {/* Header */}
-          <div className="bg-gradient-to-r from-orange-600 to-amber-600 p-4 text-white flex items-center justify-between">
+          <div className="bg-gradient-to-r from-orange-700 to-amber-700 p-4 text-white flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <div className="relative">
                 <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center font-black text-sm">
@@ -101,7 +101,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
                 <span className="w-3 h-3 rounded-full bg-emerald-400 border-2 border-white absolute bottom-0 right-0"></span>
               </div>
               <div>
-                <h4 className="font-black text-sm leading-tight">Samen Online Direct</h4>
+                <p className="font-black text-sm leading-tight">Samen Online Direct</p>
                 <div className="flex items-center gap-1 text-[11px] text-orange-100 font-medium">
                   <ShieldCheck className="w-3 h-3" />
                   <span>Veilig & Binnen 24u reactie</span>
@@ -121,9 +121,9 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
             {isSent ? (
               <div className="p-6 bg-white rounded-2xl border border-emerald-200 text-center space-y-2">
                 <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-                <h5 className="font-extrabold text-sm text-stone-900">
+                <p className="font-extrabold text-sm text-stone-900">
                   {lang === 'nl' ? 'Vraag Verzonden!' : 'Message Sent!'}
-                </h5>
+                </p>
                 <p className="text-xs text-stone-600 leading-relaxed font-medium">
                   {lang === 'nl'
                     ? 'Bedankt! We hebben je vraag ontvangen en sturen je z.s.m. een reactie per e-mail.'
@@ -209,14 +209,15 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({ lang }) => {
       {/* Floating Action Pill */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center gap-2.5 px-4 py-3 rounded-full bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs shadow-xl shadow-orange-600/30 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+        className="group flex items-center gap-2.5 px-4 py-3 rounded-full bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-xs shadow-xl shadow-orange-700/30 hover:scale-105 active:scale-95 transition-all cursor-pointer"
         title="Stel een vraag"
+        aria-label="Stel een vraag"
       >
         <span className="relative flex h-3 w-3">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-300 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
         </span>
-        <MessageCircle className="w-5 h-5 fill-white text-orange-600" />
+        <MessageCircle className="w-5 h-5 fill-white text-orange-700" />
         <span>{lang === 'nl' ? 'Stel een Vraag' : 'Ask a Question'}</span>
       </button>
     </div>

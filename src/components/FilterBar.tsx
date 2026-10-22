@@ -158,7 +158,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 onClick={() => onSelectCategory(cat)}
                 className={`whitespace-nowrap flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-orange-600 text-white shadow-md shadow-orange-600/20'
+                    ? 'bg-orange-700 text-white shadow-md shadow-orange-700/20'
                     : 'bg-orange-50/60 text-stone-800 hover:bg-orange-100 border border-orange-100/80 hover:border-orange-200'
                 }`}
               >
@@ -256,11 +256,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               onClick={() => onQuickFilterChange('starter')}
               className={`flex items-center gap-1 px-3 py-1 rounded-xl transition-all cursor-pointer ${
                 activeQuickFilter === 'starter'
-                  ? 'bg-orange-600 text-white shadow-2xs font-black'
+                  ? 'bg-orange-700 text-white shadow-2xs font-black'
                   : 'bg-orange-50 text-orange-900 border border-orange-200/80 hover:bg-orange-100'
               }`}
             >
-              <Tag className="w-3 h-3 text-orange-600" />
+              <Tag className="w-3 h-3 text-orange-700" />
               <span>Starter (€75)</span>
             </button>
 
@@ -312,11 +312,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             {/* Province Selector */}
             {onSelectProvince && (
               <div className="flex items-center gap-1.5 bg-orange-50/50 border border-orange-200/80 rounded-xl px-2.5 py-1.5">
-                <MapPin className="w-3.5 h-3.5 text-orange-500" />
-                <span className="font-bold text-stone-700 hidden sm:inline">
+                <MapPin className="w-3.5 h-3.5 text-orange-600" />
+                <label htmlFor="filter-province-select" className="font-bold text-stone-700 hidden sm:inline cursor-pointer">
                   {lang === 'nl' ? 'Regio:' : 'Region:'}
-                </span>
+                </label>
                 <select
+                  id="filter-province-select"
+                  aria-label={lang === 'nl' ? 'Filter op regio of provincie' : 'Filter by region or province'}
                   value={selectedProvince}
                   onChange={(e) => onSelectProvince(e.target.value as ProvinceType)}
                   className="bg-transparent font-bold text-orange-950 focus:outline-none cursor-pointer text-xs"
@@ -333,11 +335,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             {/* Price Tier Selector */}
             {onSelectPriceTier && (
               <div className="flex items-center gap-1.5 bg-orange-50/50 border border-orange-200/80 rounded-xl px-2.5 py-1.5">
-                <Tag className="w-3.5 h-3.5 text-orange-500" />
-                <span className="font-bold text-stone-700 hidden sm:inline">
+                <Tag className="w-3.5 h-3.5 text-orange-600" />
+                <label htmlFor="filter-tier-select" className="font-bold text-stone-700 hidden sm:inline cursor-pointer">
                   {lang === 'nl' ? 'Pakket:' : 'Package:'}
-                </span>
+                </label>
                 <select
+                  id="filter-tier-select"
+                  aria-label={lang === 'nl' ? 'Filter op prijspakket' : 'Filter by price package'}
                   value={selectedPriceTier}
                   onChange={(e) => onSelectPriceTier(e.target.value)}
                   className="bg-transparent font-bold text-orange-950 focus:outline-none cursor-pointer text-xs"
@@ -352,11 +356,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-1.5 bg-orange-50/50 border border-orange-200/80 rounded-xl px-2.5 py-1.5">
-              <ArrowUpDown className="w-3.5 h-3.5 text-orange-500" />
-              <span className="font-bold text-stone-700 hidden sm:inline">
+              <ArrowUpDown className="w-3.5 h-3.5 text-orange-600" />
+              <label htmlFor="filter-sort-select" className="font-bold text-stone-700 hidden sm:inline cursor-pointer">
                 {lang === 'nl' ? 'Sorteer op:' : 'Sort by:'}
-              </span>
+              </label>
               <select
+                id="filter-sort-select"
+                aria-label={lang === 'nl' ? 'Sorteer concepten' : 'Sort concepts'}
                 value={sortBy}
                 onChange={(e) => onSortChange(e.target.value as SortByType)}
                 className="bg-transparent font-bold text-orange-950 focus:outline-none cursor-pointer text-xs"

@@ -46,11 +46,11 @@ export const Hero: React.FC<HeroProps> = ({
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-stone-900 tracking-tight leading-tight mb-6">
           {lang === 'nl' ? (
             <>
-              Originele <span className="text-orange-600">Website Concepts</span> voor Nederlandse bedrijven
+              Originele <span className="text-orange-700">Website Concepts</span> voor Nederlandse bedrijven
             </>
           ) : (
             <>
-              Original <span className="text-orange-600">Website Concepts</span> for Dutch web projects
+              Original <span className="text-orange-700">Website Concepts</span> for Dutch web projects
             </>
           )}
         </h1>
@@ -101,14 +101,14 @@ export const Hero: React.FC<HeroProps> = ({
             <button
               type="button"
               onClick={() => onSearchChange('')}
-              className="text-xs text-orange-600 hover:text-orange-800 px-3 py-1 font-bold cursor-pointer"
+              className="text-xs text-orange-700 hover:text-orange-900 px-3 py-1 font-bold cursor-pointer"
             >
               {lang === 'nl' ? 'Wis' : 'Clear'}
             </button>
           )}
           <button
             type="submit"
-            className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md shadow-orange-600/20 transition-all cursor-pointer whitespace-nowrap"
+            className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-bold text-xs shadow-md shadow-orange-700/20 transition-all cursor-pointer whitespace-nowrap"
           >
             {lang === 'nl' ? 'Bekijk Resultaten' : 'View Results'}
           </button>
@@ -135,7 +135,7 @@ export const Hero: React.FC<HeroProps> = ({
                 }}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-2xs ${
                   isActive
-                    ? 'bg-orange-600 text-white border border-orange-600 shadow-md scale-105'
+                    ? 'bg-orange-700 text-white border border-orange-700 shadow-md scale-105'
                     : 'bg-orange-50/70 hover:bg-orange-100 border border-orange-200/80 text-orange-950 hover:border-orange-300'
                 }`}
               >
@@ -150,7 +150,7 @@ export const Hero: React.FC<HeroProps> = ({
           <span>🔄 {lang === 'nl' ? 'Heb je al een bestaande site of eigen schets?' : 'Have an existing site or your own plan?'}</span>
           <a
             href="#prijs-calculator"
-            className="text-orange-600 hover:text-orange-700 font-extrabold underline decoration-orange-300 underline-offset-2 transition-colors cursor-pointer"
+            className="text-orange-700 hover:text-orange-800 font-extrabold underline decoration-orange-300 underline-offset-2 transition-colors cursor-pointer"
           >
             {lang === 'nl' ? 'Vraag een Redesign of Maatwerk aan' : 'Request Redesign or Custom Build'}
           </a>
