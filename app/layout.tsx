@@ -3,11 +3,12 @@ import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://samenonline-web.github.io'),
-  title: 'Samen Online 🇳🇱 • Professionele Websites & Webshops voor MKB en ZZP',
+  title: 'Samen Online • Professionele Websites & Webshops voor MKB en ZZP',
   description:
     "Ontdek 20 kant-en-klare, interactieve branche-concepten voor aannemers, boekhouders, advocaten, makelaars, zorg, salons en webshops. Bereken direct je investering en test live met iDEAL.",
   keywords: [
     'Samen Online',
+    'Samen Online website',
     'Website laten maken MKB',
     'ZZP website Nederland',
     'Aannemer website',
@@ -27,14 +28,14 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'nl_NL',
     url: 'https://samenonline-web.github.io',
-    title: 'Samen Online 🇳🇱 • Websites die Klanten Opleveren voor MKB & ZZP',
+    title: 'Samen Online • Websites die Klanten Opleveren voor MKB & ZZP',
     description:
       'Kies uit 20 interactieve templates, bereken direct je investering binnen 60 seconden en personaliseer live met jouw eigen bedrijfsnaam en kleuren.',
     siteName: 'Samen Online',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Samen Online 🇳🇱 • Websites voor Nederlandse Ondernemers',
+    title: 'Samen Online • Websites voor Nederlandse Ondernemers',
     description:
       'Kies uit 20 interactieve branche-templates. Live demonstraties van tariefcalculators tot iDEAL checkout.',
   },
