@@ -36,8 +36,8 @@ export const Footer: React.FC<FooterProps> = ({
     onOpenInfoModal(
       lang === 'nl' ? 'Richtlijnen & Transparantie' : 'Guidelines & Transparency',
       lang === 'nl'
-        ? `Welkom bij Samen Online! Wij hanteren de volgende kwaliteitsnormen:\n\n1. Eerlijke Vermeldingen: Alle getoonde website concepten en sjablonen zijn geoptimaliseerd voor de Nederlandse markt (iDEAL, AVG/GDPR, PostNL).\n\n2. Geen Verborgen Kosten: Prijzen, oplevertijden en functionaliteiten zijn transparant.\n\n3. Hoge Kwaliteit: Wij bouwen uitsluitend met moderne technologieën zoals Next.js, React en Tailwind CSS voor maximale snelheid en vindbaarheid (SEO).\n\n4. Vriendelijke Service: Direct persoonlijk contact en ondersteuning in het Nederlands.\n\n5. Bedrijfsstatus & Facturatie: Samen Online is een startend freelance initiatief. Facturen worden netjes opgemaakt conform de Nederlandse fiscale richtlijnen (resultaat uit overige werkzaamheden / ROW), zonder btw-opslag. Een officiële KvK-inschrijving volgt bij verdere doorgroei.\n\n6. Webhosting & Domeinen: Optionele all-in webhosting op snelle Nederlandse NVMe SSD-servers met 99.9% uptime, gratis SSL en zakelijke e-mail. Klanten behouden altijd de vrije keuze om zelf hosting te regelen.`
-        : `Welcome to Samen Online! Our guidelines:\n\n1. Fair Listings: All showcased website templates are designed for the Dutch web landscape.\n\n2. Zero Hidden Costs: Clear pricing and build timelines.\n\n3. Modern Tech: Fast Next.js performance and accessibility standards.\n\n4. Friendly Support: Direct communication and Dutch/English support.\n\n5. Legal & Billing: Operating as an independent freelance starter initiative under Dutch non-VAT regulations (ROW). Official Chamber of Commerce (KvK) registration will follow upon expansion.\n\n6. Web Hosting & Domains: Optional all-in hosting on high-speed Dutch NVMe SSD servers with automated SSL and business email. Clients maintain the freedom to manage their own host.`
+        ? `Welkom bij Samen Online! Wij hanteren de volgende kwaliteitsnormen:\n\n1. Eerlijke Vermeldingen: Alle getoonde website concepten en sjablonen zijn geoptimaliseerd voor de Nederlandse markt (iDEAL, AVG/GDPR, PostNL).\n\n2. Geen Verborgen Kosten: Prijzen, oplevertijden en functionaliteiten zijn transparant.\n\n3. Hoge Kwaliteit: Wij bouwen uitsluitend met moderne technologieën zoals Next.js, React en Tailwind CSS voor maximale snelheid en vindbaarheid (SEO).\n\n4. Vriendelijke Service: Direct persoonlijk contact en ondersteuning in het Nederlands.\n\n5. Bedrijfsstatus & Facturatie: Samen Online is een startend freelance initiatief. Facturen worden netjes opgemaakt conform de Nederlandse fiscale richtlijnen (resultaat uit overige werkzaamheden / ROW), zonder btw-opslag. Een officiële KvK-inschrijving volgt bij verdere doorgroei.\n\n6. Webhosting & Domeinen: Optionele all-in webhosting op snelle Nederlandse NVMe SSD-servers met 99.9% uptime, gratis SSL en zakelijke e-mail. Klanten behouden altijd de vrije keuze om zelf hosting te regelen.\n\n7. Eerlijke Communicatie & Geen Valse Reviews: Wij hechten aan 100% transparantie. Alle getoonde sjablonen en review-elementen zijn interactieve demonstratiemodellen. Wij fabriceren nooit onechte klantbeoordelingen.`
+        : `Welcome to Samen Online! Our guidelines:\n\n1. Fair Listings: All showcased website templates are designed for the Dutch web landscape.\n\n2. Zero Hidden Costs: Clear pricing and build timelines.\n\n3. Modern Tech: Fast Next.js performance and accessibility standards.\n\n4. Friendly Support: Direct communication and Dutch/English support.\n\n5. Legal & Billing: Operating as an independent freelance starter initiative under Dutch non-VAT regulations (ROW). Official Chamber of Commerce (KvK) registration will follow upon expansion.\n\n6. Web Hosting & Domains: Optional all-in hosting on high-speed Dutch NVMe SSD servers with automated SSL and business email. Clients maintain the freedom to manage their own host.\n\n7. Integrity: All templates and review widgets are interactive design mockups. We never fabricate fake reviews.`
     );
   };
 
@@ -54,8 +54,8 @@ export const Footer: React.FC<FooterProps> = ({
     onOpenInfoModal(
       lang === 'nl' ? 'Algemene Voorwaarden' : 'Terms of Service',
       lang === 'nl'
-        ? `Algemene voorwaarden van Samen Online:\n\n1. Dienstverlening: Samen Online biedt kant-en-klare website concepten, advies en maatwerk webdesign voor ondernemers.\n\n2. Vrijblijvende Aanvragen: Het indienen van een offerte of aanvraag is altijd 100% gratis en vrijblijvend.\n\n3. Intellectueel Eigendom: Bij oplevering van een op maat gemaakt project wordt het eigendom van de opgeleverde website overgedragen aan de klant.\n\n4. Garantie & Tevredenheid: Wij werken totdat je tevreden bent met het eindresultaat.`
-        : `Terms of service:\n\n1. Services: Samen Online provides custom website development and templates.\n\n2. Free Consultations: Inquiries and quotes are completely free of charge.\n\n3. IP & Ownership: Full ownership is transferred to the client upon project delivery.`
+        ? `Algemene voorwaarden van Samen Online:\n\n1. Dienstverlening: Samen Online biedt kant-en-klare website concepten, advies en maatwerk webdesign voor ondernemers.\n\n2. Vrijblijvende Aanvragen: Het indienen van een offerte of aanvraag is altijd 100% gratis en vrijblijvend.\n\n3. Intellectueel Eigendom: Bij oplevering van een op maat gemaakt project wordt het eigendom van de opgeleverde website overgedragen aan de klant.\n\n4. Garantie & Tevredenheid: Wij werken totdat je tevreden bent met het eindresultaat.\n\n5. Fictieve Voorbeeldconcepten & Vrijwaring: Alle getoonde sjablonen, mockups, logo-voorbeelden en merknamen (waaronder 'BouwMeester Aannemer', 'De Vries Boekhouding', 'Studio Puur', 'Bistro De Gracht', etc.) zijn uitsluitend fictieve voorbeeldconcepten ter demonstratie van lay-outs en webfunctionaliteiten. Eventuele gelijkenissen met bestaande handelsnamen berusten op louter toeval.`
+        : `Terms of service:\n\n1. Services: Samen Online provides custom website development and templates.\n\n2. Free Consultations: Inquiries and quotes are completely free of charge.\n\n3. IP & Ownership: Full ownership is transferred to the client upon project delivery.\n\n4. Demonstration Concepts: All showcased business names, logos, and mockups are fictional concepts used solely for design demonstration purposes. Any resemblance to real entities is entirely coincidental.`
     );
   };
 
@@ -195,8 +195,17 @@ export const Footer: React.FC<FooterProps> = ({
 
         </div>
 
+        {/* Legal Transparency Disclaimer note */}
+        <div className="pt-8 pb-4 text-center sm:text-left text-[11px] text-stone-600 font-medium border-t border-orange-100">
+          <p>
+            {lang === 'nl'
+              ? 'Juridische mededeling: Alle op deze website getoonde bedrijfsnamen, sjablonen en review-elementen zijn fictieve voorbeeldconcepten ter demonstratie van webdesign en technische mogelijkheden. Samen Online levert unieke websites op maat gebaseerd op deze ontwerpen.'
+              : 'Legal notice: All company names, templates, and review elements on this site are fictional showcase concepts for web design demonstration purposes. Samen Online builds custom websites based on these layouts.'}
+          </p>
+        </div>
+
         {/* Bottom copyright line */}
-        <div className="pt-8 border-t border-orange-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-stone-500">
+        <div className="pt-4 border-t border-orange-100/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-stone-500">
           <p>© {new Date().getFullYear()} Samen Online. {lang === 'nl' ? 'Alle rechten voorbehouden.' : 'All rights reserved.'}</p>
           <div className="flex items-center gap-4">
             <button

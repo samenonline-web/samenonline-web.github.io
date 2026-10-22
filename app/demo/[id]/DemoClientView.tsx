@@ -102,7 +102,7 @@ export const DemoClientView: React.FC<DemoClientViewProps> = ({ template }) => {
               {customBrandName.trim() || template.name}
             </span>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-              ● Live Demo
+              ● Fictief Demo Concept
             </span>
           </div>
         </div>

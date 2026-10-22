@@ -202,10 +202,8 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                             <span>{template.estimatedBuildDays} {lang === 'nl' ? 'dagen oplevertijd' : 'days build time'}</span>
                           </div>
 
-                          <div className="flex items-center gap-1 font-bold text-amber-500">
-                            <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                            <span className="text-slate-800">{template.rating.toFixed(1)}</span>
-                            <span className="text-slate-400">({template.reviewCount})</span>
+                          <div className="flex items-center gap-1 font-bold text-xs text-stone-600 bg-stone-100 px-2.5 py-1 rounded-xl border border-stone-200">
+                            <span>{lang === 'nl' ? 'Voorbeeld Lay-out' : 'Showcase Layout'}</span>
                           </div>
                         </div>
 

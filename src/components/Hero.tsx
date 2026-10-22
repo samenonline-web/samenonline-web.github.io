@@ -56,11 +56,21 @@ export const Hero: React.FC<HeroProps> = ({
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+        <p className="text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto mb-4 leading-relaxed font-normal">
           {lang === 'nl'
-            ? 'Bekijk onze kant-en-klare webdesign concepten voor Nederlandse webwinkels, creatieve bureaus, duurzame initiatieven en SaaS platforms. Volledig op maat aanpasbaar!'
-            : 'Explore our tailor-made website concepts for Dutch e-commerce, agencies, sustainable ventures, and tech startups. Built for conversion & compliance!'}
+            ? 'Bekijk onze interactieve voorbeeldconcepten ter inspiratie voor jouw eigen website. Alle ontwerpen zijn demonstratie-modellen en worden 100% op maat ingericht voor jouw eigen bedrijf!'
+            : 'Explore our interactive showcase concepts for your web project. All layouts are demonstration models customized entirely for your brand!'}
         </p>
+
+        {/* Transparency Disclaimer Badge */}
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-100 border border-stone-200 text-stone-600 text-xs font-medium mb-8">
+          <span>💡</span>
+          <span>
+            {lang === 'nl'
+              ? 'Transparantie: Alle getoonde bedrijfsnamen en sjablonen zijn fictieve voorbeeldconcepten.'
+              : 'Transparency: All company names and templates are fictional showcase concepts.'}
+          </span>
+        </div>
 
         {/* Hero Search Box */}
         <form
