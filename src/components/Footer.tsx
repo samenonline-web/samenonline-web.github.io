@@ -36,8 +36,8 @@ export const Footer: React.FC<FooterProps> = ({
     onOpenInfoModal(
       lang === 'nl' ? 'Richtlijnen & Transparantie' : 'Guidelines & Transparency',
       lang === 'nl'
-        ? `Welkom bij Samen Online! Wij hanteren de volgende kwaliteitsnormen:\n\n1. Eerlijke Vermeldingen: Alle getoonde website concepten en sjablonen zijn geoptimaliseerd voor de Nederlandse markt (iDEAL, AVG/GDPR, PostNL).\n\n2. Geen Verborgen Kosten: Prijzen, oplevertijden en functionaliteiten zijn transparant.\n\n3. Hoge Kwaliteit: Wij bouwen uitsluitend met moderne technologieën zoals Next.js, React en Tailwind CSS voor maximale snelheid en vindbaarheid (SEO).\n\n4. Vriendelijke Service: Direct persoonlijk contact en ondersteuning in het Nederlands.`
-        : `Welcome to Samen Online! Our guidelines:\n\n1. Fair Listings: All showcased website templates are designed for the Dutch web landscape.\n\n2. Zero Hidden Costs: Clear pricing and build timelines.\n\n3. Modern Tech: Fast Next.js performance and accessibility standards.\n\n4. Friendly Support: Direct communication and Dutch/English support.`
+        ? `Welkom bij Samen Online! Wij hanteren de volgende kwaliteitsnormen:\n\n1. Eerlijke Vermeldingen: Alle getoonde website concepten en sjablonen zijn geoptimaliseerd voor de Nederlandse markt (iDEAL, AVG/GDPR, PostNL).\n\n2. Geen Verborgen Kosten: Prijzen, oplevertijden en functionaliteiten zijn transparant.\n\n3. Hoge Kwaliteit: Wij bouwen uitsluitend met moderne technologieën zoals Next.js, React en Tailwind CSS voor maximale snelheid en vindbaarheid (SEO).\n\n4. Vriendelijke Service: Direct persoonlijk contact en ondersteuning in het Nederlands.\n\n5. Bedrijfsstatus & Facturatie: Samen Online is een startend freelance initiatief. Facturen worden netjes opgemaakt conform de Nederlandse fiscale richtlijnen (resultaat uit overige werkzaamheden / ROW), zonder btw-opslag. Een officiële KvK-inschrijving volgt bij verdere doorgroei.`
+        : `Welcome to Samen Online! Our guidelines:\n\n1. Fair Listings: All showcased website templates are designed for the Dutch web landscape.\n\n2. Zero Hidden Costs: Clear pricing and build timelines.\n\n3. Modern Tech: Fast Next.js performance and accessibility standards.\n\n4. Friendly Support: Direct communication and Dutch/English support.\n\n5. Legal & Billing: Operating as an independent freelance starter initiative under Dutch non-VAT regulations (ROW). Official Chamber of Commerce (KvK) registration will follow upon expansion.`
     );
   };
 
@@ -95,6 +95,12 @@ export const Footer: React.FC<FooterProps> = ({
               <MapPin className="w-3.5 h-3.5" />
               <span>Gemaakt met ❤️ in Nederland</span>
             </div>
+
+            <p className="text-[11px] text-stone-500 font-medium">
+              {lang === 'nl'
+                ? 'Onafhankelijk freelance initiatief • Facturatie conform ROW (vrijgesteld van btw)'
+                : 'Independent freelance initiative • Operating under Dutch non-VAT regulations'}
+            </p>
           </div>
 
           {/* Col 2: Quick Links */}

@@ -52,6 +52,12 @@ const FAQS: FaqItem[] = [
     aNl: 'Heel eenvoudig: je levert je eigen bedrijfslogo aan (indien je die al hebt) en eventuele eigen teksten of foto’s. Wij ontwerpen geen losse logo’s; heb je nog geen logo, dan presenteren we jouw bedrijfsnaam in een superstrak, stijlvol typografisch woordmerk in het gekozen lettertype. Ook vullen we de website desgewenst met professionele brancheteksten en rechtenvrije HD-fotografie.',
     aEn: 'Very simple: you provide your own company logo (if you have one) and any copy or photos. We do not design standalone company logos; if you do not have a logo yet, we render your business name in a sleek, stylish typographic wordmark in your chosen font. We also provide industry copy and royalty-free HD imagery.',
   },
+  {
+    qNl: 'Kan ik als bedrijf een factuur ontvangen en hoe zit het met KvK en btw?',
+    qEn: 'Can I receive an invoice for my accounting, and what about KvK / VAT?',
+    aNl: 'Jazeker! Je ontvangt voor elk opgeleverd project een keurige factuur / specificatie die je direct kunt opvoeren als zakelijke kosten in je eigen boekhouding. Samen Online opereert momenteel als startend freelance portfolio-initiatief conform de Nederlandse fiscale richtlijnen (resultaat uit overige werkzaamheden / ROW). Doordat wij geen 21% btw hoeven door te rekenen, profiteer je als ondernemer van extra scherpe, transparante all-in tarieven! Een formele KvK-registratie volgt bij verdere doorgroei.',
+    aEn: 'Yes absolutely! You will receive a clean invoice / specification for every delivered project that you can directly deduct as business expenses. Samen Online operates as a freelance starter initiative under Dutch tax guidelines (ROW, non-VAT). Because there is no 21% VAT markup, you benefit from sharp, transparent all-in rates! Formal KvK registration will follow upon expansion.',
+  },
 ];
 
 export const FaqSection: React.FC<FaqSectionProps> = ({ lang }) => {
