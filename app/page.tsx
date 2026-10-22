@@ -40,7 +40,6 @@ export default function Home() {
   // Search & Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>('All');
-  const [selectedProvince, setSelectedProvince] = useState<ProvinceType>('All');
   const [selectedPriceTier, setSelectedPriceTier] = useState<string>('All');
   const [quickFilter, setQuickFilter] = useState<QuickFilterType>('all');
   const [sortBy, setSortBy] = useState<SortByType>('rating');
@@ -151,7 +150,6 @@ export default function Home() {
   const handleResetAllFilters = () => {
     setSearchQuery('');
     setSelectedCategory('All');
-    setSelectedProvince('All');
     setSelectedPriceTier('All');
     setQuickFilter('all');
     setShowOnlyBookmarks(false);
@@ -179,11 +177,6 @@ export default function Home() {
 
         // Category Filter
         if (selectedCategory !== 'All' && tmpl.category !== selectedCategory) {
-          return false;
-        }
-
-        // Province Filter
-        if (selectedProvince !== 'All' && tmpl.province !== selectedProvince) {
           return false;
         }
 
@@ -252,7 +245,7 @@ export default function Home() {
         }
         return 0;
       });
-  }, [templates, searchQuery, selectedCategory, selectedProvince, selectedPriceTier, quickFilter, showOnlyBookmarks, bookmarks, sortBy]);
+  }, [templates, searchQuery, selectedCategory, selectedPriceTier, quickFilter, showOnlyBookmarks, bookmarks, sortBy]);
 
   return (
     <div
@@ -298,8 +291,6 @@ export default function Home() {
         lang={lang}
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
-        selectedProvince={selectedProvince}
-        onSelectProvince={setSelectedProvince}
         selectedPriceTier={selectedPriceTier}
         onSelectPriceTier={setSelectedPriceTier}
         sortBy={sortBy}

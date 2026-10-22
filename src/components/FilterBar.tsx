@@ -18,7 +18,7 @@ import {
   Briefcase,
   SlidersHorizontal,
 } from 'lucide-react';
-import { CategoryType, Language, ProvinceType } from '../types/company';
+import { CategoryType, Language } from '../types/company';
 
 export type QuickFilterType =
   | 'all'
@@ -42,8 +42,6 @@ interface FilterBarProps {
   lang: Language;
   selectedCategory: CategoryType;
   onSelectCategory: (category: CategoryType) => void;
-  selectedProvince?: ProvinceType;
-  onSelectProvince?: (province: ProvinceType) => void;
   selectedPriceTier?: string;
   onSelectPriceTier?: (tier: string) => void;
   sortBy: SortByType;
@@ -71,28 +69,10 @@ const CATEGORIES: CategoryType[] = [
   'Local Services & Healthcare',
 ];
 
-const PROVINCES: { id: ProvinceType; name: string }[] = [
-  { id: 'All', name: 'Alle Provincies' },
-  { id: 'Zuid-Holland', name: 'Zuid-Holland' },
-  { id: 'Noord-Holland', name: 'Noord-Holland' },
-  { id: 'Utrecht', name: 'Utrecht' },
-  { id: 'Noord-Brabant', name: 'Noord-Brabant' },
-  { id: 'Gelderland', name: 'Gelderland' },
-  { id: 'Groningen', name: 'Groningen' },
-  { id: 'Limburg', name: 'Limburg' },
-  { id: 'Flevoland', name: 'Flevoland' },
-  { id: 'Overijssel', name: 'Overijssel' },
-  { id: 'Friesland', name: 'Friesland' },
-  { id: 'Drenthe', name: 'Drenthe' },
-  { id: 'Zeeland', name: 'Zeeland' },
-];
-
 export const FilterBar: React.FC<FilterBarProps> = ({
   lang,
   selectedCategory,
   onSelectCategory,
-  selectedProvince = 'All',
-  onSelectProvince,
   selectedPriceTier = 'All',
   onSelectPriceTier,
   sortBy,
@@ -138,7 +118,6 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   const hasActiveFilters = Boolean(
     selectedCategory !== 'All' ||
     activeQuickFilter !== 'all' ||
-    selectedProvince !== 'All' ||
     selectedPriceTier !== 'All' ||
     (searchQuery && searchQuery.trim().length > 0)
   );
@@ -306,32 +285,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         {/* 3. Secondary Dropdown Controls & Modals */}
         <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
           
-          {/* Left: Region & Price Tier Selectors */}
+          {/* Left: Price Tier & Sort Selectors */}
           <div className="flex flex-wrap items-center gap-2">
             
-            {/* Province Selector */}
-            {onSelectProvince && (
-              <div className="flex items-center gap-1.5 bg-orange-50/50 border border-orange-200/80 rounded-xl px-2.5 py-1.5">
-                <MapPin className="w-3.5 h-3.5 text-orange-600" />
-                <label htmlFor="filter-province-select" className="font-bold text-stone-700 hidden sm:inline cursor-pointer">
-                  {lang === 'nl' ? 'Regio:' : 'Region:'}
-                </label>
-                <select
-                  id="filter-province-select"
-                  aria-label={lang === 'nl' ? 'Filter op regio of provincie' : 'Filter by region or province'}
-                  value={selectedProvince}
-                  onChange={(e) => onSelectProvince(e.target.value as ProvinceType)}
-                  className="bg-transparent font-bold text-orange-950 focus:outline-none cursor-pointer text-xs"
-                >
-                  {PROVINCES.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-
             {/* Price Tier Selector */}
             {onSelectPriceTier && (
               <div className="flex items-center gap-1.5 bg-orange-50/50 border border-orange-200/80 rounded-xl px-2.5 py-1.5">
@@ -445,18 +401,6 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                   title="Snelfilter wissen"
                 >
                   <span>{getQuickFilterLabel(activeQuickFilter)}</span>
-                  <X className="w-3 h-3" />
-                </button>
-              )}
-
-              {selectedProvince !== 'All' && onSelectProvince && (
-                <button
-                  type="button"
-                  onClick={() => onSelectProvince('All')}
-                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-900 border border-orange-300 font-bold hover:bg-orange-200 transition-colors cursor-pointer"
-                  title="Provincie filter wissen"
-                >
-                  <span>Regio: {selectedProvince}</span>
                   <X className="w-3 h-3" />
                 </button>
               )}
