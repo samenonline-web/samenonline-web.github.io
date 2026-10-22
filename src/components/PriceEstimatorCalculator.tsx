@@ -1,7 +1,20 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { Calculator, Check, ArrowRight, Sparkles, Clock, ShieldCheck, Globe, Download, CheckCircle2, AlertCircle } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import {
+  Calculator,
+  Check,
+  ArrowRight,
+  Sparkles,
+  Clock,
+  ShieldCheck,
+  Globe,
+  Download,
+  CheckCircle2,
+  AlertCircle,
+  XCircle,
+  Loader2,
+} from 'lucide-react';
 import { Language } from '../types/company';
 import { QuotePdfModal, QuotePdfData } from './QuotePdfModal';
 
@@ -148,9 +161,88 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
     return {
       status: 'valid',
       fullName: `${cleanDomain}.nl`,
-      message: `${cleanDomain}.nl is beschikbaar voor registratie & inbegrepen bij All-in Webhosting!`,
+      message: `${cleanDomain}.nl voldoet aan de SIDN-formaateisen.`,
     };
   }, [cleanDomain]);
+
+  // Live DNS-over-HTTPS (DoH) Availability Lookup
+  const [dnsState, setDnsState] = useState<{
+    status: 'idle' | 'checking' | 'available' | 'taken' | 'error';
+    domainName: string;
+    message?: string;
+  }>({ status: 'idle', domainName: '' });
+
+  useEffect(() => {
+    if (!cleanDomain || domainValidation.status === 'invalid') {
+      setDnsState({ status: 'idle', domainName: '' });
+      return;
+    }
+
+    setDnsState({ status: 'checking', domainName: `${cleanDomain}.nl` });
+
+    const controller = new AbortController();
+    const timer = setTimeout(async () => {
+      try {
+        const queryUrl = `https://dns.google/resolve?name=${encodeURIComponent(cleanDomain)}.nl&type=NS`;
+        const res = await fetch(queryUrl, { signal: controller.signal });
+        const data = await res.json();
+
+        // Status 0 with Answer means registered nameservers exist (domain taken)
+        if (data.Status === 0 && Array.isArray(data.Answer) && data.Answer.length > 0) {
+          setDnsState({
+            status: 'taken',
+            domainName: `${cleanDomain}.nl`,
+            message: `${cleanDomain}.nl is al geregistreerd & in gebruik door een andere partij.`,
+          });
+        } else if (data.Status === 3) {
+          // Status 3 is NXDOMAIN (domain not found in root DNS)
+          setDnsState({
+            status: 'available',
+            domainName: `${cleanDomain}.nl`,
+            message: `${cleanDomain}.nl is beschikbaar voor registratie & inbegrepen bij All-in Webhosting!`,
+          });
+        } else if (data.Status === 0) {
+          // Check A record fallback if NS records were cached without answer
+          const resA = await fetch(
+            `https://dns.google/resolve?name=${encodeURIComponent(cleanDomain)}.nl&type=A`,
+            { signal: controller.signal }
+          );
+          const dataA = await resA.json();
+          if (dataA.Status === 0 && Array.isArray(dataA.Answer) && dataA.Answer.length > 0) {
+            setDnsState({
+              status: 'taken',
+              domainName: `${cleanDomain}.nl`,
+              message: `${cleanDomain}.nl is al geregistreerd & in gebruik door een andere partij.`,
+            });
+          } else {
+            setDnsState({
+              status: 'available',
+              domainName: `${cleanDomain}.nl`,
+              message: `${cleanDomain}.nl is beschikbaar voor registratie & inbegrepen bij All-in Webhosting!`,
+            });
+          }
+        } else {
+          setDnsState({
+            status: 'available',
+            domainName: `${cleanDomain}.nl`,
+            message: `${cleanDomain}.nl is beschikbaar voor registratie & inbegrepen bij All-in Webhosting!`,
+          });
+        }
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === 'AbortError') return;
+        setDnsState({
+          status: 'error',
+          domainName: `${cleanDomain}.nl`,
+          message: `Kon realtime DNS niet bereiken. Bij aanvraag verifiëren we dit direct voor je bij SIDN.`,
+        });
+      }
+    }, 350);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [cleanDomain, domainValidation.status]);
 
   const toggleAddon = (id: string) => {
     setSelectedAddons((prev) =>
@@ -176,7 +268,9 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
         .filter(Boolean) as string[],
     ],
     hostingPlan,
-    chosenDomain: cleanDomain ? `${cleanDomain}.nl` : undefined,
+    chosenDomain: cleanDomain
+      ? `${cleanDomain}.nl${dnsState.status === 'taken' ? ' (Bestaand/Bezet)' : ''}`
+      : undefined,
     basePrice: activeTypeObj.basePrice + pagesPrice,
     addonsPrice: addonsTotal,
     totalPrice,
@@ -194,10 +288,18 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
         ? `Inclusief All-in Hosting, .nl domein (${cleanDomain ? cleanDomain + '.nl' : 'nog te bepalen'}) en zakelijke e-mail (+€9,50/mnd)`
         : 'Klant regelt zelf hosting (€0/mnd)';
 
+    const domainStatusText = cleanDomain
+      ? dnsState.status === 'taken'
+        ? `${cleanDomain}.nl (Bestaand domein koppelen/verhuizen)`
+        : dnsState.status === 'available'
+        ? `${cleanDomain}.nl (Nieuw registreren)`
+        : `${cleanDomain}.nl`
+      : 'Nog niet ingevuld';
+
     onOpenRequestModal({
       templateName: `${activeTypeObj.nameNl} (${activePageOption.labelNl})`,
       budget: `Indicatie: €${totalPrice} eenmalig${hostingPlan === 'managed' ? ' + €9,50/mnd all-in hosting' : ''}`,
-      notes: `Aanvraag via 60-seconden calculator: Type: ${activeTypeObj.nameNl}, Pagina's: ${activePageOption.labelNl}, Extra opties: ${addonNames || 'Geen'}, Gewenste domeinnaam: ${cleanDomain ? cleanDomain + '.nl' : 'Nog niet ingevuld'}, Hosting: ${hostingText}, Verwachte levertijd: ~${estimatedDays} dagen.`,
+      notes: `Aanvraag via 60-seconden calculator: Type: ${activeTypeObj.nameNl}, Pagina's: ${activePageOption.labelNl}, Extra opties: ${addonNames || 'Geen'}, Gewenste domeinnaam: ${domainStatusText}, Hosting: ${hostingText}, Verwachte levertijd: ~${estimatedDays} dagen.`,
     });
   };
 
@@ -403,25 +505,52 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                     </span>
                   </div>
 
-                  {domainValidation.status === 'valid' && (
-                    <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-bold bg-emerald-100/70 p-2 rounded-xl border border-emerald-300">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                  {domainValidation.status === 'invalid' && (
+                    <div className="flex items-center gap-1.5 text-xs text-amber-900 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-300">
+                      <AlertCircle className="w-4 h-4 text-amber-700 shrink-0" />
                       <span>{domainValidation.message}</span>
                     </div>
                   )}
 
-                  {domainValidation.status === 'invalid' && (
-                    <div className="flex items-center gap-1.5 text-xs text-amber-900 font-bold bg-amber-50 p-2 rounded-xl border border-amber-300">
-                      <AlertCircle className="w-4 h-4 text-amber-700 shrink-0" />
-                      <span>{domainValidation.message}</span>
+                  {domainValidation.status === 'valid' && dnsState.status === 'checking' && (
+                    <div className="flex items-center gap-2 text-xs text-stone-700 font-bold bg-white/90 p-2.5 rounded-xl border border-emerald-300 animate-pulse">
+                      <Loader2 className="w-4 h-4 text-orange-600 animate-spin shrink-0" />
+                      <span>Live DNS controleren voor {cleanDomain}.nl...</span>
+                    </div>
+                  )}
+
+                  {domainValidation.status === 'valid' && dnsState.status === 'taken' && (
+                    <div className="p-3 rounded-xl bg-rose-50 border border-rose-300 text-xs text-rose-950 space-y-1">
+                      <div className="flex items-center gap-1.5 font-black text-rose-800">
+                        <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                        <span>{cleanDomain}.nl is al bezet / geregistreerd.</span>
+                      </div>
+                      <p className="text-[11px] text-rose-900 leading-relaxed font-medium">
+                        💡 <strong>Is {cleanDomain}.nl al jouw eigendom?</strong> Geen probleem! We kunnen jouw bestaande domeinnaam kosteloos koppelen of verhuizen naar Samen Online.
+                        Ben je geen eigenaar? Kies dan een alternatief (zoals <em>{cleanDomain}-online.nl</em> of <em>{cleanDomain}-bedrijf.nl</em>).
+                      </p>
+                    </div>
+                  )}
+
+                  {domainValidation.status === 'valid' && dnsState.status === 'available' && (
+                    <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-bold bg-emerald-100/80 p-2.5 rounded-xl border border-emerald-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                      <span>{cleanDomain}.nl is beschikbaar voor registratie & inbegrepen bij All-in Webhosting!</span>
+                    </div>
+                  )}
+
+                  {domainValidation.status === 'valid' && dnsState.status === 'error' && (
+                    <div className="flex items-center gap-1.5 text-xs text-stone-700 font-bold bg-stone-50 p-2.5 rounded-xl border border-stone-300">
+                      <CheckCircle2 className="w-4 h-4 text-stone-600 shrink-0" />
+                      <span>{cleanDomain}.nl is een geldig formaat. Bij aanvraag verifiëren we direct de registratiestatus bij SIDN.</span>
                     </div>
                   )}
 
                   {domainValidation.status === 'empty' && (
                     <p className="text-[11px] text-stone-500 font-medium">
                       {lang === 'nl'
-                        ? 'Typ je gewenste domeinnaam (bijv. "bouwbedrijf-jansen") om direct de geldigheid te controleren.'
-                        : 'Type your preferred domain name (e.g. "my-brand") to check formatting.'}
+                        ? 'Typ je gewenste domeinnaam (bijv. "bouwbedrijf-jansen") om direct live de beschikbaarheid te controleren via DNS.'
+                        : 'Type your preferred domain name (e.g. "my-brand") to check live DNS availability.'}
                     </p>
                   )}
                 </div>
@@ -487,9 +616,11 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                   </strong>
                 </div>
                 {hostingPlan === 'managed' && cleanDomain && (
-                  <div className="flex justify-between text-emerald-800 font-semibold">
+                  <div className="flex justify-between text-xs font-semibold">
                     <span>Domeinnaam:</span>
-                    <span>{cleanDomain}.nl</span>
+                    <span className={dnsState.status === 'taken' ? 'text-rose-700 font-bold' : 'text-emerald-800 font-bold'}>
+                      {cleanDomain}.nl {dnsState.status === 'taken' ? '(Bezet / Bestaand)' : dnsState.status === 'available' ? '(Vrij)' : ''}
+                    </span>
                   </div>
                 )}
                 <div className="flex justify-between text-emerald-700 font-bold pt-1 border-t border-stone-200/60">
