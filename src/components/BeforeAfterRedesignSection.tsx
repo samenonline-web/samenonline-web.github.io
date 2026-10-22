@@ -12,8 +12,10 @@ import {
   SplitSquareVertical,
   CheckCircle2,
   AlertTriangle,
+  FileText,
 } from 'lucide-react';
 import { Language } from '../types/company';
+import { CaseStudyModal } from './CaseStudyModal';
 
 interface BeforeAfterRedesignSectionProps {
   lang: Language;
@@ -26,6 +28,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
 }) => {
   const [sliderPosition, setSliderPosition] = useState<number>(50); // percentage 0 to 100
   const [isDragging, setIsDragging] = useState(false);
+  const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleMove = useCallback((clientX: number) => {
@@ -334,14 +337,33 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
           </p>
         </div>
 
-        <button
-          onClick={onOpenRedesignRequest}
-          className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-orange-600/30 transition-all cursor-pointer whitespace-nowrap"
-        >
-          <span>{lang === 'nl' ? 'Vraag een Gratis Redesign Scan Aan' : 'Request Free Redesign Scan'}</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+        <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto shrink-0">
+          <button
+            type="button"
+            onClick={() => setIsCaseStudyOpen(true)}
+            className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border-2 border-stone-300 font-extrabold text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer whitespace-nowrap"
+          >
+            <FileText className="w-4 h-4 text-orange-600" />
+            <span>{lang === 'nl' ? 'Bekijk Casestudie (+64% Leads)' : 'View Case Study (+64%)'}</span>
+          </button>
+
+          <button
+            onClick={onOpenRedesignRequest}
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-orange-600/30 transition-all cursor-pointer whitespace-nowrap"
+          >
+            <span>{lang === 'nl' ? 'Gratis Redesign Scan' : 'Free Redesign Scan'}</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
+
+      {/* Case Study Modal */}
+      <CaseStudyModal
+        isOpen={isCaseStudyOpen}
+        onClose={() => setIsCaseStudyOpen(false)}
+        lang={lang}
+        onOpenRedesignRequest={onOpenRedesignRequest}
+      />
     </section>
   );
 };

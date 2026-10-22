@@ -17,6 +17,9 @@ import { PricingPackagesSection } from '../src/components/PricingPackagesSection
 import { HowItWorksSection } from '../src/components/HowItWorksSection';
 import { BeforeAfterRedesignSection } from '../src/components/BeforeAfterRedesignSection';
 import { WebsiteSpeedAuditSection } from '../src/components/WebsiteSpeedAuditSection';
+import { CmsComparisonSection } from '../src/components/CmsComparisonSection';
+import { GuaranteesSection } from '../src/components/GuaranteesSection';
+import { RegionalSelectorSection } from '../src/components/RegionalSelectorSection';
 import { RoiEstimatorCalculator } from '../src/components/RoiEstimatorCalculator';
 import { ClientChecklistSection } from '../src/components/ClientChecklistSection';
 import { ProjectStatusTrackerModal } from '../src/components/ProjectStatusTrackerModal';
@@ -32,6 +35,7 @@ import { Heart, Search } from 'lucide-react';
 export default function Home() {
   const [lang, setLang] = useState<Language>('nl');
   const [templates, setTemplates] = useState<WebTemplate[]>(INITIAL_TEMPLATES);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Search & Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -187,7 +191,13 @@ export default function Home() {
   }, [templates, searchQuery, selectedCategory, quickFilter, showOnlyBookmarks, bookmarks, sortBy]);
 
   return (
-    <div className="min-h-screen bg-amber-50/20 flex flex-col font-sans selection:bg-orange-500 selection:text-white">
+    <div
+      className={`min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white transition-colors duration-200 ${
+        isDarkMode
+          ? 'global-dark-mode bg-stone-950 text-stone-100'
+          : 'bg-amber-50/20 text-stone-900'
+      }`}
+    >
       {/* Top Navbar */}
       <Navbar
         lang={lang}
@@ -196,6 +206,8 @@ export default function Home() {
         totalTemplatesCount={templates.length}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={() => setIsDarkMode((prev) => !prev)}
       />
 
       {/* Welcoming Hero Header */}
@@ -381,6 +393,22 @@ export default function Home() {
           }
         />
 
+        {/* "Waarom Next.js i.p.v. WordPress of Wix?" Kennis- & Vergelijkingstabel */}
+        <CmsComparisonSection
+          lang={lang}
+          onOpenCalculator={() => {
+            const el = document.getElementById('prijs-calculator');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+          onOpenRedesignRequest={() =>
+            handleOpenRequestModal(undefined, undefined, undefined, {
+              templateName: 'Website Redesign van WordPress/Wix naar Next.js',
+              budget: 'Vanaf €175 (Redesign)',
+              notes: 'Aanvraag via WordPress vs Next.js vergelijker: ik wil overstappen van WordPress/Wix naar Next.js.',
+            })
+          }
+        />
+
         {/* 4-Step "Hoe Wij Werken" Section */}
         <HowItWorksSection
           lang={lang}
@@ -394,6 +422,16 @@ export default function Home() {
         {/* Interactive "Wat Moet Ik Zelf Aanleveren?" Checklist */}
         <ClientChecklistSection
           lang={lang}
+          onOpenRequestModal={() => handleOpenRequestModal()}
+        />
+
+        {/* 4 Harde Samen Online Zekerheden & Garanties */}
+        <GuaranteesSection
+          lang={lang}
+          onOpenCalculator={() => {
+            const el = document.getElementById('prijs-calculator');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
           onOpenRequestModal={() => handleOpenRequestModal()}
         />
 
@@ -423,6 +461,18 @@ export default function Home() {
           onOpenRequestModal={(customData) => {
             handleOpenRequestModal(undefined, undefined, undefined, customData);
           }}
+        />
+
+        {/* Lokale SEO & Regiokiezer */}
+        <RegionalSelectorSection
+          lang={lang}
+          onOpenRequestModal={(notes) =>
+            handleOpenRequestModal(undefined, undefined, undefined, {
+              templateName: 'Lokale Bedrijfswebsite',
+              budget: 'Vanaf €75 - €195',
+              notes,
+            })
+          }
         />
 
         {/* About Samen Online Section */}

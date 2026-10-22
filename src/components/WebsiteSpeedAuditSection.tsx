@@ -17,6 +17,7 @@ import {
   Globe,
 } from 'lucide-react';
 import { Language } from '../types/company';
+import { AuditReportPdfModal } from './AuditReportPdfModal';
 
 interface WebsiteSpeedAuditSectionProps {
   lang: Language;
@@ -30,6 +31,7 @@ export const WebsiteSpeedAuditSection: React.FC<WebsiteSpeedAuditSectionProps> =
   const [urlInput, setUrlInput] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [auditResult, setAuditResult] = useState<{
     url: string;
     speedScore: number;
@@ -76,7 +78,7 @@ export const WebsiteSpeedAuditSection: React.FC<WebsiteSpeedAuditSectionProps> =
   };
 
   const handlePrintAudit = () => {
-    window.print();
+    setIsPdfModalOpen(true);
   };
 
   return (
@@ -299,6 +301,15 @@ export const WebsiteSpeedAuditSection: React.FC<WebsiteSpeedAuditSectionProps> =
         )}
 
       </div>
+
+      {auditResult && (
+        <AuditReportPdfModal
+          isOpen={isPdfModalOpen}
+          onClose={() => setIsPdfModalOpen(false)}
+          lang={lang}
+          auditData={auditResult}
+        />
+      )}
     </section>
   );
 };

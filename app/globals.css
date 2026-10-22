@@ -288,3 +288,57 @@ body {
 .template-dark-mode svg.text-stone-400 {
   color: #d6d3d1 !important;
 }
+
+/* ==========================================================================
+   Global Site Dark Mode
+   Applied to the main Samen Online landing page when toggled in the Navbar
+   ========================================================================== */
+.global-dark-mode {
+  color-scheme: dark !important;
+  background-color: #0c0a09 !important;
+  color: #f5f5f4 !important;
+}
+
+.global-dark-mode header {
+  background-color: rgba(20, 18, 16, 0.95) !important;
+  border-color: #292524 !important;
+}
+
+.global-dark-mode .bg-white {
+  background-color: #171513 !important;
+  color: #f5f5f4 !important;
+}
+
+.global-dark-mode .bg-stone-50,
+.global-dark-mode [class*="bg-stone-50/"] {
+  background-color: #141210 !important;
+}
+
+.global-dark-mode .text-stone-900,
+.global-dark-mode .text-stone-800 {
+  color: #fafaf9 !important;
+}
+
+.global-dark-mode .text-stone-700,
+.global-dark-mode .text-stone-600 {
+  color: #d6d3d1 !important;
+}
+
+.global-dark-mode .text-stone-500 {
+  color: #a8a29e !important;
+}
+
+.global-dark-mode .border-stone-200,
+.global-dark-mode .border-stone-100,
+.global-dark-mode .border-orange-100,
+.global-dark-mode [class*="border-stone-200"] {
+  border-color: #292524 !important;
+}
+
+.global-dark-mode input,
+.global-dark-mode select,
+.global-dark-mode textarea {
+  background-color: #292524 !important;
+  color: #fafaf9 !important;
+  border-color: #44403c !important;
+}

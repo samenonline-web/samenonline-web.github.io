@@ -18,6 +18,10 @@ import { RijschoolVlot } from './RijschoolVlot';
 import { GlansHelderSchoonmaak } from './GlansHelderSchoonmaak';
 import { StudioFlowYoga } from './StudioFlowYoga';
 import { ZorgMondKliniek } from './ZorgMondKliniek';
+import { AdvocatenKantoorJustitia } from './AdvocatenKantoorJustitia';
+import { DierenkliniekDeVennen } from './DierenkliniekDeVennen';
+import { MakelaardijVastgoed } from './MakelaardijVastgoed';
+import { InktEnNaaldStudio } from './InktEnNaaldStudio';
 
 interface TemplateRendererProps {
   templateId: string;
@@ -96,6 +100,14 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
         return <StudioFlowYoga {...templateProps} />;
       case 'zorgmond-kliniek':
         return <ZorgMondKliniek {...templateProps} />;
+      case 'advocaten-justitia':
+        return <AdvocatenKantoorJustitia {...templateProps} />;
+      case 'dierenkliniek-devennen':
+        return <DierenkliniekDeVennen {...templateProps} />;
+      case 'makelaardij-vastgoed':
+        return <MakelaardijVastgoed {...templateProps} />;
+      case 'inkt-en-naald-studio':
+        return <InktEnNaaldStudio {...templateProps} />;
       default:
         return <GrachtenWebAgency {...templateProps} />;
     }

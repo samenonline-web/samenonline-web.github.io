@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Heart, Plus, Search, Globe } from 'lucide-react';
+import { Heart, Plus, Search, Globe, Moon, Sun } from 'lucide-react';
 import { Language } from '../types/company';
 
 interface NavbarProps {
@@ -11,6 +11,8 @@ interface NavbarProps {
   totalTemplatesCount: number;
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  isDarkMode?: boolean;
+  onToggleDarkMode?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -20,6 +22,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   totalTemplatesCount,
   searchQuery,
   onSearchChange,
+  isDarkMode = false,
+  onToggleDarkMode,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-orange-100/80 shadow-xs">
@@ -82,6 +86,22 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Globe className="w-3.5 h-3.5 text-orange-600" />
             <span>{lang === 'nl' ? '🇳🇱 NL' : '🇬🇧 EN'}</span>
           </button>
+
+          {/* Dark / Light Mode Switcher */}
+          {onToggleDarkMode && (
+            <button
+              onClick={onToggleDarkMode}
+              className="flex items-center justify-center w-9 h-9 rounded-xl text-stone-700 bg-orange-50/50 border border-orange-200/80 hover:bg-orange-100/70 transition-colors shadow-2xs cursor-pointer"
+              title={isDarkMode ? (lang === 'nl' ? 'Schakel naar Lichte Modus' : 'Switch to Light Mode') : (lang === 'nl' ? 'Schakel naar Donkere Modus' : 'Switch to Dark Mode')}
+              aria-label="Toggle Dark Mode"
+            >
+              {isDarkMode ? (
+                <Sun className="w-4 h-4 text-amber-500" />
+              ) : (
+                <Moon className="w-4 h-4 text-stone-700" />
+              )}
+            </button>
+          )}
 
           {/* Request Website Button */}
           <button

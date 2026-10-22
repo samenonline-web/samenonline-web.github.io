@@ -1,7 +1,21 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { X, Send, CheckCircle2, Heart, AlertCircle, Loader2, MessageCircle, ArrowRight, Download } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  X,
+  Send,
+  CheckCircle2,
+  Heart,
+  AlertCircle,
+  Loader2,
+  MessageCircle,
+  ArrowRight,
+  Download,
+  UploadCloud,
+  Trash2,
+  Image as ImageIcon,
+  FileText,
+} from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 import { QuotePdfModal, QuotePdfData } from './QuotePdfModal';
 
@@ -45,6 +59,50 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isQuotePdfOpen, setIsQuotePdfOpen] = useState(false);
+
+  // Logo & Sketch Drag-and-Drop state
+  interface AttachmentItem {
+    name: string;
+    size: number;
+    previewUrl?: string;
+    type: string;
+  }
+  const [attachments, setAttachments] = useState<AttachmentItem[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFiles = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    const newItems: AttachmentItem[] = [];
+    Array.from(files).forEach((file) => {
+      if (file.type.startsWith('image/')) {
+        const previewUrl = URL.createObjectURL(file);
+        newItems.push({
+          name: file.name,
+          size: file.size,
+          previewUrl,
+          type: file.type,
+        });
+      } else {
+        newItems.push({
+          name: file.name,
+          size: file.size,
+          type: file.type,
+        });
+      }
+    });
+    setAttachments((prev) => [...prev, ...newItems].slice(0, 5));
+  };
+
+  const removeAttachment = (index: number) => {
+    setAttachments((prev) => {
+      const item = prev[index];
+      if (item?.previewUrl) {
+        URL.revokeObjectURL(item.previewUrl);
+      }
+      return prev.filter((_, i) => i !== index);
+    });
+  };
 
   useEffect(() => {
     if (initialCustomData) {
@@ -115,9 +173,16 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
       payload.append('theme_configuration', `Thema: ${preferredTheme || 'Standaard'}, Font: ${preferredFont || 'Standaard'}`);
       payload.append('hosting_plan', includeHosting ? 'Ja, All-in Webhosting & .NL Domein (+€9,50/mnd)' : 'Nee, regelt zelf hosting (€0/mnd)');
       payload.append('budget', formData.budget);
+      const attachmentInfo =
+        attachments.length > 0
+          ? `\n[Bijgevoegd Materiaal (${attachments.length} bestand(en)): ${attachments
+              .map((a) => `${a.name} (${Math.round(a.size / 1024)} KB)`)
+              .join(', ')}]`
+          : '';
+
       payload.append(
         'message',
-        `${formData.notes || 'Geen extra toelichting'}\n\n[Gekozen Huisstijl: ${preferredTheme || 'Standaard'}, Font: ${preferredFont || 'Standaard'}]`
+        `${formData.notes || 'Geen extra toelichting'}\n\n[Gekozen Huisstijl: ${preferredTheme || 'Standaard'}, Font: ${preferredFont || 'Standaard'}]${attachmentInfo}`
       );
       payload.append('from_name', 'Samen Online');
       payload.append(
@@ -438,6 +503,98 @@ export const RequestWebsiteModal: React.FC<RequestWebsiteModalProps> = ({
                 }
                 className="w-full px-3.5 py-2.5 bg-orange-50/40 border border-orange-200/80 rounded-xl text-sm font-medium text-stone-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
+            </div>
+
+            {/* Logo & Schets Drag-and-Drop Preview Zone */}
+            <div className="space-y-2">
+              <label className="block text-xs font-bold uppercase text-stone-700">
+                {lang === 'nl' ? 'Logo, Schets of Wireframe (Optioneel)' : 'Logo, Sketch or Wireframe (Optional)'}
+              </label>
+
+              <div
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setIsDragging(true);
+                }}
+                onDragLeave={() => setIsDragging(false)}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setIsDragging(false);
+                  handleFiles(e.dataTransfer.files);
+                }}
+                onClick={() => fileInputRef.current?.click()}
+                className={`p-4 rounded-2xl border-2 border-dashed transition-all cursor-pointer text-center ${
+                  isDragging
+                    ? 'border-orange-500 bg-orange-100/60'
+                    : 'border-orange-200 bg-orange-50/30 hover:bg-orange-50/60'
+                }`}
+              >
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  multiple
+                  accept="image/*,.pdf"
+                  className="hidden"
+                  onChange={(e) => handleFiles(e.target.files)}
+                />
+                <div className="flex flex-col items-center justify-center gap-1.5">
+                  <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center">
+                    <UploadCloud className="w-5 h-5" />
+                  </div>
+                  <p className="text-xs font-bold text-stone-800">
+                    {lang === 'nl'
+                      ? 'Sleep een logo of ontwerpschets hierheen, of klik om te kiezen'
+                      : 'Drop your logo or wireframe here, or click to upload'}
+                  </p>
+                  <p className="text-[11px] text-stone-500">
+                    PNG, JPG, SVG of PDF (max. 5 bestanden)
+                  </p>
+                </div>
+              </div>
+
+              {/* Uploaded Previews */}
+              {attachments.length > 0 && (
+                <div className="space-y-1.5 pt-1">
+                  {attachments.map((file, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between p-2 rounded-xl bg-stone-50 border border-stone-200 text-xs"
+                    >
+                      <div className="flex items-center gap-2.5 overflow-hidden">
+                        {file.previewUrl ? (
+                          <img
+                            src={file.previewUrl}
+                            alt={file.name}
+                            className="w-8 h-8 rounded-lg object-cover border border-stone-200 shrink-0"
+                          />
+                        ) : (
+                          <div className="w-8 h-8 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center shrink-0">
+                            <FileText className="w-4 h-4" />
+                          </div>
+                        )}
+                        <div className="truncate">
+                          <p className="font-bold text-stone-800 truncate">{file.name}</p>
+                          <p className="text-[10px] text-stone-500">
+                            {Math.round(file.size / 1024)} KB
+                          </p>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeAttachment(idx);
+                        }}
+                        className="p-1 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                        title="Verwijder"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Include Hosting Checkbox */}

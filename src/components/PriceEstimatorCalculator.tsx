@@ -20,6 +20,22 @@ interface SiteType {
   days: number;
 }
 
+interface PageOption {
+  id: '1' | '3' | '5' | '8+';
+  labelNl: string;
+  labelEn: string;
+  descNl: string;
+  price: number;
+  extraDays: number;
+}
+
+const PAGE_OPTIONS: PageOption[] = [
+  { id: '1', labelNl: '1 Pagina (One-Page)', labelEn: '1 Page (One-page)', descNl: 'Alles overzichtelijk op 1 strakke landingspagina', price: 0, extraDays: 0 },
+  { id: '3', labelNl: '3 Pagina’s', labelEn: '3 Pages', descNl: 'Bijv. Home, Diensten en Contact', price: 35, extraDays: 1 },
+  { id: '5', labelNl: '5 Pagina’s (Meest Gekozen)', labelEn: '5 Pages (Most Popular)', descNl: 'Home, Over Ons, Diensten, Portfolio, Contact', price: 65, extraDays: 1 },
+  { id: '8+', labelNl: '8+ Pagina’s (Uitgebreid)', labelEn: '8+ Pages (Enterprise)', descNl: 'Veel diensten, teamleden, casestudies & formulieren', price: 125, extraDays: 3 },
+];
+
 const SITE_TYPES: SiteType[] = [
   {
     id: 'starter',
@@ -89,12 +105,15 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
   onOpenRequestModal,
 }) => {
   const [selectedType, setSelectedType] = useState<string>('business');
+  const [pageCount, setPageCount] = useState<'1' | '3' | '5' | '8+'>('5');
   const [selectedAddons, setSelectedAddons] = useState<string[]>(['seo', 'whatsapp']);
   const [hostingPlan, setHostingPlan] = useState<'managed' | 'self'>('managed');
   const [domainInput, setDomainInput] = useState<string>('');
   const [isQuotePdfOpen, setIsQuotePdfOpen] = useState<boolean>(false);
 
   const activeTypeObj = SITE_TYPES.find((t) => t.id === selectedType) || SITE_TYPES[1];
+  const activePageOption = PAGE_OPTIONS.find((p) => p.id === pageCount) || PAGE_OPTIONS[2];
+  const pagesPrice = activePageOption.price;
 
   const cleanDomain = useMemo(() => {
     let clean = domainInput.trim().toLowerCase();
@@ -144,17 +163,21 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
     return sum + (addon ? addon.price : 0);
   }, 0);
 
-  const totalPrice = activeTypeObj.basePrice + addonsTotal;
-  const estimatedDays = activeTypeObj.days + Math.floor(selectedAddons.length * 0.7);
+  const totalPrice = activeTypeObj.basePrice + pagesPrice + addonsTotal;
+  const estimatedDays =
+    activeTypeObj.days + activePageOption.extraDays + Math.floor(selectedAddons.length * 0.7);
 
   const quotePdfData: QuotePdfData = {
-    templateOrProjectType: activeTypeObj.nameNl,
-    selectedModules: selectedAddons
-      .map((id) => ADDONS.find((a) => a.id === id)?.nameNl)
-      .filter(Boolean) as string[],
+    templateOrProjectType: `${activeTypeObj.nameNl} (${activePageOption.labelNl})`,
+    selectedModules: [
+      `Aantal pagina's: ${activePageOption.labelNl}`,
+      ...selectedAddons
+        .map((id) => ADDONS.find((a) => a.id === id)?.nameNl)
+        .filter(Boolean) as string[],
+    ],
     hostingPlan,
     chosenDomain: cleanDomain ? `${cleanDomain}.nl` : undefined,
-    basePrice: activeTypeObj.basePrice,
+    basePrice: activeTypeObj.basePrice + pagesPrice,
     addonsPrice: addonsTotal,
     totalPrice,
     estimatedDays,
@@ -172,9 +195,9 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
         : 'Klant regelt zelf hosting (€0/mnd)';
 
     onOpenRequestModal({
-      templateName: activeTypeObj.nameNl,
+      templateName: `${activeTypeObj.nameNl} (${activePageOption.labelNl})`,
       budget: `Indicatie: €${totalPrice} eenmalig${hostingPlan === 'managed' ? ' + €9,50/mnd all-in hosting' : ''}`,
-      notes: `Aanvraag via 60-seconden calculator: Type: ${activeTypeObj.nameNl}, Extra opties: ${addonNames || 'Geen'}, Gewenste domeinnaam: ${cleanDomain ? cleanDomain + '.nl' : 'Nog niet ingevuld'}, Hosting: ${hostingText}, Verwachte levertijd: ~${estimatedDays} dagen.`,
+      notes: `Aanvraag via 60-seconden calculator: Type: ${activeTypeObj.nameNl}, Pagina's: ${activePageOption.labelNl}, Extra opties: ${addonNames || 'Geen'}, Gewenste domeinnaam: ${cleanDomain ? cleanDomain + '.nl' : 'Nog niet ingevuld'}, Hosting: ${hostingText}, Verwachte levertijd: ~${estimatedDays} dagen.`,
     });
   };
 
@@ -237,10 +260,46 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
               </div>
             </div>
 
-            {/* Step 2: Extra Modules */}
+            {/* Step 2: Aantal Pagina's & Structuur */}
             <div>
               <label className="text-xs font-black uppercase text-stone-700 tracking-wider block mb-3">
-                2. {lang === 'nl' ? 'Optionele Extra Modules:' : 'Optional Extra Modules:'}
+                2. {lang === 'nl' ? 'Gewenst Aantal Pagina’s:' : 'Number of Pages:'}
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {PAGE_OPTIONS.map((opt) => {
+                  const isSelected = pageCount === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => setPageCount(opt.id)}
+                      className={`p-3 rounded-2xl border-2 text-center transition-all cursor-pointer flex flex-col justify-between ${
+                        isSelected
+                          ? 'border-orange-500 bg-orange-50/70 shadow-xs'
+                          : 'border-stone-200 hover:border-orange-300 bg-white'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-black text-xs text-stone-900 block">
+                          {opt.id === '1' ? '1 Pagina' : `${opt.id} Pagina's`}
+                        </span>
+                        <span className="text-[10px] text-stone-500 font-medium line-clamp-1 mt-0.5">
+                          {opt.labelNl.replace(/^[0-9+]+ Pagina’s? ?/, '') || 'One-page'}
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-black text-orange-700 mt-2">
+                        {opt.price === 0 ? 'Inbegrepen' : `+€${opt.price}`}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Step 3: Extra Modules */}
+            <div>
+              <label className="text-xs font-black uppercase text-stone-700 tracking-wider block mb-3">
+                3. {lang === 'nl' ? 'Optionele Extra Modules:' : 'Optional Extra Modules:'}
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {ADDONS.map((addon) => {
@@ -266,10 +325,10 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
               </div>
             </div>
 
-            {/* Step 3: Webhosting & Domeinnaam Keuze + Live .NL Domeinchecker */}
+            {/* Step 4: Webhosting & Domeinnaam Keuze + Live .NL Domeinchecker */}
             <div>
               <label className="text-xs font-black uppercase text-stone-700 tracking-wider block mb-3">
-                3. {lang === 'nl' ? 'Webhosting & .NL Domeinnaam:' : 'Hosting & .NL Domain Registration:'}
+                4. {lang === 'nl' ? 'Webhosting & .NL Domeinnaam:' : 'Hosting & .NL Domain Registration:'}
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-3">
                 <button
@@ -410,6 +469,12 @@ export const PriceEstimatorCalculator: React.FC<PriceEstimatorCalculatorProps> =
                 <div className="flex justify-between">
                   <span>Basis website:</span>
                   <strong className="text-stone-900">€{activeTypeObj.basePrice}</strong>
+                </div>
+                <div className="flex justify-between">
+                  <span>Aantal pagina&apos;s ({activePageOption.id}):</span>
+                  <strong className="text-stone-900">
+                    {pagesPrice === 0 ? 'Inbegrepen' : `+€${pagesPrice}`}
+                  </strong>
                 </div>
                 <div className="flex justify-between">
                   <span>Geselecteerde extra&apos;s ({selectedAddons.length}):</span>

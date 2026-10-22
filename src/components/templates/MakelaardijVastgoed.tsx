@@ -1,0 +1,383 @@
+'use client';
+
+import React, { useState } from 'react';
+import { TemplateProps } from '../../types/theme';
+import {
+  Home,
+  Search,
+  MapPin,
+  CheckCircle2,
+  Euro,
+  Key,
+  ShieldCheck,
+  ChevronRight,
+  Sun,
+  Moon,
+  Sparkles,
+  BedDouble,
+  Maximize2,
+  Award,
+} from 'lucide-react';
+
+interface PropertyItem {
+  id: string;
+  title: string;
+  address: string;
+  price: number;
+  areaM2: number;
+  bedrooms: number;
+  energyLabel: string;
+  status: 'Nieuw' | 'Verkocht o.v.' | 'Open Huis';
+  img: string;
+}
+
+const PROPERTIES: PropertyItem[] = [
+  {
+    id: 'p1',
+    title: 'Karakteristieke Jaren 30 Tweekapper',
+    address: 'Emmalaan 14 • Utrecht',
+    price: 545000,
+    areaM2: 138,
+    bedrooms: 4,
+    energyLabel: 'A',
+    status: 'Nieuw',
+    img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 'p2',
+    title: 'Luxe Loft met Dakterras & Parkeerplaats',
+    address: 'Westerdok 82 • Amsterdam',
+    price: 685000,
+    areaM2: 96,
+    bedrooms: 2,
+    energyLabel: 'A+++',
+    status: 'Open Huis',
+    img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 'p3',
+    title: 'Moderne Gezinswoning met Zonnige Tuin',
+    address: 'Veldhovenring 29 • Breda',
+    price: 425000,
+    areaM2: 122,
+    bedrooms: 3,
+    energyLabel: 'B',
+    status: 'Verkocht o.v.',
+    img: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80',
+  },
+];
+
+export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
+  theme,
+  isDarkMode,
+  onToggleDarkMode,
+  onRequestQuote,
+  customBrandName,
+  customCity,
+}) => {
+  const brandName = customBrandName || 'Van Houten Makelaardij & Taxaties';
+  const city = customCity || 'Utrecht & Midden-Nederland';
+
+  const [priceMax, setPriceMax] = useState<number>(700000);
+  const [valuationSubmitted, setValuationSubmitted] = useState(false);
+  const [valuationData, setValuationData] = useState({
+    name: '',
+    email: '',
+    postcode: '',
+    houseNumber: '',
+  });
+
+  const filteredProperties = PROPERTIES.filter((p) => p.price <= priceMax);
+
+  const handleValuationSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!valuationData.name || !valuationData.postcode) return;
+    setValuationSubmitted(true);
+  };
+
+  return (
+    <div className={`min-h-screen ${isDarkMode ? 'bg-stone-950 text-stone-100' : 'bg-stone-50 text-stone-800'}`}>
+      
+      {/* Demo Concept Disclaimer Bar */}
+      <div className="bg-stone-900 text-stone-300 py-1.5 px-4 text-center text-xs border-b border-stone-800 flex items-center justify-center gap-2">
+        <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <span>
+          <strong>Voorbeeldconcept:</strong> Makelaarskantoor, Vastgoed & Taxatie website lay-out (NVM-stijl & funda-ready).
+        </span>
+      </div>
+
+      {/* Top Navbar */}
+      <header className={`sticky top-0 z-30 backdrop-blur-md border-b transition-colors ${
+        isDarkMode ? 'bg-stone-950/90 border-stone-800' : 'bg-white/95 border-stone-200'
+      }`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white font-black shadow-md ${theme.primary}`}>
+              <Home className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="font-black text-base sm:text-lg tracking-tight block leading-none">
+                {brandName}
+              </span>
+              <span className="text-[11px] font-semibold text-stone-500">
+                Gecertificeerd NVM Makelaar • {city}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3">
+            {onToggleDarkMode && (
+              <button
+                onClick={onToggleDarkMode}
+                aria-label="Toggle Dark Mode"
+                className={`p-2 rounded-xl border text-xs cursor-pointer transition-colors ${
+                  isDarkMode
+                    ? 'border-stone-800 bg-stone-900 text-yellow-400 hover:bg-stone-800'
+                    : 'border-stone-200 bg-stone-100 text-stone-700 hover:bg-stone-200'
+                }`}
+              >
+                {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+            )}
+
+            <button
+              onClick={onRequestQuote}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-black text-white shadow-md transition-all cursor-pointer ${theme.primary} hover:opacity-95`}
+            >
+              Gratis Waardebepaling
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative overflow-hidden pt-12 pb-14 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <div className="lg:col-span-7 space-y-6">
+            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${theme.badgeBg} ${theme.badgeText}`}>
+              <Award className="w-4 h-4" />
+              <span>NVM & VastgoedCert Gecertificeerde Makelaars</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+              Jouw Droomhuis Kopen of Verkopen in <span className={theme.textPrimary}>{city}</span>
+            </h1>
+
+            <p className="text-sm sm:text-base text-stone-600 dark:text-stone-300 font-medium leading-relaxed max-w-xl">
+              Persoonlijke begeleiding, een modern verkoopconcept met 3D-tours en stylingadvies, en maximale opbrengst via Funda en ons exclusieve zoekersbestand.
+            </p>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs font-bold text-stone-600 dark:text-stone-300">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>Geen verkoop = geen kosten</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>Professionele Funda fotograaf</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>NWWI Taxatierapporten</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Card: Gratis Waardebepaling Formulier */}
+          <div className="lg:col-span-5">
+            <div className={`p-6 sm:p-7 rounded-3xl border-2 shadow-xl ${
+              isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200'
+            }`}>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <Key className="w-5 h-5 text-orange-600" />
+                  <h3 className="font-black text-lg">Gratis Waardebepaling</h3>
+                </div>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-900">
+                  Vrijblijvend
+                </span>
+              </div>
+
+              {valuationSubmitted ? (
+                <div className="py-8 text-center space-y-3">
+                  <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  <h4 className="font-black text-base">Aanvraag Ontvangen!</h4>
+                  <p className="text-xs text-stone-500 max-w-xs mx-auto">
+                    Bedankt {valuationData.name}! Onze NVM-makelaar neemt binnen 24 uur contact op voor een gratis waardebepaling op locatie aan {valuationData.postcode} {valuationData.houseNumber}.
+                  </p>
+                  <button
+                    onClick={() => setValuationSubmitted(false)}
+                    className="text-xs font-bold text-stone-500 underline cursor-pointer mt-2"
+                  >
+                    Nieuwe aanvraag doen
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleValuationSubmit} className="space-y-3">
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="text-xs font-bold block mb-1">Postcode</label>
+                      <input
+                        type="text"
+                        required
+                        value={valuationData.postcode}
+                        onChange={(e) => setValuationData({ ...valuationData, postcode: e.target.value })}
+                        placeholder="bijv. 3512 AB"
+                        className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-orange-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold block mb-1">Huisnummer</label>
+                      <input
+                        type="text"
+                        required
+                        value={valuationData.houseNumber}
+                        onChange={(e) => setValuationData({ ...valuationData, houseNumber: e.target.value })}
+                        placeholder="14 A"
+                        className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-orange-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-bold block mb-1">Jouw Volledige Naam</label>
+                    <input
+                      type="text"
+                      required
+                      value={valuationData.name}
+                      onChange={(e) => setValuationData({ ...valuationData, name: e.target.value })}
+                      placeholder="bijv. Mark van Houten"
+                      className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-orange-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-bold block mb-1">E-mailadres</label>
+                    <input
+                      type="email"
+                      required
+                      value={valuationData.email}
+                      onChange={(e) => setValuationData({ ...valuationData, email: e.target.value })}
+                      placeholder="mark@voorbeeld.nl"
+                      className="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-orange-500"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className={`w-full py-3.5 rounded-xl text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer ${theme.primary} hover:opacity-90`}
+                  >
+                    <span>Vrijblijvende Waardebepaling Aanvragen</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Woningaanbod Showcase Grid */}
+      <section className={`py-14 px-4 sm:px-6 border-t ${
+        isDarkMode ? 'bg-stone-900/60 border-stone-800' : 'bg-white border-stone-200'
+      }`}>
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div>
+              <span className="text-xs font-black uppercase tracking-wider text-orange-600">
+                Actueel Woningaanbod
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black">
+                Woningen Te Koop in {city}
+              </h2>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs font-bold text-stone-600 dark:text-stone-300">
+              <span>Max. Vraagprijs: €{priceMax.toLocaleString('nl-NL')}</span>
+              <input
+                type="range"
+                min={400000}
+                max={800000}
+                step={25000}
+                value={priceMax}
+                onChange={(e) => setPriceMax(Number(e.target.value))}
+                className="accent-orange-600 cursor-pointer w-32"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {filteredProperties.map((p) => (
+              <div
+                key={p.id}
+                className={`rounded-3xl border overflow-hidden transition-all flex flex-col justify-between ${
+                  isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-stone-50 border-stone-200'
+                }`}
+              >
+                <div>
+                  <div className="relative h-48 w-full overflow-hidden bg-stone-200">
+                    <img
+                      src={p.img}
+                      alt={p.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-stone-900/80 backdrop-blur-xs text-white text-[10px] font-black uppercase tracking-wider">
+                      {p.status}
+                    </span>
+                    <span className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-emerald-600 text-white text-[10px] font-black">
+                      Label {p.energyLabel}
+                    </span>
+                  </div>
+
+                  <div className="p-5">
+                    <div className="text-xl font-black text-stone-900 dark:text-stone-100 mb-1">
+                      € {p.price.toLocaleString('nl-NL')} k.k.
+                    </div>
+                    <h4 className="font-bold text-sm text-stone-800 dark:text-stone-200 mb-1">
+                      {p.title}
+                    </h4>
+                    <span className="text-xs text-stone-500 block mb-4 flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-orange-500" />
+                      {p.address}
+                    </span>
+
+                    <div className="flex items-center gap-3 text-xs text-stone-600 dark:text-stone-400 font-semibold border-t border-stone-200 dark:border-stone-800 pt-3">
+                      <span className="flex items-center gap-1">
+                        <Maximize2 className="w-3.5 h-3.5" />
+                        {p.areaM2} m²
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1">
+                        <BedDouble className="w-3.5 h-3.5" />
+                        {p.bedrooms} kamers
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-5 pt-0">
+                  <button
+                    onClick={onRequestQuote}
+                    className="w-full py-2.5 rounded-xl bg-stone-200 dark:bg-stone-800 hover:bg-orange-600 hover:text-white dark:hover:bg-orange-600 text-stone-800 dark:text-stone-200 font-bold text-xs transition-colors cursor-pointer"
+                  >
+                    Bezichtiging Plannen
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Demo Note */}
+      <footer className="py-8 px-4 text-center text-xs text-stone-500 border-t border-stone-200 dark:border-stone-800">
+        <p>© 2026 {brandName} • Gemaakt met Samen Online Webconcepten</p>
+      </footer>
+
+    </div>
+  );
+};
