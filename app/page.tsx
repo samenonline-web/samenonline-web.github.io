@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Navbar } from '@/src/components/Navbar';
 import { Hero } from '../src/components/Hero';
 import { TemplateCarousel } from '../src/components/TemplateCarousel';
-import { FilterBar } from '../src/components/FilterBar';
+import { FilterBar, QuickFilterType } from '../src/components/FilterBar';
 import { TemplateCard } from '../src/components/TemplateCard';
 import { TemplateModal } from '../src/components/TemplateModal';
 import { LivePreviewModal } from '../src/components/LivePreviewModal';
@@ -14,6 +14,10 @@ import { AboutSection } from '../src/components/AboutSection';
 import { Footer } from '../src/components/Footer';
 import { PriceEstimatorCalculator } from '../src/components/PriceEstimatorCalculator';
 import { HowItWorksSection } from '../src/components/HowItWorksSection';
+import { BeforeAfterRedesignSection } from '../src/components/BeforeAfterRedesignSection';
+import { RoiEstimatorCalculator } from '../src/components/RoiEstimatorCalculator';
+import { ClientChecklistSection } from '../src/components/ClientChecklistSection';
+import { ProjectStatusTrackerModal } from '../src/components/ProjectStatusTrackerModal';
 import { TemplateComparisonModal } from '../src/components/TemplateComparisonModal';
 import { FaqSection } from '../src/components/FaqSection';
 import { WhatsAppWidget } from '../src/components/WhatsAppWidget';
@@ -29,6 +33,7 @@ export default function Home() {
   // Search & Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>('All');
+  const [quickFilter, setQuickFilter] = useState<QuickFilterType>('all');
   const [sortBy, setSortBy] = useState<'rating' | 'name' | 'buildDays'>('rating');
   const [showOnlyBookmarks, setShowOnlyBookmarks] = useState(false);
 
@@ -46,6 +51,7 @@ export default function Home() {
   } | null>(null);
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
+  const [isStatusTrackerOpen, setIsStatusTrackerOpen] = useState(false);
   const [infoModalData, setInfoModalData] = useState<{ isOpen: boolean; title: string; content: string }>({
     isOpen: false,
     title: '',
@@ -57,6 +63,7 @@ export default function Home() {
     activePreviewTemplate ||
     isRequestModalOpen ||
     isComparisonModalOpen ||
+    isStatusTrackerOpen ||
     infoModalData.isOpen
   );
 
@@ -135,6 +142,34 @@ export default function Home() {
           return false;
         }
 
+        // Quick Filter
+        if (quickFilter === 'popular' && !tmpl.isFeatured) {
+          return false;
+        }
+        if (quickFilter === 'fast' && tmpl.estimatedBuildDays > 4) {
+          return false;
+        }
+        if (quickFilter === 'ideal' && !tmpl.idealReady) {
+          return false;
+        }
+        if (quickFilter === 'calculator') {
+          const calculatorTemplates = [
+            'bouwmeester-aannemer',
+            'glanshelder-schoonmaak',
+            'rijschool-vlot',
+            'fiets-craft-bv',
+            'versvogel-boerenwinkel',
+            'grachten-web-agency',
+            'stroom-delen-saas',
+            'studioflow-yoga',
+            'devries-boekhouding',
+            'bistro-degracht',
+          ];
+          if (!calculatorTemplates.includes(tmpl.id)) {
+            return false;
+          }
+        }
+
         // Bookmarks filter
         return !(showOnlyBookmarks && !bookmarks.includes(tmpl.id));
       })
@@ -144,7 +179,7 @@ export default function Home() {
         if (sortBy === 'buildDays') return a.estimatedBuildDays - b.estimatedBuildDays;
         return 0;
       });
-  }, [templates, searchQuery, selectedCategory, showOnlyBookmarks, bookmarks, sortBy]);
+  }, [templates, searchQuery, selectedCategory, quickFilter, showOnlyBookmarks, bookmarks, sortBy]);
 
   return (
     <div className="min-h-screen bg-amber-50/20 flex flex-col font-sans selection:bg-orange-500 selection:text-white">
@@ -186,6 +221,9 @@ export default function Home() {
         onSortChange={setSortBy}
         totalFilteredCount={filteredTemplates.length}
         onOpenComparator={() => setIsComparisonModalOpen(true)}
+        onOpenStatusTracker={() => setIsStatusTrackerOpen(true)}
+        activeQuickFilter={quickFilter}
+        onQuickFilterChange={setQuickFilter}
       />
 
       {/* Main Content Area */}
@@ -313,6 +351,18 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Interactive Before & After Redesign Slider */}
+        <BeforeAfterRedesignSection
+          lang={lang}
+          onOpenRedesignRequest={() =>
+            handleOpenRequestModal(undefined, undefined, undefined, {
+              templateName: 'Website Redesign (Bestaande site ombouwen)',
+              budget: 'Vanaf €175 (Redesign)',
+              notes: 'Aanvraag via Voor & Na Redesign Slider: ik wil mijn huidige trage website laten moderniseren naar een razendsnelle Next.js site.',
+            })
+          }
+        />
+
         {/* 4-Step "Hoe Wij Werken" Section */}
         <HowItWorksSection
           lang={lang}
@@ -323,8 +373,22 @@ export default function Home() {
           }}
         />
 
+        {/* Interactive "Wat Moet Ik Zelf Aanleveren?" Checklist */}
+        <ClientChecklistSection
+          lang={lang}
+          onOpenRequestModal={() => handleOpenRequestModal()}
+        />
+
         {/* 60-Second Price Estimator Calculator */}
         <PriceEstimatorCalculator
+          lang={lang}
+          onOpenRequestModal={(customData) => {
+            handleOpenRequestModal(undefined, undefined, undefined, customData);
+          }}
+        />
+
+        {/* MKB Website ROI & Rendement Calculator */}
+        <RoiEstimatorCalculator
           lang={lang}
           onOpenRequestModal={(customData) => {
             handleOpenRequestModal(undefined, undefined, undefined, customData);
@@ -393,6 +457,14 @@ export default function Home() {
         lang={lang}
         onSelectTemplate={(tmpl) => handleOpenRequestModal(tmpl)}
         onOpenLivePreview={(tmpl) => setActivePreviewTemplate(tmpl)}
+      />
+
+      {/* Project Status & Oplevering Tracker Modal */}
+      <ProjectStatusTrackerModal
+        isOpen={isStatusTrackerOpen}
+        onClose={() => setIsStatusTrackerOpen(false)}
+        lang={lang}
+        onOpenContactModal={() => handleOpenRequestModal()}
       />
 
       {/* Informational / Legal Modal */}

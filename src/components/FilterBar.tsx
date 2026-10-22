@@ -1,8 +1,10 @@
 'use client';
 
 import React from 'react';
-import { ArrowUpDown, Scale } from 'lucide-react';
+import { ArrowUpDown, Scale, Clock, Sparkles, Zap, ShoppingCart, Calculator } from 'lucide-react';
 import { CategoryType, Language } from '../types/company';
+
+export type QuickFilterType = 'all' | 'popular' | 'fast' | 'ideal' | 'calculator';
 
 interface FilterBarProps {
   lang: Language;
@@ -12,6 +14,9 @@ interface FilterBarProps {
   onSortChange: (sort: 'rating' | 'name' | 'buildDays') => void;
   totalFilteredCount: number;
   onOpenComparator?: () => void;
+  onOpenStatusTracker?: () => void;
+  activeQuickFilter: QuickFilterType;
+  onQuickFilterChange: (filter: QuickFilterType) => void;
 }
 
 const CATEGORIES: CategoryType[] = [
@@ -32,6 +37,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   onSortChange,
   totalFilteredCount,
   onOpenComparator,
+  onOpenStatusTracker,
+  activeQuickFilter,
+  onQuickFilterChange,
 }) => {
   const getCategoryName = (cat: CategoryType) => {
     if (lang === 'en') return cat;
@@ -68,6 +76,87 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               </button>
             );
           })}
+        </div>
+
+        {/* Quick Filter Sneltoetsen & Status Tracker */}
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2.5 border-b border-stone-100">
+          <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-bold">
+            <span className="text-stone-400 mr-1 hidden sm:inline">Snelfilters:</span>
+            
+            <button
+              type="button"
+              onClick={() => onQuickFilterChange('all')}
+              className={`px-3 py-1 rounded-xl transition-all cursor-pointer ${
+                activeQuickFilter === 'all'
+                  ? 'bg-stone-900 text-white shadow-2xs'
+                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+              }`}
+            >
+              Alle 16
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onQuickFilterChange('popular')}
+              className={`flex items-center gap-1 px-3 py-1 rounded-xl transition-all cursor-pointer ${
+                activeQuickFilter === 'popular'
+                  ? 'bg-amber-500 text-white shadow-2xs font-black'
+                  : 'bg-amber-50 text-amber-900 border border-amber-200/80 hover:bg-amber-100'
+              }`}
+            >
+              <span>⭐ Populairste Concepten</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onQuickFilterChange('fast')}
+              className={`flex items-center gap-1 px-3 py-1 rounded-xl transition-all cursor-pointer ${
+                activeQuickFilter === 'fast'
+                  ? 'bg-emerald-600 text-white shadow-2xs font-black'
+                  : 'bg-emerald-50 text-emerald-900 border border-emerald-200/80 hover:bg-emerald-100'
+              }`}
+            >
+              <Zap className="w-3 h-3 text-emerald-600" />
+              <span>Snelste Oplevering (≤ 4 dagen)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onQuickFilterChange('ideal')}
+              className={`flex items-center gap-1 px-3 py-1 rounded-xl transition-all cursor-pointer ${
+                activeQuickFilter === 'ideal'
+                  ? 'bg-sky-600 text-white shadow-2xs font-black'
+                  : 'bg-sky-50 text-sky-900 border border-sky-200/80 hover:bg-sky-100'
+              }`}
+            >
+              <ShoppingCart className="w-3 h-3 text-sky-600" />
+              <span>iDEAL & Facturatie</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onQuickFilterChange('calculator')}
+              className={`flex items-center gap-1 px-3 py-1 rounded-xl transition-all cursor-pointer ${
+                activeQuickFilter === 'calculator'
+                  ? 'bg-purple-600 text-white shadow-2xs font-black'
+                  : 'bg-purple-50 text-purple-900 border border-purple-200/80 hover:bg-purple-100'
+              }`}
+            >
+              <Calculator className="w-3 h-3 text-purple-600" />
+              <span>Met Rekenmodule</span>
+            </button>
+          </div>
+
+          {onOpenStatusTracker && (
+            <button
+              type="button"
+              onClick={onOpenStatusTracker}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold border border-stone-300 transition-colors cursor-pointer text-[11px]"
+            >
+              <Clock className="w-3.5 h-3.5 text-stone-600" />
+              <span>Mijn Website Status Tracker</span>
+            </button>
+          )}
         </div>
 
         {/* Secondary Filter Controls */}
