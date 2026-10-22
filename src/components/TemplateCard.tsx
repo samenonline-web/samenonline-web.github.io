@@ -46,9 +46,14 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
                   {template.name}
                 </h3>
               </div>
-              <span className="text-xs font-bold text-orange-700 bg-orange-50 px-2.5 py-0.5 rounded-md inline-block mt-0.5 border border-orange-200/60">
-                {template.priceTier} Concept
-              </span>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="text-xs font-bold text-orange-700 bg-orange-50 px-2.5 py-0.5 rounded-md inline-block border border-orange-200/60">
+                  {template.priceTier} Concept
+                </span>
+                <span className="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200/60 flex items-center gap-1">
+                  ⭐ {template.rating.toFixed(1)}
+                </span>
+              </div>
             </div>
           </div>
 
