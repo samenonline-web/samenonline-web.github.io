@@ -292,55 +292,326 @@ body {
 }
 
 /* ==========================================================================
-   Global Site Dark Mode
-   Applied to the main Samen Online landing page when toggled in the Navbar
+   Global Site Dark Mode (Luxury Obsidian Craft)
+   Engineered for seamless contrast, crisp typography, and radiant amber warmth.
    ========================================================================== */
-.global-dark-mode {
+.global-dark-mode,
+html.dark {
   color-scheme: dark !important;
   background-color: #0c0a09 !important;
   color: #f5f5f4 !important;
 }
 
-.global-dark-mode header {
-  background-color: rgba(20, 18, 16, 0.95) !important;
+/* 1. Header & Sticky Filter Navigation */
+.global-dark-mode header,
+html.dark header {
+  background-color: rgba(18, 16, 14, 0.94) !important;
   border-color: #292524 !important;
+  backdrop-filter: blur(16px) !important;
 }
 
-.global-dark-mode .bg-white {
+.global-dark-mode #filter-section,
+html.dark #filter-section {
+  background-color: rgba(18, 16, 14, 0.94) !important;
+  border-color: #292524 !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+/* 2. Surfaces, Cards & Containers */
+.global-dark-mode .bg-white,
+html.dark .bg-white {
   background-color: #171513 !important;
   color: #f5f5f4 !important;
+  border-color: #292524 !important;
 }
 
 .global-dark-mode .bg-stone-50,
-.global-dark-mode [class*="bg-stone-50/"] {
-  background-color: #141210 !important;
+.global-dark-mode [class*="bg-stone-50/"],
+.global-dark-mode .bg-stone-100,
+html.dark .bg-stone-50,
+html.dark [class*="bg-stone-50/"],
+html.dark .bg-stone-100 {
+  background-color: #1e1b18 !important;
+  color: #f5f5f4 !important;
 }
 
+/* Warm Orange/Amber Callout Boxes & Banners */
+.global-dark-mode .bg-orange-50,
+.global-dark-mode [class*="bg-orange-50/"],
+.global-dark-mode .bg-orange-100,
+.global-dark-mode .bg-amber-50,
+.global-dark-mode [class*="bg-amber-50/"],
+.global-dark-mode .bg-amber-100,
+html.dark .bg-orange-50,
+html.dark [class*="bg-orange-50/"],
+html.dark .bg-orange-100,
+html.dark .bg-amber-50,
+html.dark [class*="bg-amber-50/"],
+html.dark .bg-amber-100 {
+  background-color: rgba(234, 88, 12, 0.08) !important;
+  border-color: rgba(234, 88, 12, 0.22) !important;
+  color: #f5f5f4 !important;
+}
+
+/* Emerald / Green Callouts & Badges */
+.global-dark-mode .bg-emerald-50,
+.global-dark-mode [class*="bg-emerald-50/"],
+.global-dark-mode .bg-emerald-100,
+html.dark .bg-emerald-50,
+html.dark [class*="bg-emerald-50/"],
+html.dark .bg-emerald-100 {
+  background-color: rgba(5, 150, 105, 0.12) !important;
+  border-color: rgba(5, 150, 105, 0.25) !important;
+  color: #6ee7b7 !important;
+}
+
+/* Rose / Red Callouts & Bookmarks */
+.global-dark-mode .bg-rose-50,
+.global-dark-mode [class*="bg-rose-50/"],
+.global-dark-mode .bg-rose-100,
+html.dark .bg-rose-50,
+html.dark [class*="bg-rose-50/"],
+html.dark .bg-rose-100 {
+  background-color: rgba(225, 29, 72, 0.12) !important;
+  border-color: rgba(225, 29, 72, 0.3) !important;
+  color: #fda4af !important;
+}
+
+/* 3. Typography & Text Hierarchy */
+.global-dark-mode h1,
+.global-dark-mode h2,
+.global-dark-mode h3,
+.global-dark-mode h4,
+.global-dark-mode h5,
+.global-dark-mode h6,
+.global-dark-mode strong,
+.global-dark-mode b,
 .global-dark-mode .text-stone-900,
-.global-dark-mode .text-stone-800 {
-  color: #fafaf9 !important;
+.global-dark-mode .text-stone-950,
+.global-dark-mode .text-slate-900,
+.global-dark-mode .text-slate-800,
+.global-dark-mode .text-zinc-900,
+.global-dark-mode .text-zinc-800,
+.global-dark-mode .text-orange-950,
+.global-dark-mode .text-amber-950,
+.global-dark-mode .text-emerald-950,
+.global-dark-mode .text-rose-950,
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6,
+html.dark strong,
+html.dark b,
+html.dark .text-stone-900,
+html.dark .text-stone-950,
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-zinc-900,
+html.dark .text-zinc-800,
+html.dark .text-orange-950,
+html.dark .text-amber-950,
+html.dark .text-emerald-950,
+html.dark .text-rose-950 {
+  color: #ffffff !important;
 }
 
+.global-dark-mode p,
 .global-dark-mode .text-stone-700,
-.global-dark-mode .text-stone-600 {
+.global-dark-mode .text-stone-600,
+.global-dark-mode .text-slate-700,
+.global-dark-mode .text-slate-600,
+html.dark p,
+html.dark .text-stone-700,
+html.dark .text-stone-600,
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
   color: #d6d3d1 !important;
 }
 
-.global-dark-mode .text-stone-500 {
+.global-dark-mode .text-stone-500,
+.global-dark-mode .text-stone-400,
+.global-dark-mode .text-slate-500,
+.global-dark-mode .text-slate-400,
+html.dark .text-stone-500,
+html.dark .text-stone-400,
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
   color: #a8a29e !important;
 }
 
+/* Accent Colors */
+.global-dark-mode .text-orange-700,
+.global-dark-mode .text-orange-800,
+.global-dark-mode .text-amber-800,
+.global-dark-mode .text-amber-900,
+html.dark .text-orange-700,
+html.dark .text-orange-800,
+html.dark .text-amber-800,
+html.dark .text-amber-900 {
+  color: #fb923c !important;
+}
+
+.global-dark-mode .text-emerald-700,
+.global-dark-mode .text-emerald-800,
+html.dark .text-emerald-700,
+html.dark .text-emerald-800 {
+  color: #34d399 !important;
+}
+
+.global-dark-mode .text-rose-700,
+.global-dark-mode .text-rose-800,
+html.dark .text-rose-700,
+html.dark .text-rose-800 {
+  color: #f87171 !important;
+}
+
+/* 4. Borders & Lines */
 .global-dark-mode .border-stone-200,
 .global-dark-mode .border-stone-100,
+.global-dark-mode .border-stone-300,
 .global-dark-mode .border-orange-100,
-.global-dark-mode [class*="border-stone-200"] {
+.global-dark-mode .border-orange-200,
+.global-dark-mode .border-orange-300,
+.global-dark-mode .border-amber-200,
+.global-dark-mode [class*="border-stone-200"],
+.global-dark-mode [class*="border-orange-100"],
+.global-dark-mode [class*="border-orange-200"],
+html.dark .border-stone-200,
+html.dark .border-stone-100,
+html.dark .border-stone-300,
+html.dark .border-orange-100,
+html.dark .border-orange-200,
+html.dark .border-orange-300,
+html.dark .border-amber-200,
+html.dark [class*="border-stone-200"],
+html.dark [class*="border-orange-100"],
+html.dark [class*="border-orange-200"] {
   border-color: #292524 !important;
 }
 
+.global-dark-mode .divide-stone-200 > :not([hidden]) ~ :not([hidden]),
+html.dark .divide-stone-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #292524 !important;
+}
+
+/* 5. Interactive Form Inputs & Selects */
 .global-dark-mode input,
 .global-dark-mode select,
-.global-dark-mode textarea {
-  background-color: #292524 !important;
-  color: #fafaf9 !important;
-  border-color: #44403c !important;
+.global-dark-mode textarea,
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #1e1b18 !important;
+  color: #ffffff !important;
+  border-color: #383431 !important;
 }
+
+.global-dark-mode input::placeholder,
+.global-dark-mode textarea::placeholder,
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #78716c !important;
+}
+
+.global-dark-mode input:focus,
+.global-dark-mode select:focus,
+.global-dark-mode textarea:focus,
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: #ea580c !important;
+  box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.3) !important;
+}
+
+.global-dark-mode select option,
+html.dark select option {
+  background-color: #1e1b18 !important;
+  color: #ffffff !important;
+}
+
+.global-dark-mode input[type="range"],
+html.dark input[type="range"] {
+  accent-color: #ea580c !important;
+}
+
+/* 6. High-Contrast Buttons & Filter Pills */
+/* Ensure dark stone buttons don't disappear into obsidian backgrounds */
+.global-dark-mode button.bg-stone-900,
+.global-dark-mode a.bg-stone-900,
+html.dark button.bg-stone-900,
+html.dark a.bg-stone-900 {
+  background-color: #262320 !important;
+  color: #ffffff !important;
+  border: 1px solid #44403c !important;
+}
+
+.global-dark-mode button.bg-stone-900:hover,
+.global-dark-mode a.bg-stone-900:hover,
+html.dark button.bg-stone-900:hover,
+html.dark a.bg-stone-900:hover {
+  background-color: #383431 !important;
+  border-color: #57534e !important;
+}
+
+/* Active Category Pill in FilterBar */
+.global-dark-mode #filter-section button.bg-stone-900,
+html.dark #filter-section button.bg-stone-900 {
+  background-color: #f5f5f4 !important;
+  color: #0c0a09 !important;
+  border-color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+/* Hover background on list items & buttons */
+.global-dark-mode .hover\:bg-stone-100:hover,
+.global-dark-mode .hover\:bg-stone-50:hover,
+.global-dark-mode .hover\:bg-orange-50:hover,
+.global-dark-mode .hover\:bg-orange-100:hover,
+html.dark .hover\:bg-stone-100:hover,
+html.dark .hover\:bg-stone-50:hover,
+html.dark .hover\:bg-orange-50:hover,
+html.dark .hover\:bg-orange-100:hover {
+  background-color: #2a2622 !important;
+  color: #ffffff !important;
+}
+
+/* 7. Specific Section Finishes */
+/* About Section */
+.global-dark-mode #about-section,
+html.dark #about-section {
+  background-color: #141210 !important;
+  border-color: #292524 !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7) !important;
+}
+
+.global-dark-mode #about-section .bg-white,
+html.dark #about-section .bg-white {
+  background-color: #1c1917 !important;
+  border-color: #292524 !important;
+}
+
+/* Carousel Section */
+.global-dark-mode .carousel-container,
+html.dark .carousel-container {
+  background-color: #141210 !important;
+  border-color: #292524 !important;
+}
+
+/* Footer */
+.global-dark-mode footer,
+html.dark footer {
+  background-color: #110f0e !important;
+  border-color: #292524 !important;
+  color: #a8a29e !important;
+}
+
+/* Modals */
+.global-dark-mode .fixed .bg-white,
+html.dark .fixed .bg-white {
+  background-color: #171513 !important;
+  border: 1px solid #292524 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9) !important;
+}
+

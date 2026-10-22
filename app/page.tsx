@@ -91,6 +91,37 @@ export default function Home() {
     };
   }, [isAnyModalOpen]);
 
+  // Initialize theme from storage or system preference
+  React.useEffect(() => {
+    try {
+      const savedTheme = localStorage.getItem('samenonline-theme');
+      if (savedTheme === 'dark') {
+        setIsDarkMode(true);
+      } else if (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setIsDarkMode(true);
+      }
+    } catch {}
+  }, []);
+
+  // Sync Dark Mode state with document.documentElement
+  React.useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add('global-dark-mode');
+      document.documentElement.style.colorScheme = 'dark';
+      try {
+        localStorage.setItem('samenonline-theme', 'dark');
+      } catch {}
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove('global-dark-mode');
+      document.documentElement.style.colorScheme = 'light';
+      try {
+        localStorage.setItem('samenonline-theme', 'light');
+      } catch {}
+    }
+  }, [isDarkMode]);
+
   // Toggle Language
   const handleLanguageToggle = () => {
     setLang((prev) => (prev === 'nl' ? 'en' : 'nl'));
@@ -250,7 +281,7 @@ export default function Home() {
     <div
       className={`min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white transition-colors duration-200 ${
         isDarkMode
-          ? 'global-dark-mode bg-stone-950 text-stone-100'
+          ? 'global-dark-mode dark bg-stone-950 text-stone-100'
           : 'bg-amber-50/20 text-stone-900'
       }`}
     >
