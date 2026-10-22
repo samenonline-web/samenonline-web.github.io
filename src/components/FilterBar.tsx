@@ -45,7 +45,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   };
 
   return (
-    <div className="bg-white border-b border-orange-100 sticky top-20 z-30 shadow-xs py-4">
+    <div id="filter-section" className="bg-white border-b border-orange-100 sticky top-20 z-30 shadow-xs py-4 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Category Tabs */}
@@ -59,7 +59,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 className={`whitespace-nowrap px-4 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
                   isActive
                     ? 'bg-orange-600 text-white shadow-md shadow-orange-600/20'
-                    : 'bg-orange-50/60 text-slate-800 hover:bg-orange-100 border border-orange-100/80 hover:border-orange-200'
+                    : 'bg-orange-50/60 text-stone-800 hover:bg-orange-100 border border-orange-100/80 hover:border-orange-200'
                 }`}
               >
                 {getCategoryName(cat)}
@@ -71,13 +71,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         {/* Secondary Filter Controls */}
         <div className="flex items-center justify-between gap-3 text-xs">
           
-          <span className="font-bold text-slate-500">
+          <span className="font-bold text-stone-500">
             {totalFilteredCount} {lang === 'nl' ? 'concepten' : 'concepts'}
           </span>
 
           <div className="flex items-center gap-1.5 bg-orange-50/50 border border-orange-200/80 rounded-xl px-3 py-1.5">
             <ArrowUpDown className="w-3.5 h-3.5 text-orange-500" />
-            <span className="font-bold text-slate-700">
+            <span className="font-bold text-stone-700">
               {lang === 'nl' ? 'Sorteer op:' : 'Sort by:'}
             </span>
             <select

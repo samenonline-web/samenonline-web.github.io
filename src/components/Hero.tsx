@@ -42,7 +42,7 @@ export const Hero: React.FC<HeroProps> = ({
         </div>
 
         {/* Hero Title (Solid, crisp, friendly typography) */}
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight mb-6">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-stone-900 tracking-tight leading-tight mb-6">
           {lang === 'nl' ? (
             <>
               Originele <span className="text-orange-600">Website Concepts</span> voor Nederlandse bedrijven
@@ -55,14 +55,23 @@ export const Hero: React.FC<HeroProps> = ({
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+        <p className="text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
           {lang === 'nl'
             ? 'Bekijk onze kant-en-klare webdesign concepten voor Nederlandse webwinkels, creatieve bureaus, duurzame initiatieven en SaaS platforms. Volledig op maat aanpasbaar!'
             : 'Explore our tailor-made website concepts for Dutch e-commerce, agencies, sustainable ventures, and tech startups. Built for conversion & compliance!'}
         </p>
 
         {/* Hero Search Box */}
-        <div className="max-w-2xl mx-auto bg-white p-2.5 rounded-2xl border-2 border-orange-100 shadow-lg shadow-orange-500/5 flex flex-col sm:flex-row items-center gap-2 mb-8">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const element = document.getElementById('filter-section') || document.getElementById('templates-section');
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="max-w-2xl mx-auto bg-white p-2.5 rounded-2xl border-2 border-orange-100 shadow-lg shadow-orange-500/5 flex flex-col sm:flex-row items-center gap-2 mb-8"
+        >
           <div className="relative flex-1 w-full flex items-center">
             <Search className="w-5 h-5 text-orange-500 absolute left-4 pointer-events-none" />
             <input
@@ -74,36 +83,55 @@ export const Hero: React.FC<HeroProps> = ({
                   ? 'Zoek op concept, branche of zoekterm...'
                   : 'Search by concept, industry or keyword...'
               }
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-transparent text-slate-900 placeholder-slate-400 font-medium focus:outline-none text-sm sm:text-base"
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-transparent text-stone-900 placeholder-stone-400 font-medium focus:outline-none text-sm sm:text-base"
             />
           </div>
           {searchQuery && (
             <button
+              type="button"
               onClick={() => onSearchChange('')}
               className="text-xs text-orange-600 hover:text-orange-800 px-3 py-1 font-bold cursor-pointer"
             >
               {lang === 'nl' ? 'Wis' : 'Clear'}
             </button>
           )}
-        </div>
+          <button
+            type="submit"
+            className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md shadow-orange-600/20 transition-all cursor-pointer whitespace-nowrap"
+          >
+            {lang === 'nl' ? 'Bekijk Resultaten' : 'View Results'}
+          </button>
+        </form>
 
         {/* Quick Filter Tag Pills */}
         <div className="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto">
-          <span className="text-xs font-semibold text-slate-500 mr-1">
+          <span className="text-xs font-bold text-stone-500 mr-1">
             {lang === 'nl' ? 'Filter op type:' : 'Filter by type:'}
           </span>
-          {quickTags.map((tag, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                if (tag.category !== 'All') onSelectCategory(tag.category);
-                if (tag.query) onSearchChange(tag.query);
-              }}
-              className="px-3.5 py-1.5 rounded-xl bg-orange-50/70 hover:bg-orange-100 border border-orange-200/80 text-orange-950 text-xs font-bold transition-all cursor-pointer shadow-2xs hover:border-orange-300"
-            >
-              {tag.label}
-            </button>
-          ))}
+          {quickTags.map((tag, idx) => {
+            const isActive = selectedCategory === tag.category;
+            return (
+              <button
+                key={idx}
+                onClick={() => {
+                  const newCat = isActive ? 'All' : tag.category;
+                  onSelectCategory(newCat);
+                  if (tag.query) onSearchChange(tag.query);
+                  const element = document.getElementById('filter-section') || document.getElementById('templates-section');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-2xs ${
+                  isActive
+                    ? 'bg-orange-600 text-white border border-orange-600 shadow-md scale-105'
+                    : 'bg-orange-50/70 hover:bg-orange-100 border border-orange-200/80 text-orange-950 hover:border-orange-300'
+                }`}
+              >
+                {tag.label}
+              </button>
+            );
+          })}
         </div>
 
       </div>

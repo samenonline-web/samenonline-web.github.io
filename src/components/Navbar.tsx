@@ -46,7 +46,16 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Search Bar Preview on Desktop */}
-        <div className="hidden md:flex flex-1 max-w-md mx-4 relative items-center">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const element = document.getElementById('filter-section') || document.getElementById('templates-section');
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="hidden md:flex flex-1 max-w-md mx-4 relative items-center"
+        >
           <Search className="w-4 h-4 text-orange-500 absolute left-3.5 pointer-events-none" />
           <input
             type="text"
@@ -59,7 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }
             className="w-full pl-10 pr-4 py-2 bg-orange-50/50 border border-orange-200/80 rounded-full text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all shadow-2xs"
           />
-        </div>
+        </form>
 
         {/* Action Buttons */}
         <div className="flex items-center gap-3">
