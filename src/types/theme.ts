@@ -87,3 +87,45 @@ export const COLOR_THEMES: Record<ColorThemeId, ColorTheme> = {
     accentGradient: 'from-rose-500 to-orange-500',
   },
 };
+
+export type FontStyleId = 'sans' | 'serif' | 'rounded' | 'tech';
+
+export interface FontStyle {
+  id: FontStyleId;
+  name: string;
+  label: string;
+  description: string;
+  fontFamily: string;
+}
+
+export const FONT_STYLES: Record<FontStyleId, FontStyle> = {
+  sans: {
+    id: 'sans',
+    name: 'Modern Sans',
+    label: 'Aa Modern',
+    description: 'Strak, fris & hedendaags',
+    fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  },
+  serif: {
+    id: 'serif',
+    name: 'Klassiek Serif',
+    label: 'Aa Serif',
+    description: 'Luxe, elegant & tijdloos',
+    fontFamily: 'Georgia, Cambria, "Times New Roman", Times, serif',
+  },
+  rounded: {
+    id: 'rounded',
+    name: 'Vriendelijk Rond',
+    label: 'Aa Rond',
+    description: 'Warm, toegankelijk & zacht',
+    fontFamily: '"Segoe UI Rounded", "Quicksand", "Nunito", system-ui, -apple-system, sans-serif',
+  },
+  tech: {
+    id: 'tech',
+    name: 'Geometrisch / Tech',
+    label: 'Aa Tech',
+    description: 'SaaS, digitaal & zakelijk',
+    fontFamily: '"Trebuchet MS", "Plus Jakarta Sans", "Century Gothic", "Segoe UI", sans-serif',
+  },
+};
+

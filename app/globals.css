@@ -17,3 +17,12 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
+
+/* Template Live Font Scoping */
+.template-font-scope {
+  font-family: inherit;
+}
+
+.template-font-scope * {
+  font-family: inherit !important;
+}

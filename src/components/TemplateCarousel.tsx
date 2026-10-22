@@ -10,6 +10,7 @@ interface TemplateCarouselProps {
   onOpenDetails: (template: WebTemplate) => void;
   onOpenLivePreview: (template: WebTemplate) => void;
   onOpenRequestModal: (template?: WebTemplate) => void;
+  isPaused?: boolean;
 }
 
 export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
@@ -18,6 +19,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
   onOpenDetails,
   onOpenLivePreview,
   onOpenRequestModal,
+  isPaused = false,
 }) => {
   const featuredTemplates = templates.filter((t) => t.isFeatured);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,12 +27,12 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
   const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!isAutoPlay || featuredTemplates.length === 0) return;
+    if (!isAutoPlay || isPaused || featuredTemplates.length === 0) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % featuredTemplates.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, [isAutoPlay, featuredTemplates.length]);
+  }, [isAutoPlay, isPaused, featuredTemplates.length]);
 
   if (featuredTemplates.length === 0) return null;
 

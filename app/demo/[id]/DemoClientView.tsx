@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Palette, ArrowRight, Heart } from 'lucide-react';
+import { ArrowLeft, Palette, ArrowRight, Heart, Type } from 'lucide-react';
 import { WebTemplate } from '../../../src/types/company';
-import { COLOR_THEMES, ColorThemeId } from '../../../src/types/theme';
+import { COLOR_THEMES, ColorThemeId, FONT_STYLES, FontStyleId } from '../../../src/types/theme';
 import { TemplateRenderer } from '../../../src/components/templates/TemplateRenderer';
 import { RequestWebsiteModal } from '../../../src/components/RequestWebsiteModal';
 
@@ -14,9 +14,11 @@ interface DemoClientViewProps {
 
 export const DemoClientView: React.FC<DemoClientViewProps> = ({ template }) => {
   const [selectedThemeId, setSelectedThemeId] = useState<ColorThemeId>('orange');
+  const [selectedFontId, setSelectedFontId] = useState<FontStyleId>('sans');
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
 
   const currentTheme = COLOR_THEMES[selectedThemeId];
+  const currentFont = FONT_STYLES[selectedFontId];
 
   return (
     <div className="min-h-screen bg-stone-100 flex flex-col font-sans">
@@ -41,30 +43,63 @@ export const DemoClientView: React.FC<DemoClientViewProps> = ({ template }) => {
           </div>
         </div>
 
-        {/* Center: Live Brand Color Switcher */}
-        <div className="flex items-center gap-2 bg-stone-950 px-3 py-1.5 rounded-xl border border-stone-800 text-xs font-bold">
-          <span className="text-stone-400 flex items-center gap-1 hidden sm:flex">
-            <Palette className="w-3.5 h-3.5" />
-            <span>Huisstijl Kleur:</span>
-          </span>
-          <div className="flex items-center gap-1.5">
-            {(['orange', 'blue', 'green', 'purple', 'dark', 'red'] as ColorThemeId[]).map((cId) => {
-              const colorConfig = COLOR_THEMES[cId];
-              const isSelected = selectedThemeId === cId;
-              const dotBg = cId === 'orange' ? '#ea580c' : cId === 'blue' ? '#0284c7' : cId === 'green' ? '#059669' : cId === 'purple' ? '#9333ea' : cId === 'dark' ? '#292524' : '#e11d48';
-              return (
-                <button
-                  key={cId}
-                  onClick={() => setSelectedThemeId(cId)}
-                  title={colorConfig.name}
-                  className={`w-6 h-6 rounded-full border-2 transition-transform cursor-pointer ${
-                    isSelected ? 'border-white scale-115 ring-2 ring-white/30' : 'border-transparent hover:scale-105 opacity-80 hover:opacity-100'
-                  }`}
-                  style={{ backgroundColor: dotBg }}
-                />
-              );
-            })}
+        {/* Center: Live Brand Color & Font Switcher */}
+        <div className="flex flex-wrap items-center gap-3">
+          
+          {/* Color Switcher */}
+          <div className="flex items-center gap-2 bg-stone-950 px-3 py-1.5 rounded-xl border border-stone-800 text-xs font-bold">
+            <span className="text-stone-400 flex items-center gap-1 hidden sm:flex">
+              <Palette className="w-3.5 h-3.5 text-stone-400" />
+              <span>Huisstijl Kleur:</span>
+            </span>
+            <div className="flex items-center gap-1.5">
+              {(['orange', 'blue', 'green', 'purple', 'dark', 'red'] as ColorThemeId[]).map((cId) => {
+                const colorConfig = COLOR_THEMES[cId];
+                const isSelected = selectedThemeId === cId;
+                const dotBg = cId === 'orange' ? '#ea580c' : cId === 'blue' ? '#0284c7' : cId === 'green' ? '#059669' : cId === 'purple' ? '#9333ea' : cId === 'dark' ? '#292524' : '#e11d48';
+                return (
+                  <button
+                    key={cId}
+                    onClick={() => setSelectedThemeId(cId)}
+                    title={colorConfig.name}
+                    className={`w-6 h-6 rounded-full border-2 transition-transform cursor-pointer ${
+                      isSelected ? 'border-white scale-115 ring-2 ring-white/30' : 'border-transparent hover:scale-105 opacity-80 hover:opacity-100'
+                    }`}
+                    style={{ backgroundColor: dotBg }}
+                  />
+                );
+              })}
+            </div>
           </div>
+
+          {/* Font Switcher */}
+          <div className="flex items-center gap-1.5 bg-stone-950 px-3 py-1.5 rounded-xl border border-stone-800 text-xs font-bold">
+            <span className="text-stone-400 flex items-center gap-1 hidden sm:flex">
+              <Type className="w-3.5 h-3.5 text-stone-400" />
+              <span>Font:</span>
+            </span>
+            <div className="flex items-center gap-1">
+              {(['sans', 'serif', 'rounded', 'tech'] as FontStyleId[]).map((fId) => {
+                const fontConfig = FONT_STYLES[fId];
+                const isSelected = selectedFontId === fId;
+                return (
+                  <button
+                    key={fId}
+                    onClick={() => setSelectedFontId(fId)}
+                    title={`${fontConfig.name}: ${fontConfig.description}`}
+                    className={`px-2 py-1 rounded-lg text-[10px] font-bold transition-colors cursor-pointer ${
+                      isSelected
+                        ? 'bg-orange-600 text-white font-extrabold shadow-2xs'
+                        : 'text-stone-400 hover:text-white'
+                    }`}
+                  >
+                    {fontConfig.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
 
         {/* Request CTA */}
@@ -85,6 +120,7 @@ export const DemoClientView: React.FC<DemoClientViewProps> = ({ template }) => {
         <TemplateRenderer
           templateId={template.id}
           theme={currentTheme}
+          fontStyle={currentFont}
           onRequestQuote={() => setIsRequestModalOpen(true)}
         />
       </main>

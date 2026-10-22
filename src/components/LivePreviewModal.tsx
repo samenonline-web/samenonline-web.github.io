@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, ExternalLink, Smartphone, Monitor, Palette, ArrowRight } from 'lucide-react';
+import { X, ExternalLink, Smartphone, Monitor, Palette, ArrowRight, Type } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
-import { COLOR_THEMES, ColorThemeId } from '../types/theme';
+import { COLOR_THEMES, ColorThemeId, FONT_STYLES, FontStyleId } from '../types/theme';
 import { TemplateRenderer } from './templates/TemplateRenderer';
 import Link from 'next/link';
 
@@ -21,25 +21,35 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
   onOpenRequestModal,
 }) => {
   const [selectedThemeId, setSelectedThemeId] = useState<ColorThemeId>('orange');
+  const [selectedFontId, setSelectedFontId] = useState<FontStyleId>('sans');
   const [viewportMode, setViewportMode] = useState<'desktop' | 'mobile'>('desktop');
 
   useEffect(() => {
     if (!template) return;
+    
+    // Freeze main site scrolling while preview modal is open
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [template, onClose]);
 
   if (!template) return null;
 
   const currentTheme = COLOR_THEMES[selectedThemeId];
+  const currentFont = FONT_STYLES[selectedFontId];
 
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 cursor-pointer"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200 cursor-pointer overscroll-none"
     >
       <div
         className="bg-stone-900 w-full max-w-6xl h-[95vh] rounded-3xl shadow-2xl overflow-hidden border border-stone-800 flex flex-col cursor-default"
@@ -61,13 +71,13 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
                 </span>
               </div>
               <span className="text-[10px] text-stone-400 font-medium hidden md:block">
-                {lang === 'nl' ? 'Pas live de huiskleur aan of wissel weergave' : 'Customize brand color or change viewport'}
+                {lang === 'nl' ? 'Pas live kleur & lettertype aan' : 'Customize brand color & font live'}
               </span>
             </div>
           </div>
 
-          {/* Center: Live Theme Color Picker & Viewport Toggles */}
-          <div className="flex items-center gap-4 bg-stone-900/90 px-3 py-1.5 rounded-2xl border border-stone-800">
+          {/* Center: Live Theme Color, Font Switcher & Viewport Toggles */}
+          <div className="flex flex-wrap items-center gap-3 bg-stone-900/90 px-3 py-1.5 rounded-2xl border border-stone-800">
             
             {/* Color Palette Switcher */}
             <div className="flex items-center gap-1.5">
@@ -91,6 +101,36 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
                   />
                 );
               })}
+            </div>
+
+            <div className="w-px h-4 bg-stone-700 hidden sm:block"></div>
+
+            {/* Font Style Selector */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px] font-bold text-stone-400 flex items-center gap-1 hidden sm:flex">
+                <Type className="w-3.5 h-3.5 text-stone-400" />
+                <span>Font:</span>
+              </span>
+              <div className="flex items-center gap-1 bg-stone-950 p-1 rounded-xl border border-stone-800 text-[10px] font-bold">
+                {(['sans', 'serif', 'rounded', 'tech'] as FontStyleId[]).map((fId) => {
+                  const fontConfig = FONT_STYLES[fId];
+                  const isSelected = selectedFontId === fId;
+                  return (
+                    <button
+                      key={fId}
+                      onClick={() => setSelectedFontId(fId)}
+                      title={`${fontConfig.name}: ${fontConfig.description}`}
+                      className={`px-2 py-1 rounded-lg transition-colors cursor-pointer ${
+                        isSelected
+                          ? 'bg-orange-600 text-white font-extrabold shadow-2xs'
+                          : 'text-stone-400 hover:text-white'
+                      }`}
+                    >
+                      {fontConfig.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="w-px h-4 bg-stone-700 hidden sm:block"></div>
@@ -152,8 +192,8 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
 
         </div>
 
-        {/* Live Canvas Area */}
-        <div className="flex-1 bg-stone-900 overflow-y-auto p-2 sm:p-6 flex justify-center items-start">
+        {/* Live Canvas Area with overscroll-contain */}
+        <div className="flex-1 bg-stone-900 overflow-y-auto overscroll-contain p-2 sm:p-6 flex justify-center items-start">
           <div
             className={`transition-all duration-300 bg-white rounded-2xl shadow-xl overflow-hidden border border-stone-200 ${
               viewportMode === 'mobile'
@@ -164,6 +204,7 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
             <TemplateRenderer
               templateId={template.id}
               theme={currentTheme}
+              fontStyle={currentFont}
               onRequestQuote={() => {
                 onClose();
                 onOpenRequestModal(template);
@@ -176,3 +217,4 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
     </div>
   );
 };
+

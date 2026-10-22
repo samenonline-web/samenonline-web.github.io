@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ColorTheme } from '../../types/theme';
+import { ColorTheme, FontStyle } from '../../types/theme';
 import { GrachtenWebAgency } from './GrachtenWebAgency';
 import { DuurzaamKledingShop } from './DuurzaamKledingShop';
 import { VersVogelBoerderij } from './VersVogelBoerderij';
@@ -14,32 +14,46 @@ import { StadskliniekFysio } from './StadskliniekFysio';
 interface TemplateRendererProps {
   templateId: string;
   theme: ColorTheme;
+  fontStyle?: FontStyle;
   onRequestQuote: () => void;
 }
 
 export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
   templateId,
   theme,
+  fontStyle,
   onRequestQuote,
 }) => {
-  switch (templateId) {
-    case 'grachten-web-agency':
-      return <GrachtenWebAgency theme={theme} onRequestQuote={onRequestQuote} />;
-    case 'duurzaam-kleding-webshop':
-      return <DuurzaamKledingShop theme={theme} onRequestQuote={onRequestQuote} />;
-    case 'versvogel-boerenwinkel':
-      return <VersVogelBoerderij theme={theme} onRequestQuote={onRequestQuote} />;
-    case 'stroom-delen-saas':
-      return <StroomDelenSaaS theme={theme} onRequestQuote={onRequestQuote} />;
-    case 'fiets-craft-bv':
-      return <FietsCraftConfigurator theme={theme} onRequestQuote={onRequestQuote} />;
-    case 'ambacht-bakkerij':
-      return <AmbachtBakkerijDemo theme={theme} onRequestQuote={onRequestQuote} />;
-    case 'zonne-pionier-energy':
-      return <ZonnePionierSolar theme={theme} onRequestQuote={onRequestQuote} />;
-    case 'stadskliniek-fysio':
-      return <StadskliniekFysio theme={theme} onRequestQuote={onRequestQuote} />;
-    default:
-      return <GrachtenWebAgency theme={theme} onRequestQuote={onRequestQuote} />;
-  }
+  const renderContent = () => {
+    switch (templateId) {
+      case 'grachten-web-agency':
+        return <GrachtenWebAgency theme={theme} onRequestQuote={onRequestQuote} />;
+      case 'duurzaam-kleding-webshop':
+        return <DuurzaamKledingShop theme={theme} onRequestQuote={onRequestQuote} />;
+      case 'versvogel-boerenwinkel':
+        return <VersVogelBoerderij theme={theme} onRequestQuote={onRequestQuote} />;
+      case 'stroom-delen-saas':
+        return <StroomDelenSaaS theme={theme} onRequestQuote={onRequestQuote} />;
+      case 'fiets-craft-bv':
+        return <FietsCraftConfigurator theme={theme} onRequestQuote={onRequestQuote} />;
+      case 'ambacht-bakkerij':
+        return <AmbachtBakkerijDemo theme={theme} onRequestQuote={onRequestQuote} />;
+      case 'zonne-pionier-energy':
+        return <ZonnePionierSolar theme={theme} onRequestQuote={onRequestQuote} />;
+      case 'stadskliniek-fysio':
+        return <StadskliniekFysio theme={theme} onRequestQuote={onRequestQuote} />;
+      default:
+        return <GrachtenWebAgency theme={theme} onRequestQuote={onRequestQuote} />;
+    }
+  };
+
+  return (
+    <div
+      style={{ fontFamily: fontStyle?.fontFamily || 'inherit' }}
+      className="template-font-scope min-h-full"
+    >
+      {renderContent()}
+    </div>
+  );
 };
+

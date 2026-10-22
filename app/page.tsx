@@ -39,6 +39,25 @@ export default function Home() {
     content: '',
   });
 
+  const isAnyModalOpen = Boolean(
+    activeModalTemplate ||
+    activePreviewTemplate ||
+    isRequestModalOpen ||
+    infoModalData.isOpen
+  );
+
+  // Freeze main site scroll and prevent background scroll chaining
+  React.useEffect(() => {
+    if (isAnyModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isAnyModalOpen]);
+
   // Toggle Language
   const handleLanguageToggle = () => {
     setLang((prev) => (prev === 'nl' ? 'en' : 'nl'));
@@ -133,6 +152,7 @@ export default function Home() {
         onOpenDetails={setActiveModalTemplate}
         onOpenLivePreview={setActivePreviewTemplate}
         onOpenRequestModal={handleOpenRequestModal}
+        isPaused={isAnyModalOpen}
       />
 
       {/* Interactive Sticky Filter & Sort Bar */}
