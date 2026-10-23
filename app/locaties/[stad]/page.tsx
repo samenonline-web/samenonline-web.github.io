@@ -209,10 +209,10 @@ export default async function LocationCityPage({
           </nav>
 
           <Link
-            href="/vragenlijst"
+            href={`/vragenlijst?stad=${city.id}`}
             className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black transition-all shadow-xs"
           >
-            Start Keuzehulp
+            Start Keuzehulp {city.name}
           </Link>
         </div>
       </header>
@@ -263,7 +263,7 @@ export default async function LocationCityPage({
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/vragenlijst"
+              href={`/vragenlijst?stad=${city.id}`}
               className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-orange-600 hover:bg-orange-500 text-white font-black text-sm transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
             >
               <Sparkles className="w-4 h-4" />
@@ -357,6 +357,61 @@ export default async function LocationCityPage({
           />
         </section>
 
+        {/* GOOGLE MAPS LOCAL PACK SIMULATION */}
+        <section className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200/90 dark:border-slate-800 shadow-lg space-y-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div>
+              <span className="text-[11px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/80 px-3 py-1 rounded-full">
+                Google Maps &amp; 3-Pack Optimalisatie
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white mt-2">
+                Bovenaan in de Lokale Zoekresultaten van {city.name}
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium mt-1">
+                Meer dan 68% van de klanten in {city.name} klikt direct op het Google Maps 3-pack. Onze websites bevatten complete Schema.org LocalBusiness mark-up en geo-coördinaten.
+              </p>
+            </div>
+
+            <div className="bg-stone-50 dark:bg-slate-800/80 px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs shrink-0 font-mono">
+              <span className="text-stone-400 block text-[10px]">Coördinaten {city.name}:</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-black">{city.lat}° N, {city.lng}° E</span>
+              <span className="text-stone-500 block text-[10px]">Postcodes: {city.postcodeRange}</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div className="p-4 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 space-y-2">
+              <span className="text-xs font-black text-stone-900 dark:text-white flex items-center gap-1.5">
+                <MapPin className="w-4 h-4 text-orange-600" />
+                <span>Radius Dekking: 25 km</span>
+              </span>
+              <p className="text-xs text-stone-600 dark:text-slate-400 leading-relaxed">
+                Niet alleen in {city.name} centrum, maar in alle omliggende dorpen en wijken ({city.districts.slice(0, 3).join(', ')}).
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 space-y-2">
+              <span className="text-xs font-black text-stone-900 dark:text-white flex items-center gap-1.5">
+                <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
+                <span>Google Reviews Widget</span>
+              </span>
+              <p className="text-xs text-stone-600 dark:text-slate-400 leading-relaxed">
+                Toon automatisch je 5-sterren reviews met schema mark-up direct in de Google zoekresultaten.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 space-y-2">
+              <span className="text-xs font-black text-stone-900 dark:text-white flex items-center gap-1.5">
+                <Zap className="w-4 h-4 text-emerald-500" />
+                <span>1-Klik Route &amp; Belknop</span>
+              </span>
+              <p className="text-xs text-stone-600 dark:text-slate-400 leading-relaxed">
+                Mobiele bezoekers in {city.name} navigeren direct met 1 klik naar je pand of bellen direct voor een afspraak.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* 3 POPULAR PACKAGES */}
         <section className="space-y-6">
           <div className="text-center space-y-2">
@@ -382,10 +437,10 @@ export default async function LocationCityPage({
                 </ul>
               </div>
               <Link
-                href="/#website-vragenlijst"
+                href={`/vragenlijst?stad=${city.id}&pakket=starter`}
                 className="w-full py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-stone-900 dark:text-white font-bold text-xs text-center transition-colors"
               >
-                Vraag Aan
+                Vraag Aan voor {city.name}
               </Link>
             </div>
 
@@ -405,10 +460,10 @@ export default async function LocationCityPage({
                 </ul>
               </div>
               <Link
-                href="/#website-vragenlijst"
+                href={`/vragenlijst?stad=${city.id}&pakket=business`}
                 className="w-full py-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs text-center transition-colors shadow-md"
               >
-                Vraag Aan
+                Vraag Aan voor {city.name}
               </Link>
             </div>
 
@@ -425,10 +480,10 @@ export default async function LocationCityPage({
                 </ul>
               </div>
               <Link
-                href="/#website-vragenlijst"
+                href={`/vragenlijst?stad=${city.id}&pakket=webshop`}
                 className="w-full py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-stone-900 dark:text-white font-bold text-xs text-center transition-colors"
               >
-                Vraag Aan
+                Vraag Aan voor {city.name}
               </Link>
             </div>
           </div>

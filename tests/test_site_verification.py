@@ -545,7 +545,7 @@ class TestSamenOnlineVerification(unittest.TestCase):
     def test_city_pages_link_to_dedicated_vragenlijst(self):
         page_file = WORKSPACE / "app" / "locaties" / "[stad]" / "page.tsx"
         content = page_file.read_text(encoding="utf-8")
-        self.assertIn('href="/vragenlijst"', content)
+        self.assertIn('/vragenlijst?stad=${city.id}', content)
 
     # 51. ZorgMondKliniek NZa Tariff & Dental Insurance Calculator and Printable Dossiers
     def test_zorg_mond_kliniek_tariff_calculator(self):
@@ -862,6 +862,20 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("params.get('spoed')", content)
         self.assertIn("params.get('pakket')", content)
         self.assertIn("params.get('addons')", content)
+
+    # 79. City Hubs Prefilled Questionnaire Routing and Google Maps 3-Pack Optimization
+    def test_city_hubs_prefilled_questionnaire_routing_and_maps_pack(self):
+        page_file = WORKSPACE / "app" / "locaties" / "[stad]" / "page.tsx"
+        self.assertTrue(page_file.exists(), "app/locaties/[stad]/page.tsx must exist")
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn("/vragenlijst?stad=${city.id}", content)
+        self.assertIn("&pakket=starter", content)
+        self.assertIn("&pakket=business", content)
+        self.assertIn("&pakket=webshop", content)
+        self.assertIn("Google Maps &amp; 3-Pack Optimalisatie", content)
+        self.assertIn("Radius Dekking: 25 km", content)
+        self.assertIn("city.lat", content)
+        self.assertIn("city.lng", content)
 
 if __name__ == "__main__":
     unittest.main()
