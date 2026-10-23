@@ -678,5 +678,16 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Print Licentie & Onboarding Dossier (PDF)", content)
         self.assertIn("Bereken Jouw Jaarlijkse HR & Tijdwinst Besparing", content)
 
+    # 64. StroomDelenSaaS City Props, Smart Grid Module, and Printable Energiepaspoort
+    def test_stroomdelen_saas_grid_and_energiepaspoort(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "StroomDelenSaaS.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("gridConnectSuccess", content)
+        self.assertIn("SD-GRID-2026-X", content)
+        self.assertIn("Print Netkoppeling & Energiepaspoort (PDF)", content)
+        self.assertIn("Activeer Jouw Netkoppeling in", content)
+
 if __name__ == "__main__":
     unittest.main()

@@ -19,6 +19,8 @@ import {
   Sparkles,
   HelpCircle,
   ChevronDown,
+  Printer,
+  CheckCircle2,
 } from 'lucide-react';
 
 export const StroomDelenSaaS: React.FC<TemplateProps> = ({
@@ -26,13 +28,26 @@ export const StroomDelenSaaS: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
 }) => {
+  const brandName = customBrandName?.trim() || 'StroomDelen CleanTech';
+  const city = customCity?.trim() || 'Eindhoven & Brainport';
+
   const [kwhMonthly, setKwhMonthly] = useState(550);
   const [batteryCapacity, setBatteryCapacity] = useState(10); // in kWh
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
   const [activeTab, setActiveTab] = useState<'p2p' | 'battery' | 'tarieven' | 'api'>('p2p');
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [gridConnectSuccess, setGridConnectSuccess] = useState(false);
+  const [gridData, setGridData] = useState({
+    name: '',
+    email: '',
+    address: '',
+    gridOperator: 'Enexis Netbeheer',
+    meterType: 'Slimme Meter DSMR 5 (SMR5)',
+  });
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -87,8 +102,8 @@ export const StroomDelenSaaS: React.FC<TemplateProps> = ({
             SD
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">StroomDelen CleanTech</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Eindhoven • P2P Energy Trading Platform</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandName}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{city} • P2P Energy Trading Platform</span>
           </div>
         </div>
 
@@ -465,6 +480,179 @@ export const StroomDelenSaaS: React.FC<TemplateProps> = ({
           })}
         </div>
       </section>
+
+      {/* Smart Grid Netkoppeling & Printable Energiepaspoort */}
+      <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-4xl mx-auto">
+        <div className="bg-white rounded-3xl border-2 border-stone-200 p-6 sm:p-10 shadow-lg">
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <span className="text-xs font-black uppercase tracking-widest text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full inline-block mb-2">
+              Slimme Meter Koppeling
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-900">Activeer Jouw Netkoppeling in {city}</h2>
+            <p className="text-xs sm:text-sm text-stone-500 font-medium mt-1">
+              Verbind je omvormer en slimme meter binnen 2 minuten met het decentrale wijknetwerk.
+            </p>
+          </div>
+
+          {gridConnectSuccess ? (
+            <div className="space-y-6">
+              <div className="text-center space-y-2">
+                <div className="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto border border-emerald-300">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-black text-stone-900">Netkoppeling Succesvol Geïnitieerd!</h3>
+                <p className="text-xs text-stone-600 max-w-md mx-auto">
+                  Welkom {gridData.name}! Je aansluiting op {gridData.address || city} is aangemeld bij {gridData.gridOperator}.
+                </p>
+              </div>
+
+              {/* Printable Smart Grid Energiepaspoort Card */}
+              <div className="p-6 rounded-2xl border-2 border-dashed border-stone-300 bg-stone-50 space-y-4">
+                <div className="flex flex-col sm:flex-row justify-between sm:items-center pb-3 border-b border-stone-200 gap-2">
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-emerald-700 block">
+                      Officieel Decentraal Energiepaspoort
+                    </span>
+                    <span className="text-base font-black text-stone-900">{brandName} Smart Grid</span>
+                  </div>
+                  <span className="text-xs font-mono font-bold bg-stone-900 text-emerald-400 px-2.5 py-1 rounded-lg self-start sm:self-auto">
+                    SD-GRID-2026-X
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                  <div>
+                    <span className="text-[10px] text-stone-500 block">Eigenaar</span>
+                    <span className="font-bold text-stone-900">{gridData.name}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-stone-500 block">Locatie</span>
+                    <span className="font-bold text-stone-900">{gridData.address || city}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-stone-500 block">Netbeheerder</span>
+                    <span className="font-bold text-emerald-700">{gridData.gridOperator}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-stone-500 block">Meetprotocol</span>
+                    <span className="font-bold text-stone-900">{gridData.meterType}</span>
+                  </div>
+                </div>
+
+                <div className="text-[11px] text-stone-500 pt-2 border-t border-stone-200 flex flex-wrap gap-y-1 gap-x-4">
+                  <span>✓ ACM & Energiewet 2026 Compliant</span>
+                  <span>✓ 15-minuten P2P saldering</span>
+                  <span>✓ Versleutelde P1-dongle dataoverdracht</span>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => window.print()}
+                    className={`flex-1 py-3 px-4 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md`}
+                  >
+                    <Printer className="w-4 h-4" />
+                    <span>Print Netkoppeling & Energiepaspoort (PDF)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setGridConnectSuccess(false)}
+                    className="px-4 py-3 rounded-xl border border-stone-300 text-stone-700 text-xs font-bold hover:bg-stone-100 cursor-pointer"
+                  >
+                    Nieuwe Aanvraag
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!gridData.name || !gridData.email) return;
+                setGridConnectSuccess(true);
+              }}
+              className="space-y-4"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-stone-700 block mb-1">Volledige Naam *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="bijv. Mark van der Meer"
+                    value={gridData.name}
+                    onChange={(e) => setGridData({ ...gridData, name: e.target.value })}
+                    className="w-full text-xs p-3 rounded-xl border border-stone-300 bg-white text-stone-900 focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-stone-700 block mb-1">E-mailadres *</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="mark@domein.nl"
+                    value={gridData.email}
+                    onChange={(e) => setGridData({ ...gridData, email: e.target.value })}
+                    className="w-full text-xs p-3 rounded-xl border border-stone-300 bg-white text-stone-900 focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-stone-700 block mb-1">Adres & Postcode</label>
+                  <input
+                    type="text"
+                    placeholder="bijv. Singel 42, Eindhoven"
+                    value={gridData.address}
+                    onChange={(e) => setGridData({ ...gridData, address: e.target.value })}
+                    className="w-full text-xs p-3 rounded-xl border border-stone-300 bg-white text-stone-900 focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-stone-700 block mb-1">Regionale Netbeheerder</label>
+                  <select
+                    value={gridData.gridOperator}
+                    onChange={(e) => setGridData({ ...gridData, gridOperator: e.target.value })}
+                    className="w-full text-xs p-3 rounded-xl border border-stone-300 bg-white text-stone-900 focus:outline-none focus:border-emerald-500"
+                  >
+                    <option value="Enexis Netbeheer">Enexis Netbeheer</option>
+                    <option value="Liander">Liander</option>
+                    <option value="Stedin">Stedin</option>
+                    <option value="Coteq Netbeheer">Coteq Netbeheer</option>
+                    <option value="Rendo">Rendo</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-stone-700 block mb-1">Type Slimme Meter</label>
+                  <select
+                    value={gridData.meterType}
+                    onChange={(e) => setGridData({ ...gridData, meterType: e.target.value })}
+                    className="w-full text-xs p-3 rounded-xl border border-stone-300 bg-white text-stone-900 focus:outline-none focus:border-emerald-500"
+                  >
+                    <option value="Slimme Meter DSMR 5 (SMR5)">Slimme Meter DSMR 5 (SMR5)</option>
+                    <option value="Slimme Meter DSMR 4 (SMR4)">Slimme Meter DSMR 4 (SMR4)</option>
+                    <option value="Directe SolarEdge / Enphase API">Directe SolarEdge / Enphase API</option>
+                    <option value="Tesla Powerwall Gateway">Tesla Powerwall Gateway</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className={`w-full py-3.5 px-6 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-sm cursor-pointer shadow-lg`}
+              >
+                Genereer Mijn Smart Grid Energiepaspoort →
+              </button>
+            </form>
+          )}
+        </div>
+      </section>
+
+      {/* Footer Demo Note */}
+      <footer className="py-8 px-4 text-center text-xs text-stone-500 border-t border-stone-200 bg-white">
+        <p>© 2026 {brandName} • CleanTech Energieplatform • {city} • Fictief Demo Concept</p>
+      </footer>
     </div>
   );
 };
