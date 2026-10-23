@@ -19,6 +19,11 @@ import {
   ArrowRight,
   Filter,
   CheckCircle2,
+  Printer,
+  Leaf,
+  QrCode,
+  FileText,
+  Ruler,
 } from 'lucide-react';
 
 interface ProductItem {
@@ -146,6 +151,19 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
   const [discountCode, setDiscountCode] = useState('');
   const [discountApplied, setDiscountApplied] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [showDossier, setShowDossier] = useState(false);
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
+  const [dossierToken, setDossierToken] = useState('ECO-ORD-2026-8842');
+
+  const openDossier = () => {
+    if (cart.length === 0) {
+      // Auto populate cart with Bestseller p1 if empty for seamless test
+      setCart([{ product: PRODUCTS[0], size: 'M', quantity: 1 }]);
+    }
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    setDossierToken(`ECO-ORD-2026-${rand}`);
+    setShowDossier(true);
+  };
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -198,6 +216,16 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
   const discountAmount = discountApplied ? subtotal * 0.1 : 0;
   const totalPrice = Math.max(0, subtotal - discountAmount);
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const totalWaterSaved = cart.reduce((sum, item) => {
+    const litres = item.product.id === 'p2' ? 2800 : item.product.id === 'p1' ? 1400 : item.product.id === 'p5' ? 1600 : 800;
+    return sum + (litres * item.quantity);
+  }, 0);
+
+  const totalCo2Saved = cart.reduce((sum, item) => {
+    const co2 = item.product.id === 'p1' ? 1.8 : item.product.id === 'p5' ? 2.1 : item.product.id === 'p2' ? 3.4 : 1.2;
+    return sum + (co2 * item.quantity);
+  }, 0);
 
   return (
     <div className="min-h-full bg-stone-50 text-stone-900 font-sans relative selection:bg-orange-500 selection:text-white">
@@ -471,21 +499,31 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
                     <p className="text-xs text-stone-500 font-medium mb-3">{product.tag}</p>
 
                     {/* Size Selector */}
-                    <div className="flex items-center gap-1.5 mb-4">
-                      <span className="text-[10px] font-black text-stone-400 uppercase tracking-wider mr-1">Maat:</span>
-                      {product.sizes.map((size) => (
-                        <button
-                          key={size}
-                          onClick={() => setSelectedSize({ ...selectedSize, [product.id]: size })}
-                          className={`min-w-7 h-7 px-2 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
-                            activeSize === size
-                              ? `${theme.primary} text-white border-transparent shadow-xs scale-105`
-                              : 'border-stone-200 text-stone-700 hover:bg-stone-50'
-                          }`}
-                        >
-                          {size}
-                        </button>
-                      ))}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="text-[10px] font-black text-stone-400 uppercase tracking-wider mr-1">Maat:</span>
+                        {product.sizes.map((size) => (
+                          <button
+                            key={size}
+                            onClick={() => setSelectedSize({ ...selectedSize, [product.id]: size })}
+                            className={`min-w-7 h-7 px-2 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                              activeSize === size
+                                ? `${theme.primary} text-white border-transparent shadow-xs scale-105`
+                                : 'border-stone-200 text-stone-700 hover:bg-stone-50'
+                            }`}
+                          >
+                            {size}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        onClick={() => setShowSizeGuide(true)}
+                        className="text-[11px] font-bold text-stone-500 hover:text-stone-900 underline flex items-center gap-1 cursor-pointer"
+                        title="Maattabel bekijken"
+                      >
+                        <Ruler className="w-3 h-3 text-stone-400" />
+                        <span className="hidden sm:inline">Maattabel</span>
+                      </button>
                     </div>
                   </div>
 
@@ -683,6 +721,26 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
                 </div>
               )}
 
+              {/* Eco Impact summary widget in cart */}
+              {cart.length > 0 && (
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 space-y-1">
+                  <div className="flex items-center justify-between text-[11px] font-bold text-emerald-950">
+                    <span className="flex items-center gap-1.5">
+                      <Leaf className="w-3.5 h-3.5 text-emerald-600" />
+                      CO₂ Besparing:
+                    </span>
+                    <span className="text-emerald-700 font-extrabold">{totalCo2Saved.toFixed(1)} kg CO₂</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] font-bold text-emerald-950">
+                    <span className="flex items-center gap-1.5">
+                      <RefreshCw className="w-3.5 h-3.5 text-emerald-600" />
+                      Waterbesparing:
+                    </span>
+                    <span className="text-emerald-700 font-extrabold">{totalWaterSaved.toLocaleString('nl-NL')} L</span>
+                  </div>
+                </div>
+              )}
+
               <div className="flex justify-between text-base font-black text-stone-900">
                 <span>Totaalbedrag:</span>
                 <span>€{totalPrice.toFixed(2)}</span>
@@ -703,12 +761,207 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
                 <ArrowRight className="w-4 h-4" />
               </button>
 
+              <button
+                type="button"
+                onClick={openDossier}
+                className="w-full py-2.5 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-800 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer transition-colors"
+              >
+                <Printer className="w-4 h-4 text-stone-600" />
+                <span>Print Pakbon & Retourlabel</span>
+              </button>
+
               <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-stone-500 pt-1">
                 <span>💳 iDEAL & Bancontact</span>
                 <span>•</span>
                 <span>📦 PostNL</span>
                 <span>•</span>
                 <span>🔒 SSL Beveiligd</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Printable Pakbon & Retourlabel Modal */}
+      {showDossier && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-stone-200 relative my-8">
+            <button
+              onClick={() => setShowDossier(false)}
+              className="absolute top-5 right-5 p-2 rounded-full hover:bg-stone-100 text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Print Container */}
+            <div id="printable-pakbon" className="space-y-6">
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black tracking-wider uppercase">
+                      GOTS & FairWear Geverifieerd
+                    </span>
+                    <span className="text-[11px] font-bold text-stone-500">PostNL Groen</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                    {brandTitle} • Officiële Pakbon
+                  </h3>
+                  <p className="text-xs text-stone-500 font-medium">
+                    Duurzame Logistieke Hub {cityName} • Ref: <span className="font-mono font-bold text-stone-800">{dossierToken}</span>
+                  </p>
+                </div>
+                <div className="text-right sm:text-right">
+                  <div className="inline-block p-2 bg-stone-50 border border-stone-200 rounded-xl text-center">
+                    <QrCode className="w-10 h-10 mx-auto text-stone-700" />
+                    <span className="text-[9px] font-mono text-stone-500 block mt-0.5">{dossierToken}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Items Table */}
+              <div className="border border-stone-200 rounded-2xl overflow-hidden">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="bg-stone-100/70 border-b border-stone-200 text-stone-600 font-black">
+                      <th className="py-2.5 px-4">Artikel</th>
+                      <th className="py-2.5 px-3">Maat</th>
+                      <th className="py-2.5 px-3 text-center">Aantal</th>
+                      <th className="py-2.5 px-4 text-right">Prijs</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-stone-100">
+                    {cart.map((item, idx) => (
+                      <tr key={idx} className="font-medium text-stone-800">
+                        <td className="py-2.5 px-4">
+                          <span className="font-bold text-stone-900 block">{item.product.name}</span>
+                          <span className="text-[10px] text-stone-500">{item.product.tag}</span>
+                        </td>
+                        <td className="py-2.5 px-3 font-bold">{item.size}</td>
+                        <td className="py-2.5 px-3 text-center font-bold">{item.quantity}</td>
+                        <td className="py-2.5 px-4 text-right font-black">
+                          €{(item.product.price * item.quantity).toFixed(2)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Totals & Eco Impact Details */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 space-y-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+                    <Leaf className="w-3.5 h-3.5 text-emerald-600" />
+                    Milieu-impact van deze zending
+                  </span>
+                  <div className="text-xs font-bold text-emerald-950 space-y-1">
+                    <p>• CO₂-besparing: <span className="font-extrabold text-emerald-700">{totalCo2Saved.toFixed(1)} kg CO₂</span></p>
+                    <p>• Waterbesparing: <span className="font-extrabold text-emerald-700">{totalWaterSaved.toLocaleString('nl-NL')} liter water</span></p>
+                    <p>• Verpakking: 100% gerecycled karton, plasticvrij</p>
+                  </div>
+                </div>
+
+                <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 flex flex-col justify-between">
+                  <div className="space-y-1 text-xs">
+                    <div className="flex justify-between text-stone-600 font-medium">
+                      <span>Subtotaal:</span>
+                      <span className="font-bold">€{subtotal.toFixed(2)}</span>
+                    </div>
+                    {discountApplied && (
+                      <div className="flex justify-between text-emerald-700 font-bold">
+                        <span>Korting (DEMO10):</span>
+                        <span>-€{discountAmount.toFixed(2)}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between text-stone-600 font-medium">
+                      <span>Verzending (Hub {cityName}):</span>
+                      <span className="font-bold text-emerald-700">Gratis (Fietskoerier)</span>
+                    </div>
+                  </div>
+                  <div className="border-t border-stone-200 pt-2 mt-2 flex justify-between font-black text-sm text-stone-900">
+                    <span>Eindtotaal:</span>
+                    <span>€{totalPrice.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Return Policy & Voucher barcode */}
+              <div className="p-4 bg-stone-100/60 rounded-2xl border border-stone-200 text-[11px] text-stone-600 space-y-1">
+                <span className="font-bold text-stone-800 block">30 Dagen Kosteloos Retourneren in {cityName} & Regio:</span>
+                <p>
+                  Past een artikel niet? Plak deze retourstrook op de originele doos en lever hem gratis in bij een PostNL of DHL punt.
+                  Bovendien ontvang je bij inlevering van afgedragen kleding €10 circulair tegoed voor je volgende aankoop.
+                </p>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-col sm:flex-row items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowDossier(false)}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-stone-300 text-stone-700 font-bold text-xs hover:bg-stone-100 cursor-pointer"
+                >
+                  Sluiten
+                </button>
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className={`w-full sm:w-auto px-6 py-2.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-2 cursor-pointer`}
+                >
+                  <Printer className="w-4 h-4" />
+                  <span>Print Pakbon & Retourlabel</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Size Guide Modal */}
+      {showSizeGuide && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-stone-200 relative">
+            <button
+              onClick={() => setShowSizeGuide(false)}
+              className="absolute top-5 right-5 p-2 rounded-full hover:bg-stone-100 text-stone-400 hover:text-stone-700 cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Ruler className={`w-5 h-5 ${theme.textPrimary}`} />
+                <h3 className="text-xl font-black text-stone-900">Maattabel & Duurzaam Pasvormadvies</h3>
+              </div>
+              <p className="text-xs text-stone-600 font-medium leading-relaxed">
+                Onze kledingstukken zijn voorgekrompen en gemaakt van 100% gecertificeerd biologisch katoen of linnen. Kies je gebruikelijke maat voor een relaxed, tijdloos silhouet.
+              </p>
+              <div className="border border-stone-200 rounded-xl overflow-hidden text-xs">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-stone-100 font-bold text-stone-700">
+                      <th className="p-2.5">Maat</th>
+                      <th className="p-2.5">Borstkas (cm)</th>
+                      <th className="p-2.5">Taille (cm)</th>
+                      <th className="p-2.5">Heup (cm)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-stone-100 text-stone-600">
+                    <tr><td className="p-2.5 font-bold">XS</td><td className="p-2.5">84 - 88</td><td className="p-2.5">68 - 72</td><td className="p-2.5">88 - 92</td></tr>
+                    <tr><td className="p-2.5 font-bold">S</td><td className="p-2.5">89 - 94</td><td className="p-2.5">73 - 78</td><td className="p-2.5">93 - 98</td></tr>
+                    <tr><td className="p-2.5 font-bold">M</td><td className="p-2.5">95 - 101</td><td className="p-2.5">79 - 85</td><td className="p-2.5">99 - 104</td></tr>
+                    <tr><td className="p-2.5 font-bold">L</td><td className="p-2.5">102 - 108</td><td className="p-2.5">86 - 92</td><td className="p-2.5">105 - 110</td></tr>
+                    <tr><td className="p-2.5 font-bold">XL</td><td className="p-2.5">109 - 116</td><td className="p-2.5">93 - 100</td><td className="p-2.5">111 - 118</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="pt-2 flex justify-end">
+                <button
+                  onClick={() => setShowSizeGuide(false)}
+                  className={`px-5 py-2 rounded-xl ${theme.primary} text-white font-bold text-xs cursor-pointer`}
+                >
+                  Begrepen
+                </button>
               </div>
             </div>
           </div>

@@ -753,5 +753,17 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Print Bezichtigingsbewijs (PDF)", content)
         self.assertIn("NVM & VastgoedPRO", content)
 
+    # 71. DuurzaamKledingShop Printable Pakbon & Eco Impact Calculator
+    def test_duurzaam_kleding_shop_pakbon_and_eco_impact(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "DuurzaamKledingShop.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("ECO-ORD-2026-", content)
+        self.assertIn("Print Pakbon & Retourlabel", content)
+        self.assertIn("totalCo2Saved", content)
+        self.assertIn("totalWaterSaved", content)
+        self.assertIn("Maattabel & Duurzaam Pasvormadvies", content)
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+
 if __name__ == "__main__":
     unittest.main()
