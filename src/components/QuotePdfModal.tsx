@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { X, Printer, Download, CheckCircle2, ShieldCheck, Heart } from 'lucide-react';
 import { Language } from '../types/company';
 
@@ -33,6 +33,15 @@ export const QuotePdfModal: React.FC<QuotePdfModalProps> = ({
   quoteData,
 }) => {
   const printAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -96,6 +105,9 @@ export const QuotePdfModal: React.FC<QuotePdfModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-200 cursor-pointer overflow-y-auto print:static print:p-0 print:bg-transparent print:block print:z-auto printable-modal-root"
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Offerte en Specificatie Document"
         onClick={(e) => e.stopPropagation()}
         className="bg-white w-full max-w-3xl rounded-3xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col my-auto cursor-default print:border-none print:shadow-none print:rounded-none print:w-full print:max-w-none print:max-h-none print:overflow-visible printable-modal-card"
       >

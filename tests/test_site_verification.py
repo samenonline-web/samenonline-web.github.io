@@ -362,5 +362,19 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("localFaqs:", data_content)
         self.assertIn("review:", data_content)
 
+    # 33. WCAG Modal Accessibility & Keyboard Escape Handlers
+    def test_modal_wcag_accessibility_attributes(self):
+        pdf_modal = WORKSPACE / "src" / "components" / "QuotePdfModal.tsx"
+        pdf_content = pdf_modal.read_text(encoding="utf-8")
+        self.assertIn('role="dialog"', pdf_content)
+        self.assertIn('aria-modal="true"', pdf_content)
+        self.assertIn("e.key === 'Escape'", pdf_content)
+
+        ideal_modal = WORKSPACE / "src" / "components" / "IdealSimulatorModal.tsx"
+        ideal_content = ideal_modal.read_text(encoding="utf-8")
+        self.assertIn('role="dialog"', ideal_content)
+        self.assertIn('aria-modal="true"', ideal_content)
+        self.assertIn("e.key === 'Escape'", ideal_content)
+
 if __name__ == "__main__":
     unittest.main()

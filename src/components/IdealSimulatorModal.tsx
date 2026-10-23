@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   CheckCircle2, 
@@ -44,6 +44,15 @@ export const IdealSimulatorModal: React.FC<IdealSimulatorModalProps> = ({
   const [method, setMethod] = useState<'bank' | 'qr'>('bank');
   const [step, setStep] = useState<'selection' | 'authenticating' | 'success'>('selection');
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleSelectBank = (bankId: string) => {
@@ -67,6 +76,9 @@ export const IdealSimulatorModal: React.FC<IdealSimulatorModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-200 cursor-pointer"
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="iDEAL 2.0 Betaal Simulator"
         className="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-stone-200 dark:border-slate-800 flex flex-col cursor-default animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
