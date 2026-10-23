@@ -666,5 +666,17 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Print Intakebon (PDF)", content)
         self.assertIn("Tattoo Richtprijs & Sessieduur Rekenmodule", content)
 
+    # 63. PlanBasisHRSaaS HR ROI & Efficiency Calculator and Printable Trial Dossier
+    def test_planbasis_hr_saas_calculator_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "PlanBasisHRSaaS.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("annualManualPlanningsCost", content)
+        self.assertIn("netAnnualSavings", content)
+        self.assertIn("plannerHourlyRate", content)
+        self.assertIn("planningHoursPerWeek", content)
+        self.assertIn("PB-TRIAL-2026-X", content)
+        self.assertIn("Print Licentie & Onboarding Dossier (PDF)", content)
+        self.assertIn("Bereken Jouw Jaarlijkse HR & Tijdwinst Besparing", content)
+
 if __name__ == "__main__":
     unittest.main()

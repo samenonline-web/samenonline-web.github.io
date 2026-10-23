@@ -20,6 +20,11 @@ import {
   Phone,
   Mail,
   Globe,
+  Printer,
+  Calculator,
+  FileText,
+  Building2,
+  CheckCircle2,
 } from 'lucide-react';
 
 export const PlanBasisHRSaaS: React.FC<TemplateProps> = ({
@@ -36,6 +41,16 @@ export const PlanBasisHRSaaS: React.FC<TemplateProps> = ({
   const [teamSize, setTeamSize] = useState(12);
   const [activePlan, setActivePlan] = useState<'starter' | 'business' | 'enterprise'>('business');
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [plannerHourlyRate, setPlannerHourlyRate] = useState<number>(38);
+  const [planningHoursPerWeek, setPlanningHoursPerWeek] = useState<number>(5);
+  const [trialSuccess, setTrialSuccess] = useState(false);
+  const [trialData, setTrialData] = useState({
+    companyName: '',
+    contactName: '',
+    email: '',
+    currentPayroll: 'Exact Online',
+  });
+
   const [rosterWeek] = useState([
     { name: 'Emma v.d. Berg', role: 'Klantenservice', days: [true, true, false, true, true, false, false], hours: 32 },
     { name: 'Tom Jansen', role: 'Verkoop', days: [true, false, true, true, true, false, false], hours: 36 },
@@ -51,6 +66,15 @@ export const PlanBasisHRSaaS: React.FC<TemplateProps> = ({
   };
 
   const getPrice = (base: number) => billingCycle === 'yearly' ? Math.round(base * (1 - yearlyDiscount)) : base;
+
+  // HR ROI & Efficiency Calculations
+  const annualManualPlanningsCost = Math.round(planningHoursPerWeek * plannerHourlyRate * 52);
+  const annualSavedHours = Math.round(planningHoursPerWeek * 52 * 0.75);
+  const annualGrossSavings = Math.round(annualManualPlanningsCost * 0.75);
+  const currentPlanMonthlyPrice = teamSize <= 10 ? getPrice(29) : teamSize <= 50 ? getPrice(59) : getPrice(99);
+  const annualSaaSCost = currentPlanMonthlyPrice * 12;
+  const netAnnualSavings = Math.max(0, annualGrossSavings - annualSaaSCost);
+  const paybackMonths = annualGrossSavings > 0 ? (annualSaaSCost / (annualGrossSavings / 12)).toFixed(1) : '0';
 
   const integrations = ['Exact Online', 'AFAS', 'Nmbrs', 'Unit4', 'Slack', 'Teams', 'Google Cal', 'Outlook'];
 
@@ -236,9 +260,94 @@ export const PlanBasisHRSaaS: React.FC<TemplateProps> = ({
                     ))}
                   </tbody>
                 </table>
-                <button onClick={onRequestQuote} className="mt-4 text-xs font-black text-violet-600 hover:text-violet-700 flex items-center gap-1">
+                <button onClick={onRequestQuote} className="mt-4 text-xs font-black text-violet-600 hover:text-violet-700 flex items-center gap-1 cursor-pointer">
                   Volledig dashboard openen <ArrowRight className="w-3 h-3" />
                 </button>
+              </div>
+            </div>
+          </div>
+
+          {/* HR ROI & Efficiency Calculator */}
+          <div className={`mt-12 ${bgCard} border rounded-3xl p-6 sm:p-8 shadow-xl`}>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Calculator className="w-5 h-5 text-violet-600" />
+                  <h3 className={`text-xl font-black ${textBase}`}>Bereken Jouw Jaarlijkse HR & Tijdwinst Besparing</h3>
+                </div>
+                <p className={`text-xs ${textMuted}`}>
+                  Zie direct hoeveel planningstijd en loonkosten {brandName} bespaart ten opzichte van Excel & WhatsApp in {city}.
+                </p>
+              </div>
+
+              <div className="text-left sm:text-right bg-violet-50 dark:bg-violet-950/40 border border-violet-200 dark:border-violet-800/60 p-4 rounded-2xl">
+                <span className="text-[10px] font-bold text-violet-600 dark:text-violet-400 uppercase tracking-widest block">Netto Jaarlijkse Besparing:</span>
+                <span className="text-2xl sm:text-3xl font-black text-violet-700 dark:text-violet-300">
+                  €{netAnnualSavings.toLocaleString('nl-NL')}
+                </span>
+                <span className={`text-[10px] ${textMuted} block mt-0.5 font-bold`}>
+                  ⏱️ Terugverdientijd: {paybackMonths} mnd (ROI ~{annualSaaSCost > 0 ? Math.round((netAnnualSavings / annualSaaSCost) * 100) : 0}%)
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+              <div>
+                <label className={`text-xs font-bold ${textBase} flex justify-between mb-2`}>
+                  <span>Gemiddeld uurloon planner / manager:</span>
+                  <span className="text-violet-600 font-black">€{plannerHourlyRate} / uur</span>
+                </label>
+                <input
+                  type="range"
+                  min={25}
+                  max={75}
+                  step={1}
+                  value={plannerHourlyRate}
+                  onChange={(e) => setPlannerHourlyRate(+e.target.value)}
+                  className="w-full accent-violet-600 cursor-pointer"
+                />
+                <span className={`text-[10px] ${textMuted} block mt-1`}>
+                  Inclusief werkgeverslasten volgens CBS norm 2026.
+                </span>
+              </div>
+
+              <div>
+                <label className={`text-xs font-bold ${textBase} flex justify-between mb-2`}>
+                  <span>Handmatige planning & wijzigingen per week:</span>
+                  <span className="text-violet-600 font-black">{planningHoursPerWeek} uur / week</span>
+                </label>
+                <input
+                  type="range"
+                  min={1}
+                  max={20}
+                  step={1}
+                  value={planningHoursPerWeek}
+                  onChange={(e) => setPlanningHoursPerWeek(+e.target.value)}
+                  className="w-full accent-violet-600 cursor-pointer"
+                />
+                <span className={`text-[10px] ${textMuted} block mt-1`}>
+                  Gemiddeld besteedt een MKB-ondernemer 5 tot 8 uur/week aan ad-hoc diensten ruilen en roosteren.
+                </span>
+              </div>
+            </div>
+
+            {/* ROI Badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+              <div className={`p-3 rounded-xl border ${darkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
+                <span className={`text-[10px] font-bold ${textMuted} block`}>Bespaarde Uren/Jaar</span>
+                <span className={`text-lg font-black ${textBase}`}>{annualSavedHours} uur</span>
+              </div>
+              <div className={`p-3 rounded-xl border ${darkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
+                <span className={`text-[10px] font-bold ${textMuted} block`}>Bruto Tijdwinst</span>
+                <span className="text-lg font-black text-emerald-600 dark:text-emerald-400">€{annualGrossSavings.toLocaleString('nl-NL')}</span>
+              </div>
+              <div className={`p-3 rounded-xl border ${darkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
+                <span className={`text-[10px] font-bold ${textMuted} block`}>PlanBasis Licentie</span>
+                <span className={`text-lg font-black ${textBase}`}>€{annualSaaSCost.toLocaleString('nl-NL')}/jr</span>
+              </div>
+              <div className={`p-3 rounded-xl border ${darkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
+                <span className={`text-[10px] font-bold ${textMuted} block`}>Tijdwinst Effect</span>
+                <span className="text-lg font-black text-violet-600 dark:text-violet-400">−75% planningstijd</span>
               </div>
             </div>
           </div>
@@ -311,6 +420,163 @@ export const PlanBasisHRSaaS: React.FC<TemplateProps> = ({
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* 14-Dagen Proeflicentie & Onboarding Dossier */}
+      <section className={`py-16 ${darkMode ? 'bg-slate-900/60' : 'bg-slate-100/70'} border-y ${darkMode ? 'border-slate-800' : 'border-slate-200'}`}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8">
+            <span className={`text-xs font-black uppercase tracking-widest text-violet-600`}>Direct Starten</span>
+            <h2 className={`text-3xl font-black mt-1 ${textBase}`}>Vraag Jouw 14-Dagen Proeflicentie Aan</h2>
+            <p className={`text-xs ${textMuted} mt-2 max-w-lg mx-auto`}>
+              Ontvang direct een proeflicentie met onboarding-checklist en verwerkersovereenkomst voor {city}.
+            </p>
+          </div>
+
+          <div className={`${bgCard} border rounded-3xl p-6 sm:p-8 shadow-xl`}>
+            {trialSuccess ? (
+              <div className="space-y-6">
+                <div className="text-center space-y-2">
+                  <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 rounded-full flex items-center justify-center mx-auto border border-emerald-300 dark:border-emerald-700">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <h3 className={`text-xl font-black ${textBase}`}>Proeflicentie Geactiveerd!</h3>
+                  <p className={`text-xs ${textMuted} max-w-md mx-auto`}>
+                    Welkom {trialData.contactName}! Je testomgeving voor {trialData.companyName} is direct klaargezet met een koppeling voor {trialData.currentPayroll}.
+                  </p>
+                </div>
+
+                {/* Printable SaaS Trial Dossier Card */}
+                <div className={`p-6 rounded-2xl border-2 border-dashed ${darkMode ? 'border-slate-700 bg-slate-950' : 'border-slate-300 bg-slate-50'} space-y-4`}>
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center pb-3 border-b border-slate-200 dark:border-slate-800 gap-2">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-violet-600 block">
+                        Officiële SaaS Proeflicentie & Onboarding Dossier
+                      </span>
+                      <span className={`text-base font-black ${textBase}`}>{brandName} Cloud Suite</span>
+                    </div>
+                    <span className="text-xs font-mono font-bold bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300 px-2.5 py-1 rounded-lg self-start sm:self-auto">
+                      PB-TRIAL-2026-X
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                    <div>
+                      <span className={`text-[10px] ${textMuted} block`}>Bedrijf</span>
+                      <span className={`font-bold ${textBase}`}>{trialData.companyName}</span>
+                    </div>
+                    <div>
+                      <span className={`text-[10px] ${textMuted} block`}>Contactpersoon</span>
+                      <span className={`font-bold ${textBase}`}>{trialData.contactName}</span>
+                    </div>
+                    <div>
+                      <span className={`text-[10px] ${textMuted} block`}>Payroll Koppeling</span>
+                      <span className="font-bold text-violet-600">{trialData.currentPayroll}</span>
+                    </div>
+                    <div>
+                      <span className={`text-[10px] ${textMuted} block`}>Geldigheid</span>
+                      <span className="font-bold text-emerald-600">14 Dagen Onbeperkt</span>
+                    </div>
+                  </div>
+
+                  <div className={`text-[11px] ${textMuted} pt-2 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-y-1 gap-x-4`}>
+                    <span>✓ ISO 27001 Datacenter Amsterdam</span>
+                    <span>✓ AVG Verwerkersovereenkomst inbegrepen</span>
+                    <span>✓ Gratis telefonische onboarding in {city}</span>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => window.print()}
+                      className="flex-1 py-3 px-4 rounded-xl bg-violet-600 text-white font-black text-xs flex items-center justify-center gap-2 hover:bg-violet-700 cursor-pointer shadow-md"
+                    >
+                      <Printer className="w-4 h-4" />
+                      <span>Print Licentie & Onboarding Dossier (PDF)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setTrialSuccess(false)}
+                      className={`px-4 py-3 rounded-xl border text-xs font-bold ${darkMode ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-100'} cursor-pointer`}
+                    >
+                      Nieuwe Aanvraag
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!trialData.companyName || !trialData.contactName) return;
+                  setTrialSuccess(true);
+                }}
+                className="space-y-4"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={`text-xs font-bold ${textBase} block mb-1`}>Bedrijfsnaam *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="bijv. Jansen Logistiek B.V."
+                      value={trialData.companyName}
+                      onChange={(e) => setTrialData({ ...trialData, companyName: e.target.value })}
+                      className={`w-full text-xs p-3 rounded-xl border ${darkMode ? 'bg-slate-950 border-slate-700 text-white' : 'bg-white border-slate-300 text-slate-900'} focus:outline-none focus:border-violet-500`}
+                    />
+                  </div>
+                  <div>
+                    <label className={`text-xs font-bold ${textBase} block mb-1`}>Contactpersoon *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="bijv. Sandra de Jong"
+                      value={trialData.contactName}
+                      onChange={(e) => setTrialData({ ...trialData, contactName: e.target.value })}
+                      className={`w-full text-xs p-3 rounded-xl border ${darkMode ? 'bg-slate-950 border-slate-700 text-white' : 'bg-white border-slate-300 text-slate-900'} focus:outline-none focus:border-violet-500`}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={`text-xs font-bold ${textBase} block mb-1`}>Zakelijk E-mailadres *</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="sandra@bedrijf.nl"
+                      value={trialData.email}
+                      onChange={(e) => setTrialData({ ...trialData, email: e.target.value })}
+                      className={`w-full text-xs p-3 rounded-xl border ${darkMode ? 'bg-slate-950 border-slate-700 text-white' : 'bg-white border-slate-300 text-slate-900'} focus:outline-none focus:border-violet-500`}
+                    />
+                  </div>
+                  <div>
+                    <label className={`text-xs font-bold ${textBase} block mb-1`}>Huidige Payroll / Salarissoftware</label>
+                    <select
+                      value={trialData.currentPayroll}
+                      onChange={(e) => setTrialData({ ...trialData, currentPayroll: e.target.value })}
+                      className={`w-full text-xs p-3 rounded-xl border ${darkMode ? 'bg-slate-950 border-slate-700 text-white' : 'bg-white border-slate-300 text-slate-900'} focus:outline-none focus:border-violet-500`}
+                    >
+                      <option value="Exact Online">Exact Online</option>
+                      <option value="AFAS Software">AFAS Software</option>
+                      <option value="Nmbrs Payroll">Nmbrs Payroll</option>
+                      <option value="Unit4">Unit4</option>
+                      <option value="Loket.nl">Loket.nl</option>
+                      <option value="Excel / Handmatig">Excel / Handmatige planning</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 px-6 rounded-xl bg-violet-600 text-white font-black text-sm hover:bg-violet-700 transition-colors cursor-pointer shadow-lg"
+                >
+                  Activeer Direct Mijn 14 Dagen Proefomgeving →
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>
