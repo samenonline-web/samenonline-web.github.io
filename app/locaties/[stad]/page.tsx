@@ -99,6 +99,46 @@ export default async function LocationCityPage({
     ],
   };
 
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: (city.localFaqs || []).map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://samenonline-web.github.io',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Locaties',
+        item: 'https://samenonline-web.github.io/#locaties',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: `Webdesign ${city.name}`,
+        item: `https://samenonline-web.github.io/locaties/${city.id}`,
+      },
+    ],
+  };
+
+  const combinedJsonLd = [jsonLd, faqJsonLd, breadcrumbJsonLd];
+
   const otherCities = CITIES_DATA.filter((c) => c.id !== city.id);
 
   const getCityInitialTab = (cityId: string): DemoTabKey => {
@@ -123,10 +163,10 @@ export default async function LocationCityPage({
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-slate-950 text-stone-900 dark:text-stone-100 selection:bg-orange-500 selection:text-white">
-      {/* Schema.org Script */}
+      {/* Schema.org Script (LocalBusiness + FAQPage + BreadcrumbList) */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(combinedJsonLd) }}
       />
 
       {/* Header / Breadcrumb Bar */}

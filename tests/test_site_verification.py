@@ -376,5 +376,13 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn('aria-modal="true"', ideal_content)
         self.assertIn("e.key === 'Escape'", ideal_content)
 
+    # 34. FAQPage and BreadcrumbList Rich Snippets on City Pages
+    def test_city_pages_faq_and_breadcrumb_schema(self):
+        page_file = WORKSPACE / "app" / "locaties" / "[stad]" / "page.tsx"
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn("'@type': 'FAQPage'", content.replace('"', "'"))
+        self.assertIn("'@type': 'BreadcrumbList'", content.replace('"', "'"))
+        self.assertIn("combinedJsonLd", content)
+
 if __name__ == "__main__":
     unittest.main()
