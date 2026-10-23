@@ -275,5 +275,23 @@ class TestSamenOnlineVerification(unittest.TestCase):
         icon_file = WORKSPACE / "app" / "icon.svg"
         self.assertTrue(icon_file.exists(), "app/icon.svg must exist for browser tabs and mobile bookmarking")
 
+    # 28. Website Questionnaire & Copilot Intake Flow
+    def test_website_questionnaire_and_copilot_intake(self):
+        q_file = WORKSPACE / "src" / "components" / "WebsiteQuestionnaire.tsx"
+        self.assertTrue(q_file.exists(), "WebsiteQuestionnaire.tsx must exist")
+        q_content = q_file.read_text(encoding="utf-8")
+        self.assertIn("WebsiteQuestionnaire", q_content)
+        self.assertIn("Vind Jouw Ideale Website in 5 Vragen", q_content)
+        self.assertIn("website-vragenlijst", q_content)
+
+        page_file = WORKSPACE / "app" / "page.tsx"
+        page_content = page_file.read_text(encoding="utf-8")
+        self.assertIn("<WebsiteQuestionnaire", page_content)
+
+        copilot_file = WORKSPACE / "src" / "components" / "WebsiteCopilotWidget.tsx"
+        copilot_content = copilot_file.read_text(encoding="utf-8")
+        self.assertNotIn("Bespreken via WhatsApp met Kenan", copilot_content)
+        self.assertIn("Start Keuzehulp Vragenlijst", copilot_content)
+
 if __name__ == "__main__":
     unittest.main()

@@ -21,6 +21,7 @@ interface WebsiteCopilotWidgetProps {
     budget: string;
     notes: string;
   }) => void;
+  onOpenQuestionnaire?: () => void;
 }
 
 interface QuickChip {
@@ -47,7 +48,10 @@ const QUICK_CHIPS: QuickChip[] = [
   { id: '5', label: '🔑 Hoe zit het met eigendom?', query: 'eigendom licentie contract' },
 ];
 
-export default function WebsiteCopilotWidget({ onOpenRequestModal }: WebsiteCopilotWidgetProps) {
+export default function WebsiteCopilotWidget({
+  onOpenRequestModal,
+  onOpenQuestionnaire,
+}: WebsiteCopilotWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [inputQuery, setInputQuery] = useState('');
   const [activeAnswer, setActiveAnswer] = useState<CopilotAnswer | null>(null);
@@ -261,11 +265,22 @@ export default function WebsiteCopilotWidget({ onOpenRequestModal }: WebsiteCopi
                 {/* Actions */}
                 <div className="space-y-2">
                   <button
-                    onClick={() => handleWhatsAppClick(activeAnswer.whatsappPrefill)}
+                    onClick={() => {
+                      if (onOpenQuestionnaire) {
+                        onOpenQuestionnaire();
+                        setIsOpen(false);
+                      } else {
+                        const el = document.getElementById('website-vragenlijst');
+                        if (el) {
+                          el.scrollIntoView({ behavior: 'smooth' });
+                          setIsOpen(false);
+                        }
+                      }
+                    }}
                     className="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
                   >
-                    <MessageCircle className="w-4 h-4 fill-white" />
-                    <span>Bespreken via WhatsApp met Kenan</span>
+                    <HelpCircle className="w-4 h-4" />
+                    <span>Start Keuzehulp Vragenlijst (3 Vragen)</span>
                   </button>
 
                   {onOpenRequestModal && (

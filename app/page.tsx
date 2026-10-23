@@ -16,6 +16,7 @@ import { LocalSeoRankChecker } from '../src/components/LocalSeoRankChecker';
 import GoogleSnippetPreviewer from '../src/components/GoogleSnippetPreviewer';
 import LocalSeoCityHub from '../src/components/LocalSeoCityHub';
 import WebsiteCopilotWidget from '../src/components/WebsiteCopilotWidget';
+import { WebsiteQuestionnaire } from '../src/components/WebsiteQuestionnaire';
 import LostCustomerCalculator from '../src/components/LostCustomerCalculator';
 import ClientPortalSimulator from '../src/components/ClientPortalSimulator';
 import { LiveIdealCheckoutSimulator } from '../src/components/LiveIdealCheckoutSimulator';
@@ -744,6 +745,18 @@ export default function Home() {
             }
           />
 
+          {/* Interactive Website Intake Questionnaire (5 Vragen Keuzehulp) */}
+          <WebsiteQuestionnaire
+            lang={lang}
+            onOpenRequestModal={(customData) =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: customData?.templateTitle || 'Advies Website Keuzehulp',
+                budget: customData?.calculatedPrice ? `€${customData.calculatedPrice},- All-in` : 'Vanaf €195',
+                notes: customData?.notes || 'Aanvraag via Website Vragenlijst.',
+              })
+            }
+          />
+
           {/* Lost Customers & Omzetverlies Calculator */}
           <LostCustomerCalculator
             onOpenRedesignRequest={({ monthlyLoss, visitors, loadTime }) =>
@@ -949,6 +962,10 @@ export default function Home() {
         onOpenRequestModal={(data) =>
           handleOpenRequestModal(undefined, undefined, undefined, data)
         }
+        onOpenQuestionnaire={() => {
+          const el = document.getElementById('website-vragenlijst');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
       />
 
       {/* Floating WhatsApp Contact Widget */}
