@@ -430,5 +430,19 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("materialCost", content)
         self.assertIn("handlePrintQuote", content)
 
+    # 40. Expanded Kennisbank with 10 In-depth SEO Articles
+    def test_expanded_kennisbank_10_articles(self):
+        articles_file = WORKSPACE / "src" / "data" / "articles.ts"
+        content = articles_file.read_text(encoding="utf-8")
+        self.assertIn("google-bedrijfsprofiel-en-maps-optimalisatie", content)
+        self.assertIn("tco-vergelijking-wordpress-wix-vs-nextjs", content)
+        self.assertIn("conversie-optimalisatie-voor-dienstverleners", content)
+        self.assertIn("website-beveiliging-avg-gdpr-voor-ondernemers", content)
+        self.assertIn("kleurpsychologie-en-typografie-voor-websites", content)
+
+        # Count articles by slug occurrence
+        slug_count = content.count("slug: '")
+        self.assertEqual(slug_count, 10, f"Expected 10 articles, found {slug_count}")
+
 if __name__ == "__main__":
     unittest.main()
