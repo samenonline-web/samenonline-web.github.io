@@ -36,11 +36,11 @@ export const AuditReportPdfModal: React.FC<AuditReportPdfModalProps> = ({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-200 cursor-pointer overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-200 cursor-pointer overflow-y-auto print:static print:p-0 print:bg-transparent print:block print:z-auto printable-modal-root"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full max-w-3xl rounded-3xl shadow-2xl border-2 border-stone-200 overflow-hidden flex flex-col cursor-default max-h-[94vh]"
+        className="bg-white w-full max-w-3xl rounded-3xl shadow-2xl border-2 border-stone-200 overflow-hidden flex flex-col cursor-default max-h-[94vh] print:max-h-none print:w-full print:max-w-none print:shadow-none print:border-none print:rounded-none print:overflow-visible printable-modal-card"
       >
         {/* Modal Top Control Bar (Hidden in Print) */}
         <div className="bg-stone-900 text-white p-4 flex items-center justify-between print:hidden">

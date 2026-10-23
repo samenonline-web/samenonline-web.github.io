@@ -17,11 +17,13 @@ import { Language } from '../types/company';
 interface ClientChecklistSectionProps {
   lang: Language;
   onOpenRequestModal: () => void;
+  onOpenChecklistModal?: () => void;
 }
 
 export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
   lang,
   onOpenRequestModal,
+  onOpenChecklistModal,
 }) => {
   const [clientChecks, setClientChecks] = useState<Record<string, boolean>>({
     logo: true,
@@ -35,7 +37,11 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
   };
 
   const handlePrintGuide = () => {
-    window.print();
+    if (onOpenChecklistModal) {
+      onOpenChecklistModal();
+    } else {
+      window.print();
+    }
   };
 
   return (

@@ -319,8 +319,10 @@ export default function Home() {
           : 'bg-[#FAFAFA] text-slate-900'
       }`}
     >
-      {/* Top Navbar */}
-      <Navbar
+      {/* Interactive Application Screen Shell (Hidden during Print/PDF Generation to eliminate 31-page duplicate bug) */}
+      <div id="app-screen-content" className="print:hidden flex flex-col flex-1">
+        {/* Top Navbar */}
+        <Navbar
         lang={lang}
         onLanguageToggle={handleLanguageToggle}
         onOpenRequestModal={() => handleOpenRequestModal()}
@@ -770,6 +772,7 @@ export default function Home() {
           <ClientChecklistSection
             lang={lang}
             onOpenRequestModal={() => handleOpenRequestModal()}
+            onOpenChecklistModal={() => setIsChecklistModalOpen(true)}
           />
 
           {/* Free Copywriting Service Callout */}
@@ -888,6 +891,7 @@ export default function Home() {
 
       {/* Floating Section Dock & Dropdown Navigation */}
       <FloatingSectionNav lang={lang} totalTemplatesCount={templates.length} />
+      </div>
 
       {/* Template Details Modal */}
       <TemplateModal

@@ -697,3 +697,91 @@ html.dark .fixed .bg-white {
   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8) !important;
 }
 
+/* ==========================================================================
+   Print & PDF Export Engine
+   Isolates documents cleanly so print/PDF outputs are strictly 1-2 pages,
+   completely eliminating the 31-page duplicate website bug.
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 15mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 1. Hide the entire interactive website when printing a document */
+  #app-screen-content,
+  header,
+  nav,
+  footer,
+  aside,
+  .no-print,
+  [data-no-print],
+  #whatsapp-widget,
+  .mobile-sticky-bar,
+  .floating-section-nav {
+    display: none !important;
+  }
+
+  /* 2. Modal Overlay Neutralization */
+  .printable-modal-root {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    overflow: visible !important;
+    z-index: auto !important;
+  }
+
+  /* 3. Document Card Neutralization */
+  .printable-modal-card {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* 4. Body Content Expansion */
+  .printable-modal-body {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+
+  /* 5. Prevent item splitting across pages */
+  .print-avoid-break {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
+
+

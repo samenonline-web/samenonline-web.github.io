@@ -57,11 +57,11 @@ export const QuotePdfModal: React.FC<QuotePdfModalProps> = ({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-200 cursor-pointer overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-200 cursor-pointer overflow-y-auto print:static print:p-0 print:bg-transparent print:block print:z-auto printable-modal-root"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full max-w-3xl rounded-3xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col my-auto cursor-default print:border-none print:shadow-none print:rounded-none print:w-full print:max-w-none"
+        className="bg-white w-full max-w-3xl rounded-3xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col my-auto cursor-default print:border-none print:shadow-none print:rounded-none print:w-full print:max-w-none print:max-h-none print:overflow-visible printable-modal-card"
       >
         {/* Top Control Bar (Hidden when printing) */}
         <div className="bg-stone-900 px-6 py-4 text-white flex items-center justify-between print:hidden">
