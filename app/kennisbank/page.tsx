@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ARTICLES_DATA } from '../../src/data/articles';
+import { KennisbankFilterGrid } from '../../src/components/KennisbankFilterGrid';
 import { 
   BookOpen, 
   ArrowLeft, 
@@ -67,53 +68,9 @@ export default function KnowledgeBasePage() {
           </p>
         </section>
 
-        {/* ARTICLES GRID */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {ARTICLES_DATA.map((article) => (
-            <article
-              key={article.slug}
-              className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/90 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex flex-col justify-between group"
-            >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300">
-                    {article.category}
-                  </span>
-                  <span className="text-xs text-stone-500 dark:text-slate-400 flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{article.readTime}</span>
-                  </span>
-                </div>
-
-                <h2 className="text-lg font-black text-stone-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-snug">
-                  <Link href={`/kennisbank/${article.slug}`}>
-                    {article.title}
-                  </Link>
-                </h2>
-
-                <p className="text-xs text-stone-600 dark:text-slate-300 leading-relaxed font-medium line-clamp-3">
-                  {article.excerpt}
-                </p>
-
-                <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                  <span className="text-[10px] font-bold text-stone-400 block mb-1">Kerninzicht:</span>
-                  <p className="text-xs text-stone-800 dark:text-slate-200 font-semibold line-clamp-2">
-                    💡 {article.keyTakeaways[0]}
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-6">
-                <Link
-                  href={`/kennisbank/${article.slug}`}
-                  className="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-orange-50 hover:text-orange-600 dark:bg-slate-800 dark:hover:bg-slate-700 text-stone-900 dark:text-white text-xs font-bold transition-all flex items-center justify-between"
-                >
-                  <span>Lees Volledige Gids</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </article>
-          ))}
+        {/* INTERACTIVE ARTICLES SEARCH & FILTER GRID */}
+        <section>
+          <KennisbankFilterGrid articles={ARTICLES_DATA} />
         </section>
 
         {/* BOTTOM CTA */}

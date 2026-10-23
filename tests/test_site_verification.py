@@ -478,5 +478,17 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("website-vragenlijst", content)
         self.assertIn("Keuzehulp", content)
 
+    # 45. Interactive Kennisbank Search and Category Filter Component
+    def test_kennisbank_interactive_search_and_filter(self):
+        comp_file = WORKSPACE / "src" / "components" / "KennisbankFilterGrid.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("searchQuery", content)
+        self.assertIn("selectedCategory", content)
+        self.assertIn("filteredArticles", content)
+
+        page_file = WORKSPACE / "app" / "kennisbank" / "page.tsx"
+        page_content = page_file.read_text(encoding="utf-8")
+        self.assertIn("KennisbankFilterGrid", page_content)
+
 if __name__ == "__main__":
     unittest.main()
