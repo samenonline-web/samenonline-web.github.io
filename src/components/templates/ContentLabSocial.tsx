@@ -1,0 +1,393 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { TemplateProps } from '../../types/theme';
+import {
+  TrendingUp,
+  BarChart2,
+  Users,
+  Heart,
+  MessageCircle,
+  Share2,
+  Zap,
+  ArrowRight,
+  Star,
+  CheckCircle,
+  Play,
+  ArrowUpRight,
+  Target,
+  Sparkles,
+  Clock,
+  ChevronDown,
+} from 'lucide-react';
+
+// Minimal inline brand icons (not in this lucide-react version)
+const InstaIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+    <circle cx="12" cy="12" r="4.5"/>
+    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+  </svg>
+);
+const LinkedInIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+  </svg>
+);
+const YoutubeIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
+  </svg>
+);
+
+export const ContentLabSocial: React.FC<TemplateProps> = ({
+  theme,
+  isDarkMode,
+  onRequestQuote,
+  customBrandName,
+  customCity,
+}) => {
+  const brandName = customBrandName?.trim() || 'ContentLab';
+  const city = customCity?.trim() || 'Rotterdam';
+
+  const [activeCase, setActiveCase] = useState(0);
+  const [followerCount, setFollowerCount] = useState(12400);
+  const [activePlatform, setActivePlatform] = useState<'instagram' | 'linkedin' | 'tiktok' | 'youtube'>('instagram');
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  // Simulated live growth animation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFollowerCount((prev) => prev + Math.floor(Math.random() * 3 + 1));
+    }, 1800);
+    return () => clearInterval(interval);
+  }, []);
+
+  const darkMode = isDarkMode;
+  const bg = darkMode ? 'bg-zinc-950' : 'bg-white';
+  const bgCard = darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-slate-200';
+  const textBase = darkMode ? 'text-slate-100' : 'text-slate-900';
+  const textMuted = darkMode ? 'text-slate-400' : 'text-slate-500';
+
+  const caseStudies = [
+    {
+      client: 'FreshBrew Koffie', category: 'Instagram & TikTok',
+      before: { followers: '1.2K', reach: '3K/mnd', orders: '12/mnd' },
+      after: { followers: '28K', reach: '480K/mnd', orders: '340/mnd' },
+      duration: '6 maanden',
+      highlight: '+2.233% meer volgers',
+      color: 'from-amber-500 to-orange-500',
+    },
+    {
+      client: 'Rechtlijn Advocaten', category: 'LinkedIn',
+      before: { followers: '320', reach: '800/mnd', orders: '2 leads/mnd' },
+      after: { followers: '4.800', reach: '68K/mnd', orders: '31 leads/mnd' },
+      duration: '4 maanden',
+      highlight: '+1.400% meer bereik',
+      color: 'from-blue-600 to-indigo-600',
+    },
+    {
+      client: 'YogaFlow Studio', category: 'Instagram & Youtube',
+      before: { followers: '880', reach: '2.1K/mnd', orders: '6/mnd' },
+      after: { followers: '19.2K', reach: '220K/mnd', orders: '89/mnd' },
+      duration: '5 maanden',
+      highlight: '+2.082% meer bereik',
+      color: 'from-pink-500 to-purple-600',
+    },
+  ];
+
+  const platformPackages = {
+    instagram: {
+      icon: <InstaIcon className="w-5 h-5" />, label: 'Instagram', color: 'from-pink-500 to-purple-600',
+      services: ['12 posts/maand (Reels + Carousels)', 'Story strategie (5×/week)', 'Hashtag & SEO optimalisatie', 'Community management', 'Maandelijkse analytics report'],
+      price: 495,
+    },
+    linkedin: {
+      icon: <LinkedInIcon className="w-5 h-5" />, label: 'LinkedIn', color: 'from-blue-600 to-blue-700',
+      services: ['8 thought leadership posts/mnd', 'Persoonlijk profiel optimalisatie', 'Lead-generatie campagne', 'DM follow-up scripts', 'B2B content kalender'],
+      price: 695,
+    },
+    tiktok: {
+      icon: <Play className="w-5 h-5" />, label: 'TikTok', color: 'from-zinc-900 to-zinc-700',
+      services: ['12 video\'s/maand (scriptwriting + edit)', 'Trending sound & challenge monitoring', 'Virality growth hacking', 'FYP optimalisatie', 'Duet & reactie strategie'],
+      price: 595,
+    },
+    youtube: {
+      icon: <YoutubeIcon className="w-5 h-5" />, label: 'YouTube', color: 'from-red-600 to-rose-600',
+      services: ['4 lange videos/maand (full prod)', 'Shorts strategie (8×/mnd)', 'SEO-geoptimaliseerde titels & tags', 'Thumbnail A/B testing', 'Monetisatie advies'],
+      price: 895,
+    },
+  };
+
+  const currentPkg = platformPackages[activePlatform];
+
+  const faqs = [
+    { q: 'Hoelang duurt het voordat ik resultaten zie?', a: 'De meeste klanten zien significante groei binnen 60-90 dagen. Organische social media groei kost tijd maar levert duurzame resultaten op — wij zetten in op kwaliteitsvolgers die echt converteren.' },
+    { q: 'Maken jullie ook de content of alleen strategie?', a: 'Wij doen alles: van contentplanning, copywriting en grafisch ontwerp tot video-editing en publicatie. Jij hoeft nergens naar om te kijken tenzij je dat wilt.' },
+    { q: 'Moet ik een lang contract tekenen?', a: 'We werken met minimaal 3 maanden (zo kunnen we een echte groeicurve bouwen). Daarna maandelijks opzegbaar per de 1e van de maand.' },
+    { q: 'Kunnen jullie meerdere platforms tegelijk beheren?', a: 'Ja. We bieden multi-platform bundels met 20% korting. Veel klanten combineren Instagram + LinkedIn of TikTok + Instagram.' },
+  ];
+
+  return (
+    <div className={`min-h-full font-sans ${bg} ${textBase} selection:bg-pink-600 selection:text-white`}>
+
+      {/* Top bar */}
+      <div className="bg-gradient-to-r from-pink-600 via-rose-500 to-orange-500 text-white text-center text-xs font-black py-1.5 tracking-wide">
+        📈 Gratis social media audit: ontdek in 24 uur waar jouw groeikansen liggen →{' '}
+        <button onClick={onRequestQuote} className="underline hover:no-underline">Claim jouw audit</button>
+      </div>
+
+      {/* Nav */}
+      <nav className={`sticky top-0 z-40 border-b backdrop-blur-md px-4 sm:px-6 py-3 flex items-center justify-between ${darkMode ? 'bg-zinc-950/90 border-zinc-800' : 'bg-white/90 border-slate-100'}`}>
+        <div className="flex items-center gap-2.5">
+          <div className="bg-gradient-to-br from-pink-500 to-orange-500 text-white p-1.5 rounded-lg">
+            <TrendingUp className="w-4 h-4" />
+          </div>
+          <span className="font-black text-base">{brandName}</span>
+          <span className={`text-xs hidden sm:block ${textMuted}`}>Social Media Bureau</span>
+        </div>
+        <div className="hidden md:flex items-center gap-6 text-xs font-medium text-slate-500">
+          <a href="#resultaten" className="hover:text-pink-500 transition-colors">Resultaten</a>
+          <a href="#diensten" className="hover:text-pink-500 transition-colors">Diensten</a>
+          <a href="#werkwijze" className="hover:text-pink-500 transition-colors">Werkwijze</a>
+        </div>
+        <button onClick={onRequestQuote} className="bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black text-xs px-4 py-2 rounded-xl hover:from-pink-600 hover:to-orange-600 transition-all shadow-md">
+          Gratis Audit →
+        </button>
+      </nav>
+
+      {/* Hero */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-20 pb-16">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <div className="flex items-center gap-2 mb-6">
+              <Sparkles className="w-4 h-4 text-pink-500" />
+              <span className={`text-xs font-black uppercase tracking-widest ${textMuted}`}>Social Media Bureau · {city}</span>
+            </div>
+            <h1 className="text-5xl sm:text-6xl font-black leading-tight tracking-tighter mb-6">
+              Meer volgers.
+              <span className="block bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 bg-clip-text text-transparent">
+                Meer omzet.
+              </span>
+              Echt resultaat.
+            </h1>
+            <p className={`text-lg ${textMuted} mb-8 leading-relaxed`}>
+              {brandName} beheert Instagram, TikTok, LinkedIn en YouTube voor ambitieuze Nederlandse merken.
+              Wij zorgen voor groei — jij focust op je business.
+            </p>
+            <div className="flex flex-wrap gap-3 mb-8">
+              <button
+                onClick={onRequestQuote}
+                className="bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black px-8 py-4 rounded-xl hover:from-pink-600 hover:to-orange-600 transition-all shadow-lg flex items-center gap-2"
+              >
+                <Zap className="w-5 h-5" /> Gratis Social Audit
+              </button>
+              <button className={`flex items-center gap-2 font-bold px-6 py-4 rounded-xl border ${darkMode ? 'border-zinc-700 text-slate-300 hover:bg-zinc-800' : 'border-slate-200 text-slate-700 hover:bg-slate-50'} transition-colors`}>
+                <Play className="w-4 h-4 text-pink-500" /> Bekijk cases
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-4 text-xs font-medium text-slate-400">
+              <span className="flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-emerald-500" /> 75+ tevreden klanten</span>
+              <span className="flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-emerald-500" /> Gem. +320% bereikgroei</span>
+              <span className="flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-emerald-500" /> ROI-rapportage per maand</span>
+            </div>
+          </div>
+
+          {/* Live follower growth widget */}
+          <div className="space-y-4">
+            <div className={`${bgCard} border rounded-2xl p-5 shadow-lg`}>
+              <div className="flex items-center justify-between mb-3">
+                <div className={`text-xs font-black uppercase tracking-widest ${textMuted}`}>Live Groeisimulatie</div>
+                <div className="flex items-center gap-1.5 text-xs font-black text-emerald-500">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Live
+                </div>
+              </div>
+
+              {/* Simulated chart bars */}
+              <div className="flex items-end gap-1 h-24 mb-3">
+                {[45, 52, 48, 65, 71, 68, 80, 74, 88, 82, 95, 100].map((h, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 rounded-t-sm bg-gradient-to-t from-pink-500 to-orange-400 opacity-80 hover:opacity-100 transition-opacity"
+                    style={{ height: `${h}%` }}
+                  />
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-3xl font-black text-pink-500">{followerCount.toLocaleString('nl-NL')}</div>
+                  <div className={`text-xs ${textMuted}`}>Actieve volgers (simulatie)</div>
+                </div>
+                <div className="flex items-center gap-1 text-emerald-500 text-sm font-black">
+                  <TrendingUp className="w-4 h-4" /> +18.3%
+                </div>
+              </div>
+            </div>
+
+            {/* Platform mini-stats */}
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { platform: 'Instagram', reach: '480K', icon: <InstaIcon className="w-4 h-4" />, color: 'from-pink-500 to-purple-500' },
+                { platform: 'TikTok', reach: '1.2M', icon: <Play className="w-4 h-4" />, color: 'from-zinc-900 to-zinc-700' },
+                { platform: 'LinkedIn', reach: '68K', icon: <LinkedInIcon className="w-4 h-4" />, color: 'from-blue-600 to-blue-700' },
+                { platform: 'YouTube', reach: '220K', icon: <YoutubeIcon className="w-4 h-4" />, color: 'from-red-600 to-rose-500' },
+              ].map((p) => (
+                <div key={p.platform} className={`${bgCard} border rounded-xl p-3 flex items-center gap-3`}>
+                  <div className={`bg-gradient-to-br ${p.color} text-white p-2 rounded-lg`}>{p.icon}</div>
+                  <div>
+                    <div className={`text-xs font-bold ${textBase}`}>{p.platform}</div>
+                    <div className="text-xs text-emerald-500 font-black">{p.reach} bereik/mnd</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Case Studies */}
+      <section id="resultaten" className={`py-16 ${darkMode ? 'bg-zinc-900' : 'bg-slate-50'}`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10">
+            <span className={`text-xs font-black uppercase tracking-widest ${textMuted}`}>Bewezen resultaten</span>
+            <h2 className={`text-3xl font-black mt-1 ${textBase}`}>Klanten die wij lieten groeien</h2>
+          </div>
+
+          {/* Case tabs */}
+          <div className="flex gap-2 flex-wrap justify-center mb-8">
+            {caseStudies.map((c, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveCase(i)}
+                className={`text-xs font-black px-4 py-2 rounded-xl transition-all ${activeCase === i ? `bg-gradient-to-r ${c.color} text-white shadow-lg` : `${bgCard} border ${textMuted}`}`}
+              >
+                {c.client}
+              </button>
+            ))}
+          </div>
+
+          {(() => {
+            const c = caseStudies[activeCase];
+            return (
+              <div className={`${bgCard} border rounded-2xl overflow-hidden shadow-lg`}>
+                <div className={`bg-gradient-to-r ${c.color} p-6 text-white`}>
+                  <div className="flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                      <div className="text-xs font-black uppercase tracking-widest opacity-70 mb-1">{c.category}</div>
+                      <div className="text-2xl font-black">{c.client}</div>
+                      <div className="text-sm opacity-80 mt-1">in {c.duration}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-4xl font-black">{c.highlight.split(' ')[0]}</div>
+                      <div className="text-sm opacity-80">{c.highlight.split(' ').slice(1).join(' ')}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 grid md:grid-cols-3 gap-4">
+                  {(Object.keys(c.before) as (keyof typeof c.before)[]).map((metric) => (
+                    <div key={metric} className={`${darkMode ? 'bg-zinc-800' : 'bg-slate-50'} rounded-xl p-4`}>
+                      <div className={`text-xs font-black uppercase tracking-widest ${textMuted} mb-2 capitalize`}>{metric.replace('orders', 'Conversies')}</div>
+                      <div className="flex items-center gap-3">
+                        <div className={`text-sm font-medium ${textMuted} line-through`}>{c.before[metric]}</div>
+                        <ArrowRight className="w-4 h-4 text-pink-500" />
+                        <div className="text-lg font-black text-emerald-500">{c.after[metric]}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+      </section>
+
+      {/* Platform packages */}
+      <section id="diensten" className={`py-16 ${darkMode ? 'bg-zinc-950' : 'bg-white'}`}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8">
+            <span className={`text-xs font-black uppercase tracking-widest ${textMuted}`}>Diensten</span>
+            <h2 className={`text-3xl font-black mt-1 ${textBase}`}>Kies jouw platform</h2>
+          </div>
+
+          {/* Platform selector */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {(Object.entries(platformPackages) as [keyof typeof platformPackages, typeof platformPackages.instagram][]).map(([key, pkg]) => (
+              <button
+                key={key}
+                onClick={() => setActivePlatform(key)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black transition-all ${activePlatform === key ? `bg-gradient-to-r ${pkg.color} text-white shadow-lg` : `${bgCard} border ${textMuted} hover:border-slate-300`}`}
+              >
+                {pkg.icon} {pkg.label}
+              </button>
+            ))}
+          </div>
+
+          <div className={`${bgCard} border rounded-2xl overflow-hidden shadow-lg`}>
+            <div className={`bg-gradient-to-r ${currentPkg.color} p-6 text-white flex items-center justify-between`}>
+              <div className="flex items-center gap-3">
+                <div className="bg-white/20 p-2 rounded-xl">{currentPkg.icon}</div>
+                <div>
+                  <div className="text-xs font-black opacity-70 uppercase tracking-wider">{currentPkg.label} Pakket</div>
+                  <div className="text-2xl font-black">€{currentPkg.price}<span className="text-base font-medium opacity-70">/maand</span></div>
+                </div>
+              </div>
+              <button onClick={onRequestQuote} className="bg-white/20 hover:bg-white/30 font-black text-sm px-5 py-2.5 rounded-xl transition-colors flex items-center gap-2">
+                Aanvragen <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="p-6 grid sm:grid-cols-2 gap-3">
+              {currentPkg.services.map((s, i) => (
+                <div key={i} className="flex items-start gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span className={textBase}>{s}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className={`py-16 ${darkMode ? 'bg-zinc-900' : 'bg-slate-50'}`}>
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+          <h2 className={`text-3xl font-black ${textBase} mb-8 text-center`}>Veelgestelde vragen</h2>
+          <div className="space-y-3">
+            {faqs.map((faq, i) => (
+              <div key={i} className={`${bgCard} border rounded-xl overflow-hidden`}>
+                <button
+                  className={`w-full text-left flex items-center justify-between p-4 text-sm font-bold ${textBase}`}
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                >
+                  {faq.q}
+                  <ChevronDown className={`w-4 h-4 text-pink-500 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+                </button>
+                {openFaq === i && (
+                  <div className={`px-4 pb-4 text-sm ${textMuted}`}>{faq.a}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-gradient-to-br from-pink-600 via-rose-500 to-orange-500 text-white text-center">
+        <div className="max-w-2xl mx-auto px-4">
+          <Sparkles className="w-10 h-10 mx-auto mb-4 opacity-80" />
+          <h2 className="text-4xl font-black mb-4">Klaar om te groeien?</h2>
+          <p className="text-rose-100 text-lg mb-8">Ontvang binnen 24 uur een gratis audit van jouw huidige social media.</p>
+          <button onClick={onRequestQuote} className="bg-white text-pink-600 font-black px-10 py-4 rounded-2xl hover:bg-rose-50 transition-colors text-lg shadow-xl">
+            Gratis Audit Aanvragen →
+          </button>
+          <p className="text-rose-200 text-xs mt-4">Gevestigd in {city} · 75+ tevreden klanten · Geen lange contracten</p>
+        </div>
+      </section>
+
+      <footer className={`py-8 text-center text-xs border-t ${darkMode ? 'bg-zinc-950 border-zinc-800 text-zinc-600' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
+        <p>© 2026 {brandName} Social Media Bureau · {city} · <span className="text-pink-500 font-bold">Fictief Demo Concept</span></p>
+      </footer>
+    </div>
+  );
+};

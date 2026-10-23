@@ -22,6 +22,11 @@ import { AdvocatenKantoorJustitia } from './AdvocatenKantoorJustitia';
 import { DierenkliniekDeVennen } from './DierenkliniekDeVennen';
 import { MakelaardijVastgoed } from './MakelaardijVastgoed';
 import { InktEnNaaldStudio } from './InktEnNaaldStudio';
+import { KrachtLijnGym } from './KrachtLijnGym';
+import { LensVerhaalFotografie } from './LensVerhaalFotografie';
+import { PlanBasisHRSaaS } from './PlanBasisHRSaaS';
+import { MarktPleinPlatform } from './MarktPleinPlatform';
+import { ContentLabSocial } from './ContentLabSocial';
 
 interface TemplateRendererProps {
   templateId: string;
@@ -108,6 +113,16 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
         return <MakelaardijVastgoed {...templateProps} />;
       case 'inkt-en-naald-studio':
         return <InktEnNaaldStudio {...templateProps} />;
+      case 'krachtlijn-personal-training':
+        return <KrachtLijnGym {...templateProps} />;
+      case 'lensverhaal-fotografie':
+        return <LensVerhaalFotografie {...templateProps} />;
+      case 'planbasis-hr-saas':
+        return <PlanBasisHRSaaS {...templateProps} />;
+      case 'marktplein-platform':
+        return <MarktPleinPlatform {...templateProps} />;
+      case 'contentlab-social':
+        return <ContentLabSocial {...templateProps} />;
       default:
         return <GrachtenWebAgency {...templateProps} />;
     }
