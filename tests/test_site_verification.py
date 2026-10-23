@@ -490,5 +490,28 @@ class TestSamenOnlineVerification(unittest.TestCase):
         page_content = page_file.read_text(encoding="utf-8")
         self.assertIn("KennisbankFilterGrid", page_content)
 
+    # 46. Dedicated Website Vragenlijst / Keuzehulp Route & Structured Schema
+    def test_dedicated_vragenlijst_route_and_schema(self):
+        page_file = WORKSPACE / "app" / "vragenlijst" / "page.tsx"
+        self.assertTrue(page_file.exists(), "app/vragenlijst/page.tsx must exist")
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn("https://samenonline-web.github.io/vragenlijst", content)
+        self.assertIn("'@type': 'BreadcrumbList'", content.replace('"', "'"))
+        self.assertIn("'@type': 'FAQPage'", content.replace('"', "'"))
+
+        client_file = WORKSPACE / "src" / "components" / "VragenlijstPageClient.tsx"
+        self.assertTrue(client_file.exists(), "VragenlijstPageClient.tsx must exist")
+        client_content = client_file.read_text(encoding="utf-8")
+        self.assertIn("WebsiteQuestionnaire", client_content)
+        self.assertIn("RequestWebsiteModal", client_content)
+
+        sitemap_file = WORKSPACE / "app" / "sitemap.ts"
+        sitemap_content = sitemap_file.read_text(encoding="utf-8")
+        self.assertIn("${baseUrl}/vragenlijst", sitemap_content)
+
+        footer_file = WORKSPACE / "src" / "components" / "Footer.tsx"
+        footer_content = footer_file.read_text(encoding="utf-8")
+        self.assertIn('href="/vragenlijst"', footer_content)
+
 if __name__ == "__main__":
     unittest.main()

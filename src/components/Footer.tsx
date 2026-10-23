@@ -304,6 +304,14 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
               <li>
+                <Link
+                  href="/vragenlijst"
+                  className="hover:text-orange-400 dark:hover:text-blue-400 text-stone-400 dark:text-slate-300 transition-colors text-left font-bold"
+                >
+                  {lang === 'nl' ? 'Website Keuzehulp (Vragenlijst)' : 'Website Quiz & Advisor'}
+                </Link>
+              </li>
+              <li>
                 <button
                   type="button"
                   onClick={onOpenRequestModal}
@@ -320,6 +328,14 @@ export const Footer: React.FC<FooterProps> = ({
                 >
                   {lang === 'nl' ? 'Richtlijnen & Kwaliteit' : 'Guidelines & Standards'}
                 </button>
+              </li>
+              <li>
+                <Link
+                  href="/vragenlijst"
+                  className="hover:text-orange-400 dark:hover:text-blue-400 text-stone-400 dark:text-slate-300 transition-colors text-left font-bold"
+                >
+                  {lang === 'nl' ? 'Website Keuzehulp (Vragenlijst)' : 'Website Quiz & Advisor'}
+                </Link>
               </li>
               <li>
                 <button
