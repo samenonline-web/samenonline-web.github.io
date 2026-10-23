@@ -183,11 +183,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         f = WORKSPACE / "src" / "components" / "LocalSeoCityHub.tsx"
         self.assertTrue(f.exists(), "LocalSeoCityHub.tsx must exist")
         content = f.read_text(encoding="utf-8")
-        cities = ["Amsterdam", "Rotterdam", "Den Haag", "Utrecht", "Eindhoven", "Tilburg", "Groningen", "Breda", "Nijmegen", "Amersfoort", "Almere", "Arnhem"]
-        for c in cities:
-            self.assertIn(c, content, f"CityHub must contain {c}")
         self.assertIn("GeoCoordinates", content)
         self.assertIn("areaServed", content)
+
+        data_file = WORKSPACE / "src" / "data" / "cities.ts"
+        self.assertTrue(data_file.exists(), "src/data/cities.ts must exist")
+        data_content = data_file.read_text(encoding="utf-8")
+        cities = ["Amsterdam", "Rotterdam", "Den Haag", "Utrecht", "Eindhoven", "Tilburg", "Groningen", "Breda", "Nijmegen", "Amersfoort", "Almere", "Arnhem"]
+        for c in cities:
+            self.assertIn(c, data_content, f"cities.ts must contain {c}")
 
         page_file = WORKSPACE / "app" / "page.tsx"
         page_content = page_file.read_text(encoding="utf-8")
@@ -292,6 +296,22 @@ class TestSamenOnlineVerification(unittest.TestCase):
         copilot_content = copilot_file.read_text(encoding="utf-8")
         self.assertNotIn("Bespreken via WhatsApp met Kenan", copilot_content)
         self.assertIn("Start Keuzehulp Vragenlijst", copilot_content)
+
+    # 29. 12 Dedicated Static Location Routes & Sitemap Coverage
+    def test_location_city_pages_and_sitemap(self):
+        page_file = WORKSPACE / "app" / "locaties" / "[stad]" / "page.tsx"
+        self.assertTrue(page_file.exists(), "app/locaties/[stad]/page.tsx must exist")
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn("generateStaticParams", content)
+        self.assertIn("generateMetadata", content)
+        self.assertIn("CITIES_DATA", content)
+        self.assertIn("ProfessionalService", content)
+        self.assertIn("schema.org", content)
+
+        sitemap_file = WORKSPACE / "app" / "sitemap.ts"
+        sitemap_content = sitemap_file.read_text(encoding="utf-8")
+        self.assertIn("/locaties/", sitemap_content)
+        self.assertIn("CITIES_DATA", sitemap_content)
 
 if __name__ == "__main__":
     unittest.main()
