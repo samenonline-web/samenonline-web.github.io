@@ -421,5 +421,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("handleCheckoutSimulator", content)
         self.assertIn("Test iDEAL 2.0 Checkout Simulator", content)
 
+    # 39. BouwMeester Aannemer Calculator 2.0 with Quality Selector & Cost Split
+    def test_bouwmeester_calculator_cost_split(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "BouwMeesterAannemer.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("finishQuality", content)
+        self.assertIn("laborCost", content)
+        self.assertIn("materialCost", content)
+        self.assertIn("handlePrintQuote", content)
+
 if __name__ == "__main__":
     unittest.main()

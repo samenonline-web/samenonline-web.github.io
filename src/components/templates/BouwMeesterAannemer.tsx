@@ -64,9 +64,15 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
 }) => {
+  const brandTitle = customBrandName || 'BouwMeester Aannemers';
+  const cityName = customCity || 'Midden-Nederland';
+
   const [renovationType, setRenovationType] = useState<'uitbouw' | 'dakkapel' | 'badkamer' | 'totaal'>('uitbouw');
   const [squareMeters, setSquareMeters] = useState(25);
+  const [finishQuality, setFinishQuality] = useState<'standaard' | 'luxe'>('standaard');
   const [activeProject, setActiveProject] = useState(PROJECTS[0].id);
   const [showAfter, setShowAfter] = useState<Record<string, boolean>>({ b1: true, b2: true, b3: true });
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -84,10 +90,22 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
     totaal: 950,
   };
 
-  const calculatedCost = squareMeters * baseRates[renovationType];
+  const rawCost = squareMeters * baseRates[renovationType];
+  const qualityMultiplier = finishQuality === 'luxe' ? 1.18 : 1.0;
+  const calculatedCost = Math.round(rawCost * qualityMultiplier);
+
+  // Split calculations
+  const laborCost = Math.round(calculatedCost * 0.55);
+  const materialCost = Math.round(calculatedCost * 0.35);
+  const overheadCost = calculatedCost - laborCost - materialCost;
+
   const calculatedWeeks = Math.max(2, Math.round(squareMeters / 6));
 
   const currentProjectObj = PROJECTS.find((p) => p.id === activeProject) || PROJECTS[0];
+
+  const handlePrintQuote = () => {
+    window.print();
+  };
 
   return (
     <div className="min-h-full bg-stone-50 text-stone-900 font-sans relative selection:bg-orange-600 selection:text-white">
@@ -248,44 +266,93 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
                   <span>80 m²</span>
                 </div>
               </div>
+
+              {/* Quality & Material Selector */}
+              <div>
+                <label className="text-xs font-black text-stone-700 block mb-2">Afwerkingsniveau & Materiaalkeuze:</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => setFinishQuality('standaard')}
+                    className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                      finishQuality === 'standaard'
+                        ? 'border-orange-600 bg-orange-50/50 text-stone-900'
+                        : 'border-stone-200 bg-white text-stone-600 hover:border-stone-300'
+                    }`}
+                  >
+                    <div className="font-black text-xs">Standaard Bouwkwaliteit</div>
+                    <div className="text-[10px] text-stone-500 mt-0.5">HR++ glas, stucwerk sausklaar</div>
+                  </button>
+                  <button
+                    onClick={() => setFinishQuality('luxe')}
+                    className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                      finishQuality === 'luxe'
+                        ? 'border-orange-600 bg-orange-50/50 text-stone-900'
+                        : 'border-stone-200 bg-white text-stone-600 hover:border-stone-300'
+                    }`}
+                  >
+                    <div className="font-black text-xs">Luxe High-End (+18%)</div>
+                    <div className="text-[10px] text-stone-500 mt-0.5">Triple glas, vloerverwarming, maatwerk</div>
+                  </button>
+                </div>
+              </div>
             </div>
 
             {/* Price Output Card */}
             <div className={`lg:col-span-5 ${theme.bgLight} p-6 sm:p-8 rounded-3xl border-2 ${theme.borderLight} text-left flex flex-col justify-between`}>
               <div>
                 <span className="text-[11px] font-black uppercase tracking-wider text-orange-800 bg-orange-100 px-2.5 py-1 rounded-md inline-block mb-3">
-                  Indicatieve Investering
+                  Indicatieve Investering ({cityName})
                 </span>
                 <div className="text-3xl sm:text-4xl font-black text-stone-900 mb-1">
                   €{calculatedCost.toLocaleString('nl-NL')}
                   <span className="text-xs font-bold text-stone-500"> incl. btw & materialen</span>
                 </div>
-                <p className="text-xs text-stone-600 mb-6 font-medium">
+                <p className="text-xs text-stone-600 mb-4 font-medium">
                   Geschatte doorlooptijd: <strong className="text-stone-900">~{calculatedWeeks} werkweken</strong> van sloop tot oplevering.
                 </p>
 
-                <div className="space-y-2 text-xs font-bold text-stone-700">
-                  <div className="bg-white p-2.5 rounded-xl border border-stone-200 flex justify-between">
+                {/* Detailed Cost Split */}
+                <div className="mb-4 p-3 bg-white/80 rounded-2xl border border-stone-200 space-y-1.5 text-[11px]">
+                  <div className="flex justify-between text-stone-600">
+                    <span>Arbeid & Vakmanschap (ca. 55%):</span>
+                    <strong className="font-mono text-stone-900">€{laborCost.toLocaleString('nl-NL')}</strong>
+                  </div>
+                  <div className="flex justify-between text-stone-600">
+                    <span>Materialen, Kozijnen & Beglazing (ca. 35%):</span>
+                    <strong className="font-mono text-stone-900">€{materialCost.toLocaleString('nl-NL')}</strong>
+                  </div>
+                  <div className="flex justify-between text-stone-600">
+                    <span>Sloopafval container & Bouwgarant (ca. 10%):</span>
+                    <strong className="font-mono text-stone-900">€{overheadCost.toLocaleString('nl-NL')}</strong>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5 text-xs font-bold text-stone-700">
+                  <div className="bg-white p-2 rounded-xl border border-stone-200 flex justify-between">
                     <span>Bouwtekening & constructieberekening:</span>
                     <span className="font-black text-emerald-700">Inbegrepen</span>
                   </div>
-                  <div className="bg-white p-2.5 rounded-xl border border-stone-200 flex justify-between">
-                    <span>Afvoer sloopafval & container:</span>
-                    <span className="font-black text-emerald-700">Inbegrepen</span>
-                  </div>
-                  <div className="bg-white p-2.5 rounded-xl border border-stone-200 flex justify-between">
+                  <div className="bg-white p-2 rounded-xl border border-stone-200 flex justify-between">
                     <span>10 Jaar BouwGarant zekerheid:</span>
                     <span className="font-black text-emerald-700">Gedekt</span>
                   </div>
                 </div>
               </div>
 
-              <button
-                onClick={onRequestQuote}
-                className={`w-full py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md mt-6 cursor-pointer`}
-              >
-                Vraag Vrijblijvende Offerte & Werkopname Aan
-              </button>
+              <div className="pt-4 space-y-2">
+                <button
+                  onClick={onRequestQuote}
+                  className={`w-full py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md cursor-pointer`}
+                >
+                  Vraag Vrijblijvende Offerte & Werkopname Aan
+                </button>
+                <button
+                  onClick={handlePrintQuote}
+                  className="w-full py-2 rounded-xl bg-white hover:bg-stone-50 border border-stone-300 text-stone-700 font-bold text-xs transition-colors cursor-pointer"
+                >
+                  Download / Print Richtprijs Specificatie
+                </button>
+              </div>
             </div>
           </div>
         </div>
