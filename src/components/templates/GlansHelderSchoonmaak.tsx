@@ -16,6 +16,9 @@ import {
   Droplets,
   CalendarCheck,
   Award,
+  Printer,
+  FileText,
+  FileCheck,
 } from 'lucide-react';
 
 export const GlansHelderSchoonmaak: React.FC<TemplateProps> = ({
@@ -34,6 +37,7 @@ export const GlansHelderSchoonmaak: React.FC<TemplateProps> = ({
   const [frequency, setFrequency] = useState<'weekly' | 'biweekly' | 'monthly' | 'once'>('biweekly');
   const [includeWindows, setIncludeWindows] = useState<boolean>(true);
   const [includeEcoProducts, setIncludeEcoProducts] = useState<boolean>(true);
+  const [showWorkPlan, setShowWorkPlan] = useState<boolean>(false);
   const [quoteRequested, setQuoteRequested] = useState<boolean>(false);
 
   // Price Calculation
@@ -249,7 +253,7 @@ export const GlansHelderSchoonmaak: React.FC<TemplateProps> = ({
                 </div>
 
                 {/* Live Price Result Box */}
-                <div className="p-4 rounded-2xl bg-stone-100 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 flex items-center justify-between mt-4">
+                <div className="p-4 rounded-2xl bg-stone-100 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4">
                   <div>
                     <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">
                       Geschat Tarief per Beurt:
@@ -260,14 +264,89 @@ export const GlansHelderSchoonmaak: React.FC<TemplateProps> = ({
                     </span>
                   </div>
 
-                  <button
-                    onClick={onRequestQuote}
-                    className={`px-4 py-3 rounded-xl text-white font-black text-xs flex items-center gap-1.5 shadow-md transition-all cursor-pointer ${theme.primary} hover:opacity-90`}
-                  >
-                    <span>Vraag Offerte Aan</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setShowWorkPlan(!showWorkPlan)}
+                      className="px-3 py-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-xs font-bold flex items-center gap-1.5 hover:bg-stone-50 dark:hover:bg-stone-700 cursor-pointer shadow-xs"
+                    >
+                      <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>{showWorkPlan ? 'Verberg Plan' : 'Bekijk Werkplan'}</span>
+                    </button>
+                    <button
+                      onClick={onRequestQuote}
+                      className={`px-4 py-2.5 rounded-xl text-white font-black text-xs flex items-center gap-1.5 shadow-md transition-all cursor-pointer ${theme.primary} hover:opacity-90`}
+                    >
+                      <span>Offerte</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
+
+                {/* Printable Werkprogramma Preview */}
+                {showWorkPlan && (
+                  <div className={`p-4 rounded-2xl border-2 border-dashed mt-4 space-y-3 ${
+                    isDarkMode ? 'bg-stone-950 border-stone-700' : 'bg-stone-50 border-stone-300'
+                  }`}>
+                    <div className="flex justify-between items-start border-b pb-2 border-stone-200 dark:border-stone-800">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 block">
+                          Schoonmaak Werkprogramma & Tariefspecificatie
+                        </span>
+                        <span className="font-black text-sm">{brandName}</span>
+                      </div>
+                      <span className="text-[10px] font-mono bg-stone-200 dark:bg-stone-800 px-2 py-0.5 rounded font-bold">
+                        GH-SPEC-2026
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Klantsegment</span>
+                        <span className="font-bold capitalize">{customerType === 'zakelijk' ? 'Kantoorpand / Bedrijf' : 'Particulier Woonhuis'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Vloeroppervlakte</span>
+                        <span className="font-bold">{squareMeters} m²</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Frequentie</span>
+                        <span className="font-bold">
+                          {frequency === 'weekly' ? 'Wekelijks (20% korting)' : frequency === 'biweekly' ? '2-Wekelijks (10% korting)' : frequency === 'monthly' ? 'Maandelijks' : 'Eenmalig'}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Telescoopbewassing</span>
+                        <span className="font-bold">{includeWindows ? 'Ja (+€35 per beurt)' : 'Nee'}</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-emerald-50 dark:bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800 text-[11px] space-y-1">
+                      <span className="font-bold text-emerald-800 dark:text-emerald-300 block">Kwaliteitsnormen & Borging:</span>
+                      <ul className="list-disc list-inside text-stone-600 dark:text-stone-300 text-[10px] space-y-0.5">
+                        <li>Vast opgeleid schoonmaakteam (VCA gecertificeerd)</li>
+                        <li>Periodieke kwaliteitscontrole volgens VSR-KMS normering</li>
+                        <li>Sleutelcontract & discretieverklaring gewaarborgd</li>
+                      </ul>
+                    </div>
+
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        onClick={() => window.print()}
+                        className="flex-1 py-2.5 rounded-xl bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs font-bold flex items-center justify-center gap-1.5 shadow hover:opacity-90 cursor-pointer"
+                      >
+                        <Printer className="w-3.5 h-3.5" />
+                        <span>Print Werkprogramma (PDF)</span>
+                      </button>
+                      <button
+                        onClick={onRequestQuote}
+                        className={`px-3 py-2.5 rounded-xl text-white font-bold text-xs ${theme.primary} hover:opacity-90 cursor-pointer`}
+                      >
+                        Bevestig Aanvraag
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

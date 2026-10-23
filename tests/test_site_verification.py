@@ -567,5 +567,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("VLT-2026-PROEF", content)
         self.assertIn("0% Rente & Geen BKR Registratie", content)
 
+    # 53. GlansHelderSchoonmaak Printable Workprogram and Tariff Calculator
+    def test_glanshelder_workprogram_calculator(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "GlansHelderSchoonmaak.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("showWorkPlan", content)
+        self.assertIn("GH-SPEC-2026", content)
+        self.assertIn("Print Werkprogramma (PDF)", content)
+        self.assertIn("VSR-KMS normering", content)
+
 if __name__ == "__main__":
     unittest.main()
