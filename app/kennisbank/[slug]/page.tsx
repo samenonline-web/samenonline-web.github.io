@@ -78,14 +78,41 @@ export default async function ArticleDetailPage({
     },
   };
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://samenonline-web.github.io',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Kennisbank',
+        item: 'https://samenonline-web.github.io/kennisbank',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: article.title,
+        item: `https://samenonline-web.github.io/kennisbank/${article.slug}`,
+      },
+    ],
+  };
+
+  const combinedJsonLd = [jsonLd, breadcrumbJsonLd];
+
   const otherArticles = ARTICLES_DATA.filter((a) => a.slug !== article.slug);
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-slate-950 text-stone-900 dark:text-stone-100 selection:bg-orange-500 selection:text-white">
-      {/* Schema.org Article Script */}
+      {/* Schema.org Article & Breadcrumb Script */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(combinedJsonLd) }}
       />
 
       {/* Header */}

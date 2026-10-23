@@ -444,5 +444,12 @@ class TestSamenOnlineVerification(unittest.TestCase):
         slug_count = content.count("slug: '")
         self.assertEqual(slug_count, 10, f"Expected 10 articles, found {slug_count}")
 
+    # 41. BreadcrumbList Schema on Kennisbank Article Detail Pages
+    def test_kennisbank_article_breadcrumb_schema(self):
+        page_file = WORKSPACE / "app" / "kennisbank" / "[slug]" / "page.tsx"
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn("'@type': 'BreadcrumbList'", content.replace('"', "'"))
+        self.assertIn("breadcrumbJsonLd", content)
+
 if __name__ == "__main__":
     unittest.main()
