@@ -150,7 +150,7 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
       }`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white font-black shadow-md ${theme.primary}`}>
+            <div className={`w-10 h-10 min-w-[40px] min-h-[40px] shrink-0 aspect-square rounded-2xl flex items-center justify-center text-white font-black shadow-md ${theme.primary}`}>
               <Home className="w-5 h-5" />
             </div>
             <div>

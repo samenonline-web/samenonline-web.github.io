@@ -130,7 +130,7 @@ export const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = (
                   </th>
                   <th className="p-4 font-black text-stone-900 w-1/3 border-l border-stone-200 bg-orange-50/30">
                     <div className="flex items-center gap-2">
-                      <span className={`w-6 h-6 rounded-lg text-white font-black text-[10px] flex items-center justify-center shrink-0 ${templateA.logoBg}`}>
+                      <span className={`w-6 h-6 shrink-0 aspect-square rounded-lg text-white font-black text-[10px] flex items-center justify-center ${templateA.logoBg}`}>
                         {templateA.logoText}
                       </span>
                       <span className="truncate">{templateA.name}</span>
@@ -138,7 +138,7 @@ export const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = (
                   </th>
                   <th className="p-4 font-black text-stone-900 w-1/3 border-l border-stone-200">
                     <div className="flex items-center gap-2">
-                      <span className={`w-6 h-6 rounded-lg text-white font-black text-[10px] flex items-center justify-center shrink-0 ${templateB.logoBg}`}>
+                      <span className={`w-6 h-6 shrink-0 aspect-square rounded-lg text-white font-black text-[10px] flex items-center justify-center ${templateB.logoBg}`}>
                         {templateB.logoText}
                       </span>
                       <span className="truncate">{templateB.name}</span>

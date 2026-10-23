@@ -173,16 +173,16 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                       <div className="space-y-4 text-left">
                         
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className={`w-12 h-12 rounded-2xl ${template.logoBg} flex items-center justify-center text-white font-extrabold text-base shadow-md`}>
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <div className={`w-12 h-12 shrink-0 aspect-square rounded-2xl ${template.logoBg} flex items-center justify-center text-white font-extrabold text-base shadow-md`}>
                               {template.logoText}
                             </div>
-                            <div>
-                              <p className="font-bold text-base text-slate-900 dark:text-white">{template.name}</p>
-                              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{template.city}, {template.province}</p>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-bold text-base text-slate-900 dark:text-white truncate">{template.name}</p>
+                              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium truncate">{template.city}, {template.province}</p>
                             </div>
                           </div>
-                          <span className="text-xs font-bold px-3 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                          <span className="text-xs font-bold px-3 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 shrink-0 ml-2">
                             ⚡ {template.priceTier}
                           </span>
                         </div>

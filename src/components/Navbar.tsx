@@ -45,7 +45,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           title={lang === 'nl' ? 'Scroll naar boven' : 'Scroll to top'}
           aria-label={lang === 'nl' ? 'Samen Online home - Terug naar boven' : 'Samen Online home - Scroll to top'}
         >
-          <div className="w-11 h-11 rounded-2xl bg-orange-700 flex items-center justify-center text-white shadow-md shadow-orange-700/20 transform group-hover:scale-105 transition-transform">
+          <div className="w-11 h-11 shrink-0 aspect-square rounded-2xl bg-orange-700 flex items-center justify-center text-white shadow-md shadow-orange-700/20 transform group-hover:scale-105 transition-transform">
             <Heart className="w-6 h-6 fill-white text-white" />
           </div>
           <div>

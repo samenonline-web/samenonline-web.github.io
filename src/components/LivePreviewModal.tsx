@@ -139,7 +139,7 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
           {/* Left: Template Info */}
           <div className="flex items-center gap-3">
             <div
-              className={`w-9 h-9 rounded-xl ${template.logoBg} flex items-center justify-center text-white text-xs font-black shadow-xs`}
+              className={`w-9 h-9 shrink-0 aspect-square rounded-xl ${template.logoBg} flex items-center justify-center text-white text-xs font-black shadow-xs`}
             >
               {template.logoText}
             </div>

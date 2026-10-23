@@ -94,7 +94,7 @@ export const InktEnNaaldStudio: React.FC<TemplateProps> = ({
       <header className="sticky top-0 z-30 backdrop-blur-md border-b border-stone-800 bg-stone-950/90">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white font-black shadow-md ${theme.primary}`}>
+            <div className={`w-10 h-10 min-w-[40px] min-h-[40px] shrink-0 aspect-square rounded-2xl flex items-center justify-center text-white font-black shadow-md ${theme.primary}`}>
               ⚡
             </div>
             <div>

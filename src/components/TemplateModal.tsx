@@ -61,7 +61,7 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
           </button>
 
           <div className="flex items-center gap-4">
-            <div className={`w-16 h-16 rounded-2xl ${template.logoBg} flex items-center justify-center text-white font-black text-2xl shadow-lg border-2 border-white/40`}>
+            <div className={`w-16 h-16 shrink-0 aspect-square rounded-2xl ${template.logoBg} flex items-center justify-center text-white font-black text-2xl shadow-lg border-2 border-white/40`}>
               {template.logoText}
             </div>
 

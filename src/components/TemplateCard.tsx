@@ -34,23 +34,23 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
       <div>
         <div className="flex items-start justify-between gap-3 mb-4">
           
-          <div className="flex items-center gap-3">
-            {/* Logo Avatar */}
-            <div className={`w-14 h-14 rounded-2xl ${template.logoBg} flex items-center justify-center text-white font-extrabold text-xl shadow-md transform group-hover:scale-105 transition-transform`}>
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            {/* Logo Avatar - strictly square, never squished by long titles */}
+            <div className={`w-14 h-14 min-w-[56px] min-h-[56px] shrink-0 aspect-square rounded-2xl ${template.logoBg} flex items-center justify-center text-white font-extrabold text-xl shadow-md select-none transform group-hover:scale-105 transition-transform`}>
               {template.logoText}
             </div>
 
-            <div>
+            <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5 flex-wrap">
-                <h3 className="font-extrabold text-lg text-stone-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                <h3 className="font-extrabold text-lg text-stone-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-snug">
                   {template.name}
                 </h3>
               </div>
-              <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-xs font-bold text-orange-700 dark:text-orange-300 bg-orange-50 dark:bg-orange-950/60 px-2.5 py-0.5 rounded-md inline-block border border-orange-200/60 dark:border-orange-800/60">
+              <div className="flex items-center gap-2 mt-1 flex-wrap">
+                <span className="text-xs font-bold text-orange-700 dark:text-orange-300 bg-orange-50 dark:bg-orange-950/60 px-2.5 py-0.5 rounded-md inline-block border border-orange-200/60 dark:border-orange-800/60 shrink-0">
                   {template.priceTier} Concept
                 </span>
-                <span className="text-[11px] font-bold text-stone-600 dark:text-slate-300 bg-stone-100 dark:bg-slate-800 px-2 py-0.5 rounded-md border border-stone-200 dark:border-slate-700 flex items-center gap-1">
+                <span className="text-[11px] font-bold text-stone-600 dark:text-slate-300 bg-stone-100 dark:bg-slate-800 px-2 py-0.5 rounded-md border border-stone-200 dark:border-slate-700 flex items-center gap-1 shrink-0">
                   Demo Concept
                 </span>
               </div>

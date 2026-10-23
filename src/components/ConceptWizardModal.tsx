@@ -344,7 +344,7 @@ export const ConceptWizardModal: React.FC<ConceptWizardModalProps> = ({
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className={`w-14 h-14 rounded-2xl text-white font-black text-lg flex items-center justify-center shrink-0 shadow-md ${recommendation.main.logoBg}`}>
+                  <div className={`w-14 h-14 shrink-0 aspect-square rounded-2xl text-white font-black text-lg flex items-center justify-center shadow-md ${recommendation.main.logoBg}`}>
                     {recommendation.main.logoText}
                   </div>
                   <div>
