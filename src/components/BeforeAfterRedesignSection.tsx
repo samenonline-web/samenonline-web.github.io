@@ -111,50 +111,50 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
         onMouseLeave={() => setIsDragging(false)}
         onMouseMove={handleMouseMove}
         onTouchMove={handleTouchMove}
-        className="relative w-full h-[400px] sm:h-[480px] rounded-3xl overflow-hidden border-2 border-orange-200/90 shadow-2xl select-none cursor-ew-resize bg-stone-900"
+        className="relative w-full h-[400px] sm:h-[480px] rounded-3xl overflow-hidden border-2 border-orange-200/90 shadow-2xl select-none cursor-ew-resize bg-white dark:bg-stone-900"
       >
         {/* NEW SITE LAYER (Right / Background Base) */}
-        <div className="absolute inset-0 bg-gradient-to-br from-stone-900 via-stone-800 to-orange-950 p-6 sm:p-10 flex flex-col justify-between text-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-slate-950 dark:via-slate-900 dark:to-orange-950 p-6 sm:p-10 flex flex-col justify-between text-stone-900 dark:text-white">
           {/* Top Bar Simulated Browser */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+          <div className="flex items-center justify-between border-b border-orange-200/80 dark:border-white/10 pb-4">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" />
-              <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-md border border-emerald-500/30">
+              <span className="text-xs font-mono font-bold text-emerald-800 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-md border border-emerald-300 dark:border-emerald-500/30">
                 🔒 https://jouwbedrijf.nl (Next.js 16 • NVMe SSL)
               </span>
             </div>
-            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-900/60 px-3 py-1 rounded-full border border-emerald-500/40">
+            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/60 px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-500/40">
               ⚡ PageSpeed 99/100
             </span>
           </div>
 
           {/* New Site Content Mockup */}
           <div className="my-auto max-w-xl space-y-4">
-            <span className="px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30 text-xs font-bold inline-block">
+            <span className="px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/20 text-orange-800 dark:text-orange-400 border border-orange-300 dark:border-orange-500/30 text-xs font-bold inline-block">
               ✨ 2026 Modern Design & Conversie Machine
             </span>
-            <h3 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight text-white">
+            <h3 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight text-stone-900 dark:text-white">
               Samen Online: Vloeiend, Snel & 100% Jouw Eigendom
             </h3>
-            <p className="text-xs sm:text-sm text-stone-300 font-medium leading-relaxed">
+            <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-300 font-medium leading-relaxed">
               Geen zware PHP databasevertragingen meer. Bezoekers klikken en de pagina staat er instant binnen 0.3 seconden. Resultaat: meer aanvragen en betere Google posities.
             </p>
             <div className="flex flex-wrap gap-2 pt-1 text-[11px] font-bold">
-              <span className="px-2.5 py-1 rounded-lg bg-white/10 text-emerald-300 border border-white/10">
+              <span className="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-white/10 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-white/10">
                 🚀 0.3s Laadtijd
               </span>
-              <span className="px-2.5 py-1 rounded-lg bg-white/10 text-emerald-300 border border-white/10">
+              <span className="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-white/10 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-white/10">
                 📱 100% Mobiel Responsive
               </span>
-              <span className="px-2.5 py-1 rounded-lg bg-white/10 text-emerald-300 border border-white/10">
+              <span className="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-white/10 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-white/10">
                 💬 Directe WhatsApp & Formulier
               </span>
             </div>
           </div>
 
-          <div className="text-[11px] font-semibold text-stone-400 border-t border-white/10 pt-3 flex justify-between items-center">
+          <div className="text-[11px] font-semibold text-stone-500 dark:text-stone-400 border-t border-orange-200/80 dark:border-white/10 pt-3 flex justify-between items-center">
             <span>Volledig geoptimaliseerd voor conversie in Nederland</span>
-            <span className="font-bold text-emerald-400">✓ Actieve Next.js Engine</span>
+            <span className="font-bold text-emerald-700 dark:text-emerald-400">✓ Actieve Next.js Engine</span>
           </div>
         </div>
 

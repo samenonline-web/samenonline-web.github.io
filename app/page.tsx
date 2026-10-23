@@ -560,19 +560,19 @@ export default function Home() {
         )}
 
         {/* Custom Design / Website Redesign Callout Banner */}
-        <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-stone-900 to-stone-800 dark:from-slate-950 dark:to-slate-900 text-white border border-stone-800 dark:border-slate-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
+        <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-orange-50/90 dark:bg-slate-900 border-2 border-orange-200/90 dark:border-slate-800 text-stone-900 dark:text-white shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
           <div className="space-y-2 text-center md:text-left max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold border border-orange-500/30">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/20 text-orange-800 dark:text-orange-400 text-xs font-bold border border-orange-300 dark:border-orange-500/30">
               <span>🎨 Geen template nodig?</span>
               <span>•</span>
               <span>100% Maatwerk</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-black tracking-tight text-white">
+            <h3 className="text-xl sm:text-2xl font-black tracking-tight text-stone-900 dark:text-white">
               {lang === 'nl'
                 ? 'Heb je al een bestaande website of een eigen ontwerp in gedachten?'
                 : 'Already have an existing site or your own custom design plan?'}
             </h3>
-            <p className="text-xs sm:text-sm text-stone-300 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 leading-relaxed font-medium">
               {lang === 'nl'
                 ? 'Je zit nergens aan vast. Wil je een gedateerde website laten moderniseren (redesign), of heb je al een eigen schets, wireframe of Figma-ontwerp? Wij bouwen jouw website exact zoals jij het wilt.'
                 : 'No template required. Need an existing website modernized, or already have your own wireframe/plan? We code your vision 1:1.'}
@@ -601,7 +601,7 @@ export default function Home() {
                   notes: 'Ik heb al een eigen plan of schets voor mijn website.',
                 })
               }
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 dark:bg-slate-800 dark:hover:bg-slate-700 text-stone-200 dark:text-slate-200 border border-stone-700 dark:border-slate-700 font-extrabold text-xs transition-all cursor-pointer whitespace-nowrap text-center"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-100/50 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-200 border border-orange-200 dark:border-slate-700 font-extrabold text-xs transition-all cursor-pointer whitespace-nowrap text-center shadow-xs"
             >
               <span>📐 Eigen Ontwerp Bespreken</span>
             </button>

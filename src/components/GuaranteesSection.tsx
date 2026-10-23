@@ -148,16 +148,16 @@ export const GuaranteesSection: React.FC<GuaranteesSectionProps> = ({
       </div>
 
       {/* Trust Quote Bar */}
-      <div className="mt-10 p-5 sm:p-6 rounded-3xl bg-stone-900 dark:bg-slate-950 border border-stone-800 dark:border-slate-800 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl transition-colors">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 border border-orange-500/30 flex items-center justify-center shrink-0">
+      <div className="mt-10 p-5 sm:p-6 rounded-3xl bg-orange-50/80 dark:bg-slate-900 border-2 border-orange-200/90 dark:border-slate-800 text-stone-900 dark:text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm transition-colors">
+        <div className="flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/70 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-800/60 flex items-center justify-center shrink-0">
             <Lock className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-white">
+            <h3 className="text-sm font-black text-stone-900 dark:text-white">
               {lang === 'nl' ? 'Transparantie gegarandeerd in elke offerte' : 'Full transparency on every estimate'}
             </h3>
-            <p className="text-xs text-stone-400">
+            <p className="text-xs text-stone-600 dark:text-slate-300 font-medium">
               {lang === 'nl'
                 ? 'Geen automatische stilzwijgende verlengingen. Je betaalt eenmalig de bouwkosten en eventueel €9,50/mnd voor all-in hosting.'
                 : 'One-off build investment with optional €9.50/mo hosting. Cancel anytime.'}
@@ -169,7 +169,7 @@ export const GuaranteesSection: React.FC<GuaranteesSectionProps> = ({
           {onOpenCalculator && (
             <button
               onClick={onOpenCalculator}
-              className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors cursor-pointer"
+              className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-100/70 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-200 border border-orange-200 dark:border-slate-700 text-xs font-bold transition-colors cursor-pointer shadow-2xs"
             >
               {lang === 'nl' ? 'Bereken Jouw Prijs' : 'Calculate Price'}
             </button>
@@ -177,7 +177,7 @@ export const GuaranteesSection: React.FC<GuaranteesSectionProps> = ({
           {onOpenRequestModal && (
             <button
               onClick={onOpenRequestModal}
-              className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-lg shadow-orange-600/30 transition-all cursor-pointer"
+              className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-md shadow-orange-700/30 transition-all cursor-pointer whitespace-nowrap"
             >
               <span>{lang === 'nl' ? 'Direct Aanvragen' : 'Get Started'}</span>
               <ArrowRight className="w-3.5 h-3.5" />

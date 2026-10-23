@@ -187,73 +187,73 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
         </div>
 
         {/* Column 2: What Samen Online Arranges */}
-        <div className="bg-stone-900 text-white rounded-3xl border-2 border-stone-800 p-6 sm:p-8 shadow-xl flex flex-col justify-between">
+        <div className="bg-white dark:bg-slate-900/90 rounded-3xl border-2 border-emerald-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-sm flex flex-col justify-between transition-colors">
           <div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-black border border-emerald-500/30">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-black border border-emerald-200 dark:border-emerald-800/60 shadow-2xs">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-black text-lg text-white">2. Wat Wij Volledig Regelen</h3>
-                  <span className="text-[11px] text-stone-400 font-medium">100% technische ontzorging</span>
+                  <h3 className="font-black text-lg text-stone-900 dark:text-white">2. Wat Wij Volledig Regelen</h3>
+                  <span className="text-[11px] text-stone-500 dark:text-slate-400 font-medium">100% technische ontzorging</span>
                 </div>
               </div>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
                 Inbegrepen
               </span>
             </div>
 
-            <p className="text-xs text-stone-300 mb-6 leading-relaxed">
+            <p className="text-xs text-stone-600 dark:text-slate-300 mb-6 leading-relaxed">
               Jij hoeft geen regel code te schrijven of servers te configureren. Dit is allemaal standaard geregeld:
             </p>
 
             <ul className="space-y-3.5 text-xs">
               <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-white block font-bold">.NL Domeinnaam & Snelle NVMe Webhosting</strong>
-                  <span className="text-stone-400 text-[11px]">
+                  <strong className="text-stone-900 dark:text-white block font-bold">.NL Domeinnaam & Snelle NVMe Webhosting</strong>
+                  <span className="text-stone-600 dark:text-slate-400 text-[11px]">
                     Registratie van jouw domein en supersnelle Nederlandse SSD servers zonder trage databasevertraging.
                   </span>
                 </div>
               </li>
 
               <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-white block font-bold">Gratis A+ SSL Veiligheidscertificaat</strong>
-                  <span className="text-stone-400 text-[11px]">
+                  <strong className="text-stone-900 dark:text-white block font-bold">Gratis A+ SSL Veiligheidscertificaat</strong>
+                  <span className="text-stone-600 dark:text-slate-400 text-[11px]">
                     Het vertrouwde groene slotje in de browserbalk; essentieel voor Google ranking en AVG privacy.
                   </span>
                 </div>
               </li>
 
               <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-white block font-bold">Interactieve Formulieren & WhatsApp Chat</strong>
-                  <span className="text-stone-400 text-[11px]">
+                  <strong className="text-stone-900 dark:text-white block font-bold">Interactieve Formulieren & WhatsApp Chat</strong>
+                  <span className="text-stone-600 dark:text-slate-400 text-[11px]">
                     Directe aanvragen in jouw e-mailbox zonder spambots, inclusief 1-klik WhatsApp contactknop.
                   </span>
                 </div>
               </li>
 
               <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-white block font-bold">Lokale Google SEO & Schema.org</strong>
-                  <span className="text-stone-400 text-[11px]">
+                  <strong className="text-stone-900 dark:text-white block font-bold">Lokale Google SEO & Schema.org</strong>
+                  <span className="text-stone-600 dark:text-slate-400 text-[11px]">
                     Gestructureerde bedrijfsgegevens (LocalBusiness, PostalAddress) voor maximale zichtbaarheid in jouw regio.
                   </span>
                 </div>
               </li>
 
               <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-white block font-bold">100% Jouw Eigendom (Geen Wurgcontract)</strong>
-                  <span className="text-stone-400 text-[11px]">
+                  <strong className="text-stone-900 dark:text-white block font-bold">100% Jouw Eigendom (Geen Wurgcontract)</strong>
+                  <span className="text-stone-600 dark:text-slate-400 text-[11px]">
                     De code en website zijn volledig van jou. Geen verplichte langdurige opzegtermijnen.
                   </span>
                 </div>
@@ -261,13 +261,13 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
             </ul>
           </div>
 
-          <div className="pt-6 mt-6 border-t border-stone-800 flex items-center justify-between">
-            <span className="text-[11px] font-bold text-stone-400">
+          <div className="pt-6 mt-6 border-t border-stone-200 dark:border-slate-800 flex items-center justify-between">
+            <span className="text-[11px] font-bold text-stone-500 dark:text-slate-400">
               ⚡ Oplevering gemiddeld binnen 3 tot 5 dagen
             </span>
             <button
               onClick={handlePrintGuide}
-              className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 border border-white/20 font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-200 border border-stone-200 dark:border-slate-700 font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <FileDown className="w-3.5 h-3.5" />
               <span>Print / Download Aanlevergids</span>

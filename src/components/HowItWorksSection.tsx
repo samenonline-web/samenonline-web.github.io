@@ -136,12 +136,12 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
       </div>
 
       {/* Bottom CTA Banner */}
-      <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-stone-900 to-stone-800 dark:from-slate-950 dark:to-slate-900 dark:border dark:border-slate-800 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl transition-colors">
+      <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-orange-50/90 dark:bg-slate-900 border-2 border-orange-200/90 dark:border-slate-800 text-stone-900 dark:text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm transition-colors">
         <div className="space-y-1 text-center sm:text-left">
-          <h3 className="text-lg sm:text-xl font-black text-white">
+          <h3 className="text-lg sm:text-xl font-black text-stone-900 dark:text-white">
             {lang === 'nl' ? 'Klaar om jouw onderneming online te laten schitteren?' : 'Ready to launch your business online?'}
           </h3>
-          <p className="text-xs text-stone-300 dark:text-slate-300 font-medium">
+          <p className="text-xs text-stone-600 dark:text-slate-300 font-medium">
             {lang === 'nl'
               ? 'Kies een concept sjabloon of vraag direct een vrijblijvend adviesgesprek aan.'
               : 'Choose a template or request a free consultation today.'}
@@ -151,13 +151,13 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={onScrollToTemplates}
-            className="px-5 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-stone-100 dark:hover:bg-slate-700 text-stone-900 dark:text-slate-200 font-black text-xs transition-all cursor-pointer shadow-sm border border-stone-200 dark:border-slate-700"
+            className="px-5 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-100/70 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-200 font-bold text-xs transition-all cursor-pointer shadow-2xs border border-orange-200 dark:border-slate-700"
           >
             {lang === 'nl' ? 'Bekijk Alle 33 Concepten' : 'View All 33 Concepts'}
           </button>
           <button
             onClick={onOpenRequestModal}
-            className="px-5 py-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-black text-xs flex items-center gap-2 transition-all cursor-pointer shadow-md shadow-orange-600/30"
+            className="px-5 py-3 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-black text-xs flex items-center gap-2 transition-all cursor-pointer shadow-md shadow-orange-700/30 whitespace-nowrap"
           >
             <span>{lang === 'nl' ? 'Start Jouw Aanvraag' : 'Start Your Project'}</span>
             <ArrowRight className="w-4 h-4" />

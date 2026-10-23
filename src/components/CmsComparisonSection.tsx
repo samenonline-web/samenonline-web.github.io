@@ -175,52 +175,52 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
         </div>
 
         {/* Next.js / Samen Online Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-slate-950 text-white border-2 border-orange-500/60 shadow-xl flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-orange-600/20 blur-3xl pointer-events-none"></div>
+        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-slate-950 dark:to-slate-900 border-2 border-orange-500 shadow-xl flex flex-col justify-between relative overflow-hidden">
+          <div className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-orange-500/10 dark:bg-orange-600/20 blur-3xl pointer-events-none"></div>
 
           <div className="relative z-10">
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
-              <span className="px-3 py-1 rounded-full bg-emerald-950/80 text-emerald-400 text-xs font-bold flex items-center gap-1.5 border border-emerald-800/60">
-                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <div className="flex items-center justify-between pb-4 border-b border-orange-200/80 dark:border-white/10">
+              <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-400 text-xs font-bold flex items-center gap-1.5 border border-emerald-300 dark:border-emerald-800/60">
+                <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400"></span>
                 <span>Samen Online (Next.js 16 Architectuur)</span>
               </span>
-              <span className="font-mono text-xl sm:text-2xl font-black text-emerald-400">
+              <span className="font-mono text-xl sm:text-2xl font-black text-emerald-700 dark:text-emerald-400">
                 99 / 100
               </span>
             </div>
 
-            <h3 className="text-xl sm:text-2xl font-black text-white mt-4 leading-snug">
+            <h3 className="text-xl sm:text-2xl font-black text-stone-900 dark:text-white mt-4 leading-snug">
               Bliksemsnel, Conversiegericht & 100% Jouw Eigendom
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 mt-2 leading-relaxed font-medium">
               Statische pre-rendering en supersnelle NVMe edge caching zorgen voor een directe laadtijd binnen 0.3 seconden. Bezoekers klikken en zijn direct op de pagina.
             </p>
 
             {/* Metrics List */}
             <div className="mt-5 space-y-2 text-xs">
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10">
-                <span className="text-slate-300">Laadtijd op 4G mobiel</span>
-                <span className="font-extrabold text-emerald-400">0.3s (16x sneller)</span>
+              <div className="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-white/10 border border-orange-200/80 dark:border-white/10 shadow-sm">
+                <span className="text-stone-600 dark:text-slate-300 font-medium">Laadtijd op 4G mobiel</span>
+                <span className="font-extrabold text-emerald-700 dark:text-emerald-400">0.3s (16x sneller)</span>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10">
-                <span className="text-slate-300">Mobiele Conversie Stijging</span>
-                <span className="font-extrabold text-orange-400">+64% meer aanvragen</span>
+              <div className="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-white/10 border border-orange-200/80 dark:border-white/10 shadow-sm">
+                <span className="text-stone-600 dark:text-slate-300 font-medium">Mobiele Conversie Stijging</span>
+                <span className="font-extrabold text-orange-700 dark:text-orange-400">+64% meer aanvragen</span>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10">
-                <span className="text-slate-300">Veiligheid & Code Integriteit</span>
-                <span className="font-extrabold text-emerald-400">Geen DB-lekken, A+ SSL</span>
+              <div className="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-white/10 border border-orange-200/80 dark:border-white/10 shadow-sm">
+                <span className="text-stone-600 dark:text-slate-300 font-medium">Veiligheid & Code Integriteit</span>
+                <span className="font-extrabold text-emerald-700 dark:text-emerald-400">Geen DB-lekken, A+ SSL</span>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10">
-                <span className="text-slate-300">Vaste Maandelijkse Kosten</span>
-                <span className="font-extrabold text-white">€ 0 of € 9,50 p/mnd (All-in)</span>
+              <div className="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-white/10 border border-orange-200/80 dark:border-white/10 shadow-sm">
+                <span className="text-stone-600 dark:text-slate-300 font-medium">Vaste Maandelijkse Kosten</span>
+                <span className="font-extrabold text-stone-900 dark:text-white">€ 0 of € 9,50 p/mnd (All-in)</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10">
+          <div className="mt-6 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3 p-4 rounded-2xl bg-white/90 dark:bg-white/10 border border-orange-200/80 dark:border-white/10 shadow-sm">
             <div>
-              <span className="font-bold text-white text-xs block">Klaar voor de overstap?</span>
-              <span className="text-[11px] text-slate-300">Migratie van teksten en foto&apos;s gratis inbegrepen.</span>
+              <span className="font-bold text-stone-900 dark:text-white text-xs block">Klaar voor de overstap?</span>
+              <span className="text-[11px] text-stone-600 dark:text-slate-300">Migratie van teksten en foto&apos;s gratis inbegrepen.</span>
             </div>
             <button
               type="button"
@@ -318,12 +318,12 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
       </div>
 
       {/* Bottom CTA Banner */}
-      <div className="mt-8 p-6 rounded-3xl bg-stone-900 dark:bg-slate-950 dark:border dark:border-slate-800 text-white flex flex-col sm:flex-row items-center justify-between gap-4 transition-colors">
+      <div className="mt-8 p-6 rounded-3xl bg-orange-50/90 dark:bg-slate-900 border-2 border-orange-200/90 dark:border-slate-800 text-stone-900 dark:text-white flex flex-col sm:flex-row items-center justify-between gap-4 transition-colors shadow-sm">
         <div className="space-y-1 text-center sm:text-left">
-          <h3 className="font-black text-sm sm:text-base text-white">
+          <h3 className="font-black text-sm sm:text-base text-stone-900 dark:text-white">
             Klaar om jouw trage WordPress website in te ruilen voor razendsnelle Next.js technologie?
           </h3>
-          <p className="text-xs text-stone-300 dark:text-slate-300 font-medium">
+          <p className="text-xs text-stone-600 dark:text-slate-300 font-medium">
             Wij migreren al jouw bestaande teksten en afbeeldingen zonder verlies van Google posities.
           </p>
         </div>
