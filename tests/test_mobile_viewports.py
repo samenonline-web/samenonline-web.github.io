@@ -1,6 +1,15 @@
 import unittest
+import socket
 from playwright.sync_api import sync_playwright
 
+def is_server_running(host="127.0.0.1", port=3000):
+    try:
+        with socket.create_connection((host, port), timeout=0.5):
+            return True
+    except OSError:
+        return False
+
+@unittest.skipUnless(is_server_running(), "Next.js dev/prod server on port 3000 is not running; skipping browser E2E tests")
 class TestMobileViewports(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
