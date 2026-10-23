@@ -585,5 +585,16 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Zakelijke Lease & WKR Fietsplan", content)
         self.assertIn("Print Specificatie", content)
 
+    # 55. DeVriesBoekhouding Tax Deduction Breakdown & Printable Intake Voucher
+    def test_devries_boekhouding_tax_and_voucher(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "DeVriesBoekhouding.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("meetsHourCriterion", content)
+        self.assertIn("hasStarterDeduction", content)
+        self.assertIn("DV-FISC-2026-INTAKE", content)
+        self.assertIn("Print Afspraakbevestiging & Checklist", content)
+
 if __name__ == "__main__":
     unittest.main()

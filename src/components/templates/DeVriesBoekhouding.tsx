@@ -17,6 +17,8 @@ import {
   TrendingUp,
   Receipt,
   Clock,
+  Printer,
+  CheckCircle2,
 } from 'lucide-react';
 
 export const DeVriesBoekhouding: React.FC<TemplateProps> = ({
@@ -24,9 +26,15 @@ export const DeVriesBoekhouding: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
 }) => {
+  const brandName = customBrandName || 'De Vries & Partners Belastingadviseurs';
+  const city = customCity || 'Den Haag & Rotterdam';
   const [selectedPlan, setSelectedPlan] = useState<'zzp' | 'mkb' | 'bv'>('zzp');
   const [yearlyRevenue, setYearlyRevenue] = useState(75000);
+  const [meetsHourCriterion, setMeetsHourCriterion] = useState(true);
+  const [hasStarterDeduction, setHasStarterDeduction] = useState(false);
   const [appointmentDate, setAppointmentDate] = useState('2026-10-28');
   const [appointmentType, setAppointmentType] = useState<'kantoor' | 'video'>('video');
   const [booked, setBooked] = useState(false);
@@ -37,8 +45,11 @@ export const DeVriesBoekhouding: React.FC<TemplateProps> = ({
     setTimeout(() => setToastMessage(null), 2500);
   };
 
-  // Estimated Tax Savings & Deductions
-  const estimatedTaxDeductions = Math.round(yearlyRevenue * 0.08 + 2400);
+  // Estimated Tax Savings & Deductions (2026 Dutch Tax Law)
+  const zelfstandigenaftrek = meetsHourCriterion ? 3750 : 0;
+  const startersaftrek = meetsHourCriterion && hasStarterDeduction ? 2123 : 0;
+  const mkbVrijstelling = Math.round((yearlyRevenue * 0.65) * 0.1331);
+  const estimatedTaxDeductions = zelfstandigenaftrek + startersaftrek + mkbVrijstelling;
   const hoursSavedPerMonth = selectedPlan === 'bv' ? 14 : selectedPlan === 'mkb' ? 10 : 6;
 
   const plans = [
@@ -97,7 +108,7 @@ export const DeVriesBoekhouding: React.FC<TemplateProps> = ({
       {/* Top Banner */}
       <div className={`py-1.5 px-4 text-center text-xs font-bold text-white ${theme.primary} flex items-center justify-center gap-2 shadow-xs`}>
         <ShieldCheck className="w-3.5 h-3.5" />
-        <span>Lid van de NOAB (Nederlandse Orde van Administratie- en Belastingdeskundigen) • Geen uurtje-factuurtje</span>
+        <span>Lid van de NOAB (Nederlandse Orde van Belastingdeskundigen) • Gevestigd in {city}</span>
       </div>
 
       {/* Header */}
@@ -107,8 +118,8 @@ export const DeVriesBoekhouding: React.FC<TemplateProps> = ({
             DV
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">De Vries & Partners</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Den Haag & Rotterdam • Fiscaal & Financieel Advies</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandName}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{city} • Fiscaal & Financieel Advies</span>
           </div>
         </div>
 
@@ -271,6 +282,41 @@ export const DeVriesBoekhouding: React.FC<TemplateProps> = ({
                 <span>€125.000</span>
                 <span>€250.000+</span>
               </div>
+
+              {/* Fiscale Aftrek Toggles */}
+              <div className="mt-4 pt-4 border-t border-stone-200 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-stone-700">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={meetsHourCriterion}
+                    onChange={(e) => setMeetsHourCriterion(e.target.checked)}
+                    className="rounded accent-orange-600"
+                  />
+                  <span>Voldoet aan urencriterium (min. 1.225 uur)</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={hasStarterDeduction}
+                    onChange={(e) => setHasStarterDeduction(e.target.checked)}
+                    className="rounded accent-orange-600"
+                  />
+                  <span>Startersaftrek van toepassing (eerste 3 jr)</span>
+                </label>
+              </div>
+
+              {/* Deduction Breakdown Badges */}
+              <div className="mt-3 flex flex-wrap gap-2 text-[10px] font-bold">
+                <span className="px-2 py-1 rounded-md bg-stone-100 text-stone-700 border border-stone-200">
+                  Zelfstandigenaftrek: €{zelfstandigenaftrek.toLocaleString('nl-NL')}
+                </span>
+                <span className="px-2 py-1 rounded-md bg-stone-100 text-stone-700 border border-stone-200">
+                  Startersaftrek: €{startersaftrek.toLocaleString('nl-NL')}
+                </span>
+                <span className="px-2 py-1 rounded-md bg-stone-100 text-stone-700 border border-stone-200">
+                  MKB-winstvrijstelling (13.31%): €{mkbVrijstelling.toLocaleString('nl-NL')}
+                </span>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
@@ -299,10 +345,77 @@ export const DeVriesBoekhouding: React.FC<TemplateProps> = ({
           </p>
 
           {booked ? (
-            <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-900 space-y-2">
-              <span className="text-3xl block">🎉</span>
-              <h4 className="font-black text-base">Afspraak Bevestigd (Demo)!</h4>
-              <p className="text-xs">Je kennismakingsgesprek staat gepland op <strong>{appointmentDate}</strong> ({appointmentType === 'video' ? 'via Microsoft Teams' : 'op kantoor'}).</p>
+            <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-900 space-y-4 text-left">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-emerald-200 rounded-full flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-6 h-6 text-emerald-800" />
+                </div>
+                <div>
+                  <h4 className="font-black text-base">Kennismakingsgesprek Bevestigd!</h4>
+                  <p className="text-xs text-emerald-700">Je afspraak staat gereserveerd in de agenda van {brandName}.</p>
+                </div>
+              </div>
+
+              {/* Printable Appointment Voucher & Intake Dossier */}
+              <div className="p-4 rounded-2xl border-2 border-dashed border-emerald-300 bg-white/80 space-y-3">
+                <div className="flex justify-between items-start border-b pb-2 border-stone-200">
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 block">
+                      Fiscaal Intake Dossier & Afspraakbevestiging
+                    </span>
+                    <span className="font-black text-sm text-stone-900">{brandName}</span>
+                  </div>
+                  <span className="text-[10px] font-mono bg-stone-100 text-stone-700 px-2 py-0.5 rounded font-bold">
+                    DV-FISC-2026-INTAKE
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs text-stone-700">
+                  <div>
+                    <span className="text-[10px] text-stone-500 block">Type Gesprek</span>
+                    <span className="font-bold">{appointmentType === 'video' ? 'Online Video (Microsoft Teams)' : `Op Kantoor (${city})`}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-stone-500 block">Datum</span>
+                    <span className="font-bold">{appointmentDate}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-stone-500 block">Gekozen Pakket</span>
+                    <span className="font-bold uppercase">{selectedPlan}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-stone-500 block">Verwacht Belastingvoordeel</span>
+                    <span className="font-bold text-emerald-700">€{estimatedTaxDeductions.toLocaleString('nl-NL')} / jr</span>
+                  </div>
+                </div>
+
+                <div className="bg-stone-50 p-3 rounded-xl border border-stone-200 text-[11px] space-y-1">
+                  <span className="font-bold text-stone-800 block">Handig om bij de hand te hebben:</span>
+                  <ul className="list-disc list-inside text-stone-600 text-[10px] space-y-0.5">
+                    <li>Laatste aangifte inkomstenbelasting of vennootschapsbelasting</li>
+                    <li>KvK inschrijfnummer en btw-identificatienummer</li>
+                    <li>Toegang tot huidige boekhouding (Moneybird, Exact, e-Boekhouden)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="flex gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="flex-1 py-2.5 rounded-xl bg-stone-900 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow hover:opacity-90 cursor-pointer"
+                >
+                  <Printer className="w-3.5 h-3.5" />
+                  <span>Print Afspraakbevestiging & Checklist (PDF)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBooked(false)}
+                  className="px-3 py-2.5 rounded-xl border border-emerald-300 bg-white text-emerald-800 text-xs font-bold hover:bg-emerald-50 cursor-pointer"
+                >
+                  Nieuwe Datum
+                </button>
+              </div>
             </div>
           ) : (
             <form
