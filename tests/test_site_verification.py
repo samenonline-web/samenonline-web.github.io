@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 import json
 import unittest
@@ -936,6 +937,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("min-h-[52px]", bouw_content)
         self.assertIn("min-h-[64px]", bouw_content)
         self.assertIn("active:scale-98", bouw_content)
+
+    # 84. Core Web Vitals & DOM Structure Validator Execution
+    def test_core_web_vitals_and_dom_validator(self):
+        script_file = WORKSPACE / "scripts" / "benchmark_cwv_dom.py"
+        self.assertTrue(script_file.exists(), "scripts/benchmark_cwv_dom.py must exist")
+        import subprocess
+        result = subprocess.run([sys.executable, str(script_file)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, f"CWV Benchmark failed:\n{result.stdout}\n{result.stderr}")
+        self.assertIn("All audited pages pass Core Web Vitals DOM & SEO validation!", result.stdout)
 
 if __name__ == "__main__":
     unittest.main()
