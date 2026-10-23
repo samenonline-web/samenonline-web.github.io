@@ -19,6 +19,7 @@ import {
   Phone,
   MapPin,
   Calendar,
+  Printer,
 } from 'lucide-react';
 
 export const KrachtLijnGym: React.FC<TemplateProps> = ({
@@ -32,6 +33,10 @@ export const KrachtLijnGym: React.FC<TemplateProps> = ({
   const city = customCity?.trim() || 'Utrecht';
 
   const [activeMembership, setActiveMembership] = useState<'basis' | 'pro' | 'elite'>('pro');
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
+  const [isStudent, setIsStudent] = useState<boolean>(false);
+  const [trialVoucherCreated, setTrialVoucherCreated] = useState<boolean>(false);
+  const [memberName, setMemberName] = useState<string>('');
   const [bmi, setBmi] = useState({ weight: 80, height: 175 });
   const [goal, setGoal] = useState<'afvallen' | 'spieropbouw' | 'conditie'>('spieropbouw');
   const [openClassIdx, setOpenClassIdx] = useState<number | null>(null);
@@ -345,15 +350,59 @@ export const KrachtLijnGym: React.FC<TemplateProps> = ({
       {/* Membership */}
       <section id="lidmaatschap" className="py-20 bg-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10">
+          <div className="text-center mb-8">
             <span className="text-xs font-black uppercase tracking-widest text-zinc-500">Kies jouw plan</span>
             <h2 className="text-4xl font-black text-white mt-1">Transparante Prijzen</h2>
-            <p className="text-zinc-500 mt-2">Maandelijks opzegbaar. Geen verborgen kosten.</p>
+            <p className="text-zinc-500 mt-2">Geen verborgen kosten • Sporten in {city}</p>
+          </div>
+
+          {/* Billing Switcher & Student Discount */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+            <div className="inline-flex p-1 rounded-2xl bg-zinc-800 border border-zinc-700 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => setBillingCycle('monthly')}
+                className={`px-4 py-2 rounded-xl transition-all cursor-pointer ${
+                  billingCycle === 'monthly'
+                    ? 'bg-zinc-950 text-white shadow-xs'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                Maandelijks Opzegbaar
+              </button>
+              <button
+                type="button"
+                onClick={() => setBillingCycle('annual')}
+                className={`px-4 py-2 rounded-xl transition-all cursor-pointer ${
+                  billingCycle === 'annual'
+                    ? 'bg-lime-400 text-zinc-900 font-black shadow-xs'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                Jaarabonnement (2 Mnd Gratis 🔥)
+              </button>
+            </div>
+
+            <label className="flex items-center gap-2 text-xs font-bold text-zinc-300 cursor-pointer bg-zinc-800/80 px-3.5 py-2 rounded-xl border border-zinc-700">
+              <input
+                type="checkbox"
+                checked={isStudent}
+                onChange={(e) => setIsStudent(e.target.checked)}
+                className="rounded accent-lime-400"
+              />
+              <span>Studentenkorting (-20%)</span>
+            </label>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {(Object.entries(memberships) as [keyof typeof memberships, typeof memberships.basis][]).map(([key, plan]) => {
               const isActive = activeMembership === key;
+              const displayPrice = isStudent
+                ? Math.round((billingCycle === 'annual' ? (plan.price * 10) / 12 : plan.price) * 0.8)
+                : billingCycle === 'annual'
+                ? Math.round((plan.price * 10) / 12)
+                : plan.price;
+
               return (
                 <div
                   key={key}
@@ -364,8 +413,10 @@ export const KrachtLijnGym: React.FC<TemplateProps> = ({
                     <div className={`${limeBg} text-zinc-900 text-xs font-black px-3 py-0.5 rounded-full inline-block mb-4`}>Meest gekozen</div>
                   )}
                   <div className="text-zinc-400 font-black uppercase tracking-wide text-xs mb-1">{plan.label}</div>
-                  <div className="text-4xl font-black text-white mb-0.5">€{plan.price}</div>
-                  <div className="text-zinc-600 text-xs font-medium mb-5">per maand</div>
+                  <div className="text-4xl font-black text-white mb-0.5">€{displayPrice}</div>
+                  <div className="text-zinc-400 text-xs font-semibold mb-5">
+                    {billingCycle === 'annual' ? 'per maand (jaarcontract)' : 'per maand (maandelijks)'}
+                  </div>
                   <ul className="space-y-2">
                     {plan.features.map((f, fi) => (
                       <li key={fi} className="flex items-start gap-2 text-sm text-zinc-400">
@@ -393,6 +444,106 @@ export const KrachtLijnGym: React.FC<TemplateProps> = ({
           <Flame className="w-10 h-10 mx-auto mb-4" />
           <h2 className="text-4xl font-black mb-4">Klaar om te starten?</h2>
           <p className="text-zinc-700 mb-8 text-lg">7 dagen gratis. Geen creditcard vereist. Stap vandaag nog in {city}.</p>
+          {/* Printable 7-Day Gym Pass Generator */}
+          <div className="my-8 bg-zinc-900 rounded-3xl p-6 sm:p-8 text-white border-2 border-zinc-800 text-left max-w-xl mx-auto shadow-2xl">
+            <div className="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
+              <div className="flex items-center gap-2">
+                <Dumbbell className="w-5 h-5 text-lime-400" />
+                <h3 className="font-black text-base">Claim Jouw 7-Dagen Vrijblijvende Pas</h3>
+              </div>
+              <span className="text-[10px] font-mono bg-lime-400/20 text-lime-400 border border-lime-400/40 px-2 py-0.5 rounded font-black">
+                KL-PASS-2026
+              </span>
+            </div>
+
+            {trialVoucherCreated ? (
+              <div className="space-y-4">
+                <div className="p-4 rounded-2xl border-2 border-dashed border-lime-400/60 bg-zinc-950 space-y-3">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-lime-400 block">
+                        Officiële Proefpas & Voucher
+                      </span>
+                      <span className="font-black text-base text-white">{brandName} Gym</span>
+                    </div>
+                    <span className="text-xs font-bold text-zinc-400">{city}</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <span className="text-[10px] text-zinc-500 block">Naam Sporter</span>
+                      <span className="font-bold text-white">{memberName || 'Nieuw Lid'}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-zinc-500 block">Gekozen Doel</span>
+                      <span className="font-bold text-lime-400 capitalize">{goal}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-zinc-500 block">BMI & Conditieprofiel</span>
+                      <span className="font-bold text-white">{bmiValue} ({bmiCategory})</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-zinc-500 block">Geldigheid</span>
+                      <span className="font-bold text-white">7 aaneengesloten dagen</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-zinc-900 p-2.5 rounded-xl border border-zinc-800 text-[11px] space-y-1">
+                    <span className="font-bold text-lime-400 block">Inbegrepen bij je 7-dagen pas:</span>
+                    <ul className="list-disc list-inside text-zinc-300 text-[10px] space-y-0.5">
+                      <li>Onbeperkte toegang tot alle fitnesszones in {city}</li>
+                      <li>Deelname aan 1x groepsles naar keuze</li>
+                      <li>Gratis body composition analyse met PT coach</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => window.print()}
+                    className="flex-1 py-2.5 rounded-xl bg-lime-400 text-zinc-950 text-xs font-black flex items-center justify-center gap-1.5 shadow hover:bg-lime-300 cursor-pointer"
+                  >
+                    <Printer className="w-3.5 h-3.5" />
+                    <span>Print 7-Dagen Gym Pas (PDF)</span>
+                  </button>
+                  <button
+                    onClick={() => setTrialVoucherCreated(false)}
+                    className="px-3 py-2.5 rounded-xl border border-zinc-700 text-zinc-300 text-xs font-bold hover:bg-zinc-800 cursor-pointer"
+                  >
+                    Nieuwe Pas
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setTrialVoucherCreated(true);
+                }}
+                className="space-y-3"
+              >
+                <div>
+                  <label className="text-[11px] font-bold text-zinc-400 block mb-1">Jouw Volledige Naam</label>
+                  <input
+                    type="text"
+                    required
+                    value={memberName}
+                    onChange={(e) => setMemberName(e.target.value)}
+                    placeholder="bijv. Sander Meijer"
+                    className="w-full px-3 py-2 rounded-xl border border-zinc-700 bg-zinc-950 text-xs font-bold text-white focus:outline-none focus:border-lime-400"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full py-3 rounded-xl bg-lime-400 hover:bg-lime-300 text-zinc-950 text-xs font-black flex items-center justify-center gap-1.5 shadow-md cursor-pointer transition-all"
+                >
+                  <span>Genereer Mijn Gratis 7-Dagen Pas</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
+            )}
+          </div>
+
           <div className="flex flex-wrap gap-4 justify-center">
             <button
               onClick={onRequestQuote}

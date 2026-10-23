@@ -615,5 +615,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("VET-VEN-2026-X", content)
         self.assertIn("Print Afspraakkaart (PDF)", content)
 
+    # 58. KrachtLijnGym Billing Switcher, Student Discount, and Printable Gym Pass
+    def test_krachtlijn_gym_membership_and_pass(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "KrachtLijnGym.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("billingCycle", content)
+        self.assertIn("isStudent", content)
+        self.assertIn("Studentenkorting (-20%)", content)
+        self.assertIn("KL-PASS-2026", content)
+        self.assertIn("Print 7-Dagen Gym Pas (PDF)", content)
+
 if __name__ == "__main__":
     unittest.main()
