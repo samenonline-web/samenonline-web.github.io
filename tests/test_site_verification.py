@@ -722,5 +722,16 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Yoga & Mindfulness Tarieven Module", content)
         self.assertIn("pricePerClass", content)
 
+    # 68. StudioPuurSalon Booking Addons, City Props, and Printable Afspraak Voucher
+    def test_studio_puur_salon_booking_and_voucher(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "StudioPuurSalon.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("PUUR-SALON-2026-X", content)
+        self.assertIn("Print Afspraakbevestiging (PDF)", content)
+        self.assertIn("grandTotal", content)
+        self.assertIn("selectedAddons", content)
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+
 if __name__ == "__main__":
     unittest.main()

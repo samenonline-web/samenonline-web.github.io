@@ -15,6 +15,7 @@ import {
   ArrowRight,
   ShieldCheck,
   MapPin,
+  Printer,
 } from 'lucide-react';
 
 interface Service {
@@ -307,6 +308,15 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
               <span className="text-4xl block">✨</span>
               <h3 className="font-black text-xl text-stone-900">Afspraak Bevestigd (Demo)!</h3>
               <div className="bg-white p-4 rounded-2xl border border-rose-100 text-left space-y-2 text-xs">
+                <div className="flex justify-between items-center border-b border-stone-100 pb-2">
+                  <div>
+                    <span className="text-[10px] text-rose-600 font-black uppercase tracking-wider block">Salon Boeking</span>
+                    <span className="font-black text-xs text-stone-900">{brandTitle} • {cityName}</span>
+                  </div>
+                  <span className="font-mono font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded text-[11px]">
+                    PUUR-SALON-2026-X
+                  </span>
+                </div>
                 <div className="flex justify-between border-b border-stone-100 pb-2">
                   <span className="text-stone-500 font-medium">Behandeling:</span>
                   <span className="font-bold text-stone-900">{activeServiceObj.name}</span>
@@ -335,8 +345,16 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
               <div className="flex flex-col gap-2 pt-2">
                 <button
                   type="button"
+                  onClick={() => window.print()}
+                  className={`w-full py-2.5 px-4 ${theme.primary} ${theme.primaryHover} text-white font-black text-xs rounded-xl cursor-pointer shadow-xs transition-colors flex items-center justify-center gap-1.5`}
+                >
+                  <Printer className="w-3.5 h-3.5" />
+                  <span>Print Afspraakbevestiging (PDF)</span>
+                </button>
+                <button
+                  type="button"
                   onClick={() => showToast('📅 Demo: Agenda-uitnodiging (.ics) klaargezet!')}
-                  className="w-full py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white font-extrabold text-xs rounded-xl cursor-pointer shadow-xs transition-colors"
+                  className="w-full py-2 px-4 bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs rounded-xl cursor-pointer shadow-xs transition-colors"
                 >
                   📅 Voeg toe aan Google / Apple Agenda
                 </button>
@@ -479,6 +497,11 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
           )}
         </div>
       </section>
+
+      {/* Footer Demo Note */}
+      <footer className="py-8 px-4 text-center text-xs text-stone-500 border-t border-stone-200 bg-white">
+        <p>© 2026 {brandTitle} • Kapper & Schoonheidssalon • {cityName} • Fictief Demo Concept</p>
+      </footer>
     </div>
   );
 };
