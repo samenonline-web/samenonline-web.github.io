@@ -235,5 +235,113 @@ class TestMobileViewports(unittest.TestCase):
 
         context.close()
 
+    def test_14_dedicated_vragenlijst_mobile_flow_375px(self):
+        context = self.browser.new_context(viewport={"width": 375, "height": 667})
+        page = context.new_page()
+        page.goto("http://localhost:3000/vragenlijst", wait_until="networkidle")
+
+        scroll_width = page.evaluate("() => document.documentElement.scrollWidth")
+        inner_width = page.evaluate("() => window.innerWidth")
+        self.assertLessEqual(scroll_width, inner_width + 1, f"Horizontal overflow at 375px on /vragenlijst: {scroll_width}")
+
+        q_section = page.locator("#website-vragenlijst")
+        self.assertTrue(q_section.is_visible())
+
+        # Step 1: Click next
+        next_btn = q_section.locator("button:has-text('Volgende Vraag')")
+        self.assertTrue(next_btn.is_visible())
+        next_btn.click()
+        page.wait_for_timeout(150)
+
+        # Step 2: Next
+        next_btn.click()
+        page.wait_for_timeout(150)
+
+        # Step 3: Next
+        next_btn.click()
+        page.wait_for_timeout(150)
+
+        # Step 4: Next
+        next_btn.click()
+        page.wait_for_timeout(150)
+
+        # Step 5: Finish
+        finish_btn = q_section.locator("button:has-text('Bekijk Mijn Persoonlijk Advies')")
+        self.assertTrue(finish_btn.is_visible())
+        finish_btn.click()
+        page.wait_for_timeout(300)
+
+        # Result card assertions
+        text_content = q_section.text_content() or ""
+        self.assertIn("Jouw Aanbevolen Website Oplossing", text_content)
+        self.assertIn("SO-INTAKE-2026-", text_content)
+
+        print_btn = q_section.locator("button:has-text('Print Intake Dossier (PDF)')")
+        self.assertTrue(print_btn.is_visible(), "Print Intake Dossier button must be visible on 375px")
+
+        copy_btn = q_section.locator("button:has-text('Kopieer Specificatie')")
+        self.assertTrue(copy_btn.is_visible(), "Copy specification button must be visible on 375px")
+
+        context.close()
+
+    def test_15_questionnaire_url_prefilling_and_responsive_390px(self):
+        context = self.browser.new_context(viewport={"width": 390, "height": 844})
+        page = context.new_page()
+        page.goto("http://localhost:3000/vragenlijst?stad=amsterdam&spoed=true&pakket=webshop", wait_until="networkidle")
+
+        scroll_width = page.evaluate("() => document.documentElement.scrollWidth")
+        inner_width = page.evaluate("() => window.innerWidth")
+        self.assertLessEqual(scroll_width, inner_width + 1, f"Horizontal overflow at 390px on prefilled /vragenlijst: {scroll_width}")
+
+        q_section = page.locator("#website-vragenlijst")
+        self.assertTrue(q_section.is_visible())
+
+        # Advance through prefilled flow
+        next_btn = q_section.locator("button:has-text('Volgende Vraag')")
+        for _ in range(4):
+            if next_btn.is_visible():
+                next_btn.click()
+                page.wait_for_timeout(100)
+
+        finish_btn = q_section.locator("button:has-text('Bekijk Mijn Persoonlijk Advies')")
+        if finish_btn.is_visible():
+            finish_btn.click()
+            page.wait_for_timeout(250)
+
+            # Assert Amsterdam regional badge in results
+            result_text = q_section.text_content() or ""
+            self.assertIn("Regio Amsterdam", result_text)
+            self.assertIn("Samen Webshop", result_text)
+
+        context.close()
+
+    def test_16_all_12_location_routes_load_without_horizontal_overflow_412px(self):
+        context = self.browser.new_context(viewport={"width": 412, "height": 915})
+        page = context.new_page()
+
+        cities = [
+            "amsterdam", "rotterdam", "den-haag", "utrecht", "eindhoven",
+            "tilburg", "groningen", "breda", "nijmegen", "amersfoort", "almere", "arnhem"
+        ]
+
+        for city_id in cities:
+            url = f"http://localhost:3000/locaties/{city_id}"
+            res = page.goto(url, wait_until="domcontentloaded")
+            self.assertIsNotNone(res)
+            self.assertEqual(res.status, 200, f"Location route /locaties/{city_id} returned status {res.status}")
+
+            scroll_width = page.evaluate("() => document.documentElement.scrollWidth")
+            inner_width = page.evaluate("() => window.innerWidth")
+            self.assertLessEqual(scroll_width, inner_width + 1, f"Horizontal overflow on /locaties/{city_id} at 412px: scrollWidth={scroll_width}")
+
+            h1_text = page.locator("h1").first.text_content() or ""
+            self.assertTrue(len(h1_text) > 0, f"h1 should not be empty on /locaties/{city_id}")
+
+            # Check that Google Maps 3-Pack section is rendered
+            maps_section = page.locator("text=Google Maps & 3-Pack Optimalisatie")
+            self.assertTrue(maps_section.count() > 0, f"Google Maps section missing on /locaties/{city_id}")
+
+        context.close()
+
 if __name__ == "__main__":
     unittest.main()
