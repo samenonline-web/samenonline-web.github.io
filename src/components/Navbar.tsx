@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-md border-b-2 border-orange-100/80 dark:border-slate-800/80 shadow-xs transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3 sm:gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4 overflow-x-clip sm:overflow-visible">
         
         {/* Brand Logo & Name - Clickable to scroll to top */}
         <button
@@ -326,16 +326,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
 
-          {/* Request Website Button */}
+          {/* Request Website Button - visible on sm and up; on mobile the sticky bottom bar handles direct requests */}
           <button
             onClick={() => onOpenRequestModal()}
-            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-bold text-xs sm:text-sm shadow-md shadow-orange-700/20 hover:shadow-lg transition-all transform active:scale-95 cursor-pointer shrink-0"
+            className="hidden sm:flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-bold text-xs sm:text-sm shadow-md shadow-orange-700/20 hover:shadow-lg transition-all transform active:scale-95 cursor-pointer shrink-0"
           >
             <Plus className="w-4 h-4" />
-            <span className="hidden sm:inline">
+            <span>
               {lang === 'nl' ? 'Website Aanvragen' : 'Request Website'}
             </span>
-            <span className="sm:hidden">{lang === 'nl' ? 'Aanvragen' : 'Request'}</span>
           </button>
 
         </div>

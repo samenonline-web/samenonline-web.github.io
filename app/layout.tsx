@@ -251,7 +251,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" className="h-full antialiased scroll-smooth">
+    <html lang="nl" className="h-full antialiased scroll-smooth overflow-x-clip">
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="icon" href="/icon-48x48.png" sizes="48x48" type="image/png" />
@@ -264,7 +264,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-white dark:bg-[#07090e] text-stone-900 dark:text-slate-100 font-sans transition-colors duration-200">
+      <body className="min-h-full flex flex-col bg-white dark:bg-[#07090e] text-stone-900 dark:text-slate-100 font-sans transition-colors duration-200 overflow-x-clip">
         {children}
       </body>
     </html>
