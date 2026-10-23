@@ -257,6 +257,13 @@ export default function RootLayout({
         <link rel="icon" href="/icon-48x48.png" sizes="48x48" type="image/png" />
         <link rel="icon" href="/icon-192x192.png" sizes="192x192" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://dns.google" />
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
+        <meta name="format-detection" content="telephone=no" />
         <meta name="apple-mobile-web-app-title" content="Samen Online" />
         <meta name="application-name" content="Samen Online" />
         <script

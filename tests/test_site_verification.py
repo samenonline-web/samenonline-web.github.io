@@ -877,5 +877,22 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("city.lat", content)
         self.assertIn("city.lng", content)
 
+    # 80. Web Manifest PWA configuration and Performance/Security Headers
+    def test_web_manifest_pwa_and_security_headers(self):
+        manifest_file = WORKSPACE / "app" / "manifest.ts"
+        self.assertTrue(manifest_file.exists(), "app/manifest.ts must exist")
+        manifest_content = manifest_file.read_text(encoding="utf-8")
+        self.assertIn("portrait-primary", manifest_content)
+        self.assertIn("maskable", manifest_content)
+        self.assertIn("categories", manifest_content)
+
+        layout_file = WORKSPACE / "app" / "layout.tsx"
+        layout_content = layout_file.read_text(encoding="utf-8")
+        self.assertIn('rel="manifest"', layout_content)
+        self.assertIn('rel="preconnect"', layout_content)
+        self.assertIn('rel="dns-prefetch"', layout_content)
+        self.assertIn('nosniff', layout_content)
+        self.assertIn('strict-origin-when-cross-origin', layout_content)
+
 if __name__ == "__main__":
     unittest.main()
