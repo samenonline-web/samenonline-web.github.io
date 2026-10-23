@@ -53,10 +53,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="font-extrabold text-xl tracking-tight text-stone-900 dark:text-white group-hover:text-stone-950 dark:group-hover:text-slate-100 font-sans transition-colors">
                 Samen<span className="text-orange-700 dark:text-orange-500">Online</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold px-2 py-0.5 rounded-full bg-orange-100 dark:bg-orange-950/70 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                Showcase
-              </span>
             </div>
             <p className="text-xs text-stone-600 dark:text-slate-400 font-medium hidden sm:block">
               {lang === 'nl' ? 'Website Concepts & Webdesign voor Nederland' : 'Dutch Website Concepts & Custom Design'}
