@@ -17,6 +17,7 @@ import {
   Hammer,
   Layers,
   ChevronRight,
+  Printer,
 } from 'lucide-react';
 
 interface ProjectCase {
@@ -75,6 +76,7 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
   const [finishQuality, setFinishQuality] = useState<'standaard' | 'luxe'>('standaard');
   const [activeProject, setActiveProject] = useState(PROJECTS[0].id);
   const [showAfter, setShowAfter] = useState<Record<string, boolean>>({ b1: true, b2: true, b3: true });
+  const [showDossier, setShowDossier] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -130,8 +132,8 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
             BM
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">BouwMeester Aannemers</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Midden-Nederland • Verbouwingen & Aanbouw</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandTitle}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{cityName} • Verbouwingen & Aanbouw</span>
           </div>
         </div>
 
@@ -347,12 +349,72 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
                   Vraag Vrijblijvende Offerte & Werkopname Aan
                 </button>
                 <button
-                  onClick={handlePrintQuote}
-                  className="w-full py-2 rounded-xl bg-white hover:bg-stone-50 border border-stone-300 text-stone-700 font-bold text-xs transition-colors cursor-pointer"
+                  onClick={() => setShowDossier(!showDossier)}
+                  className="w-full py-2.5 rounded-xl bg-white hover:bg-stone-50 border border-stone-300 text-stone-700 font-bold text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                 >
-                  Download / Print Richtprijs Specificatie
+                  <Printer className="w-3.5 h-3.5" />
+                  <span>{showDossier ? 'Verberg Specificatie' : 'Download / Print Richtprijs Specificatie'}</span>
                 </button>
               </div>
+
+              {/* Printable BouwGarant Richtprijs & Specificatie Dossier */}
+              {showDossier && (
+                <div className="mt-4 p-4 rounded-2xl border-2 border-dashed border-stone-300 bg-white space-y-3">
+                  <div className="flex justify-between items-start border-b pb-2 border-stone-200">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-orange-600 block">
+                        BouwGarant Richtprijs & Specificatie Dossier
+                      </span>
+                      <span className="font-black text-sm text-stone-900">{brandTitle}</span>
+                    </div>
+                    <span className="text-[10px] font-mono bg-stone-900 text-orange-400 px-2 py-0.5 rounded font-bold">
+                      BM-BOUW-2026-X
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-xs text-stone-700">
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Werkregio</span>
+                      <span className="font-bold">{cityName}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Project & Omvang</span>
+                      <span className="font-bold capitalize">{renovationType} • {squareMeters} m²</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Afwerkingsniveau</span>
+                      <span className="font-bold capitalize text-orange-600">{finishQuality}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Richtprijs (incl. btw)</span>
+                      <span className="font-bold text-stone-900">€{calculatedCost.toLocaleString('nl-NL')} (~{calculatedWeeks} wk)</span>
+                    </div>
+                  </div>
+
+                  <div className="text-[10px] text-stone-500 pt-1 border-t border-stone-100 flex justify-between items-center">
+                    <span>10 Jaar Constructiegarantie & CAR-verzekering</span>
+                    <span className="font-bold text-emerald-600">BouwGarant & VCA**</span>
+                  </div>
+
+                  <div className="flex gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={handlePrintQuote}
+                      className={`flex-1 py-2.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-sm cursor-pointer`}
+                    >
+                      <Printer className="w-3.5 h-3.5" />
+                      <span>Print Verbouw Specificatie (PDF)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowDossier(false)}
+                      className="px-3 py-2.5 rounded-xl border border-stone-300 text-stone-600 text-xs font-bold hover:bg-stone-100 cursor-pointer"
+                    >
+                      Sluiten
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -421,6 +483,11 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
           </div>
         </div>
       </section>
+
+      {/* Footer Demo Note */}
+      <footer className="py-8 px-4 text-center text-xs text-stone-500 border-t border-stone-200 bg-white">
+        <p>© 2026 {brandTitle} • Bouw & Aannemersbedrijf • {cityName} • Fictief Demo Concept</p>
+      </footer>
     </div>
   );
 };

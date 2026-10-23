@@ -699,5 +699,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Officiële Dakscan & Investeringsraming", content)
         self.assertIn("Scope 12 & InstallQ", content)
 
+    # 66. BouwMeesterAannemer M2 Estimator, BouwGarant, and Printable Specification Dossier
+    def test_bouwmeester_aannemer_estimator_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "BouwMeesterAannemer.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("showDossier", content)
+        self.assertIn("BM-BOUW-2026-X", content)
+        self.assertIn("Print Verbouw Specificatie (PDF)", content)
+        self.assertIn("BouwGarant Richtprijs & Specificatie Dossier", content)
+        self.assertIn("BouwGarant & VCA**", content)
+
 if __name__ == "__main__":
     unittest.main()
