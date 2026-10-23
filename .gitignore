@@ -45,3 +45,8 @@ next-env.d.ts
 .godkiller/
 .agentMemory/
 /arena/
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
