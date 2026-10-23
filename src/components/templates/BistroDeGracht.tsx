@@ -465,7 +465,7 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-xl transition-all capitalize cursor-pointer flex items-center gap-1 ${
+                className={`min-h-[40px] px-4 py-2 rounded-xl transition-all capitalize cursor-pointer flex items-center gap-1 active:scale-95 ${
                   activeCategory === cat ? 'bg-white text-stone-900 shadow-sm font-black' : 'text-stone-600 hover:text-stone-900'
                 }`}
               >
@@ -514,27 +514,29 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
                     {inCartCount === 0 ? (
                       <button
                         onClick={() => addToCart(item)}
-                        className={`w-full py-2.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer`}
+                        className={`w-full min-h-[44px] py-2.5 px-3 rounded-xl ${theme.primary} ${theme.primaryHover} active:scale-98 text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer`}
                       >
-                        <Plus className="w-3.5 h-3.5" />
+                        <Plus className="w-4 h-4" />
                         <span>Voeg Toe Aan Bestelling</span>
                       </button>
                     ) : (
-                      <div className="w-full flex items-center justify-between bg-stone-100 p-1 rounded-xl">
+                      <div className="w-full min-h-[44px] flex items-center justify-between bg-stone-100 p-1 rounded-xl">
                         <button
                           onClick={() => updateQuantity(item.id, -1)}
-                          className="w-7 h-7 rounded-lg bg-white text-stone-800 shadow-xs flex items-center justify-center font-bold cursor-pointer"
+                          className="min-w-[40px] min-h-[40px] rounded-lg bg-white text-stone-800 shadow-xs flex items-center justify-center font-bold active:scale-95 cursor-pointer"
+                          aria-label={`Verlaag aantal ${item.name}`}
                         >
-                          <Minus className="w-3.5 h-3.5" />
+                          <Minus className="w-4 h-4" />
                         </button>
-                        <span className="text-xs font-bold text-stone-900">
+                        <span className="text-xs font-bold text-stone-900 px-2">
                           {inCartCount} in bestelling
                         </span>
                         <button
                           onClick={() => updateQuantity(item.id, 1)}
-                          className="w-7 h-7 rounded-lg bg-white text-stone-800 shadow-xs flex items-center justify-center font-bold cursor-pointer"
+                          className="min-w-[40px] min-h-[40px] rounded-lg bg-white text-stone-800 shadow-xs flex items-center justify-center font-bold active:scale-95 cursor-pointer"
+                          aria-label={`Verhoog aantal ${item.name}`}
                         >
-                          <Plus className="w-3.5 h-3.5" />
+                          <Plus className="w-4 h-4" />
                         </button>
                       </div>
                     )}
@@ -596,7 +598,7 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
                     <button
                       key={num}
                       onClick={() => setGuests(num)}
-                      className={`py-2 rounded-xl text-xs font-black border transition-all cursor-pointer ${
+                      className={`min-h-[44px] py-2 rounded-xl text-xs font-black border transition-all active:scale-95 cursor-pointer flex items-center justify-center ${
                         guests === num ? `${theme.primary} text-white border-transparent shadow-xs` : 'border-stone-200 hover:bg-stone-50'
                       }`}
                     >
@@ -645,7 +647,7 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
                   <button
                     type="button"
                     onClick={() => setSeating('binnen')}
-                    className={`p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+                    className={`min-h-[44px] p-3 rounded-xl border text-xs font-bold transition-all active:scale-95 cursor-pointer ${
                       seating === 'binnen' ? `${theme.primary} text-white border-transparent shadow-xs` : 'border-stone-200 hover:bg-stone-50'
                     }`}
                   >
@@ -654,7 +656,7 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
                   <button
                     type="button"
                     onClick={() => setSeating('terras')}
-                    className={`p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+                    className={`min-h-[44px] p-3 rounded-xl border text-xs font-bold transition-all active:scale-95 cursor-pointer ${
                       seating === 'terras' ? `${theme.primary} text-white border-transparent shadow-xs` : 'border-stone-200 hover:bg-stone-50'
                     }`}
                   >

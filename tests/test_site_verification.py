@@ -921,5 +921,21 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("params.get('onderwerp')", q_content)
         self.assertIn("Kennisbank Thema", q_content)
 
+    # 83. Interactive Demo Mobile Touch Targets and Haptic Feedback
+    def test_interactive_demo_mobile_touch_targets_and_haptics(self):
+        bistro_file = WORKSPACE / "src" / "components" / "templates" / "BistroDeGracht.tsx"
+        self.assertTrue(bistro_file.exists(), "BistroDeGracht.tsx must exist")
+        bistro_content = bistro_file.read_text(encoding="utf-8")
+        self.assertIn("min-h-[44px]", bistro_content)
+        self.assertIn("min-w-[40px] min-h-[40px]", bistro_content)
+        self.assertIn("active:scale-95", bistro_content)
+
+        bouw_file = WORKSPACE / "src" / "components" / "templates" / "BouwMeesterAannemer.tsx"
+        self.assertTrue(bouw_file.exists(), "BouwMeesterAannemer.tsx must exist")
+        bouw_content = bouw_file.read_text(encoding="utf-8")
+        self.assertIn("min-h-[52px]", bouw_content)
+        self.assertIn("min-h-[64px]", bouw_content)
+        self.assertIn("active:scale-98", bouw_content)
+
 if __name__ == "__main__":
     unittest.main()

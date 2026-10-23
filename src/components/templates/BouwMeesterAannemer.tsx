@@ -234,7 +234,7 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
                     <button
                       key={item.id}
                       onClick={() => setRenovationType(item.id as any)}
-                      className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                      className={`min-h-[52px] p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all active:scale-98 cursor-pointer ${
                         renovationType === item.id
                           ? `${theme.borderLight} bg-stone-50 ring-2 ring-orange-500/25`
                           : 'border-stone-200 hover:bg-stone-50 text-stone-700'
@@ -275,7 +275,7 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => setFinishQuality('standaard')}
-                    className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                    className={`min-h-[64px] p-3 rounded-2xl border-2 text-left transition-all active:scale-98 cursor-pointer ${
                       finishQuality === 'standaard'
                         ? 'border-orange-600 bg-orange-50/50 text-stone-900'
                         : 'border-stone-200 bg-white text-stone-600 hover:border-stone-300'
@@ -286,7 +286,7 @@ export const BouwMeesterAannemer: React.FC<TemplateProps> = ({
                   </button>
                   <button
                     onClick={() => setFinishQuality('luxe')}
-                    className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                    className={`min-h-[64px] p-3 rounded-2xl border-2 text-left transition-all active:scale-98 cursor-pointer ${
                       finishQuality === 'luxe'
                         ? 'border-orange-600 bg-orange-50/50 text-stone-900'
                         : 'border-stone-200 bg-white text-stone-600 hover:border-stone-300'
