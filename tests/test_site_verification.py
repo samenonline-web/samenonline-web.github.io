@@ -803,5 +803,17 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("MP-ESCROW-2026-", content)
         self.assertIn("Print Klusaanvraag (PDF)", content)
 
+    # 75. BistroDeGracht Tasting Menu, Wine Pairing, and Printable Reservation Dossier
+    def test_bistro_de_gracht_tasting_menu_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "BistroDeGracht.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("tastingCourses", content)
+        self.assertIn("includeWinePairing", content)
+        self.assertIn("totalTastingEstimate", content)
+        self.assertIn("BG-RES-2026-", content)
+        self.assertIn("Print Reserveringspaspoort (PDF)", content)
+
 if __name__ == "__main__":
     unittest.main()

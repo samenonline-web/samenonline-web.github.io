@@ -25,6 +25,8 @@ import {
   CheckCircle2,
   Trash2,
   Leaf,
+  FileText,
+  Sliders,
 } from 'lucide-react';
 
 interface MenuItem {
@@ -121,7 +123,26 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
   const [resTime, setResTime] = useState('19:00');
   const [seating, setSeating] = useState<'binnen' | 'terras'>('binnen');
   const [reserved, setReserved] = useState(false);
+  const [reservationToken, setReservationToken] = useState('BG-RES-2026-6819');
+  const [tastingCourses, setTastingCourses] = useState<3 | 4 | 5>(4);
+  const [includeWinePairing, setIncludeWinePairing] = useState<boolean>(true);
+  const [dietaryNotes, setDietaryNotes] = useState<string>('');
+  const [showDossier, setShowDossier] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const coursePriceMap: Record<number, number> = {
+    3: 44.50,
+    4: 54.50,
+    5: 67.50,
+  };
+  const pricePerPerson = (coursePriceMap[tastingCourses] || 54.50) + (includeWinePairing ? 24.50 : 0);
+  const totalTastingEstimate = pricePerPerson * guests;
+
+  const handleReserve = () => {
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    setReservationToken(`BG-RES-2026-${rand}`);
+    setReserved(true);
+  };
 
   // Cart & Ordering State
   const [cart, setCart] = useState<Record<string, number>>({});
@@ -544,18 +565,20 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
               
               <div className="p-3 bg-white rounded-2xl border border-amber-200 text-[11px] text-stone-600 flex items-center justify-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>Reserveringsticket #BG-{Math.floor(1000 + Math.random() * 9000)} bevestigd</span>
+                <span>Reserveringsticket #{reservationToken} bevestigd</span>
               </div>
 
               <div className="pt-2 flex items-center justify-center gap-3">
                 <button
-                  onClick={() => window.print()}
+                  type="button"
+                  onClick={() => setShowDossier(true)}
                   className="px-4 py-2 rounded-xl bg-stone-900 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer hover:bg-stone-800 transition-colors"
                 >
                   <Printer className="w-3.5 h-3.5" />
-                  <span>Print Ticket</span>
+                  <span>Print Reserveringspaspoort (PDF)</span>
                 </button>
                 <button
+                  type="button"
                   onClick={() => setReserved(false)}
                   className="text-xs text-stone-500 font-bold underline cursor-pointer hover:text-stone-900"
                 >
@@ -620,6 +643,7 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
                 <label className="text-xs font-black text-stone-700 block mb-2">Tafelvoorkeur:</label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
+                    type="button"
                     onClick={() => setSeating('binnen')}
                     className={`p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                       seating === 'binnen' ? `${theme.primary} text-white border-transparent shadow-xs` : 'border-stone-200 hover:bg-stone-50'
@@ -628,6 +652,7 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
                     🍷 Sfeervolle Werfkelder
                   </button>
                   <button
+                    type="button"
                     onClick={() => setSeating('terras')}
                     className={`p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                       seating === 'terras' ? `${theme.primary} text-white border-transparent shadow-xs` : 'border-stone-200 hover:bg-stone-50'
@@ -638,9 +663,66 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
                 </div>
               </div>
 
+              {/* Chef's Tasting Menu & Wijnarrangement */}
+              <div className="p-4 bg-amber-50/60 border border-amber-200 rounded-2xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-black text-amber-950 flex items-center gap-1.5">
+                    <UtensilsCrossed className="w-3.5 h-3.5 text-amber-700" />
+                    <span>Chef&apos;s Tasting Menu Arrangement:</span>
+                  </label>
+                  <span className="text-xs font-bold text-amber-900">€{pricePerPerson.toFixed(2)} p.p.</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { c: 3, label: '3-Gangen', price: '€44.50' },
+                    { c: 4, label: '4-Gangen', price: '€54.50' },
+                    { c: 5, label: '5-Gangen', price: '€67.50' },
+                  ].map((item) => (
+                    <button
+                      key={item.c}
+                      type="button"
+                      onClick={() => setTastingCourses(item.c as any)}
+                      className={`py-2 px-3 rounded-xl border text-center transition-all cursor-pointer ${
+                        tastingCourses === item.c
+                          ? 'border-amber-600 bg-amber-600 text-white font-black shadow-xs'
+                          : 'border-amber-200 bg-white text-stone-700 text-xs font-bold hover:bg-amber-100/50'
+                      }`}
+                    >
+                      <span className="block text-xs">{item.label}</span>
+                      <span className={`text-[10px] ${tastingCourses === item.c ? 'text-amber-100' : 'text-stone-500'}`}>{item.price}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIncludeWinePairing(!includeWinePairing)}
+                  className={`w-full p-2.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
+                    includeWinePairing ? 'border-amber-600 bg-white' : 'border-amber-200 bg-white/70'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Wine className="w-4 h-4 text-amber-700" />
+                    <span className="text-xs font-bold text-stone-800">Bijpassend Wijnarrangement (+€24.50 p.p.)</span>
+                  </div>
+                  <div className={`w-4 h-4 rounded-md flex items-center justify-center border text-[10px] ${
+                    includeWinePairing ? 'bg-amber-600 text-white border-amber-600 font-bold' : 'border-stone-300'
+                  }`}>
+                    {includeWinePairing && '✓'}
+                  </div>
+                </button>
+
+                <div className="pt-1 flex items-center justify-between text-xs font-black text-amber-950 border-t border-amber-200/60">
+                  <span>Totaal arrangement ({guests} pers):</span>
+                  <span className="text-base text-amber-800">€{totalTastingEstimate.toFixed(2)}</span>
+                </div>
+              </div>
+
               {/* Submit CTA */}
               <button
-                onClick={() => setReserved(true)}
+                type="button"
+                onClick={handleReserve}
                 className={`w-full py-4 rounded-2xl ${theme.primary} ${theme.primaryHover} text-white text-xs font-black transition-all shadow-md cursor-pointer flex items-center justify-center gap-2`}
               >
                 <Check className="w-4 h-4" />
@@ -656,6 +738,128 @@ export const BistroDeGracht: React.FC<TemplateProps> = ({
         <p className="font-bold text-stone-300 mb-1">{brandTitle} • Gastronomisch Genieten in {cityName}</p>
         <p>© {new Date().getFullYear()} {brandTitle}. Live demo gebouwd op Next.js door Samen Online.</p>
       </footer>
+
+      {/* Printable Reserveringspaspoort Modal */}
+      {showDossier && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-stone-200 relative my-8 text-stone-900">
+            <button
+              onClick={() => setShowDossier(false)}
+              className="absolute top-5 right-5 p-2 rounded-full hover:bg-stone-100 text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Print Container */}
+            <div id="printable-reservering" className="space-y-6">
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black tracking-wider uppercase">
+                      Officiële Reserveringsbevestiging
+                    </span>
+                    <span className="text-[11px] font-bold text-stone-500">Grachtenzijde {cityName}</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                    {brandTitle} • Gastronomisch Paspoort
+                  </h3>
+                  <p className="text-xs text-stone-500 font-medium">
+                    Tafelvoucher Token: <span className="font-mono font-bold text-stone-800">{reservationToken}</span>
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="inline-block p-2 bg-stone-50 border border-stone-200 rounded-xl text-center">
+                    <Wine className="w-8 h-8 mx-auto text-amber-600" />
+                    <span className="text-[9px] font-mono text-stone-500 block mt-0.5">{reservationToken}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reservation Details */}
+              <div className="border border-stone-200 rounded-2xl overflow-hidden text-xs">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-stone-100/70 border-b border-stone-200 text-stone-600 font-black">
+                      <th className="py-2.5 px-4">Onderdeel</th>
+                      <th className="py-2.5 px-4">Specificatie</th>
+                      <th className="py-2.5 px-4 text-right">Details</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-stone-100">
+                    <tr className="font-medium text-stone-800">
+                      <td className="py-2.5 px-4 font-bold text-stone-900">Datum &amp; Tijdslot</td>
+                      <td className="py-2.5 px-4 text-stone-600">{resDate} om {resTime} uur</td>
+                      <td className="py-2.5 px-4 text-right font-bold text-emerald-700">Bevestigd</td>
+                    </tr>
+                    <tr className="font-medium text-stone-800">
+                      <td className="py-2.5 px-4 font-bold text-stone-900">Gezelschap &amp; Tafel</td>
+                      <td className="py-2.5 px-4 text-stone-600">
+                        {guests} personen • {seating === 'binnen' ? 'Sfeervolle Werfkelder' : 'Terras aan het water'}
+                      </td>
+                      <td className="py-2.5 px-4 text-right font-bold">{guests}x couvert</td>
+                    </tr>
+                    <tr className="font-medium text-stone-800">
+                      <td className="py-2.5 px-4 font-bold text-stone-900">Chef&apos;s Tasting Arrangement</td>
+                      <td className="py-2.5 px-4 text-stone-600">
+                        {tastingCourses}-Gangen Seizoensmenu (€{coursePriceMap[tastingCourses].toFixed(2)} p.p.)
+                      </td>
+                      <td className="py-2.5 px-4 text-right font-black">
+                        €{(coursePriceMap[tastingCourses] * guests).toFixed(2)}
+                      </td>
+                    </tr>
+                    {includeWinePairing && (
+                      <tr className="font-medium text-stone-800 bg-amber-50/40">
+                        <td className="py-2.5 px-4 font-bold text-amber-950">Wijnarrangement</td>
+                        <td className="py-2.5 px-4 text-amber-800">
+                          {tastingCourses} glazen geselecteerde Europese wijnen (€24.50 p.p.)
+                        </td>
+                        <td className="py-2.5 px-4 text-right font-black text-amber-900">
+                          €{(24.50 * guests).toFixed(2)}
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Hospitality note */}
+              <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 text-xs text-stone-600 space-y-1">
+                <span className="font-bold text-stone-900 block">Belangrijke Informatie voor jouw bezoek in {cityName}:</span>
+                <p>• Wij houden je tafel tot 15 minuten na aanvangstijd vast.</p>
+                <p>• Allergieën of dieetwensen (vega/glutenvrij/zwanger) kun je bij binnenkomst direct aan de bediening doorgeven.</p>
+                <p>• Kosteloos wijzigen of annuleren via de website tot 4 uur voor aanvang.</p>
+              </div>
+
+              {/* Total & Action Buttons */}
+              <div className="bg-amber-50/70 border border-amber-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <span className="text-[11px] font-bold text-amber-800 block">Verwachte Couvert Investering:</span>
+                  <span className="text-2xl font-black text-amber-950">€{totalTastingEstimate.toFixed(2)}</span>
+                  <span className="text-xs text-amber-700 block font-medium">Betaling ter plekke na afloop van het diner</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowDossier(false)}
+                    className="px-4 py-2.5 rounded-xl border border-stone-300 text-stone-700 font-bold text-xs hover:bg-stone-100 cursor-pointer"
+                  >
+                    Sluiten
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => window.print()}
+                    className="px-5 py-2.5 rounded-xl bg-stone-900 hover:bg-black text-white font-black text-xs shadow-md flex items-center gap-2 cursor-pointer"
+                  >
+                    <Printer className="w-4 h-4" />
+                    <span>Print Reserveringspaspoort (PDF)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
