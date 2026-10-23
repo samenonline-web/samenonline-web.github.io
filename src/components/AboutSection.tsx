@@ -14,8 +14,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
       
       <div className="max-w-5xl mx-auto text-center relative z-10">
         
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-800 dark:text-orange-300 font-extrabold text-xs mb-6 border border-orange-200 dark:border-orange-800/60">
-          <Heart className="w-3.5 h-3.5 fill-orange-600 text-orange-600 dark:text-orange-400" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 font-extrabold text-xs mb-6 border border-orange-200 dark:border-blue-800/60">
+          <Heart className="w-3.5 h-3.5 fill-orange-600 text-orange-600 dark:fill-blue-500 dark:text-blue-400" />
           <span>{lang === 'nl' ? 'Over Samen Online' : 'About Samen Online'}</span>
         </div>
 
@@ -33,7 +33,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
           <div className="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-orange-100 dark:border-slate-800 shadow-xs flex flex-col transition-colors">
-            <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-blue-400 flex items-center justify-center mb-4">
               <MapPin className="w-6 h-6" />
             </div>
             <h3 className="font-extrabold text-base mb-1.5 text-stone-900 dark:text-white">
@@ -47,7 +47,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
           </div>
 
           <div className="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-orange-100 dark:border-slate-800 shadow-xs flex flex-col transition-colors">
-            <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-blue-400 flex items-center justify-center mb-4">
               <Compass className="w-6 h-6" />
             </div>
             <h3 className="font-extrabold text-base mb-1.5 text-stone-900 dark:text-white">
@@ -61,7 +61,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
           </div>
 
           <div className="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-orange-100 dark:border-slate-800 shadow-xs flex flex-col transition-colors">
-            <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-blue-400 flex items-center justify-center mb-4">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <h3 className="font-extrabold text-base mb-1.5 text-stone-900 dark:text-white">
@@ -75,7 +75,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
           </div>
 
           <div className="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-orange-100 dark:border-slate-800 shadow-xs flex flex-col transition-colors">
-            <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-blue-400 flex items-center justify-center mb-4">
               <Sparkles className="w-6 h-6" />
             </div>
             <h3 className="font-extrabold text-base mb-1.5 text-stone-900 dark:text-white">

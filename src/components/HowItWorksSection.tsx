@@ -78,8 +78,8 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
     <section id="hoe-wij-werken" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-black uppercase tracking-wider">
-          <CheckCircle2 className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 border border-orange-200 dark:border-blue-800/60 text-xs font-black uppercase tracking-wider">
+          <CheckCircle2 className="w-4 h-4 text-orange-600 dark:text-blue-400" />
           <span>{lang === 'nl' ? 'Transparante Werkwijze' : 'How We Work'}</span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-white tracking-tight">
@@ -104,15 +104,15 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               <div>
                 {/* Step Top Bar */}
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-3xl font-black text-stone-300 dark:text-slate-700 group-hover:text-orange-500 transition-colors font-mono">
+                  <span className="text-3xl font-black text-stone-300 dark:text-slate-700 group-hover:text-orange-500 dark:group-hover:text-blue-400 transition-colors font-mono">
                     {item.step}
                   </span>
-                  <div className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-orange-600 dark:text-orange-400 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-orange-600 dark:text-blue-400 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                     <Icon className="w-6 h-6" />
                   </div>
                 </div>
 
-                <span className="text-[10px] font-black uppercase tracking-wider text-orange-700 dark:text-orange-300 bg-orange-100 dark:bg-orange-950/80 px-2.5 py-0.5 rounded-full inline-block mb-3">
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange-700 dark:text-blue-300 bg-orange-100 dark:bg-blue-950/80 px-2.5 py-0.5 rounded-full inline-block mb-3">
                   {lang === 'nl' ? item.badgeNl : item.badgeEn}
                 </span>
 
@@ -157,7 +157,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
           </button>
           <button
             onClick={onOpenRequestModal}
-            className="px-5 py-3 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-black text-xs flex items-center gap-2 transition-all cursor-pointer shadow-md shadow-orange-700/30 whitespace-nowrap"
+            className="px-5 py-3 rounded-xl bg-orange-700 hover:bg-orange-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-black text-xs flex items-center gap-2 transition-all cursor-pointer shadow-md shadow-orange-700/30 dark:shadow-blue-900/40 whitespace-nowrap"
           >
             <span>{lang === 'nl' ? 'Start Jouw Aanvraag' : 'Start Your Project'}</span>
             <ArrowRight className="w-4 h-4" />

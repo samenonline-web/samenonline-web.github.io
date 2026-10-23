@@ -52,8 +52,8 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
     <section id="redesign-slider" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-black uppercase tracking-wider">
-          <SplitSquareVertical className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 border border-orange-200 dark:border-blue-800/60 text-xs font-black uppercase tracking-wider">
+          <SplitSquareVertical className="w-4 h-4 text-orange-600 dark:text-blue-400" />
           <span>{lang === 'nl' ? 'Interactieve Transformatie' : 'Interactive Transformation'}</span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-white tracking-tight">
@@ -114,7 +114,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
         className="relative w-full h-[400px] sm:h-[480px] rounded-3xl overflow-hidden border-2 border-orange-200/90 shadow-2xl select-none cursor-ew-resize bg-white dark:bg-stone-900"
       >
         {/* NEW SITE LAYER (Right / Background Base) */}
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-slate-950 dark:via-slate-900 dark:to-orange-950 p-6 sm:p-10 flex flex-col justify-between text-stone-900 dark:text-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950/60 p-6 sm:p-10 flex flex-col justify-between text-stone-900 dark:text-white">
           {/* Top Bar Simulated Browser */}
           <div className="flex items-center justify-between border-b border-orange-200/80 dark:border-white/10 pb-4">
             <div className="flex items-center gap-2">
@@ -130,7 +130,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
 
           {/* New Site Content Mockup */}
           <div className="my-auto max-w-xl space-y-4">
-            <span className="px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/20 text-orange-800 dark:text-orange-400 border border-orange-300 dark:border-orange-500/30 text-xs font-bold inline-block">
+            <span className="px-3 py-1 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 border border-orange-300 dark:border-blue-800/60 text-xs font-bold inline-block">
               ✨ 2026 Modern Design & Conversie Machine
             </span>
             <h3 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight text-stone-900 dark:text-white">
@@ -251,7 +251,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
         <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-stone-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-stone-500 dark:text-slate-400">Google PageSpeed Score</span>
-            <Gauge className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+            <Gauge className="w-4 h-4 text-orange-600 dark:text-blue-400" />
           </div>
           <div className="space-y-1">
             <div className="flex justify-between items-baseline">
@@ -272,7 +272,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
         <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-stone-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-stone-500 dark:text-slate-400">Laadtijd (LCP Benchmark)</span>
-            <Clock className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+            <Clock className="w-4 h-4 text-orange-600 dark:text-blue-400" />
           </div>
           <div className="space-y-1">
             <div className="flex justify-between items-baseline">
@@ -292,7 +292,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
         <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-stone-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-stone-500 dark:text-slate-400">Mobiele Conversie</span>
-            <Smartphone className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+            <Smartphone className="w-4 h-4 text-orange-600 dark:text-blue-400" />
           </div>
           <div className="space-y-1">
             <div className="flex justify-between items-baseline">
@@ -312,7 +312,7 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
         <div className="p-5 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-stone-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-stone-500 dark:text-slate-400">Veiligheid & Onderhoud</span>
-            <ShieldCheck className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+            <ShieldCheck className="w-4 h-4 text-orange-600 dark:text-blue-400" />
           </div>
           <div className="space-y-1">
             <div className="flex justify-between items-baseline">
@@ -348,13 +348,13 @@ export const BeforeAfterRedesignSection: React.FC<BeforeAfterRedesignSectionProp
             onClick={() => setIsCaseStudyOpen(true)}
             className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-stone-100 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-200 border-2 border-stone-300 dark:border-slate-700 font-extrabold text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer whitespace-nowrap"
           >
-            <FileText className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+            <FileText className="w-4 h-4 text-orange-600 dark:text-blue-400" />
             <span>{lang === 'nl' ? 'Bekijk Casestudie (+64% Leads)' : 'View Case Study (+64%)'}</span>
           </button>
 
           <button
             onClick={onOpenRedesignRequest}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-orange-700/30 transition-all cursor-pointer whitespace-nowrap"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-700 hover:bg-orange-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-orange-700/30 dark:shadow-blue-900/40 transition-all cursor-pointer whitespace-nowrap"
           >
             <span>{lang === 'nl' ? 'Gratis Redesign Scan' : 'Free Redesign Scan'}</span>
             <ArrowRight className="w-4 h-4" />

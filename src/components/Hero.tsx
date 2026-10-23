@@ -33,8 +33,8 @@ export const Hero: React.FC<HeroProps> = ({
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 dark:bg-orange-950/70 border border-orange-200 dark:border-orange-800/60 text-orange-800 dark:text-orange-300 font-extrabold text-xs mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-orange-600" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 dark:bg-blue-950/60 border border-orange-200 dark:border-blue-800/60 text-orange-800 dark:text-blue-300 font-extrabold text-xs mb-6">
+          <Sparkles className="w-3.5 h-3.5 text-orange-600 dark:text-blue-400" />
           <span>
             {lang === 'nl' 
               ? 'Samen Online • Website Concepts & Templates' 
@@ -46,11 +46,11 @@ export const Hero: React.FC<HeroProps> = ({
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-stone-900 dark:text-white tracking-tight leading-tight mb-6">
           {lang === 'nl' ? (
             <>
-              Originele <span className="text-orange-700 dark:text-orange-500">Website Concepts</span> voor Nederlandse bedrijven
+              Originele <span className="text-orange-700 dark:text-blue-400">Website Concepts</span> voor Nederlandse bedrijven
             </>
           ) : (
             <>
-              Original <span className="text-orange-700 dark:text-orange-500">Website Concepts</span> for Dutch web projects
+              Original <span className="text-orange-700 dark:text-blue-400">Website Concepts</span> for Dutch web projects
             </>
           )}
         </h1>
@@ -84,7 +84,7 @@ export const Hero: React.FC<HeroProps> = ({
           className="max-w-2xl mx-auto bg-white dark:bg-slate-900/90 p-2.5 rounded-2xl border-2 border-orange-100 dark:border-slate-800 shadow-lg shadow-orange-500/5 flex flex-col sm:flex-row items-center gap-2 mb-8 backdrop-blur-md"
         >
           <div className="relative flex-1 w-full flex items-center">
-            <Search className="w-5 h-5 text-orange-500 absolute left-4 pointer-events-none" />
+            <Search className="w-5 h-5 text-orange-500 dark:text-blue-400 absolute left-4 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
@@ -101,14 +101,14 @@ export const Hero: React.FC<HeroProps> = ({
             <button
               type="button"
               onClick={() => onSearchChange('')}
-              className="text-xs text-orange-700 dark:text-orange-400 hover:text-orange-900 dark:hover:text-orange-300 px-3 py-1 font-bold cursor-pointer"
+              className="text-xs text-orange-700 dark:text-blue-400 hover:text-orange-900 dark:hover:text-blue-300 px-3 py-1 font-bold cursor-pointer"
             >
               {lang === 'nl' ? 'Wis' : 'Clear'}
             </button>
           )}
           <button
             type="submit"
-            className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-bold text-xs shadow-md shadow-orange-700/20 transition-all cursor-pointer whitespace-nowrap"
+            className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange-700 dark:bg-blue-600 hover:bg-orange-800 dark:hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-orange-700/20 dark:shadow-blue-600/30 transition-all cursor-pointer whitespace-nowrap"
           >
             {lang === 'nl' ? 'Bekijk Resultaten' : 'View Results'}
           </button>
@@ -135,7 +135,7 @@ export const Hero: React.FC<HeroProps> = ({
                 }}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-2xs ${
                   isActive
-                    ? 'bg-orange-700 text-white border border-orange-700 shadow-md scale-105'
+                    ? 'bg-orange-700 dark:bg-blue-600 text-white border border-orange-700 dark:border-blue-600 shadow-md scale-105'
                     : 'bg-orange-50/70 dark:bg-slate-900 hover:bg-orange-100 dark:hover:bg-slate-800 border border-orange-200/80 dark:border-slate-800 text-orange-950 dark:text-slate-200 hover:border-orange-300 dark:hover:border-slate-700'
                 }`}
               >
@@ -148,7 +148,7 @@ export const Hero: React.FC<HeroProps> = ({
         {/* Quick Transition Redesign Card (Stitch Pattern) */}
         <div className="mt-8 max-w-3xl mx-auto p-4 sm:p-5 rounded-2xl bg-orange-50/70 dark:bg-slate-900 border border-orange-200/90 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-left shadow-xs">
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/80 text-orange-700 dark:text-orange-400 flex items-center justify-center shrink-0 shadow-2xs">
+            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-blue-950/80 text-orange-700 dark:text-blue-400 flex items-center justify-center shrink-0 shadow-2xs">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>

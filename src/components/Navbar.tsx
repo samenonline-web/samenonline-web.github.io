@@ -155,13 +155,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           title={lang === 'nl' ? 'Scroll naar boven' : 'Scroll to top'}
           aria-label={lang === 'nl' ? 'Samen Online home - Terug naar boven' : 'Samen Online home - Scroll to top'}
         >
-          <div className="w-11 h-11 shrink-0 aspect-square rounded-2xl bg-orange-700 flex items-center justify-center text-white shadow-md shadow-orange-700/20 transform group-hover:scale-105 transition-transform">
+          <div className="w-11 h-11 shrink-0 aspect-square rounded-2xl bg-orange-700 dark:bg-blue-600 flex items-center justify-center text-white shadow-md shadow-orange-700/20 dark:shadow-blue-600/30 transform group-hover:scale-105 transition-transform">
             <Heart className="w-6 h-6 fill-white text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-xl tracking-tight text-stone-900 dark:text-white group-hover:text-stone-950 dark:group-hover:text-slate-100 font-sans transition-colors">
-                Samen<span className="text-orange-700 dark:text-orange-500">Online</span>
+                Samen<span className="text-orange-700 dark:text-blue-400">Online</span>
               </span>
             </div>
             <p className="text-xs text-stone-600 dark:text-slate-400 font-medium hidden sm:block">
@@ -179,12 +179,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-haspopup="true"
             className={`flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer border shadow-2xs select-none ${
               isNavDropdownOpen
-                ? 'bg-orange-700 text-white border-orange-700 shadow-sm'
+                ? 'bg-orange-700 dark:bg-blue-600 text-white border-orange-700 dark:border-blue-600 shadow-sm'
                 : 'bg-orange-50/80 dark:bg-slate-900 text-stone-800 dark:text-slate-200 border-orange-200/80 dark:border-slate-800 hover:bg-orange-100 dark:hover:bg-slate-800'
             }`}
             title={lang === 'nl' ? 'Snel naar een belangrijk onderdeel van de site' : 'Jump to section'}
           >
-            <Sparkles className="w-4 h-4 text-orange-500" />
+            <Sparkles className="w-4 h-4 text-orange-500 dark:text-blue-400" />
             <span className="hidden md:inline">
               {lang === 'nl' ? 'Snel naar' : 'Jump to'}
             </span>
@@ -201,7 +201,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="absolute left-0 sm:left-auto sm:right-0 mt-2 w-80 sm:w-96 p-2 rounded-2xl bg-white dark:bg-[#0F172A] border-2 border-orange-200 dark:border-slate-800 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
             >
               <div className="px-3 py-2 border-b border-orange-100 dark:border-slate-800/80 mb-1 flex items-center justify-between">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-orange-800 dark:text-orange-400">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-orange-800 dark:text-blue-400">
                   {lang === 'nl' ? 'Belangrijke onderdelen' : 'Quick Navigation'}
                 </span>
                 <span className="text-[10px] text-stone-500 dark:text-slate-400">
@@ -218,14 +218,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                       type="button"
                       role="menuitem"
                       onClick={() => handleScrollTo(item.id)}
-                      className="w-full flex items-start gap-3 p-2.5 rounded-xl hover:bg-orange-50 dark:hover:bg-slate-900 text-left transition-colors group cursor-pointer"
+                      className="w-full flex items-start gap-3 p-2.5 rounded-xl hover:bg-orange-50 dark:hover:bg-blue-950/40 text-left transition-colors group cursor-pointer"
                     >
                       <div className="w-8 h-8 rounded-lg bg-orange-100/70 dark:bg-slate-800 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
                         <Icon className={`w-4 h-4 ${item.iconColor}`} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-1">
-                          <span className="text-xs sm:text-sm font-extrabold text-stone-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors truncate">
+                          <span className="text-xs sm:text-sm font-extrabold text-stone-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-blue-400 transition-colors truncate">
                             {lang === 'nl' ? item.titleNl : item.titleEn}
                           </span>
                           {item.badge && (
@@ -257,7 +257,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           }}
           className="hidden lg:flex flex-1 max-w-xs xl:max-w-md mx-2 relative items-center"
         >
-          <Search className="w-4 h-4 text-orange-500 absolute left-3.5 pointer-events-none" />
+          <Search className="w-4 h-4 text-orange-500 dark:text-blue-400 absolute left-3.5 pointer-events-none" />
           <input
             type="text"
             aria-label={lang === 'nl' ? 'Zoek concept of categorie' : 'Search concept or category'}
@@ -268,7 +268,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 ? 'Zoek op concept of categorie...'
                 : 'Search concept or category...'
             }
-            className="w-full pl-10 pr-4 py-2 bg-orange-50/50 dark:bg-slate-900 border border-orange-200/80 dark:border-slate-800 rounded-full text-sm text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all shadow-2xs"
+            className="w-full pl-10 pr-4 py-2 bg-orange-50/50 dark:bg-slate-900 border border-orange-200/80 dark:border-slate-800 rounded-full text-sm text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-blue-500 focus:border-transparent transition-all shadow-2xs"
           />
         </form>
 
@@ -281,13 +281,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-label={lang === 'nl' ? 'Taalkeuze' : 'Language selection'}
             className="flex items-center p-0.5 rounded-xl bg-orange-50/70 dark:bg-slate-900 border border-orange-200/80 dark:border-slate-800 text-xs font-bold shadow-2xs"
           >
-            <Globe className="w-3.5 h-3.5 text-orange-700 dark:text-orange-400 ml-1.5 mr-1 pointer-events-none hidden sm:block" />
+            <Globe className="w-3.5 h-3.5 text-orange-700 dark:text-blue-400 ml-1.5 mr-1 pointer-events-none hidden sm:block" />
             <button
               type="button"
               onClick={() => lang !== 'nl' && onLanguageToggle()}
               className={`px-2.5 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer min-h-[36px] ${
                 lang === 'nl'
-                  ? 'bg-orange-700 text-white shadow-xs font-extrabold'
+                  ? 'bg-orange-700 dark:bg-blue-600 text-white shadow-xs font-extrabold'
                   : 'text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white hover:bg-orange-100/60 dark:hover:bg-slate-800'
               }`}
               title="Nederlands"
@@ -300,7 +300,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => lang !== 'en' && onLanguageToggle()}
               className={`px-2.5 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer min-h-[36px] ${
                 lang === 'en'
-                  ? 'bg-orange-700 text-white shadow-xs font-extrabold'
+                  ? 'bg-orange-700 dark:bg-blue-600 text-white shadow-xs font-extrabold'
                   : 'text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white hover:bg-orange-100/60 dark:hover:bg-slate-800'
               }`}
               title="English"

@@ -130,7 +130,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                   onClick={() => onSelectCategory(cat)}
                   className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer select-none ${
                     isActive
-                      ? 'bg-stone-900 dark:bg-orange-600 text-white font-bold shadow-xs'
+                      ? 'bg-stone-900 dark:bg-blue-600 text-white font-bold shadow-xs'
                       : 'text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-slate-800 font-medium'
                   }`}
                 >
@@ -160,7 +160,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               <SlidersHorizontal className="w-3.5 h-3.5" />
               <span>{lang === 'nl' ? 'Filters' : 'Filters'}</span>
               {activeExtraFiltersCount > 0 && (
-                <span className="w-4 h-4 rounded-full bg-orange-500 text-white text-[10px] flex items-center justify-center font-black">
+                <span className="w-4 h-4 rounded-full bg-orange-500 dark:bg-blue-600 text-white text-[10px] flex items-center justify-center font-black">
                   {activeExtraFiltersCount}
                 </span>
               )}
@@ -200,7 +200,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                         onClick={() => onSelectPriceTier(tier.id)}
                         className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
                           selectedPriceTier === tier.id
-                            ? 'bg-stone-900 dark:bg-orange-600 text-white'
+                            ? 'bg-stone-900 dark:bg-blue-600 text-white'
                             : 'bg-white dark:bg-slate-800 text-stone-700 dark:text-slate-200 border border-stone-200 dark:border-slate-700 hover:bg-stone-100 dark:hover:bg-slate-700'
                         }`}
                       >
@@ -229,7 +229,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                       onClick={() => onSortChange(s.id)}
                       className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
                         sortBy === s.id
-                          ? 'bg-stone-900 dark:bg-orange-600 text-white'
+                          ? 'bg-stone-900 dark:bg-blue-600 text-white'
                           : 'bg-white dark:bg-slate-800 text-stone-700 dark:text-slate-200 border border-stone-200 dark:border-slate-700 hover:bg-stone-100 dark:hover:bg-slate-700'
                       }`}
                     >
@@ -257,7 +257,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                       onClick={() => onQuickFilterChange(qf.id)}
                       className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
                         activeQuickFilter === qf.id
-                          ? 'bg-stone-900 dark:bg-orange-600 text-white'
+                          ? 'bg-stone-900 dark:bg-blue-600 text-white'
                           : 'bg-white dark:bg-slate-800 text-stone-700 dark:text-slate-200 border border-stone-200 dark:border-slate-700 hover:bg-stone-100 dark:hover:bg-slate-700'
                       }`}
                     >

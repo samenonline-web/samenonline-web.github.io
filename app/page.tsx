@@ -343,11 +343,11 @@ export default function Home() {
               const el = document.getElementById('templates-section');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100/90 dark:bg-orange-950/60 text-orange-900 dark:text-orange-300 hover:bg-orange-200 dark:hover:bg-orange-900/80 border border-orange-200 dark:border-orange-800/60 whitespace-nowrap cursor-pointer transition-all shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100/90 dark:bg-blue-950/60 text-orange-900 dark:text-blue-300 hover:bg-orange-200 dark:hover:bg-blue-900/80 border border-orange-200 dark:border-blue-800/60 whitespace-nowrap cursor-pointer transition-all shrink-0"
           >
             <span>🎨</span>
             <span>{lang === 'nl' ? 'Concepten' : 'Templates'}</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-orange-200 dark:bg-orange-900 text-orange-950 dark:text-orange-200">
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-orange-200 dark:bg-blue-900 text-orange-950 dark:text-blue-200">
               {templates.length}
             </span>
           </button>
@@ -480,7 +480,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setVisibleCount(visibleCount >= filteredTemplates.length ? 9 : filteredTemplates.length)}
-              className="text-xs font-extrabold text-orange-700 dark:text-orange-400 hover:underline cursor-pointer"
+              className="text-xs font-extrabold text-orange-700 dark:text-blue-400 hover:underline cursor-pointer"
             >
               {visibleCount >= filteredTemplates.length
                 ? (lang === 'nl' ? 'Minder tonen (9)' : 'Show less (9)')
@@ -539,7 +539,7 @@ export default function Home() {
         ) : (
           /* Empty State */
           <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-3xl border-2 border-orange-100 dark:border-slate-800 p-8 max-w-md mx-auto my-8 shadow-sm transition-colors">
-            <div className="w-16 h-16 bg-orange-100 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-orange-100 dark:bg-slate-800 text-orange-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="w-8 h-8" />
             </div>
             <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-2">
@@ -562,7 +562,7 @@ export default function Home() {
         {/* Custom Design / Website Redesign Callout Banner */}
         <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-orange-50/90 dark:bg-slate-900 border-2 border-orange-200/90 dark:border-slate-800 text-stone-900 dark:text-white shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
           <div className="space-y-2 text-center md:text-left max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/20 text-orange-800 dark:text-orange-400 text-xs font-bold border border-orange-300 dark:border-orange-500/30">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 text-xs font-bold border border-orange-300 dark:border-blue-800/60">
               <span>🎨 Geen template nodig?</span>
               <span>•</span>
               <span>100% Maatwerk</span>
@@ -612,7 +612,7 @@ export default function Home() {
         <section id="waarom-nextjs" className="scroll-mt-28 space-y-10 mt-14">
           <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
             <div className="text-center max-w-2xl mx-auto mb-6">
-              <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-orange-800/60 inline-block mb-2">
+              <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-blue-400 bg-orange-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-blue-800/60 inline-block mb-2">
                 ⚡ Waarom Next.js?
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">
@@ -670,7 +670,7 @@ export default function Home() {
         <section id="hoe-het-werkt" className="scroll-mt-28 space-y-10 mt-14">
           <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
             <div className="text-center max-w-2xl mx-auto mb-6">
-              <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-orange-800/60 inline-block mb-2">
+              <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-blue-400 bg-orange-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-blue-800/60 inline-block mb-2">
                 📋 Duidelijke Werkwijze
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">
@@ -716,7 +716,7 @@ export default function Home() {
         <section id="pakketten" className="scroll-mt-28 space-y-10 mt-14">
           <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
             <div className="text-center max-w-2xl mx-auto mb-6">
-              <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-orange-800/60 inline-block mb-2">
+              <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-blue-400 bg-orange-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-blue-800/60 inline-block mb-2">
                 💰 Transparante Tarieven
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">

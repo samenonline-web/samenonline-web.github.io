@@ -181,7 +181,7 @@ export const FloatingSectionNav: React.FC<FloatingSectionNavProps> = ({
                   onClick={() => handleScrollTo(item.id)}
                   className={`w-full flex items-center justify-between gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-orange-100/90 dark:bg-orange-950/70 text-orange-950 dark:text-orange-200 font-black shadow-2xs'
+                      ? 'bg-orange-100/90 dark:bg-blue-950/70 text-orange-950 dark:text-blue-200 font-black shadow-2xs'
                       : 'hover:bg-orange-50/80 dark:hover:bg-slate-900 text-stone-700 dark:text-slate-300 font-bold'
                   }`}
                 >
@@ -189,7 +189,7 @@ export const FloatingSectionNav: React.FC<FloatingSectionNavProps> = ({
                     <div
                       className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
                         isActive
-                          ? 'bg-orange-600 text-white shadow-xs'
+                          ? 'bg-orange-600 dark:bg-blue-600 text-white shadow-xs'
                           : 'bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-400'
                       }`}
                     >
@@ -204,7 +204,7 @@ export const FloatingSectionNav: React.FC<FloatingSectionNavProps> = ({
                     <span
                       className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md shrink-0 ${
                         isActive
-                          ? 'bg-orange-600 text-white'
+                          ? 'bg-orange-600 dark:bg-blue-600 text-white'
                           : 'bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-400 border border-stone-200 dark:border-slate-700'
                       }`}
                     >
@@ -229,7 +229,7 @@ export const FloatingSectionNav: React.FC<FloatingSectionNavProps> = ({
           title={lang === 'nl' ? 'Open sectiemenu' : 'Open section menu'}
           className={`flex items-center gap-2 pl-3 pr-2.5 py-2 rounded-full text-xs font-black transition-all cursor-pointer select-none ${
             isOpen
-              ? 'bg-orange-700 text-white shadow-sm'
+              ? 'bg-orange-700 dark:bg-blue-600 text-white shadow-sm'
               : 'bg-orange-50/90 dark:bg-slate-900 text-stone-900 dark:text-white hover:bg-orange-100 dark:hover:bg-slate-800'
           }`}
         >

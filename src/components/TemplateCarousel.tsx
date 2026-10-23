@@ -94,8 +94,8 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                     
                     {/* Top Pill Badges */}
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 dark:bg-orange-950/60 text-orange-700 dark:text-orange-300 text-xs font-extrabold border border-orange-200 dark:border-orange-800/60">
-                        <Sparkles className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 dark:bg-blue-950/60 text-orange-700 dark:text-blue-300 text-xs font-extrabold border border-orange-200 dark:border-blue-800/60">
+                        <Sparkles className="w-3.5 h-3.5 text-orange-600 dark:text-blue-400" />
                         {lang === 'nl' ? 'Uitgelicht Concept' : 'Featured Concept'}
                       </span>
 
@@ -111,7 +111,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-2">
                         {template.name}
                       </h2>
-                      <p className="text-lg font-bold text-orange-700 dark:text-orange-400">
+                      <p className="text-lg font-bold text-orange-700 dark:text-blue-400">
                         {subtitle}
                       </p>
                     </div>
@@ -135,7 +135,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                     <div className="flex flex-wrap items-center gap-3 pt-4">
                       <button
                         onClick={() => onOpenLivePreview(template)}
-                        className="px-6 py-3.5 rounded-2xl bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-sm shadow-md shadow-orange-700/20 flex items-center gap-2 transform active:scale-95 transition-all cursor-pointer"
+                        className="px-6 py-3.5 rounded-2xl bg-orange-700 hover:bg-orange-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-extrabold text-sm shadow-md shadow-orange-700/20 dark:shadow-blue-900/30 flex items-center gap-2 transform active:scale-95 transition-all cursor-pointer"
                       >
                         <Globe className="w-4 h-4" />
                         <span>{lang === 'nl' ? 'Bekijk Live Template' : 'View Live Template'}</span>
@@ -189,7 +189,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
 
                         {/* Highlight Banner */}
                         <div className="p-3.5 rounded-2xl bg-orange-50 dark:bg-slate-900/80 border border-orange-200/80 dark:border-slate-800 text-xs text-slate-800 dark:text-slate-200 font-medium">
-                          <span className="font-bold text-orange-700 dark:text-orange-400 block mb-0.5">
+                          <span className="font-bold text-orange-700 dark:text-blue-400 block mb-0.5">
                             {lang === 'nl' ? 'Highlights:' : 'Highlights:'}
                           </span>
                           {highlight}
@@ -198,7 +198,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                         {/* Specs Pill row */}
                         <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 pt-3 border-t border-orange-100 dark:border-slate-800 font-semibold">
                           <div className="flex items-center gap-1.5">
-                            <Clock className="w-4 h-4 text-orange-600" />
+                            <Clock className="w-4 h-4 text-orange-600 dark:text-blue-400" />
                             <span>{template.estimatedBuildDays} {lang === 'nl' ? 'dagen oplevertijd' : 'days build time'}</span>
                           </div>
 
@@ -226,7 +226,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
           <button
             type="button"
             onClick={handlePrev}
-            className="p-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-100 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 hover:text-orange-700 dark:hover:text-white transition-all border border-orange-200 dark:border-slate-700 shadow-xs cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-100 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 hover:text-orange-700 dark:hover:text-blue-400 transition-all border border-orange-200 dark:border-slate-700 shadow-xs cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
             title="Vorige template"
             aria-label="Vorige template"
           >
@@ -250,8 +250,8 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
                 <span
                   className={`h-2.5 rounded-full transition-all duration-500 block ${
                     idx === currentIndex
-                      ? 'w-8 bg-orange-700 shadow-md shadow-orange-700/30'
-                      : 'w-2.5 bg-stone-300 dark:bg-slate-700 hover:bg-orange-300'
+                      ? 'w-8 bg-orange-700 dark:bg-blue-500 shadow-md shadow-orange-700/30 dark:shadow-blue-500/30'
+                      : 'w-2.5 bg-stone-300 dark:bg-slate-700 hover:bg-orange-300 dark:hover:bg-blue-400'
                   }`}
                 />
               </button>
@@ -262,7 +262,7 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
           <button
             type="button"
             onClick={handleNext}
-            className="p-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-100 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 hover:text-orange-700 dark:hover:text-white transition-all border border-orange-200 dark:border-slate-700 shadow-xs cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-100 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 hover:text-orange-700 dark:hover:text-blue-400 transition-all border border-orange-200 dark:border-slate-700 shadow-xs cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
             title="Volgende template"
             aria-label="Volgende template"
           >

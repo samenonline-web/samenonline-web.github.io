@@ -111,8 +111,8 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
     <section id="waarom-nextjs" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-black uppercase tracking-wider">
-          <Zap className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 border border-orange-200 dark:border-blue-800/60 text-xs font-black uppercase tracking-wider">
+          <Zap className="w-4 h-4 text-orange-600 dark:text-blue-400" />
           <span>{lang === 'nl' ? 'Technologische Voorsprong' : 'Modern Tech Stack'}</span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-white tracking-tight">
@@ -175,8 +175,8 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
         </div>
 
         {/* Next.js / Samen Online Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-slate-950 dark:to-slate-900 border-2 border-orange-500 shadow-xl flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-orange-500/10 dark:bg-orange-600/20 blur-3xl pointer-events-none"></div>
+        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-slate-950 dark:to-slate-900 border-2 border-orange-500 dark:border-blue-500 shadow-xl flex flex-col justify-between relative overflow-hidden">
+          <div className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-orange-500/10 dark:bg-blue-600/20 blur-3xl pointer-events-none"></div>
 
           <div className="relative z-10">
             <div className="flex items-center justify-between pb-4 border-b border-orange-200/80 dark:border-white/10">
@@ -204,7 +204,7 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
               </div>
               <div className="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-white/10 border border-orange-200/80 dark:border-white/10 shadow-sm">
                 <span className="text-stone-600 dark:text-slate-300 font-medium">Mobiele Conversie Stijging</span>
-                <span className="font-extrabold text-orange-700 dark:text-orange-400">+64% meer aanvragen</span>
+                <span className="font-extrabold text-orange-700 dark:text-blue-400">+64% meer aanvragen</span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-white/10 border border-orange-200/80 dark:border-white/10 shadow-sm">
                 <span className="text-stone-600 dark:text-slate-300 font-medium">Veiligheid & Code Integriteit</span>
@@ -225,7 +225,7 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
             <button
               type="button"
               onClick={onOpenRedesignRequest || onOpenRequestModal}
-              className="shrink-0 px-4 py-2 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer whitespace-nowrap"
+              className="shrink-0 px-4 py-2 rounded-xl bg-orange-700 hover:bg-orange-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-extrabold text-xs shadow-md shadow-orange-700/30 dark:shadow-blue-900/40 transition-all cursor-pointer whitespace-nowrap"
             >
               Start Gratis Migratiescan →
             </button>
@@ -241,12 +241,12 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
               <th className="p-4 sm:p-5 font-black text-stone-500 dark:text-slate-400 uppercase tracking-wider w-1/4 text-[11px] bg-stone-50 dark:bg-slate-950/60">
                 Eigenschap
               </th>
-              <th className="p-4 sm:p-5 font-black text-stone-900 dark:text-white w-2/5 border-l-2 border-r-2 border-orange-500 bg-orange-50/60 dark:bg-orange-950/30 relative">
+              <th className="p-4 sm:p-5 font-black text-stone-900 dark:text-white w-2/5 border-l-2 border-r-2 border-orange-500 dark:border-blue-500 bg-orange-50/60 dark:bg-blue-950/30 relative">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-black text-orange-950 dark:text-orange-300 flex items-center gap-1.5">
+                  <span className="text-sm font-black text-orange-950 dark:text-blue-300 flex items-center gap-1.5">
                     <span>🚀 Samen Online (Next.js)</span>
                   </span>
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-orange-600 text-white">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-orange-600 dark:bg-blue-600 text-white">
                     Aanbevolen
                   </span>
                 </div>
@@ -268,7 +268,7 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
                 </td>
 
                 {/* Next.js Column */}
-                <td className="p-4 sm:p-5 border-l-2 border-r-2 border-orange-500 bg-orange-50/20 dark:bg-orange-950/20 align-top">
+                <td className="p-4 sm:p-5 border-l-2 border-r-2 border-orange-500 dark:border-blue-500 bg-orange-50/20 dark:bg-blue-950/20 align-top">
                   <div className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                     <div>
@@ -330,7 +330,7 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
 
         <button
           onClick={onOpenRedesignRequest || onOpenRequestModal}
-          className="px-6 py-3 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-extrabold text-xs transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shadow-md shadow-orange-700/30 shrink-0"
+          className="px-6 py-3 rounded-xl bg-orange-700 hover:bg-orange-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-extrabold text-xs transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shadow-md shadow-orange-700/30 dark:shadow-blue-900/40 shrink-0"
         >
           <span>Vraag Next.js Website Aan</span>
           <ArrowRight className="w-4 h-4" />

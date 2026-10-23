@@ -295,14 +295,20 @@ body {
 }
 
 /* ==========================================================================
-   Global Site Dark Mode (Google Stitch Dark Mode Architecture)
-   Midnight Slate canvas (#0B1120), Tonal Layering, Luminous Ambient Orange Accents.
+   Global Site Dark Mode (Google Stitch Electric Cobalt & Cyan Architecture)
+   Midnight Slate canvas (#0B1120), Tonal Layering, Electric Cobalt (#2563EB)
+   and Neon Cyan (#38BDF8) accents. High-tech European SaaS aesthetic.
    ========================================================================== */
 .global-dark-mode,
 html.dark {
   color-scheme: dark !important;
   background-color: #0B1120 !important;
   color: #f8fafc !important;
+}
+
+html.dark ::selection {
+  background-color: #2563EB !important;
+  color: #FFFFFF !important;
 }
 
 /* 1. Header, Sticky Filter & Floating Section Navigation */
@@ -318,6 +324,13 @@ html.dark #filter-section {
   background-color: rgba(11, 17, 32, 0.94) !important;
   border-color: rgba(30, 41, 59, 0.9) !important;
   backdrop-filter: blur(16px) !important;
+}
+
+/* Brand Logo Heart in Navbar (Electric Cobalt in Dark Mode) */
+html.dark header button .bg-orange-700,
+.global-dark-mode header button .bg-orange-700 {
+  background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 50%, #3B82F6 100%) !important;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4) !important;
 }
 
 /* 2. Surfaces, Cards & Containers (Stitch Layering: 0B1120 -> 0F172A -> 161F30) */
@@ -339,21 +352,48 @@ html.dark .bg-stone-100 {
   border-color: #1E293B !important;
 }
 
-/* Warm Orange/Amber Callout Boxes & Banners */
+/* Electric Cobalt Callout Boxes & Banners (Replaces muddy orange/brown in dark mode) */
 .global-dark-mode .bg-orange-50,
 .global-dark-mode [class*="bg-orange-50/"],
 .global-dark-mode .bg-orange-100,
+.global-dark-mode [class*="bg-orange-100/"],
+.global-dark-mode .bg-orange-950,
+.global-dark-mode [class*="bg-orange-950/"],
+.global-dark-mode .bg-orange-900,
+.global-dark-mode [class*="bg-orange-900/"],
 .global-dark-mode .bg-amber-50,
 .global-dark-mode [class*="bg-amber-50/"],
 .global-dark-mode .bg-amber-100,
 html.dark .bg-orange-50,
 html.dark [class*="bg-orange-50/"],
 html.dark .bg-orange-100,
+html.dark [class*="bg-orange-100/"],
+html.dark .bg-orange-950,
+html.dark [class*="bg-orange-950/"],
+html.dark .bg-orange-900,
+html.dark [class*="bg-orange-900/"],
 html.dark .bg-amber-50,
 html.dark [class*="bg-amber-50/"],
 html.dark .bg-amber-100 {
-  background-color: rgba(234, 88, 12, 0.12) !important;
-  border-color: rgba(234, 88, 12, 0.32) !important;
+  background-color: rgba(30, 64, 175, 0.16) !important;
+  border-color: rgba(59, 130, 246, 0.35) !important;
+}
+
+.global-dark-mode [class*="bg-orange-500/"],
+html.dark [class*="bg-orange-500/"] {
+  background-color: rgba(30, 64, 175, 0.20) !important;
+}
+
+.global-dark-mode [class*="border-orange-500/"],
+html.dark [class*="border-orange-500/"] {
+  border-color: rgba(59, 130, 246, 0.40) !important;
+}
+
+.global-dark-mode [class*="ring-orange-500"],
+.global-dark-mode [class*="focus:ring-orange-500"],
+html.dark [class*="ring-orange-500"],
+html.dark [class*="focus:ring-orange-500"] {
+  --tw-ring-color: #3B82F6 !important;
 }
 
 /* Emerald / Green Callouts & Badges */
@@ -434,16 +474,29 @@ html.dark .text-slate-400 {
   color: #94A3B8 !important;
 }
 
-/* Accent Colors - Stitch Vibrant Brand Lighting */
+/* Accent Colors - Stitch Electric Cobalt & Cyan Glow in Dark Mode */
 .global-dark-mode .text-orange-700,
 .global-dark-mode .text-orange-800,
+.global-dark-mode .text-orange-600,
+.global-dark-mode .text-orange-500,
+.global-dark-mode .text-orange-400,
 .global-dark-mode .text-amber-800,
 .global-dark-mode .text-amber-900,
 html.dark .text-orange-700,
 html.dark .text-orange-800,
+html.dark .text-orange-600,
+html.dark .text-orange-500,
+html.dark .text-orange-400,
 html.dark .text-amber-800,
 html.dark .text-amber-900 {
-  color: #FB923C !important;
+  color: #60A5FA !important;
+}
+
+.global-dark-mode .text-orange-300,
+.global-dark-mode .text-orange-200,
+html.dark .text-orange-300,
+html.dark .text-orange-200 {
+  color: #93C5FD !important;
 }
 
 .global-dark-mode .text-emerald-700,
@@ -467,20 +520,28 @@ html.dark .text-rose-800 {
 .global-dark-mode .border-orange-100,
 .global-dark-mode .border-orange-200,
 .global-dark-mode .border-orange-300,
+.global-dark-mode .border-orange-500,
+.global-dark-mode .border-orange-800,
+.global-dark-mode .border-orange-900,
 .global-dark-mode .border-amber-200,
 .global-dark-mode [class*="border-stone-200"],
 .global-dark-mode [class*="border-orange-100"],
 .global-dark-mode [class*="border-orange-200"],
+.global-dark-mode [class*="border-orange-800"],
 html.dark .border-stone-200,
 html.dark .border-stone-100,
 html.dark .border-stone-300,
 html.dark .border-orange-100,
 html.dark .border-orange-200,
 html.dark .border-orange-300,
+html.dark .border-orange-500,
+html.dark .border-orange-800,
+html.dark .border-orange-900,
 html.dark .border-amber-200,
 html.dark [class*="border-stone-200"],
 html.dark [class*="border-orange-100"],
-html.dark [class*="border-orange-200"] {
+html.dark [class*="border-orange-200"],
+html.dark [class*="border-orange-800"] {
   border-color: #1E293B !important;
 }
 
@@ -514,8 +575,8 @@ html.dark textarea::placeholder {
 html.dark input:focus,
 html.dark select:focus,
 html.dark textarea:focus {
-  border-color: #F97316 !important;
-  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.25) !important;
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
   outline: none !important;
 }
 
@@ -527,10 +588,37 @@ html.dark select option {
 
 .global-dark-mode input[type="range"],
 html.dark input[type="range"] {
-  accent-color: #F97316 !important;
+  accent-color: #3B82F6 !important;
 }
 
-/* 6. High-Contrast Buttons & Filter Pills */
+/* 6. Primary Action Buttons in Dark Mode (Stitch Electric Cobalt Gradient) */
+html.dark button[class*="bg-orange-700"],
+html.dark button[class*="bg-orange-600"],
+html.dark a[class*="bg-orange-700"],
+html.dark a[class*="bg-orange-600"],
+.global-dark-mode button[class*="bg-orange-700"],
+.global-dark-mode button[class*="bg-orange-600"],
+.global-dark-mode a[class*="bg-orange-700"],
+.global-dark-mode a[class*="bg-orange-600"] {
+  background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 50%, #3B82F6 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark button[class*="bg-orange-700"]:hover,
+html.dark button[class*="bg-orange-600"]:hover,
+html.dark a[class*="bg-orange-700"]:hover,
+html.dark a[class*="bg-orange-600"]:hover,
+.global-dark-mode button[class*="bg-orange-700"]:hover,
+.global-dark-mode button[class*="bg-orange-600"]:hover,
+.global-dark-mode a[class*="bg-orange-700"]:hover,
+.global-dark-mode a[class*="bg-orange-600"]:hover {
+  background: linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #60A5FA 100%) !important;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.55) !important;
+}
+
+/* Secondary Buttons */
 .global-dark-mode button.bg-stone-900,
 .global-dark-mode a.bg-stone-900,
 html.dark button.bg-stone-900,
@@ -548,14 +636,14 @@ html.dark a.bg-stone-900:hover {
   border-color: #475569 !important;
 }
 
-/* Active Category Pill in FilterBar */
+/* Active Category Pill in FilterBar (Electric Cobalt Glow) */
 .global-dark-mode #filter-section button.bg-stone-900,
 html.dark #filter-section button.bg-stone-900 {
-  background-color: #EA580C !important;
+  background-color: #2563EB !important;
   color: #FFFFFF !important;
-  border-color: #EA580C !important;
+  border-color: #3B82F6 !important;
   font-weight: 800 !important;
-  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.35) !important;
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.45) !important;
 }
 
 /* Hover background on list items & buttons */

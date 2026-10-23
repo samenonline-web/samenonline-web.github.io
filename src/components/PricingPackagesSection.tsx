@@ -77,8 +77,8 @@ export const PricingPackagesSection: React.FC<PricingPackagesSectionProps> = ({
     <section id="tarieven-pakketten" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-black uppercase tracking-wider">
-          <Sparkles className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 border border-orange-200 dark:border-blue-800/60 text-xs font-black uppercase tracking-wider">
+          <Sparkles className="w-4 h-4 text-orange-600 dark:text-blue-400" />
           <span>{lang === 'nl' ? 'Transparante Vaste Pakketten' : 'Fixed Price Packages'}</span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-white tracking-tight">
@@ -98,12 +98,12 @@ export const PricingPackagesSection: React.FC<PricingPackagesSectionProps> = ({
             key={pkg.id}
             className={`rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all relative ${
               pkg.highlight
-                ? 'border-2 border-orange-500 bg-orange-50/20 dark:bg-slate-900/90 shadow-xl ring-2 ring-orange-500/10'
+                ? 'border-2 border-orange-500 dark:border-blue-500 bg-orange-50/20 dark:bg-slate-900/90 shadow-xl ring-2 ring-orange-500/10 dark:ring-blue-500/20'
                 : 'border-2 border-stone-200/90 dark:border-slate-800 bg-white dark:bg-slate-900/90 shadow-sm hover:shadow-md dark:hover:border-slate-700'
             }`}
           >
             {pkg.badge && (
-              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-orange-700 text-white font-black text-[11px] uppercase tracking-wider shadow-md">
+              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-orange-700 dark:bg-blue-600 text-white font-black text-[11px] uppercase tracking-wider shadow-md">
                 {pkg.badge}
               </span>
             )}
@@ -112,7 +112,7 @@ export const PricingPackagesSection: React.FC<PricingPackagesSectionProps> = ({
               <div className="flex items-center justify-between mb-2">
                 <h3 className="font-black text-xl text-stone-900 dark:text-white">{pkg.nameNl}</h3>
                 <span className="text-[11px] font-bold text-stone-500 dark:text-slate-400 flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-orange-600" />
+                  <Clock className="w-3.5 h-3.5 text-orange-600 dark:text-blue-400" />
                   <span>~{pkg.days} dagen</span>
                 </span>
               </div>
@@ -154,7 +154,7 @@ export const PricingPackagesSection: React.FC<PricingPackagesSectionProps> = ({
                 }
                 className={`w-full py-4 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
                   pkg.highlight
-                    ? 'bg-orange-700 hover:bg-orange-800 text-white shadow-orange-700/30'
+                    ? 'bg-orange-700 hover:bg-orange-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white shadow-orange-700/30 dark:shadow-blue-900/40'
                     : 'bg-stone-900 dark:bg-slate-800 hover:bg-stone-800 dark:hover:bg-slate-700 text-white shadow-stone-900/20 dark:border dark:border-slate-700'
                 }`}
               >
