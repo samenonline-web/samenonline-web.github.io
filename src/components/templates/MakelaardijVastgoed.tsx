@@ -22,6 +22,7 @@ import {
   MessageCircle,
   X,
   Clock,
+  Calculator,
 } from 'lucide-react';
 
 interface PropertyItem {
@@ -109,6 +110,25 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
   const [viewingTime, setViewingTime] = useState<string>('Vrijdag 14:00 - 14:45');
   const [viewingData, setViewingData] = useState({ name: '', phone: '', email: '' });
   const [viewingConfirmed, setViewingConfirmed] = useState<boolean>(false);
+
+  // Mortgage Calculator State
+  const [mortgagePrice, setMortgagePrice] = useState<number>(485000);
+  const [mortgageSavings, setMortgageSavings] = useState<number>(50000);
+  const [mortgageInterestRate, setMortgageInterestRate] = useState<number>(3.8);
+
+  const loanAmount = Math.max(0, mortgagePrice - mortgageSavings);
+  const monthlyInterestRate = mortgageInterestRate / 100 / 12;
+  const numberOfMonths = 360; // 30 jaar
+  const grossMonthlyPayment =
+    monthlyInterestRate > 0 && loanAmount > 0
+      ? Math.round(
+          (loanAmount *
+            (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfMonths))) /
+            (Math.pow(1 + monthlyInterestRate, numberOfMonths) - 1)
+        )
+      : 0;
+  const netMonthlyPayment = Math.round(grossMonthlyPayment * 0.78);
+  const isNhgEligible = mortgagePrice <= 450000;
 
   const filteredProperties = PROPERTIES.filter((p) => {
     const matchesPrice = p.price <= priceMax;
@@ -439,6 +459,148 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Hypotheek & Maandlasten Calculator */}
+      <section className={`py-14 px-4 sm:px-6 border-t ${
+        isDarkMode ? 'bg-stone-950 border-stone-800' : 'bg-stone-100/70 border-stone-200'
+      }`}>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-orange-100 text-orange-900 dark:bg-orange-950/70 dark:text-orange-300 mb-2">
+              <Calculator className="w-3.5 h-3.5" />
+              <span>Hypotheek Calculator</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">
+              Bereken Jouw Maandlasten in {city}
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-500 font-medium">
+              Indicatieve berekening op basis van 30 jaar annuïtair inclusief renteaftrek
+            </p>
+          </div>
+
+          <div className={`p-6 sm:p-8 rounded-3xl border shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-8 items-center ${
+            isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200'
+          }`}>
+            {/* Sliders Input */}
+            <div className="lg:col-span-7 space-y-5">
+              <div>
+                <div className="flex justify-between items-center text-xs font-black mb-1.5">
+                  <span className="text-stone-700 dark:text-stone-300">Woningwaarde / Koopsom:</span>
+                  <span className="text-orange-600 font-black text-sm">€{mortgagePrice.toLocaleString('nl-NL')}</span>
+                </div>
+                <input
+                  type="range"
+                  min={250000}
+                  max={950000}
+                  step={10000}
+                  value={mortgagePrice}
+                  onChange={(e) => setMortgagePrice(Number(e.target.value))}
+                  className="w-full accent-orange-600 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-stone-400 font-bold mt-1">
+                  <span>€250.000</span>
+                  <span>€600.000</span>
+                  <span>€950.000</span>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center text-xs font-black mb-1.5">
+                  <span className="text-stone-700 dark:text-stone-300">Eigen Inleg / Spaargeld:</span>
+                  <span className="text-stone-900 dark:text-stone-100 font-black text-sm">€{mortgageSavings.toLocaleString('nl-NL')}</span>
+                </div>
+                <input
+                  type="range"
+                  min={0}
+                  max={200000}
+                  step={5000}
+                  value={mortgageSavings}
+                  onChange={(e) => setMortgageSavings(Number(e.target.value))}
+                  className="w-full accent-orange-600 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-stone-400 font-bold mt-1">
+                  <span>€0 (100% lenen)</span>
+                  <span>€100.000</span>
+                  <span>€200.000</span>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center text-xs font-black mb-1.5">
+                  <span className="text-stone-700 dark:text-stone-300">Indicatieve Hypotheekrente (10 jr vast):</span>
+                  <span className="text-stone-900 dark:text-stone-100 font-black text-sm">{mortgageInterestRate}%</span>
+                </div>
+                <input
+                  type="range"
+                  min={2.5}
+                  max={6.0}
+                  step={0.1}
+                  value={mortgageInterestRate}
+                  onChange={(e) => setMortgageInterestRate(Number(e.target.value))}
+                  className="w-full accent-orange-600 cursor-pointer"
+                />
+              </div>
+
+              {/* NHG Indicator Badge */}
+              <div className={`p-3 rounded-2xl border text-xs flex items-center justify-between ${
+                isNhgEligible
+                  ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-300'
+                  : 'bg-stone-50 dark:bg-stone-800/50 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400'
+              }`}>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span className="font-bold">Nationale Hypotheek Garantie (NHG):</span>
+                </div>
+                <span className="font-black">
+                  {isNhgEligible ? '✅ Komt in aanmerking (< €450k)' : '❌ Boven NHG-grens'}
+                </span>
+              </div>
+            </div>
+
+            {/* Live Monthly Payment Result Card */}
+            <div className={`lg:col-span-5 p-6 rounded-3xl border-2 text-left flex flex-col justify-between ${theme.bgLight} ${theme.borderLight}`}>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange-900 bg-orange-100 dark:bg-orange-950/80 px-2.5 py-1 rounded-md inline-block mb-3">
+                  Indicatieve Maandlasten
+                </span>
+
+                <div className="mb-4">
+                  <span className="text-[11px] text-stone-500 font-bold block">Netto per maand:</span>
+                  <div className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-white">
+                    €{netMonthlyPayment.toLocaleString('nl-NL')}
+                    <span className="text-xs font-bold text-stone-500"> / mnd*</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2 text-xs font-bold text-stone-700 dark:text-stone-300">
+                  <div className="bg-white dark:bg-stone-900/90 p-2.5 rounded-xl border border-stone-200 dark:border-stone-800 flex justify-between">
+                    <span>Bruto maandlast:</span>
+                    <span className="font-black text-stone-900 dark:text-white">€{grossMonthlyPayment.toLocaleString('nl-NL')} / mnd</span>
+                  </div>
+                  <div className="bg-white dark:bg-stone-900/90 p-2.5 rounded-xl border border-stone-200 dark:border-stone-800 flex justify-between">
+                    <span>Benodigde hypotheek:</span>
+                    <span className="font-black text-stone-900 dark:text-white">€{loanAmount.toLocaleString('nl-NL')}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6">
+                <button
+                  type="button"
+                  onClick={onRequestQuote}
+                  className={`w-full py-3 px-4 rounded-xl text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 ${theme.primary} hover:opacity-90`}
+                >
+                  <span>Vrijblijvend Hypotheekgesprek Plannen</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+                <span className="text-[10px] text-stone-400 block text-center mt-2 font-medium">
+                  *Indicatie op basis van annuïteiten. Geen rechten aan te ontlenen.
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -522,5 +522,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Bewaar Zonneplan", content)
         self.assertIn("runDakscan", content)
 
+    # 48. Makelaardij Vastgoed Mortgage & Monthly Payment Calculator
+    def test_makelaardij_mortgage_calculator(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "MakelaardijVastgoed.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("mortgagePrice", content)
+        self.assertIn("mortgageSavings", content)
+        self.assertIn("grossMonthlyPayment", content)
+        self.assertIn("netMonthlyPayment", content)
+        self.assertIn("Nationale Hypotheek Garantie (NHG)", content)
+
 if __name__ == "__main__":
     unittest.main()
