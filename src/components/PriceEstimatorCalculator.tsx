@@ -16,7 +16,7 @@ import {
   Loader2,
   Copy,
   Mail,
-  MessageCircle,
+  HelpCircle,
 } from 'lucide-react';
 import { Language } from '../types/company';
 import { QuotePdfModal, QuotePdfData } from './QuotePdfModal';
@@ -361,29 +361,16 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
     window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
   };
 
-  const handleWhatsAppQuote = () => {
-    const addonNames = selectedAddons
-      .map((id) => ADDONS.find((a) => a.id === id)?.nameNl)
-      .filter(Boolean)
-      .join(', ');
-
-    const domainText = cleanDomain ? `${cleanDomain}.nl` : 'Nog te bepalen';
-    const hostingText =
-      hostingPlan === 'managed'
-        ? 'Inclusief All-in Hosting & .nl domein (+€9,50/mnd)'
-        : 'Zelf regelen (€0/mnd)';
-
-    const text = `Hallo Samen Online! Ik heb een website geconfigureerd via de calculator:
-• Type: ${activeTypeObj.nameNl} (${activePageOption.labelNl})
-• Investering: €${totalPrice} eenmalig${hostingPlan === 'managed' ? ' + €9,50/mnd all-in hosting' : ''}
-• Extra opties: ${addonNames || 'Geen'}
-• Gewenst domein: ${domainText}
-• Hosting: ${hostingText}
-• Levertijd: ~${estimatedDays} werkdagen
-
-Kunnen we dit vrijblijvend bespreken?`;
-
-    window.open(`https://wa.me/31622727144?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+  const handleStartQuestionnaire = () => {
+    const params = new URLSearchParams();
+    params.set('pakket', selectedType);
+    if (selectedAddons.length > 0) {
+      params.set('addons', selectedAddons.join(','));
+    }
+    if (cleanDomain) {
+      params.set('domein', `${cleanDomain}.nl`);
+    }
+    window.location.href = `/vragenlijst?${params.toString()}`;
   };
 
   return (
@@ -724,11 +711,11 @@ Kunnen we dit vrijblijvend bespreken?`;
 
               <button
                 type="button"
-                onClick={handleWhatsAppQuote}
-                className="w-full py-3 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
+                onClick={handleStartQuestionnaire}
+                className="w-full py-3 px-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-600/20 transition-all cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4 fill-white" />
-                <span>{lang === 'nl' ? 'Stuur Direct via WhatsApp naar Kenan' : 'Send Directly via WhatsApp'}</span>
+                <HelpCircle className="w-4 h-4 text-white" />
+                <span>{lang === 'nl' ? 'Start Vragenlijst met Deze Specificatie (2 min)' : 'Start Intake Questionnaire with this Setup'}</span>
               </button>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">

@@ -172,7 +172,7 @@ class TestSamenOnlineVerification(unittest.TestCase):
         content = f.read_text(encoding="utf-8")
         self.assertIn("Website Copilot", content)
         self.assertIn("QUICK_CHIPS", content)
-        self.assertIn("wa.me/31636481054", content)
+        self.assertIn("Start Keuzehulp Vragenlijst", content)
 
         page_file = WORKSPACE / "app" / "page.tsx"
         page_content = page_file.read_text(encoding="utf-8")
@@ -825,6 +825,25 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("totalWeeklyPrice", content)
         self.assertIn("VV-OOGST-2026-", content)
         self.assertIn("Print Oogstbon &amp; Pakbon (PDF)", content)
+
+    # 77. WhatsApp Elimination and Direct Questionnaire Routing Enforcement
+    def test_whatsapp_elimination_and_questionnaire_routing(self):
+        calc_file = WORKSPACE / "src" / "components" / "PriceEstimatorCalculator.tsx"
+        calc_content = calc_file.read_text(encoding="utf-8")
+        self.assertIn("handleStartQuestionnaire", calc_content)
+        self.assertNotIn("handleWhatsAppQuote", calc_content)
+        self.assertIn("Start Vragenlijst met Deze Specificatie", calc_content)
+
+        callout_file = WORKSPACE / "src" / "components" / "ExpressDeliveryCallout.tsx"
+        callout_content = callout_file.read_text(encoding="utf-8")
+        self.assertIn("handleStartExpressQuestionnaire", callout_content)
+        self.assertNotIn("handleWhatsAppUrgent", callout_content)
+        self.assertIn("/vragenlijst?spoed=true", callout_content)
+
+        copilot_file = WORKSPACE / "src" / "components" / "WebsiteCopilotWidget.tsx"
+        copilot_content = copilot_file.read_text(encoding="utf-8")
+        self.assertNotIn("handleWhatsAppClick", copilot_content)
+        self.assertNotIn("wa.me/31636481054", copilot_content)
 
 if __name__ == "__main__":
     unittest.main()

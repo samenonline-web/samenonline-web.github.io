@@ -7,7 +7,6 @@ import {
   X, 
   Send, 
   ArrowRight, 
-  MessageCircle, 
   CheckCircle2, 
   Zap, 
   Clock, 
@@ -37,7 +36,6 @@ interface CopilotAnswer {
   days: string;
   description: string;
   recommendedTemplate: string;
-  whatsappPrefill: string;
 }
 
 const QUICK_CHIPS: QuickChip[] = [
@@ -65,9 +63,8 @@ export default function WebsiteCopilotWidget({
         badge: 'Meest Gekozen voor Bouw & MKB',
         price: 'Vanaf €195 eenmalig (all-in)',
         days: '4-5 werkdagen',
-        description: 'Inclusief offerte-calculator, voor-en-na projectengalerij, Google Maps koppeling en WhatsApp direct-contact knop.',
+        description: 'Inclusief offerte-calculator, voor-en-na projectengalerij, Google Maps koppeling en direct offerteformulier.',
         recommendedTemplate: 'BouwMeester Aannemer (met m² calculator)',
-        whatsappPrefill: 'Hoi Kenan, ik heb een bouw-/schildersbedrijf en zag via de Copilot het €195 pakket. Kun je mij vertellen hoe snel we kunnen starten?',
       };
     }
 
@@ -79,7 +76,6 @@ export default function WebsiteCopilotWidget({
         days: '3 werkdagen (gegarandeerd)',
         description: 'Heb je haast voor een beurs, lancering of nieuwe klus? Wij bouwen direct een strakke, werkende responsive landingspagina.',
         recommendedTemplate: '72-Uur Express Starter Template',
-        whatsappPrefill: 'Hoi Kenan, ik heb met spoed binnen 3 dagen een werkende website nodig. Heb je momenteel ruimte voor een spoedopdracht?',
       };
     }
 
@@ -91,7 +87,6 @@ export default function WebsiteCopilotWidget({
         days: '6-8 werkdagen',
         description: 'Complete webshop met realtime winkelmand, voorraadbeheer, automatische factuurmails en 0.4s laadtijd op smartphones.',
         recommendedTemplate: 'Duurzaam Kleding & Lifestyle Shop',
-        whatsappPrefill: 'Hoi Kenan, ik wil een webshop starten met iDEAL en Mollie koppeling. Hoe werkt de betalingsintegratie bij jullie?',
       };
     }
 
@@ -103,7 +98,6 @@ export default function WebsiteCopilotWidget({
         days: '4 werkdagen',
         description: 'Wij zetten je trage WordPress of Wix site 1-op-1 om naar supersnelle Next.js code. Geen plugin-updates meer en 100% Google Lighthouse score.',
         recommendedTemplate: 'Modern Next.js Redesign',
-        whatsappPrefill: 'Hoi Kenan, mijn huidige website is erg traag. Ik wil graag weten wat een Next.js redesign kost en hoe lang het duurt.',
       };
     }
 
@@ -115,7 +109,6 @@ export default function WebsiteCopilotWidget({
         days: 'Directe overdracht bij oplevering',
         description: 'Bij Samen Online is de website 100% jouw eigendom. Wij dragen alle broncode en DNS over. Wil je dat wij de hosting regelen? Dat kan voor slechts €9,50/mnd all-in, maandelijks opzegbaar.',
         recommendedTemplate: 'Alle 40+ Concepten',
-        whatsappPrefill: 'Hoi Kenan, ik wil graag weten hoe de overdracht van broncode en hosting precies werkt na oplevering.',
       };
     }
 
@@ -125,9 +118,8 @@ export default function WebsiteCopilotWidget({
       badge: 'Transparant & All-in',
       price: '€195 - €385 (meest gekozen)',
       days: '3-5 werkdagen',
-      description: 'Op basis van jouw vraag adviseren we een moderne Next.js website met supersnelle laadtijd, WhatsApp integratie en 100% Google SEO.',
+      description: 'Op basis van jouw vraag adviseren we een moderne Next.js website met supersnelle laadtijd, mobiele conversie en 100% Google SEO.',
       recommendedTemplate: 'MKB Bedrijfsconcept',
-      whatsappPrefill: `Hoi Kenan, ik had de volgende vraag op de website: "${query}". Kun je hier kort over meedenken?`,
     };
   };
 
@@ -138,14 +130,9 @@ export default function WebsiteCopilotWidget({
     setInputQuery('');
   };
 
-  const handleWhatsAppClick = (prefill: string) => {
-    const encoded = encodeURIComponent(prefill);
-    window.open(`https://wa.me/31636481054?text=${encoded}`, '_blank');
-  };
-
   return (
     <>
-      {/* Floating Trigger Bubble (Bottom-Left to not collide with WhatsApp widget on right) */}
+      {/* Floating Trigger Bubble (Bottom-Left) */}
       {!isOpen && (
         <div className="fixed bottom-20 left-4 sm:left-6 z-40 animate-in fade-in slide-in-from-bottom duration-300">
           <button
