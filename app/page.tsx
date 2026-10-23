@@ -26,6 +26,7 @@ import { ConceptWizardModal } from '../src/components/ConceptWizardModal';
 import { TemplateComparisonModal } from '../src/components/TemplateComparisonModal';
 import { FaqSection } from '../src/components/FaqSection';
 import { WhatsAppWidget } from '../src/components/WhatsAppWidget';
+import { FloatingSectionNav } from '../src/components/FloatingSectionNav';
 
 import { INITIAL_TEMPLATES } from '../src/data/templates';
 import { WebTemplate, CategoryType, Language } from '../src/types/company';
@@ -781,6 +782,9 @@ export default function Home() {
 
       {/* Floating WhatsApp Contact Widget */}
       <WhatsAppWidget lang={lang} />
+
+      {/* Floating Section Dock & Dropdown Navigation */}
+      <FloatingSectionNav lang={lang} totalTemplatesCount={templates.length} />
 
       {/* Template Details Modal */}
       <TemplateModal
