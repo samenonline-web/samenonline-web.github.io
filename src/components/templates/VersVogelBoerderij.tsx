@@ -17,6 +17,9 @@ import {
   Leaf,
   Star,
   Printer,
+  FileText,
+  X,
+  QrCode,
 } from 'lucide-react';
 
 interface BoxOption {
@@ -95,7 +98,15 @@ export const VersVogelBoerderij: React.FC<TemplateProps> = ({
   const [selectedBoxId, setSelectedBoxId] = useState<'basis' | 'familie' | 'fruit'>('familie');
   const [selectedAddons, setSelectedAddons] = useState<string[]>(['eggs']);
   const [activeSeason, setActiveSeason] = useState<'lente' | 'zomer' | 'herfst' | 'winter'>('lente');
+  const [showDossier, setShowDossier] = useState(false);
+  const [orderToken, setOrderToken] = useState('VV-OOGST-2026-3891');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const openDossier = () => {
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    setOrderToken(`VV-OOGST-2026-${rand}`);
+    setShowDossier(true);
+  };
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -383,7 +394,7 @@ export const VersVogelBoerderij: React.FC<TemplateProps> = ({
             <div className="flex flex-wrap gap-2">
               <button
                 type="button"
-                onClick={() => window.print()}
+                onClick={openDossier}
                 className="px-4 py-3.5 rounded-xl border border-stone-300 bg-white hover:bg-stone-50 text-stone-800 text-xs font-bold shadow-xs cursor-pointer flex items-center gap-1.5"
               >
                 <Printer className="w-3.5 h-3.5 text-stone-600" />
@@ -551,6 +562,123 @@ export const VersVogelBoerderij: React.FC<TemplateProps> = ({
           )}
         </div>
       </section>
+
+      {/* Printable Oogstbon & Korte Keten Paspoort Modal */}
+      {showDossier && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-stone-200 relative my-8 text-stone-900">
+            <button
+              onClick={() => setShowDossier(false)}
+              className="absolute top-5 right-5 p-2 rounded-full hover:bg-stone-100 text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Print Container */}
+            <div id="printable-oogstbon" className="space-y-6">
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black tracking-wider uppercase">
+                      SKAL Biologisch Gecertificeerd #NL-BIO-01-2026
+                    </span>
+                    <span className="text-[11px] font-bold text-stone-500">Korte Keten Waarborg</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                    {brandName} • Officiële Oogstbon
+                  </h3>
+                  <p className="text-xs text-stone-500 font-medium">
+                    Regio {city} • Oogstbon Token: <span className="font-mono font-bold text-stone-800">{orderToken}</span>
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="inline-block p-2 bg-stone-50 border border-stone-200 rounded-xl text-center">
+                    <QrCode className="w-8 h-8 mx-auto text-emerald-700" />
+                    <span className="text-[9px] font-mono text-stone-500 block mt-0.5">{orderToken}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Box & Addons Table */}
+              <div className="border border-stone-200 rounded-2xl overflow-hidden text-xs">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-stone-100/70 border-b border-stone-200 text-stone-600 font-black">
+                      <th className="py-2.5 px-4">Product / Inhoud</th>
+                      <th className="py-2.5 px-4">Specificatie</th>
+                      <th className="py-2.5 px-4 text-right">Prijs/Week</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-stone-100">
+                    <tr className="font-medium text-stone-800">
+                      <td className="py-2.5 px-4 font-bold text-stone-900">{currentBox.name}</td>
+                      <td className="py-2.5 px-4 text-stone-600">{currentBox.subtitle}</td>
+                      <td className="py-2.5 px-4 text-right font-black">€{currentBox.price.toFixed(2)}</td>
+                    </tr>
+                    {selectedAddons.map((id) => {
+                      const item = ADDONS.find((a) => a.id === id);
+                      if (!item) return null;
+                      return (
+                        <tr key={id} className="font-medium text-stone-800 bg-stone-50/40">
+                          <td className="py-2 px-4 font-bold text-stone-900">
+                            {item.icon} {item.name}
+                          </td>
+                          <td className="py-2 px-4 text-stone-600">Lokale streekboerderij toevoeging</td>
+                          <td className="py-2 px-4 text-right font-black">€{item.price.toFixed(2)}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr className="font-medium text-emerald-800 bg-emerald-50/50">
+                      <td className="py-2 px-4 font-bold" colSpan={2}>
+                        Gekoelde Bezorging met Elektrische Bus ({city})
+                      </td>
+                      <td className="py-2 px-4 text-right font-black">Gratis</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Guarantees Box */}
+              <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 text-xs text-stone-700 space-y-1">
+                <span className="font-bold text-emerald-950 flex items-center gap-1.5 block">
+                  <Leaf className="w-3.5 h-3.5 text-emerald-600" />
+                  Korte Keten &amp; Versheidsgarantie:
+                </span>
+                <p>• <strong>Binnen 24 uur van het land:</strong> Geen opslag in gekoelde tussenmagazijnen.</p>
+                <p>• <strong>Eerlijke prijs voor de teler:</strong> Minimaal 70% van de consumentenprijs gaat direct naar de boer.</p>
+                <p>• <strong>Flexibel abonnement:</strong> Wekelijks pauzeren of opzeggen via de webapp.</p>
+              </div>
+
+              {/* Total & Action Buttons */}
+              <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <span className="text-[11px] font-bold text-stone-500 block">Wekelijks Totaalbedrag:</span>
+                  <span className="text-2xl font-black text-emerald-800">€{totalWeeklyPrice.toFixed(2)}</span>
+                  <span className="text-xs text-stone-400 block font-medium">Inclusief btw &amp; gekoelde levering</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowDossier(false)}
+                    className="px-4 py-2.5 rounded-xl border border-stone-300 text-stone-700 font-bold text-xs hover:bg-stone-100 cursor-pointer"
+                  >
+                    Sluiten
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => window.print()}
+                    className={`px-5 py-2.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md flex items-center gap-2 cursor-pointer`}
+                  >
+                    <Printer className="w-4 h-4" />
+                    <span>Print Oogstbon &amp; Pakbon (PDF)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

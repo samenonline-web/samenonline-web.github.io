@@ -815,5 +815,16 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("BG-RES-2026-", content)
         self.assertIn("Print Reserveringspaspoort (PDF)", content)
 
+    # 76. VersVogelBoerderij Oogstbon & Korte Keten Printable Dossier
+    def test_versvogel_boerderij_oogstbon_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "VersVogelBoerderij.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("selectedBoxId", content)
+        self.assertIn("totalWeeklyPrice", content)
+        self.assertIn("VV-OOGST-2026-", content)
+        self.assertIn("Print Oogstbon &amp; Pakbon (PDF)", content)
+
 if __name__ == "__main__":
     unittest.main()
