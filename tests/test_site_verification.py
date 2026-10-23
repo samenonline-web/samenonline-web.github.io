@@ -790,5 +790,18 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("CL-AUDIT-2026-", content)
         self.assertIn("Print Groeiplan (PDF)", content)
 
+    # 74. MarktPleinPlatform Escrow Estimator, City Props, and Printable Escrow Paspoort
+    def test_marktplein_platform_escrow_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "MarktPleinPlatform.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("selectedJobType", content)
+        self.assertIn("estimatedHours", content)
+        self.assertIn("isEmergency", content)
+        self.assertIn("totalJobEstimate", content)
+        self.assertIn("MP-ESCROW-2026-", content)
+        self.assertIn("Print Klusaanvraag (PDF)", content)
+
 if __name__ == "__main__":
     unittest.main()
