@@ -16,6 +16,7 @@ import {
   Truck,
   Leaf,
   Star,
+  Printer,
 } from 'lucide-react';
 
 interface BoxOption {
@@ -84,7 +85,11 @@ export const VersVogelBoerderij: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
 }) => {
+  const brandName = customBrandName || 'VersVogel Boerderij';
+  const city = customCity || 'Groningen • Eerlijke Korte Keten';
   const [postcode, setPostcode] = useState('');
   const [deliveryResult, setDeliveryResult] = useState<string | null>(null);
   const [selectedBoxId, setSelectedBoxId] = useState<'basis' | 'familie' | 'fruit'>('familie');
@@ -148,8 +153,8 @@ export const VersVogelBoerderij: React.FC<TemplateProps> = ({
             VV
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">VersVogel Boerderij</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Groningen • Eerlijke Korte Keten</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandName}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{city}</span>
           </div>
         </div>
 
@@ -371,13 +376,26 @@ export const VersVogelBoerderij: React.FC<TemplateProps> = ({
                 €{totalWeeklyPrice.toFixed(2)}{' '}
                 <span className="text-xs text-stone-400 font-normal">({currentBox.name} + {selectedAddons.length} extra&apos;s)</span>
               </span>
+              <span className="text-[11px] font-semibold text-emerald-700 block mt-0.5">
+                🚚 Gratis gekoelde bezorging in {city} • Wekelijks pauzeren
+              </span>
             </div>
-            <button
-              onClick={onRequestQuote}
-              className={`px-8 py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md cursor-pointer`}
-            >
-              Start Met Deze Box (Proefweek)
-            </button>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="px-4 py-3.5 rounded-xl border border-stone-300 bg-white hover:bg-stone-50 text-stone-800 text-xs font-bold shadow-xs cursor-pointer flex items-center gap-1.5"
+              >
+                <Printer className="w-3.5 h-3.5 text-stone-600" />
+                <span>Print Oogstbon (PDF)</span>
+              </button>
+              <button
+                onClick={onRequestQuote}
+                className={`px-8 py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md cursor-pointer`}
+              >
+                Start Met Deze Box (Proefweek)
+              </button>
+            </div>
           </div>
         </div>
       </section>

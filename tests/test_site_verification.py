@@ -635,5 +635,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Print Behandelpas (PDF)", content)
         self.assertIn("Zorgvergoeding & Declaratie 2026", content)
 
+    # 60. VersVogelBoerderij City Props & Printable Oogstbon Voucher
+    def test_versvogel_boerderij_city_and_voucher(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "VersVogelBoerderij.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("Print Oogstbon (PDF)", content)
+        self.assertIn("Gratis gekoelde bezorging in", content)
+
 if __name__ == "__main__":
     unittest.main()
