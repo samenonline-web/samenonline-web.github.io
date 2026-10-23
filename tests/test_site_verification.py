@@ -412,5 +412,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("href=\"/kennisbank\"", content)
         self.assertIn("href=\"/kennisbank/waarom-nextjs-sneller-is-dan-wordpress\"", content)
 
+    # 38. Bistro De Gracht Live Cart & Ordering Micro-App
+    def test_bistro_de_gracht_cart_and_ordering(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "BistroDeGracht.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("addToCart", content)
+        self.assertIn("totalCartCount", content)
+        self.assertIn("handleCheckoutSimulator", content)
+        self.assertIn("Test iDEAL 2.0 Checkout Simulator", content)
+
 if __name__ == "__main__":
     unittest.main()
