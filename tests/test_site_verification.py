@@ -557,5 +557,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("estimatedOutOfPocket", content)
         self.assertIn("Print Afspraakbevestiging", content)
 
+    # 52. RijschoolVlot Installment Calculator and Printable Voucher
+    def test_rijschool_vlot_installment_and_voucher(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "RijschoolVlot.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("installmentCount", content)
+        self.assertIn("Termijnbetaling Calculator", content)
+        self.assertIn("Print Proefles Voucher", content)
+        self.assertIn("VLT-2026-PROEF", content)
+        self.assertIn("0% Rente & Geen BKR Registratie", content)
+
 if __name__ == "__main__":
     unittest.main()

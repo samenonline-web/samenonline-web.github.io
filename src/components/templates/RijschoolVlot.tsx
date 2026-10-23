@@ -17,6 +17,10 @@ import {
   Fuel,
   Sun,
   Moon,
+  Printer,
+  CreditCard,
+  HelpCircle,
+  Check,
 } from 'lucide-react';
 
 interface LessonPackage {
@@ -88,6 +92,7 @@ export const RijschoolVlot: React.FC<TemplateProps> = ({
 
   const [transmission, setTransmission] = useState<'schakel' | 'automaat'>('schakel');
   const [selectedPackage, setSelectedPackage] = useState<string>('zekerheid');
+  const [installmentCount, setInstallmentCount] = useState<1 | 2 | 3>(1);
   const [trialStep, setTrialStep] = useState(1);
   const [trialData, setTrialData] = useState({
     name: '',
@@ -235,20 +240,75 @@ export const RijschoolVlot: React.FC<TemplateProps> = ({
               </div>
 
               {trialBooked ? (
-                <div className="py-8 text-center space-y-3">
-                  <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="py-4 space-y-4">
+                  <div className="text-center space-y-1.5">
+                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <h4 className="font-black text-base">Proefles Succesvol Gepland!</h4>
+                    <p className="text-xs text-stone-500 max-w-xs mx-auto">
+                      Beste {trialData.name}, we nemen binnen 2 uur telefonisch contact op om het exacte ophaaltijdstip af te stemmen.
+                    </p>
                   </div>
-                  <h4 className="font-black text-base">Proefles Aanvraag Bevestigd!</h4>
-                  <p className="text-xs text-stone-500 max-w-xs mx-auto">
-                    Bedankt {trialData.name}! We nemen binnen 2 uur telefonisch contact op om het exacte ophaaltijdstip af te stemmen.
-                  </p>
-                  <button
-                    onClick={() => setTrialBooked(false)}
-                    className="text-xs font-bold text-stone-500 underline cursor-pointer mt-2"
-                  >
-                    Nog een proefles aanvragen
-                  </button>
+
+                  {/* Printable Proefles Voucher */}
+                  <div className={`p-4 rounded-2xl border-2 border-dashed ${isDarkMode ? 'bg-stone-950 border-stone-700' : 'bg-stone-50 border-stone-300'}`}>
+                    <div className="flex justify-between items-start mb-3 border-b pb-2 border-stone-200 dark:border-stone-800">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-orange-600 block">
+                          Officiële Intake Voucher
+                        </span>
+                        <span className="font-black text-sm">{brandName}</span>
+                      </div>
+                      <span className="text-[10px] font-mono bg-stone-200 dark:bg-stone-800 px-2 py-0.5 rounded font-bold">
+                        VLT-2026-PROEF
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Leerling</span>
+                        <span className="font-bold">{trialData.name}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Telefoon</span>
+                        <span className="font-bold">{trialData.phone}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Type Transmissie</span>
+                        <span className="font-bold">{transmission === 'schakel' ? 'Handgeschakeld (B)' : 'Automaat (Code 78)'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Voorkeursdatum</span>
+                        <span className="font-bold">{trialData.date || 'In telefonisch overleg'}</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-emerald-50 dark:bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800 text-[11px] space-y-1">
+                      <span className="font-bold text-emerald-800 dark:text-emerald-300 block">Meenemen naar de proefles:</span>
+                      <ul className="list-disc list-inside text-stone-600 dark:text-stone-300 text-[10px] space-y-0.5">
+                        <li>Geldig ID-bewijs of paspoort</li>
+                        <li>Schoenen met stevige, platte zool</li>
+                        <li>Eventueel theoriecertificaat indien behaald</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => window.print()}
+                      className="flex-1 py-2.5 rounded-xl bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs font-bold flex items-center justify-center gap-1.5 shadow hover:opacity-90 cursor-pointer"
+                    >
+                      <Printer className="w-3.5 h-3.5" />
+                      <span>Print Proefles Voucher</span>
+                    </button>
+                    <button
+                      onClick={() => setTrialBooked(false)}
+                      className="px-3 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-bold hover:bg-stone-100 dark:hover:bg-stone-800 cursor-pointer"
+                    >
+                      Nieuwe Aanvraag
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleBookTrial} className="space-y-3.5">
@@ -372,9 +432,9 @@ export const RijschoolVlot: React.FC<TemplateProps> = ({
         </div>
       </section>
 
-      {/* Package Pricing Tiers */}
+      {/* Package Pricing Tiers with Installment Calculator */}
       <section className="py-16 px-4 sm:px-6 max-w-6xl mx-auto">
-        <div className="text-center space-y-3 mb-12">
+        <div className="text-center space-y-3 mb-8">
           <span className="text-xs font-black uppercase tracking-wider text-orange-600">
             Transparante Tarieven Zonder Verrassingen
           </span>
@@ -382,13 +442,57 @@ export const RijschoolVlot: React.FC<TemplateProps> = ({
             Kies Jouw Rijles Pakket
           </h2>
           <p className="text-xs sm:text-sm text-stone-500 max-w-md mx-auto">
-            Alle pakketten zijn inclusief theorie training en flexibele betaling in 2 of 3 termijnen.
+            Alle pakketten zijn inclusief theorie training en flexibele betaling in 2 of 3 termijnen zonder rente.
           </p>
+        </div>
+
+        {/* Installment Switcher */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
+          <span className="text-xs font-bold text-stone-600 dark:text-stone-300 flex items-center gap-1.5">
+            <CreditCard className="w-4 h-4 text-orange-500" />
+            Termijnbetaling Calculator:
+          </span>
+          <div className="inline-flex p-1 rounded-2xl bg-stone-200 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-xs font-bold">
+            <button
+              onClick={() => setInstallmentCount(1)}
+              className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                installmentCount === 1
+                  ? 'bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 shadow-xs'
+                  : 'text-stone-600 dark:text-stone-400'
+              }`}
+            >
+              1x Ineens Volledig
+            </button>
+            <button
+              onClick={() => setInstallmentCount(2)}
+              className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                installmentCount === 2
+                  ? 'bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 shadow-xs'
+                  : 'text-stone-600 dark:text-stone-400'
+              }`}
+            >
+              2 Termijnen (0% rente)
+            </button>
+            <button
+              onClick={() => setInstallmentCount(3)}
+              className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                installmentCount === 3
+                  ? 'bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 shadow-xs'
+                  : 'text-stone-600 dark:text-stone-400'
+              }`}
+            >
+              3 Termijnen (0% rente)
+            </button>
+          </div>
+          <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/40 px-2.5 py-1 rounded-full border border-emerald-300 dark:border-emerald-800">
+            ✓ 0% Rente & Geen BKR Registratie
+          </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {PACKAGES.map((pkg) => {
             const isSelected = selectedPackage === pkg.id;
+            const installmentAmount = Math.round(pkg.price / installmentCount);
             return (
               <div
                 key={pkg.id}
@@ -407,9 +511,22 @@ export const RijschoolVlot: React.FC<TemplateProps> = ({
                     </span>
                   )}
                   <h3 className="font-black text-xl mb-1">{pkg.name}</h3>
-                  <div className="text-3xl font-black my-4">
-                    €{pkg.price}
-                    <span className="text-xs text-stone-400 font-medium"> ({pkg.lessons} lessen)</span>
+                  <div className="my-4">
+                    <div className="text-3xl font-black">
+                      €{installmentAmount}
+                      <span className="text-xs text-stone-400 font-medium">
+                        {installmentCount === 1 ? ' ineens' : ` / mnd (${installmentCount}x termijnen)`}
+                      </span>
+                    </div>
+                    {installmentCount > 1 ? (
+                      <span className="text-[11px] text-stone-500 dark:text-stone-400 font-semibold block mt-0.5">
+                        Totaal pakketprijs: €{pkg.price} • {pkg.lessons} rijlessen
+                      </span>
+                    ) : (
+                      <span className="text-[11px] text-stone-500 dark:text-stone-400 font-semibold block mt-0.5">
+                        Inclusief CBR praktijkexamen ({pkg.lessons} rijlessen)
+                      </span>
+                    )}
                   </div>
 
                   <ul className="space-y-2.5 text-xs font-medium text-stone-600 dark:text-stone-300">
@@ -431,7 +548,7 @@ export const RijschoolVlot: React.FC<TemplateProps> = ({
                         : 'bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-700'
                     }`}
                   >
-                    <span>Kies Dit Pakket</span>
+                    <span>Pakket Aanvragen</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
