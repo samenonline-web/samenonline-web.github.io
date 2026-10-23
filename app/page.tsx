@@ -968,11 +968,18 @@ export default function Home() {
         }}
       />
 
-      {/* Floating WhatsApp Contact Widget */}
-      <WhatsAppWidget lang={lang} />
+      {/* Floating WhatsApp Contact Widget omitted per user request in favor of Questionnaire */}
+      {/* <WhatsAppWidget lang={lang} /> */}
 
       {/* Mobile Sticky Quick Action Bar */}
-      <MobileStickyBar lang={lang} onOpenRequestModal={() => handleOpenRequestModal()} />
+      <MobileStickyBar
+        lang={lang}
+        onOpenRequestModal={() => handleOpenRequestModal()}
+        onOpenQuestionnaire={() => {
+          const el = document.getElementById('website-vragenlijst');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
       {/* Floating Section Dock & Dropdown Navigation */}
       <FloatingSectionNav lang={lang} totalTemplatesCount={templates.length} />

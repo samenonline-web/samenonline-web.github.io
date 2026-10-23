@@ -470,5 +470,13 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("customCity", content)
         self.assertIn("Afrekenen met iDEAL (Demo)", content)
 
+    # 44. Mobile Sticky Bar Questionnaire Integration
+    def test_mobile_sticky_bar_questionnaire_integration(self):
+        bar_file = WORKSPACE / "src" / "components" / "MobileStickyBar.tsx"
+        content = bar_file.read_text(encoding="utf-8")
+        self.assertIn("onOpenQuestionnaire", content)
+        self.assertIn("website-vragenlijst", content)
+        self.assertIn("Keuzehulp", content)
+
 if __name__ == "__main__":
     unittest.main()

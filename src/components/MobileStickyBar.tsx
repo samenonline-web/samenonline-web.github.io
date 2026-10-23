@@ -1,17 +1,19 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, MessageCircle } from 'lucide-react';
+import { ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
 import { Language } from '../types/company';
 
 interface MobileStickyBarProps {
   lang: Language;
   onOpenRequestModal: () => void;
+  onOpenQuestionnaire?: () => void;
 }
 
 export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
   lang,
   onOpenRequestModal,
+  onOpenQuestionnaire,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -29,13 +31,13 @@ export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleWhatsApp = () => {
-    const phone = '31622727144';
-    const msg =
-      lang === 'nl'
-        ? 'Hallo Samen Online, ik zag jullie website en wil graag vrijblijvend advies over een nieuwe website.'
-        : 'Hello Samen Online, I saw your website and would like free advice on a new website.';
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+  const handleOpenQuestionnaire = () => {
+    if (onOpenQuestionnaire) {
+      onOpenQuestionnaire();
+    } else {
+      const el = document.getElementById('website-vragenlijst');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   if (!isVisible) return null;
@@ -63,12 +65,13 @@ export const MobileStickyBar: React.FC<MobileStickyBarProps> = ({
         <div className="flex items-center gap-2 shrink-0">
           <button
             type="button"
-            onClick={handleWhatsApp}
-            aria-label="WhatsApp"
-            className="w-10 h-10 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow-md shadow-emerald-600/30 transition-transform active:scale-95 cursor-pointer"
-            title="Chat via WhatsApp"
+            onClick={handleOpenQuestionnaire}
+            aria-label={lang === 'nl' ? 'Open Keuzehulp Vragenlijst' : 'Open Website Questionnaire'}
+            className="px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 text-xs font-extrabold flex items-center gap-1.5 shadow-xs transition-transform active:scale-95 cursor-pointer whitespace-nowrap"
+            title="Keuzehulp Vragenlijst"
           >
-            <MessageCircle className="w-5 h-5 fill-white" />
+            <HelpCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <span>{lang === 'nl' ? 'Keuzehulp' : 'Quiz'}</span>
           </button>
 
           <button
