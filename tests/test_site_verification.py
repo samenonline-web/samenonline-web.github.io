@@ -894,5 +894,18 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn('nosniff', layout_content)
         self.assertIn('strict-origin-when-cross-origin', layout_content)
 
+    # 81. Client Portal Simulator 2.0 & 3-Year TCO Comparison Module
+    def test_client_portal_simulator_and_tco_comparison(self):
+        comp_file = WORKSPACE / "src" / "components" / "ClientPortalSimulator.tsx"
+        self.assertTrue(comp_file.exists(), "ClientPortalSimulator.tsx must exist")
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("portalMessage", content)
+        self.assertNotIn("whatsappMessage", content)
+        self.assertIn("Financieel Inzicht • 3-Jaars TCO Berekening", content)
+        self.assertIn("WordPress &amp; Elementor", content)
+        self.assertIn("Samen Online Next.js", content)
+        self.assertIn("€4.653,- Bespaard", content)
+        self.assertIn('href="/vragenlijst"', content)
+
 if __name__ == "__main__":
     unittest.main()

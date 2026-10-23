@@ -27,7 +27,7 @@ interface StepDetail {
   subtitle: string;
   duration: string;
   clientEffort: string;
-  whatsappMessage: string;
+  portalMessage: string;
   checklist: string[];
   deliverableBadge: string;
 }
@@ -38,8 +38,8 @@ const STEPS: StepDetail[] = [
     title: 'Intake & Directe Kick-off',
     subtitle: 'Wensen doorspreken, kleuren bepalen en direct aan de slag.',
     duration: 'Binnen 2 uur na aanvraag',
-    clientEffort: '15 minuten (telefonisch of via WhatsApp)',
-    whatsappMessage: 'Hoi! Welkom bij Samen Online. Ik heb je aanvraag ontvangen en de opzet staat klaar. Stuur gerust je logo en voorkeuren door, dan begin ik meteen met bouwen!',
+    clientEffort: '15 minuten (telefonisch of intakeformulier)',
+    portalMessage: 'Hoi! Welkom bij Samen Online. Ik heb je aanvraag ontvangen en de opzet staat klaar. Stuur gerust je logo en voorkeuren door, dan begin ik meteen met bouwen!',
     checklist: [
       'Telefonische kennismaking & bepalen hoofddoel van de website',
       'Keuze voor kleurenthema, lettertype en gewenste pagina’s',
@@ -54,10 +54,10 @@ const STEPS: StepDetail[] = [
     subtitle: 'Binnen 48 uur zie je jouw website live op een geheim testdomein.',
     duration: 'Dag 2 • Oplevering eerste concept',
     clientEffort: '20 minuten preview testen op je mobiel',
-    whatsappMessage: 'Goed nieuws! De eerste interactieve versie staat live op jouw geheime testlink (demo.samenonline.nl/jouwbedrijf). Kijk er rustig naar op je telefoon en laat weten wat je vindt!',
+    portalMessage: 'Goed nieuws! De eerste interactieve versie staat live op jouw geheime testlink (demo.samenonline.nl/jouwbedrijf). Kijk er rustig naar op je telefoon en laat weten wat je vindt!',
     checklist: [
       'Volledig gecodeerd Next.js framework op testserver',
-      'Werkende formulieren, WhatsApp-knop en mobiele navigatie',
+      'Werkende formulieren, 1-klik contactknoppen en mobiele navigatie',
       'Google Lighthouse 100/100 snelheidsoptimalisatie toegepast',
       'Geheime link gedeeld met jou voor live feedback',
     ],
@@ -69,7 +69,7 @@ const STEPS: StepDetail[] = [
     subtitle: 'Samen finetunen tot alles 100% klopt.',
     duration: 'Dag 3 • Vrijblijvende aanpassingen',
     clientEffort: '10 minuten feedback geven',
-    whatsappMessage: 'Top, al je opmerkingen zijn verwerkt! Ik heb de knoppen scherper gemaakt, de foto van je team toegevoegd en de prijzen geüpdatet.',
+    portalMessage: 'Top, al je opmerkingen zijn verwerkt! Ik heb de knoppen scherper gemaakt, de foto van je team toegevoegd en de prijzen geüpdatet.',
     checklist: [
       'Teksten en koppen aangescherpt voor maximale conversie',
       'Eventuele extra diensten of tarieven toegevoegd',
@@ -84,7 +84,7 @@ const STEPS: StepDetail[] = [
     subtitle: 'Technische koppelingen en zakelijke e-mailconfiguratie.',
     duration: 'Dag 4 • Technische infrastructuur',
     clientEffort: '0 minuten (wij regelen alles)',
-    whatsappMessage: 'Je .nl domeinnaam is gekoppeld en het SSL-beveiligingscertificaat is groen. Je zakelijke e-mail (info@jouwbedrijf.nl) is nu ook actief!',
+    portalMessage: 'Je .nl domeinnaam is gekoppeld en het SSL-beveiligingscertificaat is groen. Je zakelijke e-mail (info@jouwbedrijf.nl) is nu ook actief!',
     checklist: [
       'Koppeling of verhuizing van jouw gewenste .nl domeinnaam',
       'Gratis SSL-certificaat (groen slotje in de browser)',
@@ -99,7 +99,7 @@ const STEPS: StepDetail[] = [
     subtitle: 'Jouw website staat officieel live op Google.',
     duration: 'Dag 5 • Officiële livegang',
     clientEffort: '0 minuten (vieren dat je live bent!)',
-    whatsappMessage: 'Gefeliciteerd! Jouw website staat nu officieel live voor heel Nederland. Ik heb de XML sitemap direct aangemeld bij Google Search Console voor snelle indexatie. De broncode en inloggegevens staan in je mailbox!',
+    portalMessage: 'Gefeliciteerd! Jouw website staat nu officieel live voor heel Nederland. Ik heb de XML sitemap direct aangemeld bij Google Search Console voor snelle indexatie. De broncode en inloggegevens staan in je mailbox!',
     checklist: [
       'Website live voor het grote publiek op jouw eigen domein',
       'Aanmelding bij Google Search Console & XML Sitemap ingediend',
@@ -279,28 +279,28 @@ export default function ClientPortalSimulator({ onRequestWebsite }: ClientPortal
             </div>
           </div>
 
-          {/* Simulated WhatsApp Chat Bubble */}
-          <div className="rounded-2xl bg-[#efeae2] dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 shadow-inner">
+          {/* Simulated Project Portal Live Update Card */}
+          <div className="rounded-2xl bg-slate-100 dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 shadow-inner">
             <div className="flex items-center gap-2 pb-2.5 mb-2.5 border-b border-black/10 dark:border-white/10 text-xs">
-              <div className="w-7 h-7 rounded-full bg-emerald-600 flex items-center justify-center text-white text-[11px] font-black">
+              <div className="w-7 h-7 rounded-full bg-orange-600 flex items-center justify-center text-white text-[11px] font-black">
                 K
               </div>
               <div className="flex-1 min-w-0">
                 <span className="font-bold text-slate-900 dark:text-white block truncate">
-                  Kenan • Samen Online
+                  Kenan • Project Lead &amp; Developer
                 </span>
-                <span className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Dagelijks direct contact
+                  Live Project Update
                 </span>
               </div>
             </div>
 
             {/* Bubble */}
             <div className="bg-white dark:bg-slate-800 p-3.5 rounded-2xl rounded-tl-xs shadow-xs text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-sans space-y-2">
-              <p>{activeStep.whatsappMessage}</p>
+              <p>{activeStep.portalMessage}</p>
               <div className="text-right text-[10px] text-slate-400 font-mono">
-                10:24 • Gelezen ✓✓
+                Status: In behandeling ✓
               </div>
             </div>
           </div>
@@ -316,6 +316,122 @@ export default function ClientPortalSimulator({ onRequestWebsite }: ClientPortal
               Je bent nooit afhankelijk van ons en zit nergens aan vast.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* 3-YEAR TOTAL COST OF OWNERSHIP (TCO) COMPARISON MODULE */}
+      <div className="mt-12 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-10 shadow-lg space-y-8">
+        <div className="text-center max-w-3xl mx-auto space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 text-xs font-black uppercase tracking-wider">
+            <span>Financieel Inzicht • 3-Jaars TCO Berekening</span>
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+            Waarom Samen Online tot €4.650,- Goedkoper is dan WordPress
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
+            Veel ondernemers staren zich blind op de initiële bouwprijs, maar betalen jaarlijks honderden euro&apos;s aan verborgen licenties, trage hosting en dure uurtarieven voor plugin-reparaties.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* WordPress Column */}
+          <div className="p-6 rounded-2xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-rose-200 dark:border-rose-900/40">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-700 dark:text-rose-400 block">
+                  Traditioneel Bureau
+                </span>
+                <h4 className="font-black text-lg text-slate-900 dark:text-white">WordPress &amp; Elementor</h4>
+              </div>
+              <span className="text-xl font-black font-mono text-rose-700 dark:text-rose-400">
+                €5.190,-
+              </span>
+            </div>
+
+            <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300">
+              <li className="flex justify-between">
+                <span>Bouwkosten bureau:</span>
+                <strong className="text-slate-900 dark:text-white">€1.500,-</strong>
+              </li>
+              <li className="flex justify-between">
+                <span>Managed WP Hosting (36 mnd × €25):</span>
+                <strong className="text-slate-900 dark:text-white">€900,-</strong>
+              </li>
+              <li className="flex justify-between">
+                <span>Jaarlijkse plugins (Elementor Pro, WPML, SEO):</span>
+                <strong className="text-slate-900 dark:text-white">€450,-</strong>
+              </li>
+              <li className="flex justify-between">
+                <span>Onderhoud &amp; Veiligheidsupdates (36 mnd × €65):</span>
+                <strong className="text-slate-900 dark:text-white">€2.340,-</strong>
+              </li>
+            </ul>
+
+            <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-rose-200 dark:border-rose-900/40 text-[11px] text-rose-800 dark:text-rose-300 font-medium">
+              ⚠️ Risico: WordPress plugins vereisen continue updates; bij conflicten ligt je website eruit of moet een developer ingehuurd worden.
+            </div>
+          </div>
+
+          {/* Samen Online Next.js Column */}
+          <div className="p-6 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border-2 border-emerald-500 shadow-md space-y-4 relative">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full">
+              Slimme Keuze
+            </span>
+
+            <div className="flex items-center justify-between pb-3 border-b border-emerald-200 dark:border-emerald-800/60">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block">
+                  Moderne Webstandaard
+                </span>
+                <h4 className="font-black text-lg text-slate-900 dark:text-white">Samen Online Next.js</h4>
+              </div>
+              <span className="text-xl font-black font-mono text-emerald-600 dark:text-emerald-400">
+                €537,-
+              </span>
+            </div>
+
+            <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300">
+              <li className="flex justify-between">
+                <span>Bouwkosten eenmalig (Samen Start):</span>
+                <strong className="text-slate-900 dark:text-white">€195,-</strong>
+              </li>
+              <li className="flex justify-between">
+                <span>All-in Webhosting &amp; .nl domein (36 mnd × €9,50):</span>
+                <strong className="text-slate-900 dark:text-white">€342,-</strong>
+              </li>
+              <li className="flex justify-between">
+                <span>Jaarlijkse plugin licenties:</span>
+                <strong className="text-emerald-600 dark:text-emerald-400">€0,- (Geen plugins nodig)</strong>
+              </li>
+              <li className="flex justify-between">
+                <span>Beveiligingsupdates &amp; Database-onderhoud:</span>
+                <strong className="text-emerald-600 dark:text-emerald-400">€0,- (Static Edge = Onhackbaar)</strong>
+              </li>
+            </ul>
+
+            <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-800/60 text-[11px] text-emerald-800 dark:text-emerald-300 font-medium">
+              ✓ Garantie: 100% eigendomsoverdracht. Geen vendor lock-in en nul periodieke plugin-reparaties.
+            </div>
+          </div>
+        </div>
+
+        {/* Total Net Savings Banner */}
+        <div className="p-5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+          <div>
+            <span className="text-xs uppercase tracking-wider font-extrabold text-emerald-100 block">
+              Jouw 3-Jaars Netto Winst:
+            </span>
+            <div className="text-2xl sm:text-3xl font-black font-mono">
+              €4.653,- Bespaard (89% lagere kosten)
+            </div>
+          </div>
+
+          <a
+            href="/vragenlijst"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white text-emerald-900 font-black text-xs sm:text-sm hover:bg-emerald-50 transition-all text-center shadow-md active:scale-95 cursor-pointer whitespace-nowrap"
+          >
+            Start Vragenlijst &amp; Bereken Mijn Voordeel
+          </a>
         </div>
       </div>
     </section>
