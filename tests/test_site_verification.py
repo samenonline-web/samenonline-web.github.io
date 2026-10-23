@@ -313,5 +313,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("/locaties/", sitemap_content)
         self.assertIn("CITIES_DATA", sitemap_content)
 
+    # 30. Web App Manifest (PWA mobile installability)
+    def test_manifest_ts_route(self):
+        m_file = WORKSPACE / "app" / "manifest.ts"
+        self.assertTrue(m_file.exists(), "app/manifest.ts must exist for PWA")
+        content = m_file.read_text(encoding="utf-8")
+        self.assertIn("Samen Online", content)
+        self.assertIn("standalone", content)
+        self.assertIn("theme_color", content)
+
 if __name__ == "__main__":
     unittest.main()
