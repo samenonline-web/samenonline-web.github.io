@@ -113,7 +113,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   );
 
   return (
-    <div id="filter-section" className="bg-white/95 dark:bg-[#07090e]/95 backdrop-blur-md border-b border-stone-200 dark:border-slate-800 sticky top-20 z-30 shadow-2xs py-3 scroll-mt-20">
+    <div id="filter-section" className="bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-md border-b border-stone-200 dark:border-slate-800 sticky top-20 z-30 shadow-2xs py-3 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Clean Row: Calm Category Pills + Filter Drawer Toggle */}

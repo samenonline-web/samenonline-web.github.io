@@ -29,7 +29,7 @@ export const Hero: React.FC<HeroProps> = ({
   ];
 
   return (
-    <section className="bg-white dark:bg-[#07090e] py-14 lg:py-18 border-b border-orange-100 dark:border-slate-800 transition-colors">
+    <section className="bg-white dark:bg-[#0B1120] py-14 lg:py-18 border-b border-orange-100 dark:border-slate-800 transition-colors">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         
         {/* Badge */}

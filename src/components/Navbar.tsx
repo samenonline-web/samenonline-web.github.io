@@ -136,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b-2 border-orange-100/80 dark:border-slate-800 shadow-xs transition-colors">
+    <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-md border-b-2 border-orange-100/80 dark:border-slate-800/80 shadow-xs transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3 sm:gap-4">
         
         {/* Brand Logo & Name - Clickable to scroll to top */}
@@ -198,7 +198,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {isNavDropdownOpen && (
             <div 
               role="menu"
-              className="absolute left-0 sm:left-auto sm:right-0 mt-2 w-80 sm:w-96 p-2 rounded-2xl bg-white dark:bg-slate-950 border-2 border-orange-200 dark:border-slate-800 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
+              className="absolute left-0 sm:left-auto sm:right-0 mt-2 w-80 sm:w-96 p-2 rounded-2xl bg-white dark:bg-[#0F172A] border-2 border-orange-200 dark:border-slate-800 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
             >
               <div className="px-3 py-2 border-b border-orange-100 dark:border-slate-800/80 mb-1 flex items-center justify-between">
                 <span className="text-[11px] font-extrabold uppercase tracking-wider text-orange-800 dark:text-orange-400">

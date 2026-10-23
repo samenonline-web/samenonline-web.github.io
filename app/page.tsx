@@ -296,7 +296,7 @@ export default function Home() {
     <div
       className={`min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white transition-colors duration-200 ${
         isDarkMode
-          ? 'global-dark-mode dark bg-[#07090e] text-slate-100'
+          ? 'global-dark-mode dark bg-[#0B1120] text-slate-100'
           : 'bg-amber-50/20 text-stone-900'
       }`}
     >
@@ -334,7 +334,7 @@ export default function Home() {
       {/* Sticky Quick Jump Bar for In-Page Destinations */}
       <nav 
         aria-label={lang === 'nl' ? 'Snelnavigatie onderdelen' : 'Quick section navigation'}
-        className="sticky top-20 z-35 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-y border-orange-100/90 dark:border-slate-800 py-2.5 px-4 shadow-2xs transition-colors"
+        className="sticky top-20 z-35 bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-md border-y border-orange-100/90 dark:border-slate-800 py-2.5 px-4 shadow-2xs transition-colors"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-2 overflow-x-auto no-scrollbar py-0.5 text-xs font-bold">
           <button
