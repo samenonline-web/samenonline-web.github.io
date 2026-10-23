@@ -26,6 +26,7 @@ interface TariffItem {
   name: string;
   desc: string;
   rate: string;
+  priceNum: number;
   covered: string;
 }
 
@@ -35,6 +36,7 @@ const TARIFFS: TariffItem[] = [
     name: 'Periodieke Gebitscontrole',
     desc: 'Halfjaarlijkse preventieve controle inclusief advies mondhygiëne',
     rate: '€ 26,75',
+    priceNum: 26.75,
     covered: '100% tot 18 jaar / Aanvullend 75-100%',
   },
   {
@@ -42,6 +44,7 @@ const TARIFFS: TariffItem[] = [
     name: 'Gebitsreiniging (per 5 min)',
     desc: 'Verwijderen van tandsteen en professioneel polijsten van tanden',
     rate: '€ 16,40',
+    priceNum: 16.40,
     covered: 'Aanvullende tandartsverzekering',
   },
   {
@@ -49,6 +52,7 @@ const TARIFFS: TariffItem[] = [
     name: 'Kleine Röntgenfoto (Bitewing)',
     desc: 'Detectie van beginnende gaatjes tussen kiezen onder het tandvlees',
     rate: '€ 20,49',
+    priceNum: 20.49,
     covered: '100% tot 18 jaar / Aanvullend',
   },
   {
@@ -56,6 +60,7 @@ const TARIFFS: TariffItem[] = [
     name: 'Witte Composiet Vulling (1 vlak)',
     desc: 'Kleur-nauwkeurige restauratie van kies of voortand',
     rate: '€ 55,20',
+    priceNum: 55.20,
     covered: 'Aanvullende tandartsverzekering',
   },
 ];
@@ -87,6 +92,24 @@ export const ZorgMondKliniek: React.FC<TemplateProps> = ({
   const [selectedSlot, setSelectedSlot] = useState<string>('Morgen 09:30 - 10:00');
   const [bookingData, setBookingData] = useState({ name: '', phone: '', email: '', isNewPatient: 'ja' });
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+
+  // NZa Tarieven & Vergoeding Calculator State
+  const [selectedTariffCodes, setSelectedTariffCodes] = useState<string[]>(['C002', 'M03', 'X10']);
+  const [insuranceCoveragePct, setInsuranceCoveragePct] = useState<number>(75);
+
+  const toggleTariffCode = (code: string) => {
+    setSelectedTariffCodes((prev) =>
+      prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code]
+    );
+  };
+
+  const totalTariffCost = selectedTariffCodes.reduce((sum, code) => {
+    const item = TARIFFS.find((t) => t.code === code);
+    return sum + (item ? item.priceNum : 0);
+  }, 0);
+
+  const estimatedInsurancePayout = totalTariffCost * (insuranceCoveragePct / 100);
+  const estimatedOutOfPocket = Math.max(0, totalTariffCost - estimatedInsurancePayout);
 
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -352,6 +375,83 @@ export const ZorgMondKliniek: React.FC<TemplateProps> = ({
               </tbody>
             </table>
           </div>
+
+          {/* Interactive Mondzorg Kostenschatting Tool */}
+          <div className="mt-8 p-6 rounded-3xl bg-teal-50/60 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800/80">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-teal-200/80 dark:border-teal-800/80">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-teal-800 dark:text-teal-300 bg-teal-100 dark:bg-teal-900/60 px-2.5 py-0.5 rounded-full inline-block mb-1">
+                  Interactieve Kostenschatting
+                </span>
+                <h3 className="font-black text-base text-stone-900 dark:text-white">
+                  Bereken Jouw Behandeling & Eigen Bijdrage
+                </h3>
+              </div>
+              {/* Insurance percentage pills */}
+              <div className="flex items-center gap-1.5 text-xs font-bold">
+                <span className="text-stone-500 text-[11px] mr-1">Tandartsdekking:</span>
+                {[0, 75, 100].map((pct) => (
+                  <button
+                    key={pct}
+                    type="button"
+                    onClick={() => setInsuranceCoveragePct(pct)}
+                    className={`px-2.5 py-1 rounded-xl transition-all cursor-pointer ${
+                      insuranceCoveragePct === pct
+                        ? 'bg-teal-600 text-white shadow-xs font-black'
+                        : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700'
+                    }`}
+                  >
+                    {pct === 0 ? 'Geen (0%)' : `${pct}%`}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-4">
+              {TARIFFS.map((t) => {
+                const isSelected = selectedTariffCodes.includes(t.code);
+                return (
+                  <button
+                    key={t.code}
+                    type="button"
+                    onClick={() => toggleTariffCode(t.code)}
+                    className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                      isSelected
+                        ? 'border-teal-500 bg-white dark:bg-stone-900 ring-2 ring-teal-500/20'
+                        : 'border-stone-200 dark:border-stone-800 bg-white/70 dark:bg-stone-900/60 hover:bg-white'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-1 mb-2">
+                      <span className="text-xs font-black text-stone-900 dark:text-white leading-tight">
+                        {t.name}
+                      </span>
+                      <div className={`w-4 h-4 rounded-md border flex items-center justify-center text-[10px] font-black shrink-0 ${
+                        isSelected ? 'bg-teal-600 text-white border-transparent' : 'border-stone-300 bg-white'
+                      }`}>
+                        {isSelected ? '✓' : ''}
+                      </div>
+                    </div>
+                    <span className="text-xs font-black text-teal-700 dark:text-teal-400">
+                      €{t.priceNum.toFixed(2)}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Total calculation strip */}
+            <div className="mt-5 p-4 rounded-2xl bg-white dark:bg-stone-900 border border-teal-200/90 dark:border-teal-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+              <div className="flex flex-wrap gap-4 text-stone-700 dark:text-stone-300 font-semibold">
+                <span>NZa Totaal: <strong className="text-stone-900 dark:text-white">€{totalTariffCost.toFixed(2)}</strong></span>
+                <span>•</span>
+                <span>Vergoeding ({insuranceCoveragePct}%): <strong className="text-emerald-600">€{estimatedInsurancePayout.toFixed(2)}</strong></span>
+              </div>
+              <div className="text-right">
+                <span className="text-[10px] text-stone-400 block font-bold">Geschatte eigen bijdrage:</span>
+                <span className="text-lg font-black text-stone-900 dark:text-white">€{estimatedOutOfPocket.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -405,13 +505,23 @@ export const ZorgMondKliniek: React.FC<TemplateProps> = ({
                 <p className="text-xs text-stone-500 max-w-sm mx-auto">
                   Je ontvangt binnen 5 minuten een bevestigings-sms op <strong>{bookingData.phone}</strong> en een afspraakherinnering 24 uur voor aanvang.
                 </p>
-                <div className="pt-2">
+                <div className="pt-2 flex flex-col sm:flex-row gap-2 justify-center max-w-md mx-auto">
                   <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') window.print();
+                    }}
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs shadow-xs transition-colors cursor-pointer text-center"
+                  >
+                    📄 Print Afspraakbevestiging
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => {
                       setBookingConfirmed(false);
                       setBookingStep(1);
                     }}
-                    className="text-xs font-bold text-teal-600 underline cursor-pointer"
+                    className="py-2.5 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 font-extrabold text-xs cursor-pointer text-center"
                   >
                     Nog een afspraak inplannen
                   </button>
