@@ -12,6 +12,8 @@ interface TemplateCardProps {
   onOpenRequestModal: (template: WebTemplate) => void;
   isBookmarked: boolean;
   onToggleBookmark: (id: string) => void;
+  customBrandName?: string;
+  customBrandColor?: string;
 }
 
 export const TemplateCard: React.FC<TemplateCardProps> = ({
@@ -22,7 +24,27 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
   onOpenRequestModal,
   isBookmarked,
   onToggleBookmark,
+  customBrandName,
+  customBrandColor,
 }) => {
+  const brandName = customBrandName?.trim() || '';
+  const displayName = brandName ? `${brandName}` : template.name;
+  const logoText = brandName ? brandName.slice(0, 2).toUpperCase() : template.logoText;
+
+  const getColorBg = () => {
+    if (!customBrandColor || customBrandColor === 'orange') return template.logoBg;
+    if (customBrandColor === 'blue') return 'bg-blue-600';
+    if (customBrandColor === 'green') return 'bg-emerald-600';
+    if (customBrandColor === 'purple') return 'bg-purple-600';
+    if (customBrandColor === 'red') return 'bg-rose-600';
+    if (customBrandColor === 'dark') return 'bg-slate-800';
+    return template.logoBg;
+  };
+
+  const subDomain = brandName
+    ? brandName.toLowerCase().replace(/[^a-z0-9]/g, '') || template.id
+    : template.id;
+
   const subtitle = lang === 'nl' ? template.subtitleNl : template.subtitle;
   const highlight = lang === 'nl' ? template.highlightSnippetNl : template.highlightSnippet;
   const features = lang === 'nl' ? template.featuresNl : template.features;
@@ -49,16 +71,21 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
           <div className="flex items-center gap-3 flex-1 min-w-0">
             {/* Logo Avatar */}
             <div
-              className={`w-14 h-14 min-w-[56px] min-h-[56px] shrink-0 aspect-square rounded-2xl ${template.logoBg} flex items-center justify-center text-white font-extrabold text-xl shadow-md select-none transform group-hover:scale-105 transition-transform`}
+              className={`w-14 h-14 min-w-[56px] min-h-[56px] shrink-0 aspect-square rounded-2xl ${getColorBg()} flex items-center justify-center text-white font-extrabold text-xl shadow-md select-none transform group-hover:scale-105 transition-transform`}
             >
-              {template.logoText}
+              {logoText}
             </div>
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5 flex-wrap">
                 <h3 className="font-extrabold text-lg text-stone-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
-                  {template.name}
+                  {displayName}
                 </h3>
+                {brandName && (
+                  <span className="text-[10px] text-orange-600 dark:text-blue-400 font-bold bg-orange-100 dark:bg-blue-950/80 px-1.5 py-0.5 rounded">
+                    Jouw Huisstijl
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-2 mt-1 flex-wrap">
                 <span className="text-xs font-bold text-orange-700 dark:text-blue-300 bg-orange-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md inline-block border border-orange-200/60 dark:border-blue-800/60 shrink-0">
@@ -110,7 +137,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
 
             <div className="flex-1 min-w-0 bg-slate-600/80 dark:bg-slate-800/80 px-2 py-0.5 rounded-md flex items-center gap-1.5 text-slate-300 dark:text-slate-400 font-mono text-[10px] truncate">
               <Lock className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
-              <span className="truncate">{template.id}.samenonline.nl</span>
+              <span className="truncate">{subDomain}.samenonline.nl</span>
             </div>
 
             <div className="shrink-0 flex items-center gap-1 text-[10px] text-orange-300 dark:text-blue-400 font-bold group-hover/browser:text-orange-200 dark:group-hover/browser:text-blue-300">

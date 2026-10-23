@@ -16,6 +16,7 @@ import {
   Loader2,
   Copy,
   Mail,
+  MessageCircle,
 } from 'lucide-react';
 import { Language } from '../types/company';
 import { QuotePdfModal, QuotePdfData } from './QuotePdfModal';
@@ -360,6 +361,31 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
     window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
   };
 
+  const handleWhatsAppQuote = () => {
+    const addonNames = selectedAddons
+      .map((id) => ADDONS.find((a) => a.id === id)?.nameNl)
+      .filter(Boolean)
+      .join(', ');
+
+    const domainText = cleanDomain ? `${cleanDomain}.nl` : 'Nog te bepalen';
+    const hostingText =
+      hostingPlan === 'managed'
+        ? 'Inclusief All-in Hosting & .nl domein (+€9,50/mnd)'
+        : 'Zelf regelen (€0/mnd)';
+
+    const text = `Hallo Samen Online! Ik heb een website geconfigureerd via de calculator:
+• Type: ${activeTypeObj.nameNl} (${activePageOption.labelNl})
+• Investering: €${totalPrice} eenmalig${hostingPlan === 'managed' ? ' + €9,50/mnd all-in hosting' : ''}
+• Extra opties: ${addonNames || 'Geen'}
+• Gewenst domein: ${domainText}
+• Hosting: ${hostingText}
+• Levertijd: ~${estimatedDays} werkdagen
+
+Kunnen we dit vrijblijvend bespreken?`;
+
+    window.open(`https://wa.me/31622727144?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <section id="prijs-calculator" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-14 scroll-mt-24">
       <div className="bg-white dark:bg-slate-950 rounded-3xl border-2 border-orange-200/90 dark:border-slate-800 shadow-xl overflow-hidden transition-colors">
@@ -694,6 +720,15 @@ Kunnen we de mogelijkheden en startdatum bespreken?`;
               >
                 <span>{lang === 'nl' ? 'Vraag Deze Configuratie Aan' : 'Request This Setup'}</span>
                 <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={handleWhatsAppQuote}
+                className="w-full py-3 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
+              >
+                <MessageCircle className="w-4 h-4 fill-white" />
+                <span>{lang === 'nl' ? 'Stuur Direct via WhatsApp naar Kenan' : 'Send Directly via WhatsApp'}</span>
               </button>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">

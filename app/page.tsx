@@ -4,6 +4,11 @@ import React, { useState, useMemo } from 'react';
 import { Navbar } from '@/src/components/Navbar';
 import { Hero } from '../src/components/Hero';
 import { StatsBar } from '../src/components/StatsBar';
+import { MobileStickyBar } from '../src/components/MobileStickyBar';
+import { LiveBrandingBar } from '../src/components/LiveBrandingBar';
+import { QuickMatchmakerSection } from '../src/components/QuickMatchmakerSection';
+import { CostComparisonCalculator } from '../src/components/CostComparisonCalculator';
+import { DutchCraftTrustBadges } from '../src/components/DutchCraftTrustBadges';
 import { TemplateCarousel } from '../src/components/TemplateCarousel';
 import { FilterBar, QuickFilterType, SortByType } from '../src/components/FilterBar';
 import { TemplateCard } from '../src/components/TemplateCard';
@@ -46,6 +51,10 @@ export default function Home() {
   const [sortBy, setSortBy] = useState<SortByType>('rating');
   const [showOnlyBookmarks, setShowOnlyBookmarks] = useState(false);
   const [visibleCount, setVisibleCount] = useState(9);
+
+  // Live Branding customizer state
+  const [customBrandName, setCustomBrandName] = useState('');
+  const [selectedBrandColorId, setSelectedBrandColorId] = useState('orange');
 
   // Modals & Bookmarks
   const [bookmarks, setBookmarks] = useState<string[]>([]);
@@ -335,6 +344,14 @@ export default function Home() {
         isPaused={isAnyModalOpen}
       />
 
+      {/* 20-Second Interactive Website Matchmaker */}
+      <QuickMatchmakerSection
+        templates={templates}
+        lang={lang}
+        onOpenLivePreview={setActivePreviewTemplate}
+        onOpenRequestModal={(tmpl) => handleOpenRequestModal(tmpl)}
+      />
+
       {/* Sticky Quick Jump Bar for In-Page Destinations */}
       <nav 
         aria-label={lang === 'nl' ? 'Snelnavigatie onderdelen' : 'Quick section navigation'}
@@ -442,6 +459,18 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main id="templates-section" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-mt-24">
+        {/* Realtime Live Brand & Colors Customizer */}
+        <LiveBrandingBar
+          lang={lang}
+          customBrandName={customBrandName}
+          onBrandNameChange={setCustomBrandName}
+          selectedColorId={selectedBrandColorId}
+          onColorChange={setSelectedBrandColorId}
+          onReset={() => {
+            setCustomBrandName('');
+            setSelectedBrandColorId('orange');
+          }}
+        />
         {/* Bookmarks Banner */}
         {bookmarks.length > 0 && (
           <div className="mb-6 flex items-center justify-between bg-rose-50 dark:bg-rose-950/60 border-2 border-rose-200 dark:border-rose-900/60 p-3.5 rounded-2xl transition-colors">
@@ -507,6 +536,8 @@ export default function Home() {
                   onOpenRequestModal={(tmpl) => handleOpenRequestModal(tmpl)}
                   isBookmarked={bookmarks.includes(template.id)}
                   onToggleBookmark={handleToggleBookmark}
+                  customBrandName={customBrandName}
+                  customBrandColor={selectedBrandColorId}
                 />
               ))}
             </div>
@@ -745,6 +776,18 @@ export default function Home() {
               }
             />
 
+            {/* 2-Year Total Cost Comparison: Agency vs SaaS vs Samen Online */}
+            <div className="mt-8">
+              <CostComparisonCalculator
+                lang={lang}
+                onOpenRequestModal={() => handleOpenRequestModal()}
+                onScrollToPricing={() => {
+                  const el = document.getElementById('prijs-calculator');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+              />
+            </div>
+
             {/* 60-Second Price Estimator Calculator */}
             <div className="mt-8">
               <PriceEstimatorCalculator
@@ -770,8 +813,13 @@ export default function Home() {
         {/* Section: Over Ons & FAQ */}
         <section id="faq-section" className="scroll-mt-28 space-y-10 mt-14">
           <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
+            {/* Authentic Dutch Craft & Guarantees Badges */}
+            <DutchCraftTrustBadges lang={lang} />
+
             {/* About Samen Online Section */}
-            <AboutSection lang={lang} />
+            <div className="mt-8">
+              <AboutSection lang={lang} />
+            </div>
 
             {/* SEO FAQ Section */}
             <div className="mt-8">
@@ -791,6 +839,9 @@ export default function Home() {
 
       {/* Floating WhatsApp Contact Widget */}
       <WhatsAppWidget lang={lang} />
+
+      {/* Mobile Sticky Quick Action Bar */}
+      <MobileStickyBar lang={lang} onOpenRequestModal={() => handleOpenRequestModal()} />
 
       {/* Floating Section Dock & Dropdown Navigation */}
       <FloatingSectionNav lang={lang} totalTemplatesCount={templates.length} />
