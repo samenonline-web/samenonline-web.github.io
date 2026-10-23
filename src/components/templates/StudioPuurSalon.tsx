@@ -72,15 +72,34 @@ const STYLISTS = [
   { id: 'fleur', name: 'Fleur Jansen', role: 'Huidtherapeut & Schoonheidsspecialist', avatar: '👩🏻' },
 ];
 
+interface AddonItem {
+  id: string;
+  name: string;
+  duration: string;
+  price: number;
+}
+
+const ADDONS: AddonItem[] = [
+  { id: 'scrub', name: 'Hoofdhuid Peeling & Massage', duration: '+15 min', price: 12.5 },
+  { id: 'olaplex', name: 'Olaplex No.1 & No.2 Intensieve Kuur', duration: '+20 min', price: 18.0 },
+  { id: 'brows', name: 'Wenkbrauwen Epileren & Stylen', duration: '+15 min', price: 15.0 },
+];
+
 export const StudioPuurSalon: React.FC<TemplateProps> = ({
   theme,
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
 }) => {
+  const brandTitle = customBrandName || 'Studio Puur Hair & Wellness';
+  const cityName = customCity || 'Breda';
+
   const [selectedCategory, setSelectedCategory] = useState<'alles' | 'haar' | 'kleur' | 'spa'>('alles');
   const [selectedService, setSelectedService] = useState(SERVICES[0].id);
   const [selectedStylist, setSelectedStylist] = useState(STYLISTS[0].id);
+  const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [selectedDay, setSelectedDay] = useState('Vrijdag 24 okt');
   const [selectedTime, setSelectedTime] = useState('11:00');
   const [booked, setBooked] = useState(false);
@@ -91,6 +110,14 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
     setTimeout(() => setToastMessage(null), 2500);
   };
 
+  const toggleAddon = (id: string) => {
+    if (selectedAddons.includes(id)) {
+      setSelectedAddons(selectedAddons.filter((a) => a !== id));
+    } else {
+      setSelectedAddons([...selectedAddons, id]);
+    }
+  };
+
   const filteredServices =
     selectedCategory === 'alles'
       ? SERVICES
@@ -98,6 +125,13 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
 
   const activeServiceObj = SERVICES.find((s) => s.id === selectedService) || SERVICES[0];
   const activeStylistObj = STYLISTS.find((s) => s.id === selectedStylist) || STYLISTS[0];
+
+  const addonsTotal = selectedAddons.reduce((sum, id) => {
+    const addon = ADDONS.find((a) => a.id === id);
+    return sum + (addon ? addon.price : 0);
+  }, 0);
+
+  const grandTotal = activeServiceObj.price + addonsTotal;
 
   return (
     <div className="min-h-full bg-stone-50 text-stone-900 font-sans relative selection:bg-rose-500 selection:text-white">
@@ -112,7 +146,7 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
       {/* Top Banner */}
       <div className={`py-1.5 px-4 text-center text-xs font-bold text-white ${theme.primary} flex items-center justify-center gap-2 shadow-xs`}>
         <Scissors className="w-3.5 h-3.5" />
-        <span>100% Vegan & Dierproefvrije Verzorging • Gekozen tot Beste Salon van Breda 2026</span>
+        <span>100% Vegan & Dierproefvrije Verzorging • Gekozen tot Beste Salon van {cityName} 2026</span>
       </div>
 
       {/* Header */}
@@ -122,8 +156,8 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
             SP
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">Studio Puur Salon</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Breda Centrum • Kapper & Schoonheid</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandTitle}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{cityName} Centrum • Kapper & Schoonheid</span>
           </div>
         </div>
 
@@ -269,18 +303,51 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
           </div>
 
           {booked ? (
-            <div className="p-8 text-center bg-rose-50 rounded-3xl border border-rose-200 space-y-3 max-w-md mx-auto">
+            <div className="p-8 text-center bg-rose-50 rounded-3xl border border-rose-200 space-y-4 max-w-md mx-auto">
               <span className="text-4xl block">✨</span>
-              <h3 className="font-black text-lg text-stone-900">Afspraak Bevestigd (Demo)!</h3>
-              <p className="text-xs text-stone-600 leading-relaxed font-medium">
-                Je afspraak voor <strong>{activeServiceObj.name}</strong> bij <strong>{activeStylistObj.name}</strong> op <strong>{selectedDay} om {selectedTime} uur</strong> staat genoteerd!
-              </p>
-              <button
-                onClick={() => setBooked(false)}
-                className="text-xs text-stone-500 font-bold underline cursor-pointer hover:text-stone-900"
-              >
-                Plan nog een behandeling
-              </button>
+              <h3 className="font-black text-xl text-stone-900">Afspraak Bevestigd (Demo)!</h3>
+              <div className="bg-white p-4 rounded-2xl border border-rose-100 text-left space-y-2 text-xs">
+                <div className="flex justify-between border-b border-stone-100 pb-2">
+                  <span className="text-stone-500 font-medium">Behandeling:</span>
+                  <span className="font-bold text-stone-900">{activeServiceObj.name}</span>
+                </div>
+                {selectedAddons.length > 0 && (
+                  <div className="flex justify-between border-b border-stone-100 pb-2">
+                    <span className="text-stone-500 font-medium">Extra&apos;s:</span>
+                    <span className="font-bold text-stone-900">
+                      {selectedAddons.map((id) => ADDONS.find((a) => a.id === id)?.name).filter(Boolean).join(', ')}
+                    </span>
+                  </div>
+                )}
+                <div className="flex justify-between border-b border-stone-100 pb-2">
+                  <span className="text-stone-500 font-medium">Stylist:</span>
+                  <span className="font-bold text-stone-900">{activeStylistObj.name}</span>
+                </div>
+                <div className="flex justify-between border-b border-stone-100 pb-2">
+                  <span className="text-stone-500 font-medium">Datum & Tijd:</span>
+                  <span className="font-bold text-stone-900">{selectedDay} om {selectedTime} uur</span>
+                </div>
+                <div className="flex justify-between pt-1">
+                  <span className="text-stone-700 font-extrabold">Totaal richtbedrag:</span>
+                  <span className="font-black text-stone-900 text-sm">€{grandTotal.toFixed(2)}</span>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => showToast('📅 Demo: Agenda-uitnodiging (.ics) klaargezet!')}
+                  className="w-full py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white font-extrabold text-xs rounded-xl cursor-pointer shadow-xs transition-colors"
+                >
+                  📅 Voeg toe aan Google / Apple Agenda
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBooked(false)}
+                  className="text-xs text-stone-500 font-bold underline cursor-pointer hover:text-stone-900 pt-1"
+                >
+                  Plan nog een behandeling
+                </button>
+              </div>
             </div>
           ) : (
             <div className="space-y-6 max-w-xl mx-auto text-left">
@@ -315,6 +382,45 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
                 </div>
               </div>
 
+              {/* Optional Add-on Treatments */}
+              <div>
+                <label className="text-xs font-black text-stone-700 block mb-2">
+                  Extra verzorging toevoegen (optioneel):
+                </label>
+                <div className="space-y-2">
+                  {ADDONS.map((addon) => {
+                    const isChecked = selectedAddons.includes(addon.id);
+                    return (
+                      <button
+                        type="button"
+                        key={addon.id}
+                        onClick={() => toggleAddon(addon.id)}
+                        className={`w-full p-3 rounded-2xl border text-left flex items-center justify-between transition-all cursor-pointer ${
+                          isChecked
+                            ? `${theme.borderLight} bg-rose-50/60 ring-2 ring-rose-500/20`
+                            : 'border-stone-200 hover:bg-stone-50'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div
+                            className={`w-4 h-4 rounded-md border flex items-center justify-center text-[10px] font-black ${
+                              isChecked ? `${theme.primary} text-white border-transparent` : 'border-stone-300 bg-white'
+                            }`}
+                          >
+                            {isChecked ? '✓' : ''}
+                          </div>
+                          <div>
+                            <span className="font-bold text-xs text-stone-900 block leading-tight">{addon.name}</span>
+                            <span className="text-[10px] text-stone-500 font-medium">{addon.duration}</span>
+                          </div>
+                        </div>
+                        <span className="font-black text-xs text-stone-900">+€{addon.price.toFixed(2)}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Day & Time */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -346,6 +452,20 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
                 </div>
               </div>
 
+              {/* Summary and Total */}
+              <div className="p-3.5 bg-stone-100/80 rounded-2xl border border-stone-200 flex justify-between items-center text-xs">
+                <div>
+                  <span className="text-stone-500 font-bold block text-[10px]">Totaaloverzicht behandeling:</span>
+                  <span className="font-extrabold text-stone-800">
+                    {activeServiceObj.name} {selectedAddons.length > 0 && `(+ ${selectedAddons.length} extra's)`}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] text-stone-400 block font-semibold">Te voldoen in salon</span>
+                  <span className="font-black text-lg text-stone-900">€{grandTotal.toFixed(2)}</span>
+                </div>
+              </div>
+
               <button
                 onClick={() => {
                   setBooked(true);
@@ -353,7 +473,7 @@ export const StudioPuurSalon: React.FC<TemplateProps> = ({
                 }}
                 className={`w-full py-4 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md cursor-pointer`}
               >
-                Bevestig Boeking ({selectedDay} om {selectedTime})
+                Bevestig Boeking ({selectedDay} om {selectedTime}) • €{grandTotal.toFixed(2)}
               </button>
             </div>
           )}

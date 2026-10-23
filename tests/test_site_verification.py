@@ -451,5 +451,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("'@type': 'BreadcrumbList'", content.replace('"', "'"))
         self.assertIn("breadcrumbJsonLd", content)
 
+    # 42. StudioPuur Salon Booking Addons, Live Total, and Calendar Integration
+    def test_studiopuur_salon_addons_and_total(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "StudioPuurSalon.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("ADDONS", content)
+        self.assertIn("toggleAddon", content)
+        self.assertIn("addonsTotal", content)
+        self.assertIn("grandTotal", content)
+        self.assertIn("Voeg toe aan Google / Apple Agenda", content)
+
 if __name__ == "__main__":
     unittest.main()
