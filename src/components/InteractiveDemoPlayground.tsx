@@ -65,10 +65,14 @@ const TABS: DemoTabConfig[] = [
 
 interface InteractiveDemoPlaygroundProps {
   onRequestQuote?: () => void;
+  initialTab?: DemoTabKey;
 }
 
-export default function InteractiveDemoPlayground({ onRequestQuote }: InteractiveDemoPlaygroundProps) {
-  const [activeTab, setActiveTab] = useState<DemoTabKey>('bouw');
+export default function InteractiveDemoPlayground({
+  onRequestQuote,
+  initialTab = 'bouw',
+}: InteractiveDemoPlaygroundProps) {
+  const [activeTab, setActiveTab] = useState<DemoTabKey>(initialTab);
 
   const currentTabConfig = TABS.find((t) => t.key === activeTab) || TABS[0];
 

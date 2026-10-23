@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CITIES_DATA } from '../../../src/data/cities';
+import InteractiveDemoPlayground, { DemoTabKey } from '../../../src/components/InteractiveDemoPlayground';
 import { 
   MapPin, 
   ArrowLeft, 
@@ -98,6 +99,26 @@ export default async function LocationCityPage({
   };
 
   const otherCities = CITIES_DATA.filter((c) => c.id !== city.id);
+
+  const getCityInitialTab = (cityId: string): DemoTabKey => {
+    switch (cityId) {
+      case 'amsterdam':
+      case 'breda':
+      case 'arnhem':
+        return 'horeca';
+      case 'rotterdam':
+      case 'eindhoven':
+      case 'groningen':
+      case 'almere':
+        return 'webshop';
+      case 'den-haag':
+      case 'tilburg':
+      case 'nijmegen':
+        return 'kapper';
+      default:
+        return 'bouw';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-slate-950 text-stone-900 dark:text-stone-100 selection:bg-orange-500 selection:text-white">
@@ -237,6 +258,23 @@ export default async function LocationCityPage({
               </li>
             </ul>
           </div>
+        </section>
+
+        {/* INTERACTIVE DEMO ENGINE PREVIEW */}
+        <section className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200/90 dark:border-slate-800 shadow-lg space-y-6">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-[11px] font-black uppercase tracking-wider text-orange-600 dark:text-orange-400 bg-orange-100 dark:bg-orange-950/80 px-3 py-1 rounded-full">
+              Interactieve Demo Voorbeeld voor {city.name}
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">
+              Test Hoe Jouw Website Werkt Voor Bezoekers
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300">
+              Klanten in {city.name} willen direct online een offerte berekenen, een tafel reserveren of een afspraak plannen. Test hieronder direct de werkende applicatie.
+            </p>
+          </div>
+
+          <InteractiveDemoPlayground initialTab={getCityInitialTab(city.id)} />
         </section>
 
         {/* 3 POPULAR PACKAGES */}
