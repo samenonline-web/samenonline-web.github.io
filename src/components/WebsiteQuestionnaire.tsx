@@ -71,6 +71,7 @@ export const WebsiteQuestionnaire: React.FC<WebsiteQuestionnaireProps> = ({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [cityParam, setCityParam] = useState<string>('');
   const [domainParam, setDomainParam] = useState<string>('');
+  const [topicParam, setTopicParam] = useState<string>('');
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [dossierToken, setDossierToken] = useState<string>('SO-INTAKE-2026-884');
 
@@ -127,6 +128,11 @@ export const WebsiteQuestionnaire: React.FC<WebsiteQuestionnaireProps> = ({
     const pDomein = params.get('domein');
     if (pDomein) {
       setDomainParam(pDomein);
+    }
+
+    const pTopic = params.get('onderwerp') || params.get('topic');
+    if (pTopic) {
+      setTopicParam(pTopic);
     }
 
     const randomSuffix = Math.floor(100 + Math.random() * 900);
@@ -296,7 +302,7 @@ export const WebsiteQuestionnaire: React.FC<WebsiteQuestionnaireProps> = ({
   const handleApplyProposal = () => {
     const result = calculateRecommendation();
     if (onOpenRequestModal) {
-      const summaryNotes = `Website Vragenlijst Uitkomst [${dossierToken}]:\n- Branche: ${result.industry}\n- Doel: ${result.primaryGoal}\n- Gekozen functies: ${result.features.join(', ')}\n- Content status: ${result.contentStatus}\n- Levertijd: ${result.timeline}${cityParam ? `\n- Regio: ${cityParam}` : ''}${domainParam ? `\n- Domein: ${domainParam}` : ''}\n- Geadviseerd pakket: ${result.recommendedPackage} (ca. €${result.estimatedPrice},- all-in)`;
+      const summaryNotes = `Website Vragenlijst Uitkomst [${dossierToken}]:\n- Branche: ${result.industry}\n- Doel: ${result.primaryGoal}\n- Gekozen functies: ${result.features.join(', ')}\n- Content status: ${result.contentStatus}\n- Levertijd: ${result.timeline}${topicParam ? `\n- Kennisbank Thema: ${topicParam}` : ''}${cityParam ? `\n- Regio: ${cityParam}` : ''}${domainParam ? `\n- Domein: ${domainParam}` : ''}\n- Geadviseerd pakket: ${result.recommendedPackage} (ca. €${result.estimatedPrice},- all-in)`;
       onOpenRequestModal({
         notes: summaryNotes,
         templateTitle: `${result.recommendedPackage} (${result.industry}) - ${dossierToken}`,
@@ -316,7 +322,7 @@ Geadviseerd Pakket: ${result.recommendedPackage}
 Vaste Richtprijs: €${result.estimatedPrice},- (all-in eenmalig)
 Oplevertijd: ${result.timeline === 'spoed' ? 'Met spoed binnen 48 uur' : 'Binnen 5 werkdagen'}
 Gekozen Functionaliteiten: ${result.features.join(', ')}
-${domainParam ? `Gewenst Domein: ${domainParam}\n` : ''}${cityParam ? `Regio / Stad: ${cityParam}\n` : ''}
+${domainParam ? `Gewenst Domein: ${domainParam}\n` : ''}${cityParam ? `Regio / Stad: ${cityParam}\n` : ''}${topicParam ? `Kennisbank Thema: ${topicParam}\n` : ''}
 Tech Stack: Next.js 16 App Router · Tailwind v4 · 0.3s laadtijd · 100% eigendom
 Aanvragen: https://samenonline-web.github.io/vragenlijst`;
 
@@ -682,6 +688,12 @@ Aanvragen: https://samenonline-web.github.io/vragenlijst`;
                     <span className="font-bold px-2.5 py-1 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-900 dark:text-blue-200 text-[11px] flex items-center gap-1">
                       <Globe className="w-3.5 h-3.5" />
                       <span>{domainParam}</span>
+                    </span>
+                  )}
+                  {topicParam && (
+                    <span className="font-bold px-2.5 py-1 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-900 dark:text-purple-200 text-[11px] flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                      <span>Thema: {topicParam}</span>
                     </span>
                   )}
                 </div>

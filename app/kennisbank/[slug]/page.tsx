@@ -133,10 +133,11 @@ export default async function ArticleDetailPage({
           </nav>
 
           <Link
-            href="/#website-vragenlijst"
-            className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black transition-all shadow-xs shrink-0 ml-4"
+            href={`/vragenlijst?onderwerp=${encodeURIComponent(article.title)}`}
+            className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black transition-all shadow-xs shrink-0 ml-4 flex items-center gap-1.5"
           >
-            Start Vragenlijst
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Start Vragenlijst</span>
           </Link>
         </div>
       </header>
@@ -193,22 +194,25 @@ export default async function ArticleDetailPage({
         </div>
 
         {/* AUTHOR & CTA BOX */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-md space-y-4">
+        <div className="bg-gradient-to-br from-white via-orange-50/30 to-amber-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-orange-950/20 rounded-3xl p-6 sm:p-8 border border-orange-200/80 dark:border-orange-800/60 shadow-lg space-y-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <h3 className="text-lg font-black text-stone-900 dark:text-white">
+            <div className="space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-orange-600 dark:text-orange-400 bg-orange-100 dark:bg-orange-950 px-2.5 py-0.5 rounded-full inline-block">
+                Direct Toepasbaar Advies
+              </span>
+              <h3 className="text-lg sm:text-xl font-black text-stone-900 dark:text-white">
                 Wil je dit toepassen op jouw eigen website?
               </h3>
-              <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium mt-1">
-                Laat binnen 5 werkdagen een moderne, razendsnelle Next.js website bouwen vanaf €195 all-in.
+              <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium">
+                Krijg direct een concreet websitevoorstel op maat afgestemd op {article.title.toLowerCase()}. Binnen 5 werkdagen online vanaf €195 all-in.
               </p>
             </div>
             <Link
-              href="/#website-vragenlijst"
-              className="px-6 py-3 rounded-2xl bg-orange-600 hover:bg-orange-500 text-white font-black text-xs transition-all shadow-md shrink-0 flex items-center gap-2"
+              href={`/vragenlijst?onderwerp=${encodeURIComponent(article.title)}`}
+              className="px-6 py-3.5 rounded-2xl bg-orange-600 hover:bg-orange-500 text-white font-black text-xs transition-all shadow-md shrink-0 flex items-center gap-2 group hover:scale-[1.02]"
             >
-              <Sparkles className="w-4 h-4" />
-              <span>Start Vragenlijst</span>
+              <Sparkles className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+              <span>Start Vragenlijst voor Dit Thema</span>
             </Link>
           </div>
         </div>

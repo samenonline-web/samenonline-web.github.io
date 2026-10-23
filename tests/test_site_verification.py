@@ -907,5 +907,19 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("€4.653,- Bespaard", content)
         self.assertIn('href="/vragenlijst"', content)
 
+    # 82. Kennisbank Topic Deep-Linking and Questionnaire Topic Parameter Support
+    def test_kennisbank_topic_deep_linking_and_questionnaire(self):
+        page_file = WORKSPACE / "app" / "kennisbank" / "[slug]" / "page.tsx"
+        self.assertTrue(page_file.exists(), "app/kennisbank/[slug]/page.tsx must exist")
+        page_content = page_file.read_text(encoding="utf-8")
+        self.assertIn("/vragenlijst?onderwerp=", page_content)
+        self.assertIn("Start Vragenlijst voor Dit Thema", page_content)
+
+        q_file = WORKSPACE / "src" / "components" / "WebsiteQuestionnaire.tsx"
+        q_content = q_file.read_text(encoding="utf-8")
+        self.assertIn("topicParam", q_content)
+        self.assertIn("params.get('onderwerp')", q_content)
+        self.assertIn("Kennisbank Thema", q_content)
+
 if __name__ == "__main__":
     unittest.main()
