@@ -104,7 +104,13 @@ export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
+  onOpenIdealCheckout,
 }) => {
+  const brandTitle = customBrandName || 'Bakkerij van Oranje';
+  const cityName = customCity || 'Haarlem';
+
   const [activeCategory, setActiveCategory] = useState<'alles' | 'brood' | 'viennoiserie' | 'koffie'>('alles');
   const [selectedSlot, setSelectedSlot] = useState('08:30 - 09:30');
   const [slicePreference, setSlicePreference] = useState<Record<string, 'heel' | 'gesneden'>>({});
@@ -168,7 +174,7 @@ export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({
       {/* Top Banner */}
       <div className={`py-1.5 px-4 text-center text-xs font-bold text-white ${theme.primary} flex items-center justify-center gap-2 shadow-xs`}>
         <Flame className="w-3.5 h-3.5 text-amber-200" />
-        <span>Vandaag voor 21:00 besteld = morgenochtend warm & knapperig ophalen in Haarlem</span>
+        <span>Vandaag voor 21:00 besteld = morgenochtend warm & knapperig ophalen in {cityName}</span>
       </div>
 
       {/* Header */}
@@ -178,8 +184,8 @@ export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({
             AB
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">Bakkerij van Oranje</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Grote Markt Haarlem • Ambacht sinds 1934</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandTitle}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Grote Markt {cityName} • Ambacht sinds 1934</span>
           </div>
         </div>
 
@@ -516,7 +522,13 @@ export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({
               </div>
 
               <button
-                onClick={onRequestQuote}
+                onClick={() => {
+                  if (onOpenIdealCheckout) {
+                    onOpenIdealCheckout(totalPrice, brandTitle);
+                  } else {
+                    onRequestQuote();
+                  }
+                }}
                 disabled={cart.length === 0}
                 className={`w-full py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} disabled:bg-stone-300 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2`}
               >

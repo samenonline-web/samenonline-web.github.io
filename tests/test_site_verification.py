@@ -532,5 +532,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("netMonthlyPayment", content)
         self.assertIn("Nationale Hypotheek Garantie (NHG)", content)
 
+    # 49. Ambacht Bakkerij Demo iDEAL Checkout & City Props
+    def test_ambacht_bakkerij_checkout_and_city(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "AmbachtBakkerijDemo.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("onOpenIdealCheckout", content)
+        self.assertIn("Reservering Bevestigen met iDEAL", content)
+
 if __name__ == "__main__":
     unittest.main()
