@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CITIES_DATA } from '../../../src/data/cities';
+import { INITIAL_TEMPLATES } from '../../../src/data/templates';
 import InteractiveDemoPlayground, { DemoTabKey } from '../../../src/components/InteractiveDemoPlayground';
 import { 
   MapPin, 
@@ -140,6 +141,24 @@ export default async function LocationCityPage({
   const combinedJsonLd = [jsonLd, faqJsonLd, breadcrumbJsonLd];
 
   const otherCities = CITIES_DATA.filter((c) => c.id !== city.id);
+
+  const preferredTemplateId =
+    city.id === 'amsterdam' ? 'grachten-web-agency'
+    : city.id === 'rotterdam' ? 'duurzaam-kleding-webshop'
+    : city.id === 'amersfoort' ? 'bouwmeester-aannemer'
+    : city.id === 'den-haag' ? 'studiopuur-salon'
+    : 'bistro-degracht';
+
+  const candidateTemplates = [
+    INITIAL_TEMPLATES.find((t) => t.id === preferredTemplateId),
+    INITIAL_TEMPLATES.find((t) => t.id === 'bouwmeester-aannemer'),
+    INITIAL_TEMPLATES.find((t) => t.id === 'duurzaam-kleding-webshop'),
+    INITIAL_TEMPLATES.find((t) => t.id === 'bistro-degracht'),
+  ];
+  // Deduplicate and pick top 3
+  const featuredTemplates = candidateTemplates
+    .filter((t, idx, arr): t is (typeof INITIAL_TEMPLATES)[number] => Boolean(t) && arr.findIndex((x) => x?.id === t?.id) === idx)
+    .slice(0, 3);
 
   const getCityInitialTab = (cityId: string): DemoTabKey => {
     switch (cityId) {
@@ -452,6 +471,66 @@ export default async function LocationCityPage({
                 <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 leading-relaxed pl-7">
                   {faq.a}
                 </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* FEATURED LIVE DEMOS FOR CITY */}
+        <section className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200/90 dark:border-slate-800 space-y-6 shadow-sm">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-orange-600 dark:text-orange-400 block">
+                Interactieve Concepten
+              </span>
+              <h2 className="text-xl sm:text-2xl font-black text-stone-900 dark:text-white">
+                Populaire Live Website Demo&apos;s voor {city.name}
+              </h2>
+            </div>
+            <Link
+              href="/"
+              className="text-xs font-bold text-orange-600 dark:text-orange-400 hover:underline flex items-center gap-1"
+            >
+              <span>Alle 40+ concepten bekijken</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {featuredTemplates.map((tmpl) => (
+              <div
+                key={tmpl.id}
+                className="group p-5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 hover:border-orange-500/80 transition-all flex flex-col justify-between space-y-4"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300">
+                      {tmpl.category}
+                    </span>
+                    <span className="text-xs font-bold text-amber-500 flex items-center gap-1">
+                      ★ {tmpl.rating}
+                    </span>
+                  </div>
+                  <h3 className="font-black text-sm text-stone-900 dark:text-white group-hover:text-orange-600 transition-colors">
+                    {tmpl.name}
+                  </h3>
+                  <p className="text-xs text-stone-600 dark:text-slate-300 line-clamp-2">
+                    {tmpl.subtitleNl}
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between">
+                  <span className="text-xs font-mono font-bold text-stone-900 dark:text-white">
+                    {tmpl.estimatedBuildDays} dgn oplevering
+                  </span>
+                  <Link
+                    href={`/demo/${tmpl.id}?city=${encodeURIComponent(city.name)}`}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold transition-all shadow-xs"
+                  >
+                    <span>Live Testen</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

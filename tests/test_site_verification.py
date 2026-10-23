@@ -384,5 +384,13 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("'@type': 'BreadcrumbList'", content.replace('"', "'"))
         self.assertIn("combinedJsonLd", content)
 
+    # 35. City Pages Featured Interactive Demos with city query parameters
+    def test_city_pages_featured_demo_links(self):
+        page_file = WORKSPACE / "app" / "locaties" / "[stad]" / "page.tsx"
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn("Populaire Live Website Demo", content)
+        self.assertIn("/demo/${tmpl.id}?city=", content)
+        self.assertIn("Live Testen", content)
+
 if __name__ == "__main__":
     unittest.main()
