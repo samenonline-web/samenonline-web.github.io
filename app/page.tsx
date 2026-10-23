@@ -9,6 +9,14 @@ import { LiveBrandingBar } from '../src/components/LiveBrandingBar';
 import { QuickMatchmakerSection } from '../src/components/QuickMatchmakerSection';
 import { CostComparisonCalculator } from '../src/components/CostComparisonCalculator';
 import { DutchCraftTrustBadges } from '../src/components/DutchCraftTrustBadges';
+import { TradeInTradeUpBanner } from '../src/components/TradeInTradeUpBanner';
+import { ExpressDeliveryCallout } from '../src/components/ExpressDeliveryCallout';
+import { CopywritingServiceCallout } from '../src/components/CopywritingServiceCallout';
+import { LocalSeoRankChecker } from '../src/components/LocalSeoRankChecker';
+import { LiveIdealCheckoutSimulator } from '../src/components/LiveIdealCheckoutSimulator';
+import { CustomerRoiBreakEven } from '../src/components/CustomerRoiBreakEven';
+import { StarterChecklistDownloadBanner } from '../src/components/StarterChecklistDownloadBanner';
+import { StarterChecklistModal } from '../src/components/StarterChecklistModal';
 import { TemplateCarousel } from '../src/components/TemplateCarousel';
 import { FilterBar, QuickFilterType, SortByType } from '../src/components/FilterBar';
 import { TemplateCard } from '../src/components/TemplateCard';
@@ -55,6 +63,7 @@ export default function Home() {
   // Live Branding customizer state
   const [customBrandName, setCustomBrandName] = useState('');
   const [selectedBrandColorId, setSelectedBrandColorId] = useState('orange');
+  const [isChecklistModalOpen, setIsChecklistModalOpen] = useState(false);
 
   // Modals & Bookmarks
   const [bookmarks, setBookmarks] = useState<string[]>([]);
@@ -333,6 +342,20 @@ export default function Home() {
 
       {/* Trust Metrics Ribbon */}
       <StatsBar lang={lang} />
+
+      {/* 72-Hour Express Delivery Callout */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ExpressDeliveryCallout
+          lang={lang}
+          onOpenExpressRequest={() =>
+            handleOpenRequestModal(undefined, undefined, undefined, {
+              templateName: '72-Uur Spoedservice Website',
+              budget: 'Vanaf €125 (Spoedlevering)',
+              notes: 'Aanvraag via 72-Uur Spoedservice: ik heb met spoed binnen 3 dagen een werkende website nodig.',
+            })
+          }
+        />
+      </div>
 
       {/* Featured Templates Interactive Carousel */}
       <TemplateCarousel
@@ -643,6 +666,18 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Live iDEAL Checkout Simulator */}
+        <LiveIdealCheckoutSimulator
+          lang={lang}
+          onOpenWebshopRequest={() =>
+            handleOpenRequestModal(undefined, undefined, undefined, {
+              templateName: 'Webshop met iDEAL & Mollie',
+              budget: '€385 (Webshop Pakket)',
+              notes: 'Aanvraag voor e-commerce webshop met iDEAL, Mollie en PostNL integratie.',
+            })
+          }
+        />
+
         {/* Decorative Wave Divider */}
         <div aria-hidden="true" className="w-full overflow-hidden leading-none my-10 pointer-events-none opacity-50 dark:opacity-30">
           <svg viewBox="0 0 1200 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 text-orange-300 dark:text-blue-500 fill-current" preserveAspectRatio="none">
@@ -674,6 +709,18 @@ export default function Home() {
               }
             />
 
+            {/* Website Sloopregeling / Trade-in Program */}
+            <TradeInTradeUpBanner
+              lang={lang}
+              onClaimDiscount={(cms, discountCode, discountAmount) =>
+                handleOpenRequestModal(undefined, undefined, undefined, {
+                  templateName: `Website Sloopregeling (${cms})`,
+                  budget: `Inruilkorting: -€${discountAmount} (Code: ${discountCode})`,
+                  notes: `Aanvraag via Website Sloopregeling: inruil van huidige ${cms} website met inruilpremie ${discountCode} (-€${discountAmount}).`,
+                })
+              }
+            />
+
             {/* Website Speed & SEO QuickScan Tool */}
             <div className="mt-8">
               <WebsiteSpeedAuditSection
@@ -687,6 +734,18 @@ export default function Home() {
                 }
               />
             </div>
+
+            {/* Local SEO Ranking Checker per City */}
+            <LocalSeoRankChecker
+              lang={lang}
+              onOpenLocalRequest={(city, niche) =>
+                handleOpenRequestModal(undefined, undefined, undefined, {
+                  templateName: `Lokale SEO Website (${city} - ${niche})`,
+                  budget: 'Vanaf €195 (Compleet MKB)',
+                  notes: `Aanvraag voor lokale Google vindbaarheid in ${city} voor branche ${niche}.`,
+                })
+              }
+            />
 
             {/* "Waarom Next.js i.p.v. WordPress of Wix?" Kennis- & Vergelijkingstabel */}
             <div className="mt-8">
@@ -735,6 +794,24 @@ export default function Home() {
                 onOpenRequestModal={() => handleOpenRequestModal()}
               />
             </div>
+
+            {/* Free Copywriting Service Callout */}
+            <CopywritingServiceCallout
+              lang={lang}
+              onOpenRequestModal={() =>
+                handleOpenRequestModal(undefined, undefined, undefined, {
+                  templateName: 'Website inclusief Schrijfservice',
+                  budget: 'Vanaf €195 (Compleet MKB)',
+                  notes: 'Aanvraag via Schrijfservice: ik wil graag dat Samen Online professionele Nederlandse teksten voor mijn website verzorgt.',
+                })
+              }
+            />
+
+            {/* Starter Checklist 2026 Download Banner */}
+            <StarterChecklistDownloadBanner
+              lang={lang}
+              onOpenChecklistModal={() => setIsChecklistModalOpen(true)}
+            />
           </div>
         </section>
 
@@ -805,6 +882,14 @@ export default function Home() {
                 onOpenRequestModal={(customData) => {
                   handleOpenRequestModal(undefined, undefined, undefined, customData);
                 }}
+              />
+            </div>
+
+            {/* 1 Extra Klant Break-Even Terugverdientijd Visualisatie */}
+            <div className="mt-8">
+              <CustomerRoiBreakEven
+                lang={lang}
+                onOpenRequestModal={() => handleOpenRequestModal()}
               />
             </div>
           </div>
@@ -908,6 +993,13 @@ export default function Home() {
         onClose={() => setIsStatusTrackerOpen(false)}
         lang={lang}
         onOpenContactModal={() => handleOpenRequestModal()}
+      />
+
+      {/* Starter Checklist 2026 Modal */}
+      <StarterChecklistModal
+        isOpen={isChecklistModalOpen}
+        onClose={() => setIsChecklistModalOpen(false)}
+        lang={lang}
       />
 
       {/* Informational / Legal Modal */}

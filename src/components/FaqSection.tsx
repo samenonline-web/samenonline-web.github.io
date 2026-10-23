@@ -85,6 +85,46 @@ const FAQS: FaqItem[] = [
     aNl: 'Zeker weten! Je hoeft niet per se een van onze voorbeeldtemplates te kiezen. Heb je al een bestaande website die traag of verouderd is? Wij bouwen hem om naar een moderne, supersnelle Next.js website met behoud van je teksten en Google-posities. Heb je al een eigen lay-out, wireframe, schets of Figma-bestand? Dan bouwen we jouw website exact 1-op-1.',
     aEn: 'Absolutely! You do not have to pick one of our showcase templates. We can modernize existing slow websites into Next.js or code your own custom wireframe / Figma file 1:1.',
   },
+  {
+    id: 'f9',
+    category: 'redesign',
+    qNl: 'Hoe werkt de Website Sloopregeling en de €75,- inruilkorting?',
+    qEn: 'How does the Website Trade-in and €75 discount work?',
+    aNl: 'Heb je nu een trage WordPress, Wix of Joomla website? Lever hem bij ons in. Wij zorgen dat alle bestaande teksten en afbeeldingen kosteloos worden overgezet én stellen officiële 301-redirects in zodat je geen enkele Google positie verliest. Je ontvangt direct tot €75,- inruilpremie op je nieuwe Next.js website!',
+    aEn: 'Have an old slow WordPress or Wix site? Trade it in with us! We migrate all copy and set up 301 redirects so you retain all SEO rankings, plus you get up to €75 trade-in discount.',
+  },
+  {
+    id: 'f10',
+    category: 'process',
+    qNl: 'Ik heb zelf geen tijd om teksten te schrijven, kunnen jullie dat doen?',
+    qEn: 'I have no time to write copy, can you write it for me?',
+    aNl: 'Jazeker! Dit is onze gratis Schrijfservice. Geef ons 5 steekwoorden over jouw bedrijf en diensten, en wij leveren jouw website compleet op inclusief wervende, foutloze Nederlandse teksten en SEO zoekwoorden voor jouw regio. Niet tevreden? We passen het kosteloos aan.',
+    aEn: 'Yes! Provide us with 5 keywords about your business, and we deliver your website complete with engaging Dutch copy and local SEO keywords.',
+  },
+  {
+    id: 'f11',
+    category: 'process',
+    qNl: 'Bieden jullie een 72-Uur Spoedservice voor beurzen of openingen?',
+    qEn: 'Do you offer a 72-Hour Express Launch for events or openings?',
+    aNl: 'Ja, als je haast hebt kunnen we met voorrang schakelen via onze 72-Uur Spoedservice. Binnen 3 werkdagen staat jouw website live, inclusief domeinnaamkoppeling en contactknoppen.',
+    aEn: 'Yes! With our 72-Hour Express service, your site launches within 3 business days, fully configured with domain and working contact buttons.',
+  },
+  {
+    id: 'f12',
+    category: 'process',
+    qNl: 'Kan ik later zelf gemakkelijk teksten en foto’s aanpassen?',
+    qEn: 'Can I easily update text and photos myself later?',
+    aNl: 'Ja! Onze code is uiterst schoon en modulair opgebouwd. We leveren eenvoudige instructies mee, en voor onze All-in Hosting klanten voeren we kleine tekst- en fotowijzigingen het hele jaar door gewoon kosteloos voor je uit via WhatsApp!',
+    aEn: 'Yes! Code is clean and modular. For All-in Hosting clients, we even apply small copy and image changes free of charge via WhatsApp.',
+  },
+  {
+    id: 'f13',
+    category: 'pricing',
+    qNl: 'Ben ik echt 100% eigenaar van mijn website en broncode?',
+    qEn: 'Do I truly own 100% of my website and source code?',
+    aNl: '100% ja. Bij Samen Online is er géén platform lock-in (zoals bij Wix of Shopify waar alles stopt als je niet meer betaalt). Je bezit alle intellectuele rechten en volledige broncode.',
+    aEn: '100% yes. Zero vendor lock-in. You own full source code and intellectual property.',
+  },
 ];
 
 export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal }) => {
@@ -166,6 +206,32 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
                 ✕ Wis
               </button>
             )}
+          </div>
+
+          {/* Quick Objection Search Pills */}
+          <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-bold">
+            <span className="text-stone-500 dark:text-slate-400">💡 Snelle antwoorden:</span>
+            {[
+              { label: 'WordPress Inruilen (€75 korting)', query: 'sloopregeling' },
+              { label: 'Geen Teksten?', query: 'teksten' },
+              { label: '72u Spoedservice', query: 'spoed' },
+              { label: 'Zelf Aanpassen', query: 'aanpassen' },
+              { label: '100% Eigendom', query: 'eigenaar' },
+              { label: 'Btw & Facturatie', query: 'factuur' },
+              { label: 'Hosting & E-mail', query: 'hosting' },
+            ].map((chip, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => {
+                  setSearchQuery(chip.query);
+                  setSelectedCategory('all');
+                }}
+                className="px-2.5 py-1 rounded-lg bg-orange-50 dark:bg-slate-800 text-orange-800 dark:text-blue-300 hover:bg-orange-100 dark:hover:bg-slate-700 border border-orange-200/60 dark:border-slate-700 transition-colors cursor-pointer"
+              >
+                {chip.label}
+              </button>
+            ))}
           </div>
 
           {/* Category Tabs */}
