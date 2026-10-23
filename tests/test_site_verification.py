@@ -644,5 +644,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Print Oogstbon (PDF)", content)
         self.assertIn("Gratis gekoelde bezorging in", content)
 
+    # 61. LensVerhaalFotografie Shoot Calculator, Cinema Drone Upgrade, and Printable Draaiboek
+    def test_lensverhaal_fotografie_calculator_and_draaiboek(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "LensVerhaalFotografie.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("includeDroneVideo", content)
+        self.assertIn("includeSecondShooter", content)
+        self.assertIn("includeLinenAlbum", content)
+        self.assertIn("Print Draaiboek (PDF)", content)
+        self.assertIn("Stel Jouw Ideale Fotosessie Samen", content)
+
 if __name__ == "__main__":
     unittest.main()

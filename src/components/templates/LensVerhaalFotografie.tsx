@@ -13,6 +13,8 @@ import {
   Phone,
   CheckCircle,
   X,
+  Printer,
+  Calculator,
 } from 'lucide-react';
 
 // Instagram icon (not in this lucide-react version)
@@ -37,6 +39,9 @@ export const LensVerhaalFotografie: React.FC<TemplateProps> = ({
   const [activeCategory, setActiveCategory] = useState<'all' | 'bruiloft' | 'zakelijk' | 'lifestyle' | 'portret'>('all');
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const [activePackage, setActivePackage] = useState<'silver' | 'gold' | 'platinum'>('gold');
+  const [includeSecondShooter, setIncludeSecondShooter] = useState<boolean>(false);
+  const [includeDroneVideo, setIncludeDroneVideo] = useState<boolean>(true);
+  const [includeLinenAlbum, setIncludeLinenAlbum] = useState<boolean>(false);
 
   const categories = [
     { id: 'all', label: 'Alle Werken' },
@@ -284,6 +289,98 @@ export const LensVerhaalFotografie: React.FC<TemplateProps> = ({
                 </div>
               );
             })}
+          </div>
+
+          {/* Interactive Shoot Draaiboek & Custom Quote Builder */}
+          <div className="mt-12 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 max-w-4xl mx-auto shadow-2xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Calculator className="w-5 h-5 text-amber-400" />
+                  <h3 className="text-xl font-black text-white">Stel Jouw Ideale Fotosessie Samen</h3>
+                </div>
+                <p className="text-xs text-zinc-400">
+                  Combineer het {packages[activePackage].label} pakket met professionele cinema & print upgrades.
+                </p>
+              </div>
+
+              <div className="text-right sm:text-right">
+                <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Totaalprijs Indicatie:</span>
+                <span className="text-3xl font-black text-amber-400">
+                  €{(packages[activePackage].price + (includeSecondShooter ? 350 : 0) + (includeDroneVideo ? 225 : 0) + (includeLinenAlbum ? 195 : 0)).toLocaleString('nl-NL')}
+                </span>
+                <span className="text-[10px] text-zinc-500 block mt-0.5">Inclusief BTW & nabewerking</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
+              <label className="p-3.5 rounded-2xl border border-zinc-800 bg-zinc-950/60 flex items-center justify-between gap-3 cursor-pointer hover:border-zinc-700 transition-colors">
+                <div className="flex items-center gap-2.5">
+                  <input
+                    type="checkbox"
+                    checked={includeDroneVideo}
+                    onChange={(e) => setIncludeDroneVideo(e.target.checked)}
+                    className="rounded accent-amber-400"
+                  />
+                  <div>
+                    <span className="text-xs font-bold text-white block">4K Drone Luchtbeelden</span>
+                    <span className="text-[10px] text-zinc-400">+€225 (cinema reel)</span>
+                  </div>
+                </div>
+              </label>
+
+              <label className="p-3.5 rounded-2xl border border-zinc-800 bg-zinc-950/60 flex items-center justify-between gap-3 cursor-pointer hover:border-zinc-700 transition-colors">
+                <div className="flex items-center gap-2.5">
+                  <input
+                    type="checkbox"
+                    checked={includeSecondShooter}
+                    onChange={(e) => setIncludeSecondShooter(e.target.checked)}
+                    className="rounded accent-amber-400"
+                  />
+                  <div>
+                    <span className="text-xs font-bold text-white block">2e Fotograaf (Second Shooter)</span>
+                    <span className="text-[10px] text-zinc-400">+€350 (alle hoeken)</span>
+                  </div>
+                </div>
+              </label>
+
+              <label className="p-3.5 rounded-2xl border border-zinc-800 bg-zinc-950/60 flex items-center justify-between gap-3 cursor-pointer hover:border-zinc-700 transition-colors">
+                <div className="flex items-center gap-2.5">
+                  <input
+                    type="checkbox"
+                    checked={includeLinenAlbum}
+                    onChange={(e) => setIncludeLinenAlbum(e.target.checked)}
+                    className="rounded accent-amber-400"
+                  />
+                  <div>
+                    <span className="text-xs font-bold text-white block">Luxe Linnen Album (30×30)</span>
+                    <span className="text-[10px] text-zinc-400">+€195 (handgebonden)</span>
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-zinc-800">
+              <span className="text-xs text-zinc-400 font-medium">
+                📍 Werkzaam in {city} en op locatie door heel Nederland & buitenland
+              </span>
+              <div className="flex gap-2 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl border border-zinc-700 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Printer className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Print Draaiboek (PDF)</span>
+                </button>
+                <button
+                  onClick={onRequestQuote}
+                  className="flex-1 sm:flex-none px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-900 text-xs font-black shadow-md cursor-pointer transition-all"
+                >
+                  Boek Deze Configuratie
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
