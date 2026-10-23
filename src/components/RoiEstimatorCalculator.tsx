@@ -64,18 +64,18 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
 
   return (
     <section id="roi-calculator" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
-      <div className="bg-gradient-to-br from-stone-900 via-stone-900 to-stone-800 rounded-3xl border-2 border-stone-700 shadow-2xl overflow-hidden text-white">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border-2 border-orange-200/90 dark:border-slate-800 shadow-xl overflow-hidden text-stone-900 dark:text-white transition-colors">
         
         {/* Header */}
-        <div className="p-6 sm:p-10 border-b border-stone-800 text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-black uppercase tracking-wider">
-            <TrendingUp className="w-4 h-4 text-emerald-400" />
+        <div className="p-6 sm:p-10 border-b border-orange-100 dark:border-slate-800 bg-gradient-to-r from-orange-50/60 via-amber-50/40 to-orange-50/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-orange-950/70 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-black uppercase tracking-wider">
+            <TrendingUp className="w-4 h-4 text-orange-600 dark:text-orange-400" />
             <span>{lang === 'nl' ? 'MKB Rendement & Conversie Calculator' : 'SME ROI & Revenue Calculator'}</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-black tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-black text-stone-900 dark:text-white tracking-tight">
             {lang === 'nl' ? 'Wat Levert Een Razendsnelle Website Jou Op?' : 'What Revenue Can A Fast Website Generate?'}
           </h2>
-          <p className="text-xs sm:text-sm text-stone-300 font-medium leading-relaxed">
+          <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium leading-relaxed">
             {lang === 'nl'
               ? 'Een trage website kost je dagelijks betalende klanten. Bereken in 30 seconden hoeveel extra omzet een professionele Samen Online Next.js website jouw bedrijf maandelijks kan opleveren.'
               : 'Calculate how much extra revenue a high-speed, modern website can add to your business each month.'}
@@ -89,10 +89,10 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
           <div className="lg:col-span-7 space-y-6">
             
             {/* Input 1: Monthly Visitors */}
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+            <div className="p-5 rounded-2xl bg-orange-50/30 dark:bg-slate-950/60 border border-orange-100 dark:border-slate-800 space-y-3">
               <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-stone-300">1. Geschat aantal websitebezoekers per maand:</span>
-                <span className="text-base font-black text-orange-400 font-mono">{monthlyVisitors.toLocaleString('nl-NL')} bezoekers</span>
+                <span className="text-stone-700 dark:text-slate-300">1. Geschat aantal websitebezoekers per maand:</span>
+                <span className="text-base font-black text-orange-700 dark:text-orange-400 font-mono">{monthlyVisitors.toLocaleString('nl-NL')} bezoekers</span>
               </div>
               <input
                 type="range"
@@ -101,10 +101,10 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
                 step={50}
                 value={monthlyVisitors}
                 onChange={(e) => setMonthlyVisitors(Number(e.target.value))}
-                className="w-full accent-orange-500 cursor-pointer"
+                className="w-full accent-orange-600 cursor-pointer"
                 aria-label="Maandelijkse bezoekers"
               />
-              <div className="flex justify-between text-[10px] text-stone-400">
+              <div className="flex justify-between text-[10px] text-stone-500 dark:text-slate-400 font-medium">
                 <span>150 (Lokale starter)</span>
                 <span>2.500 (MKB / Specialist)</span>
                 <span>5.000+ (Gevestigde speler)</span>
@@ -112,10 +112,10 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
             </div>
 
             {/* Input 2: Average Deal Value */}
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+            <div className="p-5 rounded-2xl bg-orange-50/30 dark:bg-slate-950/60 border border-orange-100 dark:border-slate-800 space-y-3">
               <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-stone-300">2. Gemiddelde orderwaarde / opbrengst per klant:</span>
-                <span className="text-base font-black text-emerald-400 font-mono">€{avgDealValue}</span>
+                <span className="text-stone-700 dark:text-slate-300">2. Gemiddelde orderwaarde / opbrengst per klant:</span>
+                <span className="text-base font-black text-orange-700 dark:text-orange-400 font-mono">€{avgDealValue}</span>
               </div>
               <input
                 type="range"
@@ -124,10 +124,10 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
                 step={15}
                 value={avgDealValue}
                 onChange={(e) => setAvgDealValue(Number(e.target.value))}
-                className="w-full accent-emerald-500 cursor-pointer"
+                className="w-full accent-orange-600 cursor-pointer"
                 aria-label="Gemiddelde klantwaarde"
               />
-              <div className="flex justify-between text-[10px] text-stone-400">
+              <div className="flex justify-between text-[10px] text-stone-500 dark:text-slate-400 font-medium">
                 <span>€35 (Kapper / Horeca)</span>
                 <span>€350 (Schilder / Aannemer / B2B)</span>
                 <span>€1.500+ (Grote projecten)</span>
@@ -135,14 +135,14 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
             </div>
 
             {/* Input 3: Current vs Projected Conversion */}
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+            <div className="p-5 rounded-2xl bg-orange-50/30 dark:bg-slate-950/60 border border-orange-100 dark:border-slate-800 space-y-3">
               <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-stone-300">3. Huidige conversieratio (afhakers vs contactopname):</span>
-                <span className="text-sm font-black text-amber-400 font-mono">{currentConversion}%</span>
+                <span className="text-stone-700 dark:text-slate-300">3. Huidige conversieratio (afhakers vs contactopname):</span>
+                <span className="text-sm font-black text-orange-700 dark:text-orange-400 font-mono">{currentConversion}%</span>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { rate: 0.5, label: '0.5% (Trage site / veel afhakers)' },
+                  { rate: 0.5, label: '0.5% (Trage site / afhakers)' },
                   { rate: 1.0, label: '1.0% (Gemiddeld MKB)' },
                   { rate: 1.5, label: '1.5% (Al redelijk)' },
                 ].map((item) => (
@@ -152,60 +152,62 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
                     onClick={() => setCurrentConversion(item.rate)}
                     className={`py-2 px-2 rounded-xl text-[11px] font-bold border transition-all cursor-pointer text-center ${
                       currentConversion === item.rate
-                        ? 'border-orange-500 bg-orange-500/20 text-orange-300'
-                        : 'border-white/10 bg-white/5 text-stone-400 hover:bg-white/10'
+                        ? 'border-orange-600 bg-orange-600 text-white font-extrabold shadow-xs'
+                        : 'border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-stone-700 dark:text-slate-300 hover:border-orange-300 hover:bg-orange-50/50'
                     }`}
                   >
                     {item.label}
                   </button>
                 ))}
               </div>
-              <p className="text-[11px] text-stone-400 leading-relaxed">
-                🚀 Met Samen Online Next.js stijgt jouw conversie naar naar schatting <strong>{newConversion}%</strong> dankzij 0.3s laadtijd, mobiele 1-klik WhatsApp-knoppen en betere Google Maps vindbaarheid.
+              <p className="text-[11px] text-stone-600 dark:text-slate-400 leading-relaxed">
+                🚀 Met Samen Online Next.js stijgt jouw conversie naar naar schatting <strong className="text-stone-900 dark:text-white">{newConversion}%</strong> dankzij 0.3s laadtijd, mobiele 1-klik WhatsApp-knoppen en betere Google Maps vindbaarheid.
               </p>
             </div>
 
           </div>
 
           {/* Right: Results Card */}
-          <div className="lg:col-span-5 bg-gradient-to-b from-stone-800 to-stone-900/90 p-6 sm:p-8 rounded-3xl border-2 border-emerald-500/40 shadow-xl flex flex-col justify-between">
-            <div className="space-y-4">
-              <span className="text-[11px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-950/80 border border-emerald-500/30 px-3 py-1 rounded-full inline-block">
+          <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-8 rounded-3xl border-2 border-orange-500/40 shadow-xl flex flex-col justify-between relative overflow-hidden">
+            <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-orange-500/15 blur-3xl pointer-events-none"></div>
+
+            <div className="relative z-10 space-y-4">
+              <span className="text-[11px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-3 py-1 rounded-full inline-block">
                 Geschat Resultaat
               </span>
 
               <div>
-                <span className="text-xs font-bold text-stone-400 block mb-1">
+                <span className="text-xs font-bold text-slate-300 block mb-1">
                   Verwachte extra omzet per maand:
                 </span>
-                <div className="text-4xl sm:text-5xl font-black text-emerald-400 tracking-tight">
+                <div className="text-4xl sm:text-5xl font-black text-emerald-400 tracking-tight font-mono">
                   +€{extraMonthlyRevenue.toLocaleString('nl-NL')}
-                  <span className="text-xs text-stone-400 font-normal"> /mnd</span>
+                  <span className="text-xs text-slate-400 font-normal"> /mnd</span>
                 </div>
               </div>
 
               {/* Annualized Benefit */}
-              <div className="p-3.5 rounded-2xl bg-emerald-950/50 border border-emerald-500/30 space-y-1">
-                <div className="flex items-center justify-between text-xs font-bold text-emerald-300">
+              <div className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 space-y-1">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-200">
                   <span>Jaarlijkse extra omzet:</span>
-                  <span className="text-sm font-black">+€{extraYearlyRevenue.toLocaleString('nl-NL')} /jaar</span>
+                  <span className="text-sm font-black text-orange-400 font-mono">+€{extraYearlyRevenue.toLocaleString('nl-NL')} /jaar</span>
                 </div>
-                <div className="flex items-center justify-between text-[11px] text-stone-300">
+                <div className="flex items-center justify-between text-[11px] text-slate-300">
                   <span>Extra contactaanvragen:</span>
                   <span className="font-bold text-white">~{extraMonthlyLeads} extra klanten /mnd</span>
                 </div>
               </div>
 
               {/* Payback period */}
-              <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-3 rounded-xl border border-white/10">
+              <div className="flex items-center gap-2.5 text-xs text-slate-200 bg-white/10 backdrop-blur-md p-3 rounded-xl border border-white/10">
                 <Clock className="w-4 h-4 text-orange-400 shrink-0" />
                 <span>
-                  Bij een website-investering van <strong>€195</strong> is je site bij deze indicatie al binnen <strong>~{paybackDays} dagen</strong> terugverdiend.*
+                  Bij een website-investering van <strong className="text-white">€195</strong> is je site bij deze indicatie al binnen <strong className="text-emerald-400">~{paybackDays} dagen</strong> terugverdiend.*
                 </span>
               </div>
             </div>
 
-            <div className="pt-6 space-y-2.5">
+            <div className="relative z-10 pt-6 space-y-2.5">
               <button
                 type="button"
                 onClick={handleApplyRoi}
@@ -218,19 +220,19 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
               <button
                 type="button"
                 onClick={handleEmailRoi}
-                className="w-full py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                className="w-full py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/15 font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
               >
                 <Mail className="w-4 h-4 text-orange-400" />
                 <span>{lang === 'nl' ? 'Bespreek Direct per E-mail' : 'Discuss Directly via Email'}</span>
               </button>
 
-              <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-stone-400 text-center pt-1">
+              <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-slate-400 text-center pt-1">
                 <span>🛡️ 100% Jouw Eigendom</span>
                 <span>•</span>
                 <span>⚡ Binnen 2 tot 5 dagen live</span>
               </div>
 
-              <p className="text-[10px] text-stone-500 text-center leading-normal">
+              <p className="text-[10px] text-slate-500 text-center leading-normal">
                 * Indicatieve berekening ter illustratie van conversiewinst. Werkelijke resultaten variëren per branche en aanbod.
               </p>
             </div>
