@@ -947,5 +947,17 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertEqual(result.returncode, 0, f"CWV Benchmark failed:\n{result.stdout}\n{result.stderr}")
         self.assertIn("All audited pages pass Core Web Vitals DOM & SEO validation!", result.stdout)
 
+    # 85. Client Portal Persistence and Agreement Guarantee Export
+    def test_client_portal_persistence_and_agreement_modal(self):
+        comp_file = WORKSPACE / "src" / "components" / "ClientPortalSimulator.tsx"
+        self.assertTrue(comp_file.exists(), "ClientPortalSimulator.tsx must exist")
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("localStorage.getItem('samenonline_portal_day')", content)
+        self.assertIn("localStorage.setItem('samenonline_portal_day'", content)
+        self.assertIn("SO-GARANTIE-2026", content)
+        self.assertIn("5-Dagen Samenwerkingsovereenkomst", content)
+        self.assertIn("Print / Exporteer als PDF", content)
+        self.assertIn("Vaste Prijsgarantie Zonder Verrassingen", content)
+
 if __name__ == "__main__":
     unittest.main()
