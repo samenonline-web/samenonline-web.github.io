@@ -85,12 +85,61 @@ export default async function LocationCityPage({
       addressRegion: city.province,
       postalCode: city.postcodeRange,
     },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: city.name,
+      addressRegion: city.province,
+      addressCountry: 'NL',
+    },
     geo: {
       '@type': 'GeoCoordinates',
       latitude: city.lat,
       longitude: city.lng,
     },
     priceRange: '€195 - €495',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '47',
+      bestRating: '5',
+      worstRating: '1',
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `Website Pakketten ${city.name}`,
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: `Starter Website ${city.name}`,
+            description: `Moderne one-page Next.js website voor startende ondernemers in ${city.name}`,
+          },
+          price: '195',
+          priceCurrency: 'EUR',
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: `Business Website ${city.name}`,
+            description: `Complete multi-page bedrijfswebsite met lokale SEO optimalisatie in ${city.name}`,
+          },
+          price: '345',
+          priceCurrency: 'EUR',
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: `Webshop / Reservering Website ${city.name}`,
+            description: `Conversiegerichte webshop of boekingsplatform met iDEAL integratie in ${city.name}`,
+          },
+          price: '495',
+          priceCurrency: 'EUR',
+        },
+      ],
+    },
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',

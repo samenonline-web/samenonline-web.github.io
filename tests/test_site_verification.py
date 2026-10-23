@@ -959,5 +959,18 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Print / Exporteer als PDF", content)
         self.assertIn("Vaste Prijsgarantie Zonder Verrassingen", content)
 
+    # 86. Multi-City Schema.org LocalBusiness, GeoCoordinates & OfferCatalog Hardening
+    def test_multi_city_schema_org_local_business_and_offers(self):
+        page_file = WORKSPACE / "app" / "locaties" / "[stad]" / "page.tsx"
+        self.assertTrue(page_file.exists(), "app/locaties/[stad]/page.tsx must exist")
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn("PostalAddress", content)
+        self.assertIn("GeoCoordinates", content)
+        self.assertIn("AggregateRating", content)
+        self.assertIn("OfferCatalog", content)
+        self.assertIn("Starter Website", content)
+        self.assertIn("Business Website", content)
+        self.assertIn("Webshop / Reservering Website", content)
+
 if __name__ == "__main__":
     unittest.main()
