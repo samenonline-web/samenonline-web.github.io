@@ -16,6 +16,7 @@ import {
   Award,
   CheckCircle2,
   Calendar,
+  Printer,
 } from 'lucide-react';
 
 export const ZonnePionierSolar: React.FC<TemplateProps> = ({
@@ -35,6 +36,7 @@ export const ZonnePionierSolar: React.FC<TemplateProps> = ({
   const [houseType, setHouseType] = useState<'tussen' | 'hoek' | 'vrijstaand'>('hoek');
   const [postcode, setPostcode] = useState('');
   const [scanResult, setScanResult] = useState<string | null>(null);
+  const [showDossier, setShowDossier] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -51,6 +53,7 @@ export const ZonnePionierSolar: React.FC<TemplateProps> = ({
       setScanResult(
         `✅ Dakscan Voltooid voor postcode ${num}: Jouw dakoriëntatie is gunstig (Zuidoost / Zuidwest). Geschikt voor minimaal ${houseType === 'vrijstaand' ? 18 : houseType === 'hoek' ? 14 : 10} zonnepanelen!`
       );
+      setShowDossier(true);
       showToast('Dakscan berekend met succes!');
     } else {
       setScanResult('Voer een geldige 4-cijferige postcode in.');
@@ -309,14 +312,71 @@ export const ZonnePionierSolar: React.FC<TemplateProps> = ({
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    if (typeof window !== 'undefined') window.print();
-                  }}
+                  onClick={() => setShowDossier(!showDossier)}
                   className="py-3.5 px-4 rounded-xl bg-white border border-stone-300 hover:bg-stone-50 text-stone-800 font-extrabold text-xs shadow-xs cursor-pointer text-center"
                 >
-                  📄 Bewaar Zonneplan
+                  📄 {showDossier ? 'Verberg Zonneplan' : 'Bewaar Zonneplan'}
                 </button>
               </div>
+
+              {/* Printable Zonneplan & Raming Dossier */}
+              {showDossier && (
+                <div className="mt-6 p-4 rounded-2xl border-2 border-dashed border-stone-300 bg-white space-y-3">
+                  <div className="flex justify-between items-start border-b pb-2 border-stone-200">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 block">
+                        Officiële Dakscan & Investeringsraming
+                      </span>
+                      <span className="font-black text-sm text-stone-900">{brandTitle}</span>
+                    </div>
+                    <span className="text-[10px] font-mono bg-stone-900 text-amber-400 px-2 py-0.5 rounded font-bold">
+                      ZP-DAK-2026-X
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-xs text-stone-700">
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Locatie & Regio</span>
+                      <span className="font-bold">{postcode ? `Postcode ${postcode}` : cityName}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Systeemcapaciteit</span>
+                      <span className="font-bold text-amber-600">{panelCount} Glas-Glas Panelen</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Jaaropbrengst</span>
+                      <span className="font-bold text-emerald-600">~{yearlyKwh.toLocaleString('nl-NL')} kWh / €{yearlyEuro}/jr</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Geschatte Investering (0% BTW)</span>
+                      <span className="font-bold text-stone-900">€{totalInvestment.toLocaleString('nl-NL')} (~{paybackYears} jr)</span>
+                    </div>
+                  </div>
+
+                  <div className="text-[10px] text-stone-500 pt-1 border-t border-stone-100 flex justify-between items-center">
+                    <span>Inclusief 25 jaar fabrieks- & opbrengstgarantie.</span>
+                    <span className="font-bold text-emerald-600">Scope 12 & InstallQ</span>
+                  </div>
+
+                  <div className="flex gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => window.print()}
+                      className={`flex-1 py-2.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-sm cursor-pointer`}
+                    >
+                      <Printer className="w-3.5 h-3.5" />
+                      <span>Print Zonneplan Dossier (PDF)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowDossier(false)}
+                      className="px-3 py-2.5 rounded-xl border border-stone-300 text-stone-600 text-xs font-bold hover:bg-stone-100 cursor-pointer"
+                    >
+                      Sluiten
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -352,6 +412,11 @@ export const ZonnePionierSolar: React.FC<TemplateProps> = ({
           </div>
         </div>
       </section>
+
+      {/* Footer Demo Note */}
+      <footer className="py-8 px-4 text-center text-xs text-stone-500 border-t border-stone-200 bg-white">
+        <p>© 2026 {brandTitle} • Zonne-energie Installaties • {cityName} • Fictief Demo Concept</p>
+      </footer>
     </div>
   );
 };

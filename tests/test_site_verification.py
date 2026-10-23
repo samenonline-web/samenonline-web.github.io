@@ -689,5 +689,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Print Netkoppeling & Energiepaspoort (PDF)", content)
         self.assertIn("Activeer Jouw Netkoppeling in", content)
 
+    # 65. ZonnePionierSolar Dakscan Simulator, Scope 12, and Printable Zonneplan Dossier
+    def test_zonnepionier_solar_simulator_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "ZonnePionierSolar.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("showDossier", content)
+        self.assertIn("ZP-DAK-2026-X", content)
+        self.assertIn("Print Zonneplan Dossier (PDF)", content)
+        self.assertIn("Officiële Dakscan & Investeringsraming", content)
+        self.assertIn("Scope 12 & InstallQ", content)
+
 if __name__ == "__main__":
     unittest.main()
