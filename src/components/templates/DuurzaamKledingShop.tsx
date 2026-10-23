@@ -124,7 +124,13 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
+  onOpenIdealCheckout,
 }) => {
+  const brandTitle = customBrandName || 'DuurzaamKleding';
+  const cityName = customCity || 'Utrecht';
+
   const [activeCategory, setActiveCategory] = useState<'alles' | 'dames' | 'heren' | 'accessoires'>('alles');
   const [cart, setCart] = useState<{ product: ProductItem; size: string; quantity: number }[]>([]);
   const [selectedSize, setSelectedSize] = useState<Record<string, string>>({
@@ -217,8 +223,8 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
             DK
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">DuurzaamKleding</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Utrecht • 100% Eerlijke & Circulaire Mode</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandTitle}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{cityName} • 100% Eerlijke & Circulaire Mode</span>
           </div>
         </div>
 
@@ -683,7 +689,13 @@ export const DuurzaamKledingShop: React.FC<TemplateProps> = ({
               </div>
 
               <button
-                onClick={onRequestQuote}
+                onClick={() => {
+                  if (onOpenIdealCheckout) {
+                    onOpenIdealCheckout(totalPrice, brandTitle);
+                  } else {
+                    onRequestQuote();
+                  }
+                }}
                 disabled={cart.length === 0}
                 className={`w-full py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} disabled:bg-stone-300 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2`}
               >

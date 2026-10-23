@@ -461,5 +461,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("grandTotal", content)
         self.assertIn("Voeg toe aan Google / Apple Agenda", content)
 
+    # 43. DuurzaamKledingShop E-Commerce Micro-App & iDEAL Checkout Simulator
+    def test_duurzaam_kleding_shop_checkout_integration(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "DuurzaamKledingShop.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("onOpenIdealCheckout", content)
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("Afrekenen met iDEAL (Demo)", content)
+
 if __name__ == "__main__":
     unittest.main()
