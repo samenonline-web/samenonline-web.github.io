@@ -18,6 +18,8 @@ import {
   Award,
   ChevronRight,
   Activity,
+  Printer,
+  FileCheck,
 } from 'lucide-react';
 
 interface Therapist {
@@ -85,7 +87,11 @@ export const StadskliniekFysio: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
 }) => {
+  const brandName = customBrandName || 'Stadskliniek Fysiotherapie';
+  const city = customCity || 'Maastricht • Centrum voor Beweging';
   const [selectedTherapy, setSelectedTherapy] = useState(TREATMENTS[0].id);
   const [selectedTherapist, setSelectedTherapist] = useState(THERAPISTS[0].id);
   const [selectedDay, setSelectedDay] = useState('Morgen');
@@ -125,8 +131,8 @@ export const StadskliniekFysio: React.FC<TemplateProps> = ({
             SF
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">Stadskliniek Fysiotherapie</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Maastricht • Centrum voor Beweging & Revalidatie</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandName}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{city}</span>
           </div>
         </div>
 
@@ -213,18 +219,77 @@ export const StadskliniekFysio: React.FC<TemplateProps> = ({
           </div>
 
           {booked ? (
-            <div className="p-8 text-center bg-stone-50 rounded-3xl border border-stone-200 space-y-4 max-w-lg mx-auto">
-              <span className="text-5xl block">🎉</span>
-              <h3 className="font-black text-xl text-stone-900">Afspraak Succesvol Gereserveerd!</h3>
-              <p className="text-xs text-stone-600 leading-relaxed font-medium">
-                Je afspraak voor <strong>{activeTreatmentObj.title}</strong> bij <strong>{activeTherapistObj.name}</strong> op <strong>{selectedDay} om {selectedTime} uur</strong> staat genoteerd. Er is een bevestiging per sms en e-mail verstuurd.
-              </p>
-              <button
-                onClick={() => setBooked(false)}
-                className="text-xs text-stone-500 font-bold underline cursor-pointer hover:text-stone-900"
-              >
-                Plan nog een afspraak
-              </button>
+            <div className="p-6 bg-stone-50 rounded-3xl border border-stone-200 space-y-4 max-w-lg mx-auto text-left">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center shrink-0">
+                  <UserCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-black text-base text-stone-900">Afspraak Gereserveerd!</h3>
+                  <p className="text-xs text-stone-500">{brandName} staat voor je klaar.</p>
+                </div>
+              </div>
+
+              {/* Printable Appointment Voucher */}
+              <div className="p-4 rounded-2xl border-2 border-dashed border-stone-300 bg-white space-y-3">
+                <div className="flex justify-between items-start border-b pb-2 border-stone-200">
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-teal-600 block">
+                      Fysiotherapie Behandelpas & Reservering
+                    </span>
+                    <span className="font-black text-sm text-stone-900">{brandName}</span>
+                  </div>
+                  <span className="text-[10px] font-mono bg-stone-100 text-stone-700 px-2 py-0.5 rounded font-bold">
+                    SF-FYSIO-2026-X
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs text-stone-700">
+                  <div>
+                    <span className="text-[10px] text-stone-400 block">Behandeling</span>
+                    <span className="font-bold">{activeTreatmentObj.title}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-stone-400 block">Duur & Tarief</span>
+                    <span className="font-bold">{activeTreatmentObj.duration}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-stone-400 block">Specialist</span>
+                    <span className="font-bold">{activeTherapistObj.name}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-stone-400 block">Tijdstip</span>
+                    <span className="font-bold">{selectedDay} om {selectedTime} u</span>
+                  </div>
+                </div>
+
+                <div className="bg-teal-50 p-2.5 rounded-xl border border-teal-200 text-[11px] space-y-1">
+                  <span className="font-bold text-teal-900 block">Meenemen naar je eerste afspraak:</span>
+                  <ul className="list-disc list-inside text-stone-600 text-[10px] space-y-0.5">
+                    <li>Geldig legitimatiebewijs (Paspoort of ID)</li>
+                    <li>Grote schone handdoek voor op de behandelbank</li>
+                    <li>Gemakkelijke kleding waarin je vrij kunt bewegen</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="flex-1 py-2.5 rounded-xl bg-stone-900 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow hover:opacity-90 cursor-pointer"
+                >
+                  <Printer className="w-3.5 h-3.5" />
+                  <span>Print Behandelpas (PDF)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBooked(false)}
+                  className="px-3 py-2.5 rounded-xl border border-stone-300 text-stone-700 text-xs font-bold hover:bg-stone-100 cursor-pointer"
+                >
+                  Nieuwe Afspraak
+                </button>
+              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -355,6 +420,47 @@ export const StadskliniekFysio: React.FC<TemplateProps> = ({
               </div>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Insurance Vergoeding 2026 Checker */}
+      <section id="vergoeding" className="py-12 sm:py-16 px-4 sm:px-8 bg-stone-100/70 border-t border-stone-200">
+        <div className="max-w-4xl mx-auto text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>Zorgvergoeding & Declaratie 2026</span>
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl font-black text-stone-900">
+            Directe Vergoeding Via Jouw Zorgverzekering
+          </h2>
+
+          <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto">
+            {brandName} is aangesloten bij alle grote zorgkoepels in Nederland. Wij declareren rechtstreeks, zodat je zelf niets hoeft voor te schieten.
+          </p>
+
+          <div className="pt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-left">
+            {[
+              { name: 'Zilveren Kruis', tag: '100% Gecontracteerd' },
+              { name: 'CZ & Ohra', tag: '100% Gecontracteerd' },
+              { name: 'VGZ & Univé', tag: '100% Gecontracteerd' },
+              { name: 'Menzis', tag: '100% Gecontracteerd' },
+              { name: 'DSW Zorgverzekeraar', tag: '100% Gecontracteerd' },
+              { name: 'ASR & Ditzo', tag: '100% Gecontracteerd' },
+            ].map((ins, i) => (
+              <div key={i} className="p-3.5 rounded-2xl bg-white border border-stone-200 shadow-xs">
+                <span className="font-black text-xs text-stone-900 block">{ins.name}</span>
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded inline-block mt-1">
+                  ✓ {ins.tag}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white border border-stone-200 text-xs text-stone-600 font-medium max-w-xl mx-auto text-center space-y-1 mt-6">
+            <strong className="text-stone-900 block">Wist je dat?</strong>
+            <span>Fysiotherapie uit de aanvullende verzekering gaat <strong>nooit</strong> ten koste van je eigen risico (€385,-).</span>
+          </div>
         </div>
       </section>
 

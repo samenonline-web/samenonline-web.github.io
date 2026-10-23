@@ -625,5 +625,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("KL-PASS-2026", content)
         self.assertIn("Print 7-Dagen Gym Pas (PDF)", content)
 
+    # 59. StadskliniekFysio City Props, Printable Behandelpas, and Insurance Section
+    def test_stadskliniek_fysio_pass_and_insurance(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "StadskliniekFysio.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("SF-FYSIO-2026-X", content)
+        self.assertIn("Print Behandelpas (PDF)", content)
+        self.assertIn("Zorgvergoeding & Declaratie 2026", content)
+
 if __name__ == "__main__":
     unittest.main()
