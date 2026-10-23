@@ -17,6 +17,8 @@ import {
   Award,
   FileText,
   Lock,
+  Printer,
+  Calculator,
 } from 'lucide-react';
 
 interface LegalPracticeArea {
@@ -92,6 +94,8 @@ export const AdvocatenKantoorJustitia: React.FC<TemplateProps> = ({
 
   const [selectedArea, setSelectedArea] = useState<string>('arbeid');
   const [feeType, setFeeType] = useState<'fixed' | 'hourly'>('fixed');
+  const [yearsEmployed, setYearsEmployed] = useState<number>(4);
+  const [monthlySalary, setMonthlySalary] = useState<number>(3800);
   const [intakeSubmitted, setIntakeSubmitted] = useState(false);
   const [clientData, setClientData] = useState({
     name: '',
@@ -100,6 +104,10 @@ export const AdvocatenKantoorJustitia: React.FC<TemplateProps> = ({
     caseDescription: '',
     urgency: 'Binnen enkele dagen',
   });
+
+  // 2026 Dutch Transitievergoeding Calculation (1/3 gross monthly salary incl 8% vacation allowance per year)
+  const grossMonthlyWithVacation = Math.round(monthlySalary * 1.08);
+  const transitievergoeding = Math.round(grossMonthlyWithVacation * (1 / 3) * yearsEmployed);
 
   const activeAreaObj = PRACTICE_AREAS.find((a) => a.id === selectedArea) || PRACTICE_AREAS[0];
 
@@ -214,20 +222,75 @@ export const AdvocatenKantoorJustitia: React.FC<TemplateProps> = ({
               </div>
 
               {intakeSubmitted ? (
-                <div className="py-8 text-center space-y-3">
-                  <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="py-4 space-y-4">
+                  <div className="text-center space-y-1.5">
+                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <h4 className="font-black text-base">Dossier Veilig Geopend</h4>
+                    <p className="text-xs text-stone-500 max-w-xs mx-auto">
+                      Geachte {clientData.name}, uw dossier is onder strikte NOvA advocatengeheimhouding ontvangen.
+                    </p>
                   </div>
-                  <h4 className="font-black text-base">Aanvraag Veilig Ontvangen</h4>
-                  <p className="text-xs text-stone-500 max-w-xs mx-auto">
-                    Geachte {clientData.name}, uw dossier is onder strikte geheimhouding ontvangen. Een van onze gespecialiseerde advocaten neemt binnen 1 werkdag telefonisch contact met u op.
-                  </p>
-                  <button
-                    onClick={() => setIntakeSubmitted(false)}
-                    className="text-xs font-bold text-stone-500 underline cursor-pointer mt-2"
-                  >
-                    Nog een zaak doorgeven
-                  </button>
+
+                  {/* Printable Dossier Voucher */}
+                  <div className={`p-4 rounded-2xl border-2 border-dashed ${isDarkMode ? 'bg-stone-950 border-stone-700' : 'bg-stone-50 border-stone-300'}`}>
+                    <div className="flex justify-between items-start mb-3 border-b pb-2 border-stone-200 dark:border-stone-800">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-orange-600 block">
+                          NOvA Geheimhoudingsdossier
+                        </span>
+                        <span className="font-black text-sm">{brandName}</span>
+                      </div>
+                      <span className="text-[10px] font-mono bg-stone-200 dark:bg-stone-800 px-2 py-0.5 rounded font-bold">
+                        JUST-DOS-2026-X
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Cliënt</span>
+                        <span className="font-bold">{clientData.name}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Telefoon</span>
+                        <span className="font-bold">{clientData.phone || 'Niet opgegeven'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Rechtsgebied</span>
+                        <span className="font-bold">{activeAreaObj.name}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Tariefindicatie</span>
+                        <span className="font-bold text-emerald-700">{activeAreaObj.fixedRate}</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-emerald-50 dark:bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800 text-[11px] space-y-1">
+                      <span className="font-bold text-emerald-800 dark:text-emerald-300 block">Bij het intakegesprek meenemen/uploaden:</span>
+                      <ul className="list-disc list-inside text-stone-600 dark:text-stone-300 text-[10px] space-y-0.5">
+                        <li>Arbeidsovereenkomst & eventuele VSO of ontslagbrief</li>
+                        <li>Geldig identiteitsbewijs (Paspoort/ID)</li>
+                        <li>Eventuele rechtsbijstandverzekering polisgegevens</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => window.print()}
+                      className="flex-1 py-2.5 rounded-xl bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs font-bold flex items-center justify-center gap-1.5 shadow hover:opacity-90 cursor-pointer"
+                    >
+                      <Printer className="w-3.5 h-3.5" />
+                      <span>Print Dossierbewijs (PDF)</span>
+                    </button>
+                    <button
+                      onClick={() => setIntakeSubmitted(false)}
+                      className="px-3 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-bold hover:bg-stone-100 dark:hover:bg-stone-800 cursor-pointer"
+                    >
+                      Nieuwe Zaak
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleIntakeSubmit} className="space-y-3">
@@ -356,6 +419,87 @@ export const AdvocatenKantoorJustitia: React.FC<TemplateProps> = ({
               ))}
             </div>
           </div>
+
+          {/* Transitievergoeding Calculator (When Arbeidsrecht is active) */}
+          {selectedArea === 'arbeid' && (
+            <div className={`mt-8 p-6 sm:p-8 rounded-3xl border-2 ${
+              isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200 shadow-md'
+            }`}>
+              <div className="flex items-center gap-2 mb-3">
+                <Calculator className="w-5 h-5 text-orange-500" />
+                <h3 className="font-black text-lg">Wettelijke Transitievergoeding Calculator (2026)</h3>
+              </div>
+              <p className="text-xs text-stone-500 mb-6">
+                Bereken direct de wettelijke minimumnorm bij ontslag via het UWV of de kantonrechter. Bij een vaststellingsovereenkomst (VSO) kan hier vaak aanzienlijk boven worden onderhandeld.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <div className="flex justify-between text-xs font-bold mb-1.5">
+                    <span>Aantal Gewerkte Dienstjaren:</span>
+                    <span className="font-black text-orange-600">{yearsEmployed} jaar</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1"
+                    max="35"
+                    value={yearsEmployed}
+                    onChange={(e) => setYearsEmployed(Number(e.target.value))}
+                    className="w-full accent-orange-600 cursor-pointer"
+                  />
+                  <div className="flex justify-between text-[10px] text-stone-400 mt-1 font-semibold">
+                    <span>1 jaar</span>
+                    <span>15 jaar</span>
+                    <span>35 jaar</span>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-bold mb-1.5">
+                    <span>Bruto Maandsalaris (excl. 8% vakantiegeld):</span>
+                    <span className="font-black text-orange-600">€{monthlySalary.toLocaleString('nl-NL')}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1500"
+                    max="10000"
+                    step="100"
+                    value={monthlySalary}
+                    onChange={(e) => setMonthlySalary(Number(e.target.value))}
+                    className="w-full accent-orange-600 cursor-pointer"
+                  />
+                  <div className="flex justify-between text-[10px] text-stone-400 mt-1 font-semibold">
+                    <span>€1.500</span>
+                    <span>€5.500</span>
+                    <span>€10.000+</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span className="text-[11px] font-bold text-orange-800 dark:text-orange-300 uppercase tracking-wider block">
+                    Wettelijke Transitievergoeding (Indicatie):
+                  </span>
+                  <div className="text-2xl sm:text-3xl font-black text-orange-700 dark:text-orange-400">
+                    €{transitievergoeding.toLocaleString('nl-NL')}
+                    <span className="text-xs font-medium text-stone-500 dark:text-stone-400"> (bruto)</span>
+                  </div>
+                  <span className="text-[11px] text-stone-500 dark:text-stone-400 font-semibold mt-1 block">
+                    Inclusief 8% wettelijke vakantietoeslag • Max. wettelijk 2026: €94.000 (of jaarsalaris indien hoger)
+                  </span>
+                </div>
+
+                <button
+                  onClick={onRequestQuote}
+                  className={`px-5 py-3 rounded-xl text-white font-black text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md ${theme.primary} hover:opacity-90`}
+                >
+                  <span>Laat VSO Toetsen</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

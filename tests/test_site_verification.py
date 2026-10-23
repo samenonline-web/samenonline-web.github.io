@@ -596,5 +596,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("DV-FISC-2026-INTAKE", content)
         self.assertIn("Print Afspraakbevestiging & Checklist", content)
 
+    # 56. AdvocatenKantoorJustitia Transitievergoeding Calculator & NOvA Dossier Voucher
+    def test_justitia_advocaten_calculator_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "AdvocatenKantoorJustitia.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("transitievergoeding", content)
+        self.assertIn("yearsEmployed", content)
+        self.assertIn("monthlySalary", content)
+        self.assertIn("JUST-DOS-2026-X", content)
+        self.assertIn("Print Dossierbewijs (PDF)", content)
+
 if __name__ == "__main__":
     unittest.main()
