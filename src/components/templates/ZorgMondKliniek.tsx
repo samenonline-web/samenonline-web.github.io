@@ -19,6 +19,7 @@ import {
   Sparkles,
   ArrowRight,
   Check,
+  Printer,
 } from 'lucide-react';
 
 interface TariffItem {
@@ -241,20 +242,68 @@ export const ZorgMondKliniek: React.FC<TemplateProps> = ({
               </div>
 
               {registerSuccess ? (
-                <div className="py-8 text-center space-y-3">
-                  <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="py-4 space-y-4">
+                  <div className="text-center space-y-1.5">
+                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <h4 className="font-black text-base text-stone-900 dark:text-white">Inschrijving Ontvangen!</h4>
+                    <p className="text-xs text-stone-500 max-w-xs mx-auto">
+                      Bedankt {patientData.name}! Onze praktijkassistente neemt binnen 1 werkdag contact op voor jouw intake.
+                    </p>
                   </div>
-                  <h4 className="font-black text-base">Inschrijving Ontvangen!</h4>
-                  <p className="text-xs text-stone-500 max-w-xs mx-auto">
-                    Bedankt {patientData.name}! Onze praktijkassistente neemt binnen 1 werkdag contact met je op om de intakecontrole in te plannen en je patiëntendossier over te nemen.
-                  </p>
-                  <button
-                    onClick={() => setRegisterSuccess(false)}
-                    className="text-xs font-bold text-stone-500 underline cursor-pointer mt-2"
-                  >
-                    Nog een gezinslid inschrijven
-                  </button>
+
+                  {/* Printable Patient Dossier Card */}
+                  <div className="p-4 rounded-2xl border-2 border-dashed border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-850 space-y-3">
+                    <div className="flex justify-between items-start border-b pb-2 border-stone-200 dark:border-stone-700">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-teal-600 block">
+                          Patiënt Inschrijving & Dossierbewijs
+                        </span>
+                        <span className="font-black text-sm text-stone-900 dark:text-white">{brandName}</span>
+                      </div>
+                      <span className="text-[10px] font-mono bg-stone-900 text-teal-400 px-2 py-0.5 rounded font-bold">
+                        ZM-PAT-2026-X
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs text-stone-700 dark:text-stone-300">
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Patiënt</span>
+                        <span className="font-bold text-stone-900 dark:text-white">{patientData.name}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Zorgverzekeraar</span>
+                        <span className="font-bold">{patientData.insuranceCompany || 'Nog doorgeven'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Locatie & Regio</span>
+                        <span className="font-bold">{city}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Status</span>
+                        <span className="font-bold text-emerald-600">BIG-Geregistreerd</span>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => window.print()}
+                        className="flex-1 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+                      >
+                        <Printer className="w-3.5 h-3.5" />
+                        <span>Print Inschrijfbewijs (PDF)</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setRegisterSuccess(false)}
+                        className="px-3 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300 text-xs font-bold hover:bg-stone-100 dark:hover:bg-stone-800 cursor-pointer"
+                      >
+                        Nieuw lid
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleRegisterSubmit} className="space-y-3">
@@ -484,7 +533,11 @@ export const ZorgMondKliniek: React.FC<TemplateProps> = ({
                 <h3 className="text-2xl font-black text-stone-900 dark:text-white">
                   Afspraak Succesvol Gereserveerd!
                 </h3>
-                <div className="p-4 rounded-2xl bg-stone-100 dark:bg-stone-800 max-w-md mx-auto text-xs space-y-1.5 text-left">
+                <div className="p-4 rounded-2xl bg-stone-100 dark:bg-stone-800 max-w-md mx-auto text-xs space-y-1.5 text-left border border-stone-200 dark:border-stone-700">
+                  <div className="flex justify-between items-center pb-2 border-b border-stone-200 dark:border-stone-700 mb-2">
+                    <span className="font-bold text-stone-500 uppercase text-[10px] tracking-wider">Afspraak Code:</span>
+                    <span className="font-mono font-bold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 px-2 py-0.5 rounded text-[11px]">ZM-AFSPR-2026-X</span>
+                  </div>
                   <div className="flex justify-between">
                     <span className="text-stone-500">Patiënt:</span>
                     <strong className="text-stone-900 dark:text-white">{bookingData.name}</strong>

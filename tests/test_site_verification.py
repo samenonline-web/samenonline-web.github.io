@@ -547,7 +547,7 @@ class TestSamenOnlineVerification(unittest.TestCase):
         content = page_file.read_text(encoding="utf-8")
         self.assertIn('href="/vragenlijst"', content)
 
-    # 51. ZorgMondKliniek NZa Tariff & Dental Insurance Calculator
+    # 51. ZorgMondKliniek NZa Tariff & Dental Insurance Calculator and Printable Dossiers
     def test_zorg_mond_kliniek_tariff_calculator(self):
         comp_file = WORKSPACE / "src" / "components" / "templates" / "ZorgMondKliniek.tsx"
         content = comp_file.read_text(encoding="utf-8")
@@ -556,6 +556,9 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("totalTariffCost", content)
         self.assertIn("estimatedOutOfPocket", content)
         self.assertIn("Print Afspraakbevestiging", content)
+        self.assertIn("ZM-AFSPR-2026-X", content)
+        self.assertIn("ZM-PAT-2026-X", content)
+        self.assertIn("Print Inschrijfbewijs (PDF)", content)
 
     # 52. RijschoolVlot Installment Calculator and Printable Voucher
     def test_rijschool_vlot_installment_and_voucher(self):
