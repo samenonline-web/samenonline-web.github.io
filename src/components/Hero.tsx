@@ -145,15 +145,35 @@ export const Hero: React.FC<HeroProps> = ({
           })}
         </div>
 
-        {/* Or Redesign / Custom Link */}
-        <div className="mt-5 text-xs text-stone-500 font-medium flex items-center justify-center gap-1.5 flex-wrap">
-          <span>🔄 {lang === 'nl' ? 'Heb je al een bestaande site of eigen schets?' : 'Have an existing site or your own plan?'}</span>
-          <a
-            href="#prijs-calculator"
-            className="text-orange-700 hover:text-orange-800 font-extrabold underline decoration-orange-300 underline-offset-2 transition-colors cursor-pointer"
+        {/* Quick Transition Redesign Card (Stitch Pattern) */}
+        <div className="mt-8 max-w-3xl mx-auto p-4 sm:p-5 rounded-2xl bg-orange-50/70 dark:bg-slate-900 border border-orange-200/90 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-left shadow-xs">
+          <div className="flex items-center gap-3.5">
+            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/80 text-orange-700 dark:text-orange-400 flex items-center justify-center shrink-0 shadow-2xs">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="font-extrabold text-sm sm:text-base text-stone-900 dark:text-white block">
+                {lang === 'nl' 
+                  ? 'Heb je al een bestaande website of een eigen Figma schets?' 
+                  : 'Already have an existing site or your own custom plan?'}
+              </span>
+              <span className="text-xs text-stone-600 dark:text-slate-400 font-medium">
+                {lang === 'nl'
+                  ? 'Wij migreren jouw inhoud zonder rankingverlies naar bliksemsnelle Next.js technologie.'
+                  : 'We migrate your content without losing Google ranking to lightning-fast Next.js.'}
+              </span>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              const el = document.getElementById('waarom-nextjs');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="shrink-0 px-4 py-2.5 rounded-xl bg-white dark:bg-slate-800 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-slate-700 hover:border-orange-300 dark:hover:border-slate-600 font-extrabold text-xs shadow-xs hover:bg-orange-50 dark:hover:bg-slate-700 transition-all cursor-pointer whitespace-nowrap"
           >
-            {lang === 'nl' ? 'Vraag een Redesign of Maatwerk aan' : 'Request Redesign or Custom Build'}
-          </a>
+            {lang === 'nl' ? 'Vraag Redesign Scan Aan →' : 'Request Redesign Scan →'}
+          </button>
         </div>
 
       </div>

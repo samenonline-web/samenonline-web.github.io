@@ -22,11 +22,13 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
       titleNl: 'Kies een Concept of Lever Eigen Plan Aan',
       titleEn: 'Choose a Concept or Submit Your Own Plan',
       descNl:
-        'Kies uit 20 interactieve branche-templates, vraag een redesign aan van je huidige trage website, of lever een eigen Figma schets aan.',
+        'Kies uit 33 interactieve branche-templates, vraag een redesign aan van je huidige trage website, of lever een eigen Figma schets aan.',
       descEn:
-        'Select from 20 industry templates, request an existing site redesign, or supply your own wireframe or Figma plan.',
+        'Select from 33 industry templates, request an existing site redesign, or supply your own wireframe or Figma plan.',
       badgeNl: 'Stap 1: Jouw Keuze',
       badgeEn: 'Step 1: Your Choice',
+      verifiedNl: '100% Tevredenheid',
+      verifiedEn: '100% Satisfaction',
     },
     {
       step: '02',
@@ -39,6 +41,8 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
         'Within 24 hours we review your needs and give a fixed, clear quote with no hidden recurring subscription traps.',
       badgeNl: 'Stap 2: Afstemming',
       badgeEn: 'Step 2: Alignment',
+      verifiedNl: 'Binnen 24u reactie',
+      verifiedEn: 'Response within 24h',
     },
     {
       step: '03',
@@ -51,6 +55,8 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
         'We tailor your logo, texts, photos, and brand colors. We link your .nl domain and high-speed NVMe hosting.',
       badgeNl: 'Stap 3: Realisatie',
       badgeEn: 'Step 3: Customization',
+      verifiedNl: 'Kosteloze correctieronde',
+      verifiedEn: 'Free revision round',
     },
     {
       step: '04',
@@ -63,6 +69,8 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
         'Upon your approval, your site launches online. Ultra fast, 100% your own property, and secured with SSL.',
       badgeNl: 'Stap 4: Lancering',
       badgeEn: 'Step 4: Launch',
+      verifiedNl: '2-5 werkdagen live',
+      verifiedEn: '2-5 business days live',
     },
   ];
 
@@ -118,9 +126,9 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               </div>
 
               {/* Step Footer Indicator */}
-              <div className="pt-4 mt-4 border-t border-stone-100 dark:border-slate-800 flex items-center text-[11px] font-bold text-stone-500 dark:text-slate-400">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mr-1.5 shrink-0" />
-                <span>{lang === 'nl' ? '100% Tevredenheidsgarantie' : 'Satisfaction Guaranteed'}</span>
+              <div className="pt-4 mt-4 border-t border-stone-100 dark:border-slate-800 flex items-center text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+                <CheckCircle2 className="w-3.5 h-3.5 mr-1.5 shrink-0" />
+                <span>{lang === 'nl' ? item.verifiedNl : item.verifiedEn}</span>
               </div>
             </div>
           );
@@ -145,7 +153,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
             onClick={onScrollToTemplates}
             className="px-5 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-stone-100 dark:hover:bg-slate-700 text-stone-900 dark:text-slate-200 font-black text-xs transition-all cursor-pointer shadow-sm border border-stone-200 dark:border-slate-700"
           >
-            {lang === 'nl' ? 'Bekijk Alle 16 Concepten' : 'View All 16 Concepts'}
+            {lang === 'nl' ? 'Bekijk Alle 33 Concepten' : 'View All 33 Concepts'}
           </button>
           <button
             onClick={onOpenRequestModal}
