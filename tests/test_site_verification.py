@@ -845,5 +845,23 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertNotIn("handleWhatsAppClick", copilot_content)
         self.assertNotIn("wa.me/31636481054", copilot_content)
 
+    # 78. Enhanced Questionnaire URL Param Prefill and Printable Intake Dossier
+    def test_enhanced_questionnaire_prefill_and_printable_dossier(self):
+        q_file = WORKSPACE / "src" / "components" / "WebsiteQuestionnaire.tsx"
+        self.assertTrue(q_file.exists(), "WebsiteQuestionnaire.tsx must exist")
+        content = q_file.read_text(encoding="utf-8")
+        self.assertIn("dossierToken", content)
+        self.assertIn("SO-INTAKE-2026-", content)
+        self.assertIn("cityParam", content)
+        self.assertIn("domainParam", content)
+        self.assertIn("handleCopyDossier", content)
+        self.assertIn("window.print()", content)
+        self.assertIn("Print Intake Dossier (PDF)", content)
+        self.assertIn("printable-modal-root", content)
+        self.assertIn("printable-modal-card", content)
+        self.assertIn("params.get('spoed')", content)
+        self.assertIn("params.get('pakket')", content)
+        self.assertIn("params.get('addons')", content)
+
 if __name__ == "__main__":
     unittest.main()

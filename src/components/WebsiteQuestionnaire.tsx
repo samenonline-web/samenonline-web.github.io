@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   HelpCircle,
   Briefcase,
@@ -21,7 +21,14 @@ import {
   CreditCard,
   FileText,
   Search,
-  MessageSquare
+  MessageSquare,
+  Printer,
+  Copy,
+  Check,
+  Building2,
+  Globe,
+  ShieldCheck,
+  Download
 } from 'lucide-react';
 
 export interface QuestionnaireResult {
@@ -62,6 +69,69 @@ export const WebsiteQuestionnaire: React.FC<WebsiteQuestionnaireProps> = ({
   const [contentStatus, setContentStatus] = useState('partial');
   const [timeline, setTimeline] = useState('5days');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [cityParam, setCityParam] = useState<string>('');
+  const [domainParam, setDomainParam] = useState<string>('');
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [dossierToken, setDossierToken] = useState<string>('SO-INTAKE-2026-884');
+
+  // Support URL query prefilling (?pakket=...&spoed=true&addons=...&stad=...&domein=...)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+
+    const pSpoed = params.get('spoed');
+    if (pSpoed === 'true' || pSpoed === '1') {
+      setTimeline('spoed');
+    }
+
+    const pPakket = params.get('pakket');
+    if (pPakket) {
+      const lower = pPakket.toLowerCase();
+      if (lower.includes('shop') || lower.includes('retail')) {
+        setIndustry('webshop');
+        setPrimaryGoal('ideal');
+      } else if (lower.includes('horeca') || lower.includes('restaurant') || lower.includes('cafe')) {
+        setIndustry('horeca');
+        setPrimaryGoal('afspraken');
+      } else if (lower.includes('bouw') || lower.includes('klus') || lower.includes('schilder')) {
+        setIndustry('bouw');
+        setPrimaryGoal('leads');
+      } else if (lower.includes('zorg') || lower.includes('kapper') || lower.includes('salon')) {
+        setIndustry('zorg');
+        setPrimaryGoal('afspraken');
+      }
+    }
+
+    const pAddons = params.get('addons');
+    if (pAddons) {
+      const addonList = pAddons.split(',').map((s) => s.trim().toLowerCase());
+      const mapped: string[] = ['contactformulier', 'google_seo'];
+      if (addonList.some((a) => a.includes('calc') || a.includes('offerte'))) {
+        mapped.push('offerte_calc');
+      }
+      if (addonList.some((a) => a.includes('ideal') || a.includes('shop') || a.includes('mollie'))) {
+        mapped.push('ideal_checkout');
+      }
+      if (addonList.some((a) => a.includes('booking') || a.includes('afspraak') || a.includes('agenda'))) {
+        mapped.push('afspraken_kalender');
+      }
+      setSelectedFeatures((prev) => Array.from(new Set([...prev, ...mapped])));
+    }
+
+    const pStad = params.get('stad');
+    if (pStad) {
+      const cleanCity = pStad.charAt(0).toUpperCase() + pStad.slice(1).replace('-', ' ');
+      setCityParam(cleanCity);
+    }
+
+    const pDomein = params.get('domein');
+    if (pDomein) {
+      setDomainParam(pDomein);
+    }
+
+    const randomSuffix = Math.floor(100 + Math.random() * 900);
+    setDossierToken(`SO-INTAKE-2026-${randomSuffix}`);
+  }, []);
 
   // Industry options
   const industryOptions = [
@@ -226,12 +296,34 @@ export const WebsiteQuestionnaire: React.FC<WebsiteQuestionnaireProps> = ({
   const handleApplyProposal = () => {
     const result = calculateRecommendation();
     if (onOpenRequestModal) {
-      const summaryNotes = `Website Vragenlijst Uitkomst:\n- Branche: ${result.industry}\n- Doel: ${result.primaryGoal}\n- Gekozen functies: ${result.features.join(', ')}\n- Content status: ${result.contentStatus}\n- Levertijd: ${result.timeline}\n- Geadviseerd pakket: ${result.recommendedPackage} (ca. €${result.estimatedPrice},- all-in)`;
+      const summaryNotes = `Website Vragenlijst Uitkomst [${dossierToken}]:\n- Branche: ${result.industry}\n- Doel: ${result.primaryGoal}\n- Gekozen functies: ${result.features.join(', ')}\n- Content status: ${result.contentStatus}\n- Levertijd: ${result.timeline}${cityParam ? `\n- Regio: ${cityParam}` : ''}${domainParam ? `\n- Domein: ${domainParam}` : ''}\n- Geadviseerd pakket: ${result.recommendedPackage} (ca. €${result.estimatedPrice},- all-in)`;
       onOpenRequestModal({
         notes: summaryNotes,
-        templateTitle: `${result.recommendedPackage} (${result.industry})`,
+        templateTitle: `${result.recommendedPackage} (${result.industry}) - ${dossierToken}`,
         calculatedPrice: result.estimatedPrice,
       });
+    }
+  };
+
+  const handleCopyDossier = () => {
+    const result = calculateRecommendation();
+    const summary = `Samen Online Website Intake Dossier (${dossierToken})
+--------------------------------------------------
+Dossier Referentie: ${dossierToken}
+Branche: ${result.industry}
+Primair Doel: ${result.primaryGoal}
+Geadviseerd Pakket: ${result.recommendedPackage}
+Vaste Richtprijs: €${result.estimatedPrice},- (all-in eenmalig)
+Oplevertijd: ${result.timeline === 'spoed' ? 'Met spoed binnen 48 uur' : 'Binnen 5 werkdagen'}
+Gekozen Functionaliteiten: ${result.features.join(', ')}
+${domainParam ? `Gewenst Domein: ${domainParam}\n` : ''}${cityParam ? `Regio / Stad: ${cityParam}\n` : ''}
+Tech Stack: Next.js 16 App Router · Tailwind v4 · 0.3s laadtijd · 100% eigendom
+Aanvragen: https://samenonline-web.github.io/vragenlijst`;
+
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(summary);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2500);
     }
   };
 
@@ -571,83 +663,165 @@ export const WebsiteQuestionnaire: React.FC<WebsiteQuestionnaireProps> = ({
       ) : (
         /* RESULT & SUMMARY SCREEN */
         <div className="py-8 space-y-8 animate-fade-in">
-          <div className="bg-emerald-50/70 dark:bg-emerald-950/40 p-6 sm:p-8 rounded-3xl border border-emerald-200 dark:border-emerald-800/60">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-emerald-200/80 dark:border-emerald-800/60">
-              <div>
-                <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 dark:text-emerald-300 bg-white dark:bg-emerald-900/60 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-700">
-                  Jouw Aanbevolen Website Oplossing
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white mt-2">
-                  {currentResult.recommendedPackage}
-                </h3>
-                <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium mt-1">
-                  Volledig op maat geconfigureerd voor de sector <strong className="capitalize text-stone-900 dark:text-white">{currentResult.industry}</strong>.
-                </p>
-              </div>
-
-              <div className="text-left md:text-right bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-emerald-200 dark:border-slate-800 shadow-sm shrink-0">
-                <span className="text-[10px] font-black uppercase tracking-wider text-stone-500 block">
-                  Vaste Richtprijs (All-in)
-                </span>
-                <div className="text-2xl sm:text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400">
-                  €{currentResult.estimatedPrice},-
+          {/* Printable Dossier Container */}
+          <div className="printable-modal-root bg-emerald-50/70 dark:bg-emerald-950/40 p-6 sm:p-8 rounded-3xl border border-emerald-200 dark:border-emerald-800/60 shadow-md">
+            <div className="printable-modal-card">
+              {/* Top Meta Badges */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-emerald-200/60 dark:border-emerald-800/40 text-xs">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-mono font-bold px-2.5 py-1 rounded-lg bg-emerald-200/60 dark:bg-emerald-900/80 text-emerald-900 dark:text-emerald-200 text-[11px]">
+                    Dossier: {dossierToken}
+                  </span>
+                  {cityParam && (
+                    <span className="font-bold px-2.5 py-1 rounded-lg bg-orange-100 dark:bg-orange-950 text-orange-900 dark:text-orange-200 text-[11px] flex items-center gap-1">
+                      <Building2 className="w-3.5 h-3.5" />
+                      <span>Regio {cityParam}</span>
+                    </span>
+                  )}
+                  {domainParam && (
+                    <span className="font-bold px-2.5 py-1 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-900 dark:text-blue-200 text-[11px] flex items-center gap-1">
+                      <Globe className="w-3.5 h-3.5" />
+                      <span>{domainParam}</span>
+                    </span>
+                  )}
                 </div>
-                <span className="text-[11px] text-stone-500 block">
-                  Eenmalig · 100% eigendomsoverdracht
+                <span className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">
+                  ⚡ Binnen 48u eerste werkende concept
                 </span>
               </div>
-            </div>
 
-            {/* Included highlights */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-6">
-              <div className="bg-white/80 dark:bg-slate-900/80 p-4 rounded-2xl border border-emerald-100 dark:border-slate-800">
-                <span className="text-xs font-black text-stone-900 dark:text-white block">
-                  🚀 Oplevertijd
-                </span>
-                <span className="text-xs text-stone-600 dark:text-slate-300 capitalize">
-                  {currentResult.timeline === 'spoed' ? 'Met spoed binnen 48 uur' : 'Binnen 5 werkdagen'}
-                </span>
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-emerald-200/80 dark:border-emerald-800/60">
+                <div>
+                  <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 dark:text-emerald-300 bg-white dark:bg-emerald-900/60 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-700">
+                    Jouw Aanbevolen Website Oplossing
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white mt-2">
+                    {currentResult.recommendedPackage}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 font-medium mt-1">
+                    Volledig op maat geconfigureerd voor de sector <strong className="capitalize text-stone-900 dark:text-white">{currentResult.industry}</strong> met primair doel <strong className="text-stone-900 dark:text-white">{currentResult.primaryGoal}</strong>.
+                  </p>
+                </div>
+
+                <div className="text-left md:text-right bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-emerald-200 dark:border-slate-800 shadow-sm shrink-0">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-stone-500 block">
+                    Vaste Richtprijs (All-in)
+                  </span>
+                  <div className="text-2xl sm:text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400">
+                    €{currentResult.estimatedPrice},-
+                  </div>
+                  <span className="text-[11px] text-stone-500 block">
+                    Eenmalig · 100% eigendomsoverdracht
+                  </span>
+                </div>
               </div>
-              <div className="bg-white/80 dark:bg-slate-900/80 p-4 rounded-2xl border border-emerald-100 dark:border-slate-800">
-                <span className="text-xs font-black text-stone-900 dark:text-white block">
-                  ⚡ Prestaties & Snelheid
-                </span>
-                <span className="text-xs text-stone-600 dark:text-slate-300">
-                  Next.js App Router · 0.3s laadtijd
-                </span>
+
+              {/* Included highlights */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-6">
+                <div className="bg-white/80 dark:bg-slate-900/80 p-4 rounded-2xl border border-emerald-100 dark:border-slate-800">
+                  <span className="text-xs font-black text-stone-900 dark:text-white block">
+                    🚀 Oplevertijd
+                  </span>
+                  <span className="text-xs text-stone-600 dark:text-slate-300 capitalize">
+                    {currentResult.timeline === 'spoed' ? 'Met spoed binnen 48 uur (+€75)' : 'Binnen 5 werkdagen'}
+                  </span>
+                </div>
+                <div className="bg-white/80 dark:bg-slate-900/80 p-4 rounded-2xl border border-emerald-100 dark:border-slate-800">
+                  <span className="text-xs font-black text-stone-900 dark:text-white block">
+                    ⚡ Prestaties & Snelheid
+                  </span>
+                  <span className="text-xs text-stone-600 dark:text-slate-300">
+                    Next.js App Router · 0.3s laadtijd
+                  </span>
+                </div>
+                <div className="bg-white/80 dark:bg-slate-900/80 p-4 rounded-2xl border border-emerald-100 dark:border-slate-800">
+                  <span className="text-xs font-black text-stone-900 dark:text-white block">
+                    🛡️ Eigendom & Hosting
+                  </span>
+                  <span className="text-xs text-stone-600 dark:text-slate-300">
+                    Geen vendor lock-in · Vrije hostingkeuze
+                  </span>
+                </div>
               </div>
-              <div className="bg-white/80 dark:bg-slate-900/80 p-4 rounded-2xl border border-emerald-100 dark:border-slate-800">
-                <span className="text-xs font-black text-stone-900 dark:text-white block">
-                  🛡️ Eigendom & Hosting
+
+              {/* Functional Modules Checklist */}
+              <div className="pt-6 border-t border-emerald-200/60 dark:border-emerald-800/40 mt-6">
+                <span className="text-xs font-black uppercase tracking-wider text-stone-700 dark:text-slate-300 block mb-3">
+                  Inbegrepen Functionaliteiten & Specificaties
                 </span>
-                <span className="text-xs text-stone-600 dark:text-slate-300">
-                  Geen vendor lock-in · Vrije hostingkeuze
-                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-stone-700 dark:text-slate-300">
+                  {currentResult.features.map((feat) => {
+                    const featObj = featureOptions.find((f) => f.id === feat);
+                    return (
+                      <div key={feat} className="flex items-center gap-2 p-2 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-emerald-100 dark:border-slate-800">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                        <span className="font-semibold">{featObj ? featObj.label : feat}</span>
+                      </div>
+                    );
+                  })}
+                  <div className="flex items-center gap-2 p-2 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-emerald-100 dark:border-slate-800">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    <span className="font-semibold">Volledige Responsive Polish (375px/390px/412px)</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-emerald-100 dark:border-slate-800">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    <span className="font-semibold">Schema.org LocalBusiness & Breadcrumbs</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Action buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
             <button
               type="button"
               onClick={() => {
                 setIsSubmitted(false);
                 setCurrentStep(1);
               }}
-              className="text-xs font-bold text-stone-600 dark:text-slate-400 hover:text-stone-900 dark:hover:text-white cursor-pointer"
+              className="text-xs font-bold text-stone-600 dark:text-slate-400 hover:text-stone-900 dark:hover:text-white cursor-pointer py-2 text-center"
             >
               ← Vragenlijst opnieuw invullen
             </button>
 
-            <button
-              type="button"
-              onClick={handleApplyProposal}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-black transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl cursor-pointer"
-            >
-              <Send className="w-4 h-4" />
-              <span>Vrijblijvend Voorstel Aanvragen met Dit Advies</span>
-            </button>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <button
+                type="button"
+                onClick={handleCopyDossier}
+                className="flex-1 sm:flex-initial px-4 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-100 font-bold text-xs flex items-center justify-center gap-1.5 border border-stone-200 dark:border-slate-700 transition-colors cursor-pointer"
+              >
+                {isCopied ? (
+                  <>
+                    <Check className="w-4 h-4 text-emerald-600" />
+                    <span className="text-emerald-700 dark:text-emerald-400">Gekopieerd!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4 text-stone-500" />
+                    <span>Kopieer Specificatie</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="flex-1 sm:flex-initial px-4 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-100 font-bold text-xs flex items-center justify-center gap-1.5 border border-stone-200 dark:border-slate-700 transition-colors cursor-pointer"
+              >
+                <Printer className="w-4 h-4 text-emerald-600" />
+                <span>Print Intake Dossier (PDF)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleApplyProposal}
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl cursor-pointer"
+              >
+                <Send className="w-4 h-4" />
+                <span>Vrijblijvend Voorstel Aanvragen met Dit Advies</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
