@@ -217,5 +217,23 @@ class TestMobileViewports(unittest.TestCase):
 
         context.close()
 
+    def test_13_kennisbank_search_filtering(self):
+        context = self.browser.new_context(viewport={"width": 390, "height": 844})
+        page = context.new_page()
+        page.goto("http://localhost:3000/kennisbank", wait_until="networkidle")
+
+        search_input = page.locator("input[placeholder*='Zoek in 10 gidsen']")
+        if search_input.count() > 0:
+            self.assertTrue(search_input.first.is_visible())
+            search_input.first.fill("Google")
+            page.wait_for_timeout(200)
+
+            # Check that results match query
+            articles = page.locator("article")
+            self.assertGreaterEqual(articles.count(), 1)
+            self.assertLessEqual(articles.count(), 8)
+
+        context.close()
+
 if __name__ == "__main__":
     unittest.main()
