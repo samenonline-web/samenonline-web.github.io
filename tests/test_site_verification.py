@@ -712,5 +712,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("BouwGarant Richtprijs & Specificatie Dossier", content)
         self.assertIn("BouwGarant & VCA**", content)
 
+    # 67. StudioFlowYoga Membership Calculator and Printable Proefles Voucher
+    def test_studio_flow_yoga_membership_and_voucher(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "StudioFlowYoga.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("membershipPlan", content)
+        self.assertIn("FLOW-YOGA-2026-X", content)
+        self.assertIn("Print Proefles Voucher (PDF)", content)
+        self.assertIn("Yoga & Mindfulness Tarieven Module", content)
+        self.assertIn("pricePerClass", content)
+
 if __name__ == "__main__":
     unittest.main()

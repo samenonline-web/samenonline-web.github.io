@@ -15,6 +15,8 @@ import {
   Flame,
   Award,
   Compass,
+  Printer,
+  Calculator,
 } from 'lucide-react';
 
 interface YogaClass {
@@ -111,12 +113,23 @@ export const StudioFlowYoga: React.FC<TemplateProps> = ({
 
   const [activeDay, setActiveDay] = useState<string>('Alle dagen');
   const [bookedClassId, setBookedClassId] = useState<string | null>(null);
+  const [membershipPlan, setMembershipPlan] = useState<'1x' | '2x' | 'unlimited' | '10strippen'>('2x');
   const [intakeSuccess, setIntakeSuccess] = useState(false);
   const [intakeData, setIntakeData] = useState({
     name: '',
     email: '',
     goal: 'Stressreductie & Rust',
   });
+
+  const planPrices = {
+    '1x': { price: 44, label: '1 Les per week', estClasses: 4, isMonthly: true },
+    '2x': { price: 69, label: '2 Lessen per week', estClasses: 8.5, isMonthly: true },
+    'unlimited': { price: 89, label: 'Onbeperkt Vrij Flowen', estClasses: 14, isMonthly: true },
+    '10strippen': { price: 145, label: '10-Rittenkaart (3 mnd)', estClasses: 10, isMonthly: false },
+  };
+
+  const selectedPlanObj = planPrices[membershipPlan];
+  const pricePerClass = (selectedPlanObj.price / selectedPlanObj.estClasses).toFixed(2);
 
   const filteredSchedule = SCHEDULE.filter((cls) => {
     if (activeDay === 'Alle dagen') return true;
@@ -239,20 +252,68 @@ export const StudioFlowYoga: React.FC<TemplateProps> = ({
               </div>
 
               {intakeSuccess ? (
-                <div className="py-8 text-center space-y-3">
-                  <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="py-4 space-y-4">
+                  <div className="text-center space-y-1.5">
+                    <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <h4 className="font-black text-base text-stone-900 dark:text-white">Welkom bij {brandName}!</h4>
+                    <p className="text-xs text-stone-500 max-w-xs mx-auto">
+                      Bedankt {intakeData.name}! Je proeflesreservering is bevestigd.
+                    </p>
                   </div>
-                  <h4 className="font-black text-base">Welkom bij Studio Flow!</h4>
-                  <p className="text-xs text-stone-500 max-w-xs mx-auto">
-                    Bedankt {intakeData.name}! We hebben je aanmelding ontvangen en sturen je per e-mail alle praktische info toe voor je eerste les.
-                  </p>
-                  <button
-                    onClick={() => setIntakeSuccess(false)}
-                    className="text-xs font-bold text-stone-500 underline cursor-pointer mt-2"
-                  >
-                    Nog een inschrijving doen
-                  </button>
+
+                  {/* Printable Proefles & Studio Pas Voucher */}
+                  <div className="p-4 rounded-2xl border-2 border-dashed border-rose-300 dark:border-rose-800 bg-rose-50/50 dark:bg-stone-850 space-y-3">
+                    <div className="flex justify-between items-start border-b pb-2 border-rose-200 dark:border-rose-900">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-rose-600 block">
+                          Officiële Proefles & Studio Pas
+                        </span>
+                        <span className="font-black text-sm text-stone-900 dark:text-white">{brandName}</span>
+                      </div>
+                      <span className="text-[10px] font-mono bg-stone-900 text-rose-300 px-2 py-0.5 rounded font-bold">
+                        FLOW-YOGA-2026-X
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs text-stone-700 dark:text-stone-300">
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Deelnemer</span>
+                        <span className="font-bold text-stone-900 dark:text-white">{intakeData.name}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Focus & Doel</span>
+                        <span className="font-bold text-rose-600">{intakeData.goal}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Studio Locatie</span>
+                        <span className="font-bold">{city}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Inclusief</span>
+                        <span className="font-bold text-emerald-600">Mat & Kruidenthee</span>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => window.print()}
+                        className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+                      >
+                        <Printer className="w-3.5 h-3.5" />
+                        <span>Print Proefles Voucher (PDF)</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setIntakeSuccess(false)}
+                        className="px-3 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300 text-xs font-bold hover:bg-stone-100 dark:hover:bg-stone-800 cursor-pointer"
+                      >
+                        Nog een les
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleIntakeSubmit} className="space-y-3">
@@ -405,6 +466,78 @@ export const StudioFlowYoga: React.FC<TemplateProps> = ({
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Yoga & Mindfulness Tarieven Module */}
+      <section className={`py-14 px-4 sm:px-6 ${
+        isDarkMode ? 'bg-stone-950 text-white' : 'bg-stone-100/70 text-stone-900'
+      }`}>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center space-y-2 mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300 text-xs font-black uppercase tracking-wider">
+              <Calculator className="w-4 h-4" />
+              <span>Transparante Studio Tarieven</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black">
+              Yoga & Mindfulness Tarieven Module
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-500 max-w-lg mx-auto">
+              Kies het ritme dat bij jouw levensstijl past in {city}. Maandelijks opzegbaar of een flexibele rittenkaart.
+            </p>
+          </div>
+
+          <div className={`p-6 sm:p-8 rounded-3xl border-2 shadow-xl ${
+            isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200'
+          }`}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
+              {[
+                { id: '1x', label: '1 Les / week' },
+                { id: '2x', label: '2 Lessen / week' },
+                { id: 'unlimited', label: 'Onbeperkt' },
+                { id: '10strippen', label: '10-Rittenkaart' },
+              ].map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => setMembershipPlan(p.id as any)}
+                  className={`py-3 px-2 rounded-2xl border text-center transition-all cursor-pointer ${
+                    membershipPlan === p.id
+                      ? 'border-rose-500 bg-rose-50/50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-300 ring-2 ring-rose-500/20 font-black'
+                      : 'border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 font-bold hover:bg-stone-50 dark:hover:bg-stone-800'
+                  }`}
+                >
+                  <span className="text-xs block">{p.label}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <span className="text-[10px] font-bold text-stone-500 uppercase tracking-widest block">Geselecteerd:</span>
+                <span className="text-xl font-black text-stone-900 dark:text-white">{selectedPlanObj.label}</span>
+                <div className="text-xs text-stone-500 mt-1 flex flex-wrap gap-x-3">
+                  <span>✓ Ca. €{pricePerClass} per yogales</span>
+                  <span>✓ Geen langdurige contracten</span>
+                  <span>✓ Matten & thee inbegrepen</span>
+                </div>
+              </div>
+
+              <div className="text-center sm:text-right shrink-0">
+                <span className="text-3xl font-black text-rose-600 dark:text-rose-400">
+                  €{selectedPlanObj.price}
+                </span>
+                <span className="text-xs text-stone-400 block font-bold">
+                  {selectedPlanObj.isMonthly ? 'per maand' : 'eenmalig'}
+                </span>
+                <button
+                  onClick={onRequestQuote}
+                  className={`mt-2 px-5 py-2.5 rounded-xl text-white font-black text-xs shadow-md transition-all cursor-pointer ${theme.primary} hover:opacity-90`}
+                >
+                  Meld Je Aan Voor Dit Tarief
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
