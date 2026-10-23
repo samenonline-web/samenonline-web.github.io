@@ -322,5 +322,30 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("standalone", content)
         self.assertIn("theme_color", content)
 
+    # 31. Kennisbank & In-depth SEO Articles
+    def test_kennisbank_hub_and_article_routes(self):
+        kb_page = WORKSPACE / "app" / "kennisbank" / "page.tsx"
+        self.assertTrue(kb_page.exists(), "app/kennisbank/page.tsx must exist")
+        kb_content = kb_page.read_text(encoding="utf-8")
+        self.assertIn("ARTICLES_DATA", kb_content)
+
+        art_page = WORKSPACE / "app" / "kennisbank" / "[slug]" / "page.tsx"
+        self.assertTrue(art_page.exists(), "app/kennisbank/[slug]/page.tsx must exist")
+        art_content = art_page.read_text(encoding="utf-8")
+        self.assertIn("generateStaticParams", art_content)
+        self.assertIn("generateMetadata", art_content)
+        self.assertIn("@type': 'Article'", art_content.replace('"', "'"))
+
+        data_file = WORKSPACE / "src" / "data" / "articles.ts"
+        self.assertTrue(data_file.exists(), "src/data/articles.ts must exist")
+        data_content = data_file.read_text(encoding="utf-8")
+        self.assertIn("waarom-nextjs-sneller-is-dan-wordpress", data_content)
+        self.assertIn("wat-kost-een-website-laten-maken-in-2026", data_content)
+
+        sitemap_file = WORKSPACE / "app" / "sitemap.ts"
+        sitemap_content = sitemap_file.read_text(encoding="utf-8")
+        self.assertIn("/kennisbank", sitemap_content)
+        self.assertIn("ARTICLES_DATA", sitemap_content)
+
 if __name__ == "__main__":
     unittest.main()
