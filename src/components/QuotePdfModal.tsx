@@ -54,6 +54,42 @@ export const QuotePdfModal: React.FC<QuotePdfModalProps> = ({
 
   const quoteId = `SO-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
+  const handleDownloadTxt = () => {
+    const lines = [
+      '============================================================',
+      'SAMEN ONLINE — PRO-FORMA SPECIFICATIE & OFFERTE',
+      `Referentienummer: ${quoteId}`,
+      `Datum: ${todayStr} (Geldig tot: ${validUntilDate})`,
+      'Website: https://samenonline-web.github.io',
+      '============================================================\n',
+      'KLANT & PROJECT:',
+      `Pakket: ${quoteData.templateOrProjectType}`,
+      `Geschatte levertijd: ~${quoteData.estimatedDays} werkdagen\n`,
+      'GEKOZEN SPECIFICATIES:',
+      ...quoteData.selectedModules.map((m) => `- ${m}`),
+      `Hosting: ${quoteData.hostingPlan === 'managed' ? 'All-in ontzorgd (€9,50/mnd incl. .nl domein)' : 'Zelf regelen (€0/mnd)'}`,
+      quoteData.chosenDomain ? `Gekozen domein: ${quoteData.chosenDomain}.nl` : '',
+      '\nPRIJSOPBOUW:',
+      `Basis: €${quoteData.basePrice.toFixed(2)}`,
+      `Gekozen extra's: €${quoteData.addonsPrice.toFixed(2)}`,
+      'Btw (0% ROW regeling): €0,00',
+      `TOTAAL EENMALIG: €${quoteData.totalPrice.toFixed(2)}`,
+      '\nGARANTIE:',
+      '✓ 100% Volledig Eigendom',
+      '✓ Geen wurgcontracten of lock-in',
+      '✓ Oplevering binnen afgesproken werkdagen',
+      '============================================================',
+    ].filter(Boolean);
+
+    const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `SamenOnline-Offerte-${quoteId}.txt`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div
       onClick={onClose}
@@ -76,6 +112,15 @@ export const QuotePdfModal: React.FC<QuotePdfModalProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={handleDownloadTxt}
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-700 font-extrabold text-xs transition-all cursor-pointer"
+              title="Download als tekstbestand"
+            >
+              <Download className="w-4 h-4 text-orange-400" />
+              <span>Download (.txt)</span>
+            </button>
+
             <button
               onClick={handlePrint}
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs shadow-md shadow-orange-600/30 transition-all cursor-pointer"

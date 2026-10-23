@@ -13,6 +13,11 @@ import { TradeInTradeUpBanner } from '../src/components/TradeInTradeUpBanner';
 import { ExpressDeliveryCallout } from '../src/components/ExpressDeliveryCallout';
 import { CopywritingServiceCallout } from '../src/components/CopywritingServiceCallout';
 import { LocalSeoRankChecker } from '../src/components/LocalSeoRankChecker';
+import GoogleSnippetPreviewer from '../src/components/GoogleSnippetPreviewer';
+import LocalSeoCityHub from '../src/components/LocalSeoCityHub';
+import WebsiteCopilotWidget from '../src/components/WebsiteCopilotWidget';
+import LostCustomerCalculator from '../src/components/LostCustomerCalculator';
+import ClientPortalSimulator from '../src/components/ClientPortalSimulator';
 import { LiveIdealCheckoutSimulator } from '../src/components/LiveIdealCheckoutSimulator';
 import { CustomerRoiBreakEven } from '../src/components/CustomerRoiBreakEven';
 import { StarterChecklistDownloadBanner } from '../src/components/StarterChecklistDownloadBanner';
@@ -41,6 +46,7 @@ import { TemplateComparisonModal } from '../src/components/TemplateComparisonMod
 import { FaqSection } from '../src/components/FaqSection';
 import { WhatsAppWidget } from '../src/components/WhatsAppWidget';
 import { FloatingSectionNav } from '../src/components/FloatingSectionNav';
+import InteractiveDemoPlayground from '../src/components/InteractiveDemoPlayground';
 
 import { INITIAL_TEMPLATES } from '../src/data/templates';
 import { WebTemplate, CategoryType, Language } from '../src/types/company';
@@ -599,6 +605,17 @@ export default function Home() {
           />
         </div>
 
+        {/* Interactive Industry Demo Playground */}
+        <InteractiveDemoPlayground
+          onRequestQuote={() =>
+            handleOpenRequestModal(undefined, undefined, undefined, {
+              templateName: 'Interactieve Branche Web-App',
+              budget: '€195 - €385 (MKB / Webshop Pakket)',
+              notes: 'Aanvraag via Interactieve Demo Playground: ik wil een werkende calculator of reserveringsmodule op mijn website.',
+            })
+          }
+        />
+
         {/* 20-Second Interactive Website Matchmaker */}
         <QuickMatchmakerSection
           templates={templates}
@@ -727,6 +744,17 @@ export default function Home() {
             }
           />
 
+          {/* Lost Customers & Omzetverlies Calculator */}
+          <LostCustomerCalculator
+            onOpenRedesignRequest={({ monthlyLoss, visitors, loadTime }) =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: 'Website Redesign (Omzetlek Dichten)',
+                budget: 'Vanaf €175 (Redesign Pakket)',
+                notes: `Aanvraag via Omzetlek Calculator: met ${visitors} bezoekers en ${loadTime}s laadtijd verlies ik momenteel naar schatting €${monthlyLoss}/mnd. Ik wil dit oplossen met een snelle Next.js site.`,
+              })
+            }
+          />
+
           {/* Local SEO Ranking Checker per City */}
           <LocalSeoRankChecker
             lang={lang}
@@ -735,6 +763,28 @@ export default function Home() {
                 templateName: `Lokale SEO Website (${city} - ${niche})`,
                 budget: 'Vanaf €195 (Compleet MKB)',
                 notes: `Aanvraag voor lokale Google vindbaarheid in ${city} voor branche ${niche}.`,
+              })
+            }
+          />
+
+          {/* Google 5-Star Search Snippet Previewer */}
+          <GoogleSnippetPreviewer
+            onRequestQuote={() =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: 'Google Top-Rank SEO Website',
+                budget: '€195 - €385 (SEO Geoptimaliseerd)',
+                notes: 'Aanvraag via Google Snippet Previewer: ik wil dat mijn website hoog in Google scoort met sterren en snelle laadtijd.',
+              })
+            }
+          />
+
+          {/* 12-City Regional & Local SEO Hub */}
+          <LocalSeoCityHub
+            onOpenCityRequest={(city) =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: `Lokale SEO Website ${city.name}`,
+                budget: 'Vanaf €195 (Compleet MKB)',
+                notes: `Aanvraag via Lokale SEO Hub voor ${city.name} (${city.province}, postcodes ${city.postcodeRange}). Focus: ${city.nicheFocus}.`,
               })
             }
           />
@@ -766,6 +816,17 @@ export default function Home() {
               const el = document.getElementById('templates-section');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
+          />
+
+          {/* Interactive 5-Day Delivery Client Portal Simulator */}
+          <ClientPortalSimulator
+            onRequestWebsite={() =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: '5-Dagen Oplevertraject Website',
+                budget: '€195 - €385 (MKB Pakket)',
+                notes: 'Aanvraag via 5-Dagen Oplever-Simulator: ik wil graag starten met de 5-daagse oplevering van mijn nieuwe website.',
+              })
+            }
           />
 
           {/* Interactive "Wat Moet Ik Zelf Aanleveren?" Checklist */}
@@ -881,6 +942,13 @@ export default function Home() {
         onSelectCategory={setSelectedCategory}
         onOpenRequestModal={() => handleOpenRequestModal()}
         onOpenInfoModal={handleOpenInfoModal}
+      />
+
+      {/* Client-Side Quick Answer Website Copilot */}
+      <WebsiteCopilotWidget
+        onOpenRequestModal={(data) =>
+          handleOpenRequestModal(undefined, undefined, undefined, data)
+        }
       />
 
       {/* Floating WhatsApp Contact Widget */}
