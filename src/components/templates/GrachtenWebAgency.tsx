@@ -19,6 +19,10 @@ import {
   Code2,
   TrendingUp,
   Sliders,
+  Printer,
+  FileText,
+  ShieldCheck,
+  Clock,
 } from 'lucide-react';
 
 interface Project {
@@ -85,11 +89,20 @@ export const GrachtenWebAgency: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
 }) => {
+  const brandTitle = customBrandName || 'GrachtenWeb Studio';
+  const cityName = customCity || 'Amsterdam';
+
   const [activeTab, setActiveTab] = useState<'All' | 'Branding' | 'Web' | 'E-commerce'>('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [estimateScope, setEstimateScope] = useState<'landing' | 'full' | 'shop'>('full');
   const [estimateDesign, setEstimateDesign] = useState<'standaard' | 'custom'>('custom');
+  const [includeSeo, setIncludeSeo] = useState<boolean>(true);
+  const [maintenancePlan, setMaintenancePlan] = useState<'geen' | 'essentieel' | 'pro'>('essentieel');
+  const [showDossier, setShowDossier] = useState(false);
+  const [dossierToken, setDossierToken] = useState('GWA-BRIEF-2026-9214');
   const [formSent, setFormSent] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -98,13 +111,23 @@ export const GrachtenWebAgency: React.FC<TemplateProps> = ({
     setTimeout(() => setToastMessage(null), 2500);
   };
 
+  const openDossier = () => {
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    setDossierToken(`GWA-BRIEF-2026-${rand}`);
+    setShowDossier(true);
+  };
+
   const filteredProjects =
     activeTab === 'All' ? PROJECTS : PROJECTS.filter((p) => p.cat === activeTab);
 
   // Estimator calculation
-  const calculatedEstimate =
+  const baseCost =
     (estimateScope === 'landing' ? 950 : estimateScope === 'full' ? 1850 : 2650) +
-    (estimateDesign === 'custom' ? 450 : 0);
+    (estimateDesign === 'custom' ? 450 : 0) +
+    (includeSeo ? 350 : 0);
+
+  const monthlyCost =
+    maintenancePlan === 'essentieel' ? 49 : maintenancePlan === 'pro' ? 99 : 0;
 
   return (
     <div className="min-h-full bg-stone-50 text-stone-900 font-sans relative selection:bg-orange-500 selection:text-white">
@@ -129,8 +152,8 @@ export const GrachtenWebAgency: React.FC<TemplateProps> = ({
             GW
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">GrachtenWeb Studio</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Keizersgracht Amsterdam • Digitaal Ontwerp</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandTitle}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{cityName} • Digitaal Ontwerp &amp; Code</span>
           </div>
         </div>
 
@@ -341,19 +364,88 @@ export const GrachtenWebAgency: React.FC<TemplateProps> = ({
               </div>
             </div>
 
+            {/* SEO & Copywriting Addon */}
+            <div>
+              <label className="text-xs font-black text-stone-700 block mb-2">Lokale SEO &amp; Content Booster:</label>
+              <button
+                type="button"
+                onClick={() => setIncludeSeo(!includeSeo)}
+                className={`w-full p-3 rounded-2xl border text-left transition-all cursor-pointer flex items-center justify-between ${
+                  includeSeo ? `${theme.borderLight} bg-stone-50 ring-2 ring-orange-500/25` : 'border-stone-200'
+                }`}
+              >
+                <div>
+                  <span className="font-black text-xs text-stone-900 block">
+                    Lokale SEO Strategie &amp; Copywriting (+€350)
+                  </span>
+                  <span className="text-[10px] text-stone-500">
+                    Keywordonderzoek {cityName}, Schema.org markup en overtuigende B2B teksten
+                  </span>
+                </div>
+                <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${includeSeo ? `${theme.primary} text-white` : 'border-stone-300'}`}>
+                  {includeSeo && <CheckCircle2 className="w-4 h-4" />}
+                </div>
+              </button>
+            </div>
+
+            {/* Cloud Hosting & SLA */}
+            <div>
+              <label className="text-xs font-black text-stone-700 block mb-2">Cloud Hosting &amp; 24/7 Onderhoud SLA:</label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {[
+                  { id: 'geen', label: 'Zelfbeheer', price: '€0/mnd', desc: 'Eigen hosting' },
+                  { id: 'essentieel', label: 'Essentieel', price: '€49/mnd', desc: 'Vercel Edge & updates' },
+                  { id: 'pro', label: 'Pro 24/7 SLA', price: '€99/mnd', desc: 'Priority support & backup' },
+                ].map((plan) => (
+                  <button
+                    key={plan.id}
+                    type="button"
+                    onClick={() => setMaintenancePlan(plan.id as any)}
+                    className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
+                      maintenancePlan === plan.id
+                        ? `${theme.borderLight} bg-stone-50 ring-2 ring-orange-500/25`
+                        : 'border-stone-200 hover:bg-stone-50'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center mb-0.5">
+                      <span className="font-black text-xs text-stone-900">{plan.label}</span>
+                      <span className="text-[10px] font-bold text-orange-600">{plan.price}</span>
+                    </div>
+                    <span className="text-[10px] text-stone-500 block">{plan.desc}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Calculation Result */}
             <div className="pt-4 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <span className="text-xs text-stone-500 font-bold block">Geschatte investering:</span>
-                <span className="text-3xl font-black text-stone-900">€{calculatedEstimate.toLocaleString('nl-NL')}</span>
-                <span className="text-xs text-stone-400 block font-medium">Oplevering binnen 2-3 weken</span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-black text-stone-900">€{baseCost.toLocaleString('nl-NL')}</span>
+                  {monthlyCost > 0 && (
+                    <span className="text-xs font-bold text-stone-600">+ €{monthlyCost}/mnd</span>
+                  )}
+                </div>
+                <span className="text-xs text-stone-400 block font-medium">Oplevering binnen 2-3 weken • 100% Maatwerk</span>
               </div>
-              <button
-                onClick={onRequestQuote}
-                className={`px-6 py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md cursor-pointer`}
-              >
-                Vraag Dit Project Aan
-              </button>
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={openDossier}
+                  className="w-full sm:w-auto px-4 py-3 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-800 text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                >
+                  <Printer className="w-4 h-4 text-stone-600" />
+                  <span>Print Projectbriefing (PDF)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={onRequestQuote}
+                  className={`w-full sm:w-auto px-6 py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md cursor-pointer`}
+                >
+                  Vraag Dit Project Aan
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -409,6 +501,139 @@ export const GrachtenWebAgency: React.FC<TemplateProps> = ({
                 >
                   Bespreek Vergelijkbaar Project
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Printable Project Briefing Dossier Modal */}
+      {showDossier && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-stone-200 relative my-8">
+            <button
+              onClick={() => setShowDossier(false)}
+              className="absolute top-5 right-5 p-2 rounded-full hover:bg-stone-100 text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Print Container */}
+            <div id="printable-briefing" className="space-y-6">
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-800 text-[10px] font-black tracking-wider uppercase">
+                      Officiële Projectbriefing
+                    </span>
+                    <span className="text-[11px] font-bold text-stone-500">Next.js 16 Maatwerk</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                    {brandTitle} • Offerte &amp; Scope Dossier
+                  </h3>
+                  <p className="text-xs text-stone-500 font-medium">
+                    Creative Studio {cityName} • Dossier Token: <span className="font-mono font-bold text-stone-800">{dossierToken}</span>
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="inline-block p-2 bg-stone-50 border border-stone-200 rounded-xl text-center">
+                    <FileText className="w-8 h-8 mx-auto text-orange-600" />
+                    <span className="text-[9px] font-mono text-stone-500 block mt-0.5">{dossierToken}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Scope Breakdown */}
+              <div className="border border-stone-200 rounded-2xl overflow-hidden">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="bg-stone-100/70 border-b border-stone-200 text-stone-600 font-black">
+                      <th className="py-2.5 px-4">Onderdeel</th>
+                      <th className="py-2.5 px-4">Specificatie</th>
+                      <th className="py-2.5 px-4 text-right">Investering</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-stone-100">
+                    <tr className="font-medium text-stone-800">
+                      <td className="py-2.5 px-4 font-bold text-stone-900">Type Oplevering</td>
+                      <td className="py-2.5 px-4 text-stone-600">
+                        {estimateScope === 'landing' ? 'One-page High-Conversion Landing' : estimateScope === 'full' ? 'Corporate Website (Multi-page)' : 'E-commerce & iDEAL Webshop'}
+                      </td>
+                      <td className="py-2.5 px-4 text-right font-black">
+                        €{estimateScope === 'landing' ? '950' : estimateScope === 'full' ? '1.850' : '2.650'}
+                      </td>
+                    </tr>
+                    <tr className="font-medium text-stone-800">
+                      <td className="py-2.5 px-4 font-bold text-stone-900">Design Niveau</td>
+                      <td className="py-2.5 px-4 text-stone-600">
+                        {estimateDesign === 'custom' ? 'Compleet Nieuwe Huisstijl & Typografie' : 'Bestaande Branding & Logo'}
+                      </td>
+                      <td className="py-2.5 px-4 text-right font-black">
+                        {estimateDesign === 'custom' ? '€450' : 'Inbegrepen'}
+                      </td>
+                    </tr>
+                    {includeSeo && (
+                      <tr className="font-medium text-stone-800">
+                        <td className="py-2.5 px-4 font-bold text-stone-900">Lokale SEO &amp; Copywriting</td>
+                        <td className="py-2.5 px-4 text-stone-600">
+                          Keywordonderzoek regio {cityName} + Schema.org rich snippets
+                        </td>
+                        <td className="py-2.5 px-4 text-right font-black">€350</td>
+                      </tr>
+                    )}
+                    <tr className="font-medium text-stone-800 bg-stone-50/50">
+                      <td className="py-2.5 px-4 font-bold text-stone-900">Cloud Hosting &amp; SLA</td>
+                      <td className="py-2.5 px-4 text-stone-600">
+                        {maintenancePlan === 'pro' ? 'Pro 24/7 SLA, Vercel Edge CDN & Priority Support' : maintenancePlan === 'essentieel' ? 'Essentieel Cloud Hosting, SSL & Security updates' : 'Eigen beheer (Geen SLA)'}
+                      </td>
+                      <td className="py-2.5 px-4 text-right font-black text-orange-600">
+                        {monthlyCost > 0 ? `€${monthlyCost}/mnd` : '€0/mnd'}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Guarantees Box */}
+              <div className="bg-orange-50/50 border border-orange-200 rounded-2xl p-4 space-y-1.5 text-xs">
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange-900 flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-orange-600" />
+                  Kwaliteitsgaranties GrachtenWeb Studio {cityName}
+                </span>
+                <div className="text-stone-700 space-y-1">
+                  <p>• <strong>Core Web Vitals 95+:</strong> Gegarandeerde laadtijd onder de 1 seconde.</p>
+                  <p>• <strong>Geen Vendor Lock-in:</strong> Volledige eigendom van broncode en assets.</p>
+                  <p>• <strong>100% AVG / GDPR Proof:</strong> Geen trackers van derden zonder toestemming.</p>
+                </div>
+              </div>
+
+              {/* Total & Summary */}
+              <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <span className="text-[11px] font-bold text-stone-500 block">Totaal éénmalig:</span>
+                  <span className="text-2xl font-black text-stone-900">€{baseCost.toLocaleString('nl-NL')}</span>
+                  {monthlyCost > 0 && (
+                    <span className="text-xs font-bold text-orange-700 block">+ €{monthlyCost}/maand beheer &amp; SLA</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowDossier(false)}
+                    className="px-4 py-2.5 rounded-xl border border-stone-300 text-stone-700 font-bold text-xs hover:bg-stone-100 cursor-pointer"
+                  >
+                    Sluiten
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => window.print()}
+                    className={`px-5 py-2.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md flex items-center gap-2 cursor-pointer`}
+                  >
+                    <Printer className="w-4 h-4" />
+                    <span>Print Projectbriefing (PDF)</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

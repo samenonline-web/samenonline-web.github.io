@@ -765,5 +765,18 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("customBrandName", content)
         self.assertIn("customCity", content)
 
+    # 72. GrachtenWebAgency Scope Estimator, City Props, and Printable Briefing Dossier
+    def test_grachten_web_agency_calculator_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "GrachtenWebAgency.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("baseCost", content)
+        self.assertIn("monthlyCost", content)
+        self.assertIn("includeSeo", content)
+        self.assertIn("maintenancePlan", content)
+        self.assertIn("GWA-BRIEF-2026-", content)
+        self.assertIn("Print Projectbriefing (PDF)", content)
+
 if __name__ == "__main__":
     unittest.main()
