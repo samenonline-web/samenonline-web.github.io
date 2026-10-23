@@ -262,10 +262,15 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://dns.google" />
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta httpEquiv="X-Frame-Options" content="SAMEORIGIN" />
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests; base-uri 'self';" />
         <meta name="referrer" content="strict-origin-when-cross-origin" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="apple-mobile-web-app-title" content="Samen Online" />
         <meta name="application-name" content="Samen Online" />
+        <meta name="theme-color" content="#ea580c" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#07090e" media="(prefers-color-scheme: dark)" />
+        <meta name="color-scheme" content="light dark" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

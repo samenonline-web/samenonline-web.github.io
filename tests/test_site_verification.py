@@ -972,5 +972,19 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Business Website", content)
         self.assertIn("Webshop / Reservering Website", content)
 
+    # 87. Production Security Headers & Theme Color Metadata
+    def test_security_headers_and_theme_color_metadata(self):
+        layout_file = WORKSPACE / "app" / "layout.tsx"
+        self.assertTrue(layout_file.exists(), "app/layout.tsx must exist")
+        content = layout_file.read_text(encoding="utf-8")
+        self.assertIn("Content-Security-Policy", content)
+        self.assertIn("upgrade-insecure-requests", content)
+        self.assertIn("X-Frame-Options", content)
+        self.assertIn("SAMEORIGIN", content)
+        self.assertIn("theme-color", content)
+        self.assertIn("#ea580c", content)
+        self.assertIn("#07090e", content)
+        self.assertIn("color-scheme", content)
+
 if __name__ == "__main__":
     unittest.main()
