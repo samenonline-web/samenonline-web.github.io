@@ -51,8 +51,8 @@ export const WebsiteSpeedAuditSection: React.FC<WebsiteSpeedAuditSectionProps> =
   };
 
   return (
-    <section id="website-audit" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
-      <div className="bg-white dark:bg-slate-900/90 rounded-3xl border-2 border-orange-200/90 dark:border-slate-800 shadow-xl overflow-hidden transition-colors">
+    <div id="website-audit" className="my-6 scroll-mt-24">
+      <div className="bg-white dark:bg-slate-900/90 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
         
         {/* Header */}
         <div className="bg-gradient-to-r from-stone-900 via-stone-800 to-orange-950 dark:from-slate-950 dark:via-slate-900 dark:to-orange-950 p-6 sm:p-10 text-white text-center">
@@ -255,6 +255,6 @@ export const WebsiteSpeedAuditSection: React.FC<WebsiteSpeedAuditSectionProps> =
         lang={lang}
         domain={analyzedDomain || 'jouw-bedrijf.nl'}
       />
-    </section>
+    </div>
   );
 };

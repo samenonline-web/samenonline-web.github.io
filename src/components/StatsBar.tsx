@@ -49,16 +49,16 @@ export const StatsBar: React.FC<StatsBarProps> = ({ lang }) => {
   ];
 
   return (
-    <section className="relative z-10 bg-gradient-to-r from-orange-50/80 via-white to-amber-50/80 dark:from-slate-900/90 dark:via-[#0B1120] dark:to-slate-900/90 border-y border-orange-100/80 dark:border-slate-800/80 py-4 px-4 sm:px-6 transition-colors shadow-xs">
+    <section className="relative z-10 bg-white/90 dark:bg-[#090E1A]/95 border-b border-slate-200/80 dark:border-slate-800/80 py-3.5 px-4 sm:px-6 transition-colors shadow-2xs">
       <div className="max-w-7xl mx-auto">
         {/* Horizontal scroller on mobile, centered grid on desktop */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="group relative flex items-center gap-3 p-2.5 rounded-xl bg-white/70 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 border border-orange-100/60 dark:border-slate-700/60 hover:border-orange-200 dark:hover:border-slate-600 transition-all duration-200 shadow-2xs hover:shadow-xs"
+              className="group relative flex items-center gap-3 p-2.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/60 hover:bg-white dark:hover:bg-slate-800 border border-slate-200/70 dark:border-slate-700/60 hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-200 shadow-2xs hover:shadow-xs"
             >
-              <div className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-slate-700/60 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-8 h-8 rounded-lg bg-white dark:bg-slate-700/80 flex items-center justify-center shrink-0 border border-slate-200/60 dark:border-slate-600/60 group-hover:scale-105 transition-transform">
                 {stat.icon}
               </div>
               <div className="min-w-0">

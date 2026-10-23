@@ -43,19 +43,19 @@ export const Hero: React.FC<HeroProps> = ({
   };
 
   return (
-    <section className="relative overflow-hidden bg-white dark:bg-[#0B1120] transition-colors">
+    <section className="relative overflow-hidden bg-white dark:bg-[#080D1A] transition-colors border-b border-slate-200/70 dark:border-slate-800/80">
       {/* ── Background mesh gradients ── */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Orange radial top-left */}
-        <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-orange-500/8 dark:bg-blue-600/8 blur-3xl" />
-        {/* Warm amber bottom-right */}
-        <div className="absolute -bottom-24 right-0 w-[500px] h-[500px] rounded-full bg-amber-400/6 dark:bg-indigo-600/6 blur-3xl" />
+        {/* Soft slate-blue/orange radial top-left */}
+        <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-orange-500/5 dark:bg-blue-600/10 blur-3xl" />
+        {/* Subtle indigo bottom-right */}
+        <div className="absolute -bottom-24 right-0 w-[500px] h-[500px] rounded-full bg-slate-300/20 dark:bg-indigo-600/10 blur-3xl" />
         {/* Subtle grid overlay */}
         <div
-          className="absolute inset-0 opacity-[0.025] dark:opacity-[0.04]"
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
           style={{
             backgroundImage:
-              'repeating-linear-gradient(0deg,transparent,transparent 39px,#ea580c 39px,#ea580c 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,#ea580c 39px,#ea580c 40px)',
+              'repeating-linear-gradient(0deg,transparent,transparent 39px,#64748b 39px,#64748b 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,#64748b 39px,#64748b 40px)',
           }}
         />
       </div>
@@ -296,22 +296,9 @@ export const Hero: React.FC<HeroProps> = ({
         </div>
       </div>
 
-      {/* Bottom wave separator */}
-      <div aria-hidden className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none pointer-events-none">
-        <svg
-          viewBox="0 0 1440 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-8 text-orange-50 dark:text-[#0a0f1a] fill-current opacity-60"
-          preserveAspectRatio="none"
-        >
-          <path d="M0 32L60 26.7C120 21.3 240 10.7 360 8C480 5.3 600 10.7 720 14.7C840 18.7 960 21.3 1080 20C1200 18.7 1320 13.3 1380 10.7L1440 8V32H0Z" />
-        </svg>
-      </div>
-
-      {/* Existing site redesign banner — more compact */}
-      <div className="relative bg-orange-50/70 dark:bg-slate-900/80 border-t border-orange-100 dark:border-slate-800 transition-colors">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+      {/* Existing site redesign banner — clean, compact ribbon */}
+      <div className="relative bg-slate-50 dark:bg-slate-900/90 border-t border-slate-200/80 dark:border-slate-800 transition-colors">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl bg-orange-100 dark:bg-blue-950/80 text-orange-600 dark:text-blue-400 flex items-center justify-center shrink-0">
               <Sparkles className="w-4 h-4" />
@@ -328,7 +315,7 @@ export const Hero: React.FC<HeroProps> = ({
               const el = document.getElementById('waarom-nextjs');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="shrink-0 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-slate-700 font-extrabold text-xs shadow-xs hover:bg-orange-50 dark:hover:bg-slate-700 transition-all cursor-pointer whitespace-nowrap"
+            className="shrink-0 px-3.5 py-1.5 rounded-xl bg-white dark:bg-slate-800 text-orange-700 dark:text-orange-400 border border-slate-200 dark:border-slate-700 font-extrabold text-xs shadow-2xs hover:bg-orange-50 dark:hover:bg-slate-700 transition-all cursor-pointer whitespace-nowrap"
           >
             {lang === 'nl' ? 'Redesign Scan Aanvragen →' : 'Request Redesign Scan →'}
           </button>

@@ -14,7 +14,7 @@ export const StarterChecklistDownloadBanner: React.FC<StarterChecklistDownloadBa
   onOpenChecklistModal,
 }) => {
   return (
-    <div className="my-8 p-6 rounded-3xl bg-gradient-to-r from-stone-900 to-stone-800 text-white border-2 border-stone-700 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-5 transition-colors">
+    <div className="my-6 p-6 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-5 transition-colors">
       <div className="flex items-center gap-4 text-center sm:text-left">
         <div className="w-12 h-12 rounded-2xl bg-orange-600 text-white flex items-center justify-center shrink-0 shadow-md">
           <CheckSquare className="w-6 h-6" />

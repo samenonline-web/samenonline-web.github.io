@@ -21,7 +21,7 @@ export const CopywritingServiceCallout: React.FC<CopywritingServiceCalloutProps>
   ];
 
   return (
-    <div className="my-10 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border-2 border-orange-100 dark:border-slate-800 shadow-md transition-colors">
+    <div className="my-6 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm transition-colors">
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-6">
         <div className="flex items-center gap-3.5">
           <div className="w-12 h-12 rounded-2xl bg-orange-100 dark:bg-blue-950/80 text-orange-600 dark:text-blue-400 flex items-center justify-center shrink-0 shadow-xs">

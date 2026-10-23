@@ -45,8 +45,8 @@ export const LocalSeoRankChecker: React.FC<LocalSeoRankCheckerProps> = ({
   const currentNicheObj = NICHES.find((n) => n.name === selectedNiche) || NICHES[0];
 
   return (
-    <section id="lokale-seo-check" className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border-2 border-orange-200 dark:border-slate-800 shadow-xl transition-colors">
+    <div id="lokale-seo-check" className="my-6 scroll-mt-24">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/90 dark:border-slate-800 shadow-sm transition-colors">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-2 mb-8">
@@ -151,6 +151,6 @@ export const LocalSeoRankChecker: React.FC<LocalSeoRankCheckerProps> = ({
         </div>
 
       </div>
-    </section>
+    </div>
   );
 };

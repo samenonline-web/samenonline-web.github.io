@@ -61,8 +61,8 @@ export const DutchCraftTrustBadges: React.FC<DutchCraftTrustBadgesProps> = ({ la
   ];
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="bg-white dark:bg-slate-900/90 rounded-3xl p-6 sm:p-10 border-2 border-orange-100/90 dark:border-slate-800 shadow-md transition-colors">
+    <div className="my-6">
+      <div className="bg-white dark:bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-200/90 dark:border-slate-800 shadow-sm transition-colors">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
@@ -107,6 +107,6 @@ export const DutchCraftTrustBadges: React.FC<DutchCraftTrustBadgesProps> = ({ la
         </div>
 
       </div>
-    </section>
+    </div>
   );
 };

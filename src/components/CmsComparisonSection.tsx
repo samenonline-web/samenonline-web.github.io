@@ -108,7 +108,7 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
   onOpenRedesignRequest,
 }) => {
   return (
-    <section id="waarom-nextjs" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
+    <div id="cms-vergelijking" className="my-6 scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 border border-orange-200 dark:border-blue-800/60 text-xs font-black uppercase tracking-wider">
@@ -336,6 +336,6 @@ export const CmsComparisonSection: React.FC<CmsComparisonSectionProps> = ({
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
-    </section>
+    </div>
   );
 };

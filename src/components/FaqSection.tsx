@@ -163,8 +163,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
   }, [selectedCategory, searchQuery]);
 
   return (
-    <section className="my-16 scroll-mt-24" id="veelgestelde-vragen">
-      <div className="bg-white rounded-3xl border-2 border-stone-200/80 p-6 sm:p-10 shadow-sm overflow-hidden">
+    <div className="my-6 scroll-mt-24" id="veelgestelde-vragen">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-sm overflow-hidden transition-colors">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8">
@@ -325,16 +325,16 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
         </div>
 
         {/* Bottom Callout */}
-        <div className="mt-10 p-5 rounded-2xl bg-amber-50/70 border border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div className="mt-8 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/90 dark:border-slate-700/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left transition-colors">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center shrink-0 shadow-xs">
               <MessageCircleQuestion className="w-5 h-5" />
             </div>
             <div>
-              <div className="font-extrabold text-xs sm:text-sm text-stone-900">
+              <div className="font-extrabold text-xs sm:text-sm text-stone-900 dark:text-white">
                 {lang === 'nl' ? 'Heb je een specifieke vraag over jouw project?' : 'Have a custom question about your project?'}
               </div>
-              <div className="text-xs text-stone-600 font-medium">
+              <div className="text-xs text-stone-600 dark:text-slate-300 font-medium">
                 {lang === 'nl'
                   ? 'Vraag vrijblijvend advies aan of laat een bericht achter via ons formulier.'
                   : 'Request an obligation-free consultation or leave a message through our form.'}
@@ -349,6 +349,6 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, onOpenContactModal
           </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 };

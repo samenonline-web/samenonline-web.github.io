@@ -41,7 +41,7 @@ export const LiveBrandingBar: React.FC<LiveBrandingBarProps> = ({
   const isCustomized = Boolean(customBrandName.trim() || selectedColorId !== 'orange');
 
   return (
-    <div className="relative mb-6 p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-orange-50 via-white to-amber-50 dark:from-slate-900/90 dark:via-slate-900/80 dark:to-[#0B1120] border-2 border-orange-200/80 dark:border-slate-800 shadow-sm transition-all">
+    <div className="relative mb-6 p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 shadow-xs transition-all">
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         
         {/* Left title & explanation */}

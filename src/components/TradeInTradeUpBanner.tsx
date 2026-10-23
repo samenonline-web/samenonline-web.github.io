@@ -33,8 +33,8 @@ export const TradeInTradeUpBanner: React.FC<TradeInTradeUpBannerProps> = ({
   };
 
   return (
-    <section id="sloopregeling" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
-      <div className="bg-gradient-to-r from-amber-500/10 via-orange-500/15 to-red-500/10 dark:from-amber-950/40 dark:via-orange-950/50 dark:to-red-950/40 rounded-3xl p-6 sm:p-10 border-2 border-orange-400 dark:border-orange-500/60 shadow-xl relative overflow-hidden transition-colors">
+    <div id="sloopregeling" className="my-6 scroll-mt-24">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/90 dark:border-slate-800 shadow-sm relative overflow-hidden transition-colors">
         
         {/* Glow badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-600 text-white text-xs font-black uppercase tracking-wider mb-4 shadow-sm">
@@ -141,6 +141,6 @@ export const TradeInTradeUpBanner: React.FC<TradeInTradeUpBannerProps> = ({
         </div>
 
       </div>
-    </section>
+    </div>
   );
 };

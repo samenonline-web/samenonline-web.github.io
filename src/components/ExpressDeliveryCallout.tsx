@@ -23,7 +23,7 @@ export const ExpressDeliveryCallout: React.FC<ExpressDeliveryCalloutProps> = ({
   };
 
   return (
-    <div className="my-8 p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-yellow-500/15 dark:from-amber-950/40 dark:via-orange-950/30 dark:to-yellow-950/40 border-2 border-amber-300 dark:border-amber-700/60 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5 transition-colors">
+    <div className="my-6 p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs flex flex-col md:flex-row items-center justify-between gap-5 transition-colors">
       <div className="flex items-center gap-4 text-center md:text-left">
         <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-amber-500/30 animate-pulse">
           <Zap className="w-6 h-6 fill-white" />

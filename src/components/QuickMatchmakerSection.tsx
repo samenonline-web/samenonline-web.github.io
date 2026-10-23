@@ -77,7 +77,7 @@ export const QuickMatchmakerSection: React.FC<QuickMatchmakerSectionProps> = ({
   const matches = getMatches();
 
   return (
-    <section id="matchmaker" className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
+    <section id="matchmaker" className="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       <div className="bg-gradient-to-br from-stone-900 via-stone-900 to-orange-950 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950 text-white rounded-3xl p-6 sm:p-10 border-2 border-orange-500/30 dark:border-blue-500/30 shadow-2xl relative overflow-hidden">
         
         {/* Glow sphere */}

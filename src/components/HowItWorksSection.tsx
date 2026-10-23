@@ -75,9 +75,9 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
   ];
 
   return (
-    <section id="hoe-wij-werken" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
+    <div id="hoe-wij-werken" className="py-4 scroll-mt-24">
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
+      <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 border border-orange-200 dark:border-blue-800/60 text-xs font-black uppercase tracking-wider">
           <CheckCircle2 className="w-4 h-4 text-orange-600 dark:text-blue-400" />
           <span>{lang === 'nl' ? 'Transparante Werkwijze' : 'How We Work'}</span>
@@ -182,6 +182,6 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
           </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 };

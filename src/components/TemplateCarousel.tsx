@@ -64,9 +64,9 @@ export const TemplateCarousel: React.FC<TemplateCarouselProps> = ({
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
       
-      {/* Outer Card: Bright, Friendly White Card with Warm Orange Border */}
+      {/* Outer Card: Clean, modern card */}
       <div 
-        className="relative rounded-3xl overflow-hidden shadow-xl shadow-orange-500/5 dark:shadow-indigo-500/5 border-2 border-orange-100 dark:border-slate-800 bg-white dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 transition-colors"
+        className="relative rounded-3xl overflow-hidden shadow-md border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 transition-colors"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >

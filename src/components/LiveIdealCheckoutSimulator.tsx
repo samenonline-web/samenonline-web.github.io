@@ -18,8 +18,8 @@ export const LiveIdealCheckoutSimulator: React.FC<LiveIdealCheckoutSimulatorProp
   const [hasPaid, setHasPaid] = useState(false);
 
   return (
-    <section id="ideal-simulator" className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
-      <div className="bg-gradient-to-r from-stone-900 via-stone-900 to-slate-900 text-white rounded-3xl p-6 sm:p-10 border-2 border-stone-800 shadow-xl relative overflow-hidden">
+    <div id="ideal-simulator" className="my-8 scroll-mt-24">
+      <div className="bg-gradient-to-r from-stone-900 via-stone-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-stone-800 shadow-xl relative overflow-hidden">
         
         {/* Glow */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -130,6 +130,6 @@ export const LiveIdealCheckoutSimulator: React.FC<LiveIdealCheckoutSimulatorProp
           setHasPaid(true);
         }}
       />
-    </section>
+    </div>
   );
 };

@@ -63,11 +63,11 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
   };
 
   return (
-    <section id="roi-calculator" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl border-2 border-orange-200/90 dark:border-slate-800 shadow-xl overflow-hidden text-stone-900 dark:text-white transition-colors">
+    <div id="roi-calculator" className="my-6 scroll-mt-24">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden text-stone-900 dark:text-white transition-colors">
         
         {/* Header */}
-        <div className="p-6 sm:p-10 border-b border-orange-100 dark:border-slate-800 bg-gradient-to-r from-orange-50/60 via-amber-50/40 to-orange-50/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-center max-w-3xl mx-auto space-y-3">
+        <div className="p-6 sm:p-10 border-b border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 dark:bg-orange-950/70 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/60 text-xs font-black uppercase tracking-wider">
             <TrendingUp className="w-4 h-4 text-orange-600 dark:text-orange-400" />
             <span>{lang === 'nl' ? 'MKB Rendement & Conversie Calculator' : 'SME ROI & Revenue Calculator'}</span>
@@ -241,6 +241,6 @@ Ik wil graag vrijblijvend overleggen over de mogelijkheden voor mijn website!`;
 
         </div>
       </div>
-    </section>
+    </div>
   );
 };

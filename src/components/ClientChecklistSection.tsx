@@ -39,7 +39,7 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
   };
 
   return (
-    <section id="aanlever-checklist" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
+    <div id="aanlever-checklist" className="my-6 scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-300 text-xs font-black uppercase tracking-wider">
@@ -276,6 +276,6 @@ export const ClientChecklistSection: React.FC<ClientChecklistSectionProps> = ({
         </div>
 
       </div>
-    </section>
+    </div>
   );
 };

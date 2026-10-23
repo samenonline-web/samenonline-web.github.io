@@ -71,7 +71,7 @@ export const GuaranteesSection: React.FC<GuaranteesSectionProps> = ({
   ];
 
   return (
-    <section id="garanties" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
+    <section id="garanties" className="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 text-xs font-black uppercase tracking-wider mb-4 shadow-xs">
@@ -101,26 +101,25 @@ export const GuaranteesSection: React.FC<GuaranteesSectionProps> = ({
           return (
             <div
               key={item.id}
-              className="group relative bg-white dark:bg-slate-900/90 rounded-3xl p-6 sm:p-7 border-2 border-stone-200/80 dark:border-slate-800 shadow-md hover:shadow-xl hover:border-orange-400/80 dark:hover:border-slate-700 transition-all duration-300 flex flex-col justify-between"
+              className="group relative bg-white dark:bg-slate-900/90 rounded-3xl p-6 sm:p-7 border border-stone-200/80 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-orange-300 dark:hover:border-slate-700 transition-all duration-300 flex flex-col justify-between"
             >
               <div className="space-y-4">
-                {/* Top Badge & Number */}
+                {/* Top: Icon & Big Number side by side */}
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-stone-100 dark:bg-slate-800 text-stone-700 dark:text-slate-300 border border-stone-200 dark:border-slate-700">
-                    {item.badge}
-                  </span>
-                  <span className="text-2xl font-black text-stone-200 dark:text-slate-700 group-hover:text-orange-200 dark:group-hover:text-orange-400 transition-colors">
+                  <div className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 border border-orange-200/80 dark:border-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <span className="text-2xl font-black font-mono text-stone-300 dark:text-slate-700 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors">
                     0{idx + 1}
                   </span>
                 </div>
 
-                {/* Icon */}
-                <div className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 border border-orange-200 dark:border-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <Icon className="w-6 h-6" />
-                </div>
-
-                {/* Title & Subtitle */}
+                {/* Badge on its own line - NEVER collides with number */}
                 <div>
+                  <span className="inline-block text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-stone-100 dark:bg-slate-800 text-stone-700 dark:text-slate-300 border border-stone-200 dark:border-slate-700 mb-2">
+                    {item.badge}
+                  </span>
+
                   <h3 className="text-base sm:text-lg font-black text-stone-900 dark:text-white leading-snug">
                     {item.title}
                   </h3>

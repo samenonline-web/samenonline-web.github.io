@@ -10,7 +10,7 @@ interface AboutSectionProps {
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
   return (
-    <section id="about-section" className="bg-orange-50/70 dark:bg-slate-900/60 py-16 px-4 sm:px-6 lg:px-8 my-16 rounded-3xl max-w-7xl mx-auto border-2 border-orange-100 dark:border-slate-800 shadow-xl shadow-orange-500/5 dark:shadow-indigo-500/5 relative overflow-hidden scroll-mt-24 transition-colors">
+    <div id="about-section" className="bg-white dark:bg-slate-900/90 py-10 px-4 sm:px-6 lg:px-8 my-6 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-sm relative overflow-hidden scroll-mt-24 transition-colors">
       
       <div className="max-w-5xl mx-auto text-center relative z-10">
         
@@ -32,7 +32,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
-          <div className="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-orange-100 dark:border-slate-800 shadow-xs flex flex-col transition-colors">
+          <div className="bg-slate-50 dark:bg-slate-950 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs flex flex-col transition-colors">
             <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-blue-400 flex items-center justify-center mb-4">
               <MapPin className="w-6 h-6" />
             </div>
@@ -46,7 +46,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-orange-100 dark:border-slate-800 shadow-xs flex flex-col transition-colors">
+          <div className="bg-slate-50 dark:bg-slate-950 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs flex flex-col transition-colors">
             <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-blue-400 flex items-center justify-center mb-4">
               <Compass className="w-6 h-6" />
             </div>
@@ -60,7 +60,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-orange-100 dark:border-slate-800 shadow-xs flex flex-col transition-colors">
+          <div className="bg-slate-50 dark:bg-slate-950 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs flex flex-col transition-colors">
             <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-blue-400 flex items-center justify-center mb-4">
               <ShieldCheck className="w-6 h-6" />
             </div>
@@ -74,7 +74,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-orange-100 dark:border-slate-800 shadow-xs flex flex-col transition-colors">
+          <div className="bg-slate-50 dark:bg-slate-950 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs flex flex-col transition-colors">
             <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-blue-400 flex items-center justify-center mb-4">
               <Sparkles className="w-6 h-6" />
             </div>
@@ -91,6 +91,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
 
       </div>
 
-    </section>
+    </div>
   );
 };

@@ -21,7 +21,7 @@ export const CustomerRoiBreakEven: React.FC<CustomerRoiBreakEvenProps> = ({
   const yearlyGain = customerValue * 12 - siteCost;
 
   return (
-    <div className="my-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-emerald-50 via-white to-teal-50 dark:from-emerald-950/40 dark:via-slate-900 dark:to-teal-950/40 border-2 border-emerald-300 dark:border-emerald-800 shadow-lg transition-colors">
+    <div className="my-6 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm transition-colors">
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-6">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 text-xs font-black uppercase tracking-wider mb-2">

@@ -315,8 +315,8 @@ export default function Home() {
     <div
       className={`min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white transition-colors duration-200 ${
         isDarkMode
-          ? 'global-dark-mode dark bg-[#0B1120] text-slate-100'
-          : 'bg-amber-50/20 text-stone-900'
+          ? 'global-dark-mode dark bg-[#080D1A] text-slate-100'
+          : 'bg-[#FAFAFA] text-slate-900'
       }`}
     >
       {/* Top Navbar */}
@@ -343,42 +343,10 @@ export default function Home() {
       {/* Trust Metrics Ribbon */}
       <StatsBar lang={lang} />
 
-      {/* 72-Hour Express Delivery Callout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ExpressDeliveryCallout
-          lang={lang}
-          onOpenExpressRequest={() =>
-            handleOpenRequestModal(undefined, undefined, undefined, {
-              templateName: '72-Uur Spoedservice Website',
-              budget: 'Vanaf €125 (Spoedlevering)',
-              notes: 'Aanvraag via 72-Uur Spoedservice: ik heb met spoed binnen 3 dagen een werkende website nodig.',
-            })
-          }
-        />
-      </div>
-
-      {/* Featured Templates Interactive Carousel */}
-      <TemplateCarousel
-        templates={templates}
-        lang={lang}
-        onOpenDetails={setActiveModalTemplate}
-        onOpenLivePreview={setActivePreviewTemplate}
-        onOpenRequestModal={(tmpl) => handleOpenRequestModal(tmpl)}
-        isPaused={isAnyModalOpen}
-      />
-
-      {/* 20-Second Interactive Website Matchmaker */}
-      <QuickMatchmakerSection
-        templates={templates}
-        lang={lang}
-        onOpenLivePreview={setActivePreviewTemplate}
-        onOpenRequestModal={(tmpl) => handleOpenRequestModal(tmpl)}
-      />
-
       {/* Sticky Quick Jump Bar for In-Page Destinations */}
       <nav 
         aria-label={lang === 'nl' ? 'Snelnavigatie onderdelen' : 'Quick section navigation'}
-        className="sticky top-20 z-35 bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-md border-y border-orange-100/90 dark:border-slate-800 py-2.5 px-4 shadow-2xs transition-colors"
+        className="sticky top-20 z-35 bg-white/95 dark:bg-[#080D1A]/95 backdrop-blur-md border-y border-slate-200/80 dark:border-slate-800 py-2.5 px-4 shadow-2xs transition-colors"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-2 overflow-x-auto no-scrollbar py-0.5 text-xs font-bold">
           <button
@@ -402,7 +370,7 @@ export default function Home() {
               const el = document.getElementById('waarom-nextjs');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-100 dark:bg-slate-900 text-stone-700 dark:text-slate-300 hover:bg-orange-50 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
           >
             <span>⚡</span>
             <span>{lang === 'nl' ? 'Waarom Next.js?' : 'Why Next.js?'}</span>
@@ -414,7 +382,7 @@ export default function Home() {
               const el = document.getElementById('pakketten');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-100 dark:bg-slate-900 text-stone-700 dark:text-slate-300 hover:bg-orange-50 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
           >
             <span>💰</span>
             <span>{lang === 'nl' ? 'Tarieven & Calculators' : 'Rates & Calculator'}</span>
@@ -426,7 +394,7 @@ export default function Home() {
               const el = document.getElementById('hoe-het-werkt');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-100 dark:bg-slate-900 text-stone-700 dark:text-slate-300 hover:bg-orange-50 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
           >
             <span>📋</span>
             <span>{lang === 'nl' ? 'Werkwijze & Checklist' : 'Process'}</span>
@@ -438,7 +406,7 @@ export default function Home() {
               const el = document.getElementById('garanties');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-100 dark:bg-slate-900 text-stone-700 dark:text-slate-300 hover:bg-orange-50 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
           >
             <span>🛡️</span>
             <span>{lang === 'nl' ? 'Zekerheden' : 'Guarantees'}</span>
@@ -450,7 +418,7 @@ export default function Home() {
               const el = document.getElementById('faq-section');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-100 dark:bg-slate-900 text-stone-700 dark:text-slate-300 hover:bg-orange-50 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap cursor-pointer transition-all shrink-0"
           >
             <span>❓</span>
             <span>{lang === 'nl' ? 'FAQ & Over Ons' : 'FAQ & About'}</span>
@@ -617,8 +585,40 @@ export default function Home() {
           </div>
         )}
 
+        {/* Featured Templates Interactive Carousel */}
+        <div className="mt-12">
+          <TemplateCarousel
+            templates={templates}
+            lang={lang}
+            onOpenDetails={setActiveModalTemplate}
+            onOpenLivePreview={setActivePreviewTemplate}
+            onOpenRequestModal={(tmpl) => handleOpenRequestModal(tmpl)}
+            isPaused={isAnyModalOpen}
+          />
+        </div>
+
+        {/* 20-Second Interactive Website Matchmaker */}
+        <QuickMatchmakerSection
+          templates={templates}
+          lang={lang}
+          onOpenLivePreview={setActivePreviewTemplate}
+          onOpenRequestModal={(tmpl) => handleOpenRequestModal(tmpl)}
+        />
+
+        {/* 72-Hour Express Delivery Callout */}
+        <ExpressDeliveryCallout
+          lang={lang}
+          onOpenExpressRequest={() =>
+            handleOpenRequestModal(undefined, undefined, undefined, {
+              templateName: '72-Uur Spoedservice Website',
+              budget: 'Vanaf €125 (Spoedlevering)',
+              notes: 'Aanvraag via 72-Uur Spoedservice: ik heb met spoed binnen 3 dagen een werkende website nodig.',
+            })
+          }
+        />
+
         {/* Custom Design / Website Redesign Callout Banner */}
-        <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-orange-50/90 dark:bg-slate-900 border-2 border-orange-200/90 dark:border-slate-800 text-stone-900 dark:text-white shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
+        <div className="my-6 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-stone-900 dark:text-white shadow-xs flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
           <div className="space-y-2 text-center md:text-left max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-blue-950/60 text-orange-800 dark:text-blue-300 text-xs font-bold border border-orange-300 dark:border-blue-800/60">
               <span>🎨 Geen template nodig?</span>
@@ -659,7 +659,7 @@ export default function Home() {
                   notes: 'Ik heb al een eigen plan of schets voor mijn website.',
                 })
               }
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-100/50 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-200 border border-orange-200 dark:border-slate-700 font-extrabold text-xs transition-all cursor-pointer whitespace-nowrap text-center shadow-xs"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-extrabold text-xs transition-all cursor-pointer whitespace-nowrap text-center shadow-xs"
             >
               <span>📐 Eigen Ontwerp Bespreken</span>
             </button>
@@ -678,239 +678,197 @@ export default function Home() {
           }
         />
 
-        {/* Decorative Wave Divider */}
-        <div aria-hidden="true" className="w-full overflow-hidden leading-none my-10 pointer-events-none opacity-50 dark:opacity-30">
-          <svg viewBox="0 0 1200 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 text-orange-300 dark:text-blue-500 fill-current" preserveAspectRatio="none">
-            <path d="M0 16C150 28 350 4 500 16C650 28 850 4 1000 16C1100 24 1160 20 1200 16V32H0V16Z" />
-          </svg>
-        </div>
-
         {/* Section: Waarom Next.js? (Speed audit, CMS comparison & Before/After) */}
-        <section id="waarom-nextjs" className="scroll-mt-28 space-y-10 mt-14">
-          <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
-            <div className="text-center max-w-2xl mx-auto mb-6">
-              <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-blue-400 bg-orange-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-blue-800/60 inline-block mb-2">
-                ⚡ Waarom Next.js?
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">
-                {lang === 'nl' ? 'Sneller dan WordPress, beter vindbaar in Google' : 'Faster than WordPress, higher on Google'}
-              </h2>
-            </div>
-
-            {/* Interactive Before & After Redesign Slider */}
-            <BeforeAfterRedesignSection
-              lang={lang}
-              onOpenRedesignRequest={() =>
-                handleOpenRequestModal(undefined, undefined, undefined, {
-                  templateName: 'Website Redesign (Bestaande site ombouwen)',
-                  budget: 'Vanaf €175 (Redesign)',
-                  notes: 'Aanvraag via Voor & Na Redesign Slider: ik wil mijn huidige trage website laten moderniseren naar een razendsnelle Next.js site.',
-                })
-              }
-            />
-
-            {/* Website Sloopregeling / Trade-in Program */}
-            <TradeInTradeUpBanner
-              lang={lang}
-              onClaimDiscount={(cms, discountCode, discountAmount) =>
-                handleOpenRequestModal(undefined, undefined, undefined, {
-                  templateName: `Website Sloopregeling (${cms})`,
-                  budget: `Inruilkorting: -€${discountAmount} (Code: ${discountCode})`,
-                  notes: `Aanvraag via Website Sloopregeling: inruil van huidige ${cms} website met inruilpremie ${discountCode} (-€${discountAmount}).`,
-                })
-              }
-            />
-
-            {/* Website Speed & SEO QuickScan Tool */}
-            <div className="mt-8">
-              <WebsiteSpeedAuditSection
-                lang={lang}
-                onOpenRedesignRequest={(url) =>
-                  handleOpenRequestModal(undefined, undefined, undefined, {
-                    templateName: `Website Redesign (${url})`,
-                    budget: 'Vanaf €175 (Redesign)',
-                    notes: `Aanvraag via Website QuickScan voor domeinnaam "${url}". Ik wil graag mijn laadtijd en Google-posities laten optimaliseren met Next.js.`,
-                  })
-                }
-              />
-            </div>
-
-            {/* Local SEO Ranking Checker per City */}
-            <LocalSeoRankChecker
-              lang={lang}
-              onOpenLocalRequest={(city, niche) =>
-                handleOpenRequestModal(undefined, undefined, undefined, {
-                  templateName: `Lokale SEO Website (${city} - ${niche})`,
-                  budget: 'Vanaf €195 (Compleet MKB)',
-                  notes: `Aanvraag voor lokale Google vindbaarheid in ${city} voor branche ${niche}.`,
-                })
-              }
-            />
-
-            {/* "Waarom Next.js i.p.v. WordPress of Wix?" Kennis- & Vergelijkingstabel */}
-            <div className="mt-8">
-              <CmsComparisonSection
-                lang={lang}
-                onOpenCalculator={() => {
-                  const el = document.getElementById('prijs-calculator');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                onOpenRedesignRequest={() =>
-                  handleOpenRequestModal(undefined, undefined, undefined, {
-                    templateName: 'Website Redesign van WordPress/Wix naar Next.js',
-                    budget: 'Vanaf €175 (Redesign)',
-                    notes: 'Aanvraag via WordPress vs Next.js vergelijker: ik wil overstappen van WordPress/Wix naar Next.js.',
-                  })
-                }
-              />
-            </div>
+        <section id="waarom-nextjs" className="py-12 sm:py-16 border-t border-slate-200/80 dark:border-slate-800 scroll-mt-24 space-y-6">
+          <div className="text-center max-w-2xl mx-auto mb-2">
+            <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-blue-400 bg-orange-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-blue-800/60 inline-block mb-2">
+              ⚡ Waarom Next.js?
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">
+              {lang === 'nl' ? 'Sneller dan WordPress, beter vindbaar in Google' : 'Faster than WordPress, higher on Google'}
+            </h2>
           </div>
+
+          {/* Interactive Before & After Redesign Slider */}
+          <BeforeAfterRedesignSection
+            lang={lang}
+            onOpenRedesignRequest={() =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: 'Website Redesign (Bestaande site ombouwen)',
+                budget: 'Vanaf €175 (Redesign)',
+                notes: 'Aanvraag via Voor & Na Redesign Slider: ik wil mijn huidige trage website laten moderniseren naar een razendsnelle Next.js site.',
+              })
+            }
+          />
+
+          {/* Website Sloopregeling / Trade-in Program */}
+          <TradeInTradeUpBanner
+            lang={lang}
+            onClaimDiscount={(cms, discountCode, discountAmount) =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: `Website Sloopregeling (${cms})`,
+                budget: `Inruilkorting: -€${discountAmount} (Code: ${discountCode})`,
+                notes: `Aanvraag via Website Sloopregeling: inruil van huidige ${cms} website met inruilpremie ${discountCode} (-€${discountAmount}).`,
+              })
+            }
+          />
+
+          {/* Website Speed & SEO QuickScan Tool */}
+          <WebsiteSpeedAuditSection
+            lang={lang}
+            onOpenRedesignRequest={(url) =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: `Website Redesign (${url})`,
+                budget: 'Vanaf €175 (Redesign)',
+                notes: `Aanvraag via Website QuickScan voor domeinnaam "${url}". Ik wil graag mijn laadtijd en Google-posities laten optimaliseren met Next.js.`,
+              })
+            }
+          />
+
+          {/* Local SEO Ranking Checker per City */}
+          <LocalSeoRankChecker
+            lang={lang}
+            onOpenLocalRequest={(city, niche) =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: `Lokale SEO Website (${city} - ${niche})`,
+                budget: 'Vanaf €195 (Compleet MKB)',
+                notes: `Aanvraag voor lokale Google vindbaarheid in ${city} voor branche ${niche}.`,
+              })
+            }
+          />
+
+          {/* "Waarom Next.js i.p.v. WordPress of Wix?" Kennis- & Vergelijkingstabel */}
+          <CmsComparisonSection
+            lang={lang}
+            onOpenCalculator={() => {
+              const el = document.getElementById('prijs-calculator');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            onOpenRedesignRequest={() =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: 'Website Redesign van WordPress/Wix naar Next.js',
+                budget: 'Vanaf €175 (Redesign)',
+                notes: 'Aanvraag via WordPress vs Next.js vergelijker: ik wil overstappen van WordPress/Wix naar Next.js.',
+              })
+            }
+          />
         </section>
 
-        {/* Decorative Wave Divider */}
-        <div aria-hidden="true" className="w-full overflow-hidden leading-none my-10 pointer-events-none opacity-50 dark:opacity-30">
-          <svg viewBox="0 0 1200 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 text-amber-300 dark:text-cyan-500 fill-current" preserveAspectRatio="none">
-            <path d="M0 16C200 4 400 28 600 16C800 4 1000 28 1200 16V32H0V16Z" />
-          </svg>
-        </div>
-
         {/* Section: Hoe Wij Werken & Checklist */}
-        <section id="hoe-het-werkt" className="scroll-mt-28 space-y-10">
-          <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
-            {/* 4-Step "Hoe Wij Werken" Section */}
-            <HowItWorksSection
-              lang={lang}
-              onOpenRequestModal={() => handleOpenRequestModal()}
-              onScrollToTemplates={() => {
-                const el = document.getElementById('templates-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-            />
+        <section id="hoe-het-werkt" className="py-12 sm:py-16 border-t border-slate-200/80 dark:border-slate-800 scroll-mt-24 space-y-6">
+          {/* 4-Step "Hoe Wij Werken" Section */}
+          <HowItWorksSection
+            lang={lang}
+            onOpenRequestModal={() => handleOpenRequestModal()}
+            onScrollToTemplates={() => {
+              const el = document.getElementById('templates-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
 
-            {/* Interactive "Wat Moet Ik Zelf Aanleveren?" Checklist */}
-            <div className="mt-8">
-              <ClientChecklistSection
-                lang={lang}
-                onOpenRequestModal={() => handleOpenRequestModal()}
-              />
-            </div>
+          {/* Interactive "Wat Moet Ik Zelf Aanleveren?" Checklist */}
+          <ClientChecklistSection
+            lang={lang}
+            onOpenRequestModal={() => handleOpenRequestModal()}
+          />
 
-            {/* Free Copywriting Service Callout */}
-            <CopywritingServiceCallout
-              lang={lang}
-              onOpenRequestModal={() =>
-                handleOpenRequestModal(undefined, undefined, undefined, {
-                  templateName: 'Website inclusief Schrijfservice',
-                  budget: 'Vanaf €195 (Compleet MKB)',
-                  notes: 'Aanvraag via Schrijfservice: ik wil graag dat Samen Online professionele Nederlandse teksten voor mijn website verzorgt.',
-                })
-              }
-            />
+          {/* Free Copywriting Service Callout */}
+          <CopywritingServiceCallout
+            lang={lang}
+            onOpenRequestModal={() =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: 'Website inclusief Schrijfservice',
+                budget: 'Vanaf €195 (Compleet MKB)',
+                notes: 'Aanvraag via Schrijfservice: ik wil graag dat Samen Online professionele Nederlandse teksten voor mijn website verzorgt.',
+              })
+            }
+          />
 
-            {/* Starter Checklist 2026 Download Banner */}
-            <StarterChecklistDownloadBanner
-              lang={lang}
-              onOpenChecklistModal={() => setIsChecklistModalOpen(true)}
-            />
-          </div>
+          {/* Starter Checklist 2026 Download Banner */}
+          <StarterChecklistDownloadBanner
+            lang={lang}
+            onOpenChecklistModal={() => setIsChecklistModalOpen(true)}
+          />
         </section>
 
         {/* Section: Garanties & Zekerheden */}
-        <section id="garanties" className="scroll-mt-28 mt-14">
-          <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
-            <GuaranteesSection
-              lang={lang}
-              onOpenCalculator={() => {
-                const el = document.getElementById('prijs-calculator');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              onOpenRequestModal={() => handleOpenRequestModal()}
-            />
-          </div>
+        <section id="garanties" className="py-12 sm:py-16 border-t border-slate-200/80 dark:border-slate-800 scroll-mt-24">
+          <GuaranteesSection
+            lang={lang}
+            onOpenCalculator={() => {
+              const el = document.getElementById('prijs-calculator');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            onOpenRequestModal={() => handleOpenRequestModal()}
+          />
         </section>
 
         {/* Section: Pakketten & Calculators */}
-        <section id="pakketten" className="scroll-mt-28 space-y-10 mt-14">
-          <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
-            <div className="text-center max-w-2xl mx-auto mb-6">
-              <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-blue-400 bg-orange-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-blue-800/60 inline-block mb-2">
-                💰 Transparante Tarieven
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">
-                {lang === 'nl' ? 'Vaste all-in pakketten & online calculators' : 'Fixed pricing & instant calculators'}
-              </h2>
-            </div>
-
-            {/* Transparante Vaste Pakkettentabel */}
-            <PricingPackagesSection
-              lang={lang}
-              onSelectPackage={(name, budget, notes) =>
-                handleOpenRequestModal(undefined, undefined, undefined, {
-                  templateName: name,
-                  budget,
-                  notes,
-                })
-              }
-            />
-
-            {/* 2-Year Total Cost Comparison: Agency vs SaaS vs Samen Online */}
-            <div className="mt-8">
-              <CostComparisonCalculator
-                lang={lang}
-                onOpenRequestModal={() => handleOpenRequestModal()}
-                onScrollToPricing={() => {
-                  const el = document.getElementById('prijs-calculator');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-              />
-            </div>
-
-            {/* 60-Second Price Estimator Calculator */}
-            <div className="mt-8">
-              <PriceEstimatorCalculator
-                lang={lang}
-                onOpenRequestModal={(customData) => {
-                  handleOpenRequestModal(undefined, undefined, undefined, customData);
-                }}
-              />
-            </div>
-
-            {/* MKB Website ROI & Rendement Calculator */}
-            <div className="mt-8">
-              <RoiEstimatorCalculator
-                lang={lang}
-                onOpenRequestModal={(customData) => {
-                  handleOpenRequestModal(undefined, undefined, undefined, customData);
-                }}
-              />
-            </div>
-
-            {/* 1 Extra Klant Break-Even Terugverdientijd Visualisatie */}
-            <div className="mt-8">
-              <CustomerRoiBreakEven
-                lang={lang}
-                onOpenRequestModal={() => handleOpenRequestModal()}
-              />
-            </div>
+        <section id="pakketten" className="py-12 sm:py-16 border-t border-slate-200/80 dark:border-slate-800 scroll-mt-24 space-y-6">
+          <div className="text-center max-w-2xl mx-auto mb-2">
+            <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-blue-400 bg-orange-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-blue-800/60 inline-block mb-2">
+              💰 Transparante Tarieven
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">
+              {lang === 'nl' ? 'Vaste all-in pakketten & online calculators' : 'Fixed pricing & instant calculators'}
+            </h2>
           </div>
+
+          {/* Transparante Vaste Pakkettentabel */}
+          <PricingPackagesSection
+            lang={lang}
+            onSelectPackage={(name, budget, notes) =>
+              handleOpenRequestModal(undefined, undefined, undefined, {
+                templateName: name,
+                budget,
+                notes,
+              })
+            }
+          />
+
+          {/* 2-Year Total Cost Comparison: Agency vs SaaS vs Samen Online */}
+          <CostComparisonCalculator
+            lang={lang}
+            onOpenRequestModal={() => handleOpenRequestModal()}
+            onScrollToPricing={() => {
+              const el = document.getElementById('prijs-calculator');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
+
+          {/* 60-Second Price Estimator Calculator */}
+          <PriceEstimatorCalculator
+            lang={lang}
+            onOpenRequestModal={(customData) => {
+              handleOpenRequestModal(undefined, undefined, undefined, customData);
+            }}
+          />
+
+          {/* MKB Website ROI & Rendement Calculator */}
+          <RoiEstimatorCalculator
+            lang={lang}
+            onOpenRequestModal={(customData) => {
+              handleOpenRequestModal(undefined, undefined, undefined, customData);
+            }}
+          />
+
+          {/* 1 Extra Klant Break-Even Terugverdientijd Visualisatie */}
+          <CustomerRoiBreakEven
+            lang={lang}
+            onOpenRequestModal={() => handleOpenRequestModal()}
+          />
         </section>
 
         {/* Section: Over Ons & FAQ */}
-        <section id="faq-section" className="scroll-mt-28 space-y-10 mt-14">
-          <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
-            {/* Authentic Dutch Craft & Guarantees Badges */}
-            <DutchCraftTrustBadges lang={lang} />
+        <section id="faq-section" className="py-12 sm:py-16 border-t border-slate-200/80 dark:border-slate-800 scroll-mt-24 space-y-6">
+          {/* Authentic Dutch Craft & Guarantees Badges */}
+          <DutchCraftTrustBadges lang={lang} />
 
-            {/* About Samen Online Section */}
-            <div className="mt-8">
-              <AboutSection lang={lang} />
-            </div>
+          {/* About Samen Online Section */}
+          <AboutSection lang={lang} />
 
-            {/* SEO FAQ Section */}
-            <div className="mt-8">
-              <FaqSection lang={lang} onOpenContactModal={() => handleOpenRequestModal()} />
-            </div>
-          </div>
+          {/* SEO FAQ Section */}
+          <FaqSection lang={lang} onOpenContactModal={() => handleOpenRequestModal()} />
         </section>
       </main>
 

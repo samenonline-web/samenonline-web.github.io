@@ -77,7 +77,7 @@ export const CostComparisonCalculator: React.FC<CostComparisonCalculatorProps> =
   const current = data[situation];
 
   return (
-    <section id="kosten-vergelijker" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
+    <div id="kosten-vergelijker" className="my-6 scroll-mt-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 text-xs font-black uppercase tracking-wider">
@@ -318,6 +318,6 @@ export const CostComparisonCalculator: React.FC<CostComparisonCalculatorProps> =
           {lang === 'nl' ? 'Bekijk Tarieven & Pakketten →' : 'View All Packages →'}
         </button>
       </div>
-    </section>
+    </div>
   );
 };
