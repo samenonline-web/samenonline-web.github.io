@@ -15,6 +15,9 @@ import {
   PhoneCall,
   Activity,
   Award,
+  Printer,
+  Calculator,
+  Shield,
 } from 'lucide-react';
 
 interface PetTariff {
@@ -63,6 +66,7 @@ export const DierenkliniekDeVennen: React.FC<TemplateProps> = ({
   const city = customCity || 'Tilburg & Midden-Brabant';
 
   const [petType, setPetType] = useState<'hond' | 'kat' | 'konijn' | 'anders'>('hond');
+  const [petWeightClass, setPetWeightClass] = useState<'small' | 'medium' | 'large'>('small');
   const [appointmentBooked, setAppointmentBooked] = useState(false);
   const [bookingData, setBookingData] = useState({
     ownerName: '',
@@ -71,6 +75,29 @@ export const DierenkliniekDeVennen: React.FC<TemplateProps> = ({
     phone: '',
     reason: 'Vaccinatie & Gezondheidscheck',
   });
+
+  // Huisdieren ZorgPas Calculation
+  const zorgPlanPrice =
+    petType === 'kat'
+      ? 22.5
+      : petType === 'konijn'
+      ? 16.5
+      : petWeightClass === 'small'
+      ? 26.5
+      : petWeightClass === 'medium'
+      ? 29.5
+      : 34.5;
+
+  const zorgPlanSavings =
+    petType === 'kat'
+      ? 110
+      : petType === 'konijn'
+      ? 85
+      : petWeightClass === 'small'
+      ? 125
+      : petWeightClass === 'medium'
+      ? 145
+      : 170;
 
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -218,20 +245,75 @@ export const DierenkliniekDeVennen: React.FC<TemplateProps> = ({
               </div>
 
               {appointmentBooked ? (
-                <div className="py-8 text-center space-y-3">
-                  <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="py-4 space-y-4">
+                  <div className="text-center space-y-1.5">
+                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <h4 className="font-black text-base">Afspraak Bevestigd voor {bookingData.petName}!</h4>
+                    <p className="text-xs text-stone-500 max-w-xs mx-auto">
+                      Bedankt {bookingData.ownerName}! We zien je graag samen met {bookingData.petName} op de praktijk.
+                    </p>
                   </div>
-                  <h4 className="font-black text-base">Afspraak Bevestigd voor {bookingData.petName}!</h4>
-                  <p className="text-xs text-stone-500 max-w-xs mx-auto">
-                    Bedankt {bookingData.ownerName}! We kijken uit naar het bezoek van {bookingData.petName}. Je ontvangt per direct een bevestiging per e-mail.
-                  </p>
-                  <button
-                    onClick={() => setAppointmentBooked(false)}
-                    className="text-xs font-bold text-stone-500 underline cursor-pointer mt-2"
-                  >
-                    Nog een afspraak inplannen
-                  </button>
+
+                  {/* Printable Pet Voucher */}
+                  <div className={`p-4 rounded-2xl border-2 border-dashed ${isDarkMode ? 'bg-stone-950 border-stone-700' : 'bg-stone-50 border-stone-300'}`}>
+                    <div className="flex justify-between items-start mb-3 border-b pb-2 border-stone-200 dark:border-stone-800">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 block">
+                          Dierenkliniek Consultatiekaart
+                        </span>
+                        <span className="font-black text-sm">{brandName}</span>
+                      </div>
+                      <span className="text-[10px] font-mono bg-stone-200 dark:bg-stone-800 px-2 py-0.5 rounded font-bold">
+                        VET-VEN-2026-X
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Patiënt (Huisdier)</span>
+                        <span className="font-bold">{bookingData.petName} ({petType.toUpperCase()})</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Eigenaar</span>
+                        <span className="font-bold">{bookingData.ownerName}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Reden Bezoek</span>
+                        <span className="font-bold">{bookingData.reason}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Locatie</span>
+                        <span className="font-bold">{city}</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-emerald-50 dark:bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800 text-[11px] space-y-1">
+                      <span className="font-bold text-emerald-800 dark:text-emerald-300 block">Belangrijk bij het praktijkbezoek:</span>
+                      <ul className="list-disc list-inside text-stone-600 dark:text-stone-300 text-[10px] space-y-0.5">
+                        <li>Europees Dierenpaspoort of vaccinatieboekje meenemen</li>
+                        <li>Hond aangelijnd houden; kat in stevige reismand</li>
+                        <li>Eventueel actuele medicatie of dieetvoeding noteren</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => window.print()}
+                      className="flex-1 py-2.5 rounded-xl bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs font-bold flex items-center justify-center gap-1.5 shadow hover:opacity-90 cursor-pointer"
+                    >
+                      <Printer className="w-3.5 h-3.5" />
+                      <span>Print Afspraakkaart (PDF)</span>
+                    </button>
+                    <button
+                      onClick={() => setAppointmentBooked(false)}
+                      className="px-3 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-bold hover:bg-stone-100 dark:hover:bg-stone-800 cursor-pointer"
+                    >
+                      Nieuwe Afspraak
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleBookingSubmit} className="space-y-3">
@@ -337,6 +419,91 @@ export const DierenkliniekDeVennen: React.FC<TemplateProps> = ({
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Huisdieren ZorgPas & Preventie Calculator */}
+          <div className={`mt-8 p-6 sm:p-8 rounded-3xl border-2 ${
+            isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-stone-50 border-stone-200'
+          }`}>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Shield className="w-5 h-5 text-emerald-600" />
+                  <h3 className="font-black text-lg">Huisdieren ZorgPas (Preventief Zorgplan)</h3>
+                </div>
+                <p className="text-xs text-stone-500 max-w-xl">
+                  Spreid de medische kosten van jouw huisdier in overzichtelijke maandbedragen inclusief alle vaccinaties, ontworming en vlooienpreventie.
+                </p>
+              </div>
+
+              <div className="text-right sm:text-right">
+                <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider block">Maandtarief Zorgplan:</span>
+                <span className="text-2xl sm:text-3xl font-black text-emerald-600">
+                  €{zorgPlanPrice.toFixed(2).replace('.', ',')}
+                  <span className="text-xs text-stone-400 font-medium"> / mnd</span>
+                </span>
+                <span className="text-[10px] font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full block mt-1">
+                  Bespaar ~€{zorgPlanSavings},- per jaar
+                </span>
+              </div>
+            </div>
+
+            {petType === 'hond' && (
+              <div className="mb-4 pt-4 border-t border-stone-200 dark:border-stone-800">
+                <span className="text-xs font-bold text-stone-600 dark:text-stone-300 block mb-2">
+                  Gewichtsklasse van jouw hond:
+                </span>
+                <div className="grid grid-cols-3 gap-2 text-xs font-bold">
+                  {[
+                    { id: 'small', label: 'Klein (< 10 kg)' },
+                    { id: 'medium', label: 'Middel (10 - 25 kg)' },
+                    { id: 'large', label: 'Groot (> 25 kg)' },
+                  ].map((w) => (
+                    <button
+                      key={w.id}
+                      type="button"
+                      onClick={() => setPetWeightClass(w.id as any)}
+                      className={`py-2 px-2 text-center rounded-xl border text-[11px] transition-all cursor-pointer ${
+                        petWeightClass === w.id
+                          ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300'
+                          : 'border-stone-300 dark:border-stone-700 bg-transparent text-stone-600 dark:text-stone-300'
+                      }`}
+                    >
+                      {w.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold pt-4 border-t border-stone-200 dark:border-stone-800">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>Jaarlijkse cocktailvaccinatie & gezondheidscheck</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>Volledige jaarrond vlooien-, teken- & wormenkuur</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>Onbeperkt gratis nagels knippen door assistente</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>10% korting op voeding, gebitsreiniging & operaties</span>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-stone-200 dark:border-stone-800 flex justify-end">
+              <button
+                onClick={onRequestQuote}
+                className={`px-5 py-2.5 rounded-xl text-white font-black text-xs flex items-center gap-1.5 shadow-md transition-all cursor-pointer ${theme.primary} hover:opacity-90`}
+              >
+                <span>Meld {bookingData.petName || 'Huisdier'} Aan Voor ZorgPas</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </section>

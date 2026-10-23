@@ -606,5 +606,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("JUST-DOS-2026-X", content)
         self.assertIn("Print Dossierbewijs (PDF)", content)
 
+    # 57. DierenkliniekDeVennen Pet Health Plan Calculator & Printable Consult Voucher
+    def test_dierenkliniek_zorgplan_and_voucher(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "DierenkliniekDeVennen.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("zorgPlanPrice", content)
+        self.assertIn("zorgPlanSavings", content)
+        self.assertIn("VET-VEN-2026-X", content)
+        self.assertIn("Print Afspraakkaart (PDF)", content)
+
 if __name__ == "__main__":
     unittest.main()
