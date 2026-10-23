@@ -392,5 +392,16 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("/demo/${tmpl.id}?city=", content)
         self.assertIn("Live Testen", content)
 
+    # 36. Google Snippet Previewer on City Pages with City Props
+    def test_city_pages_google_snippet_previewer(self):
+        page_file = WORKSPACE / "app" / "locaties" / "[stad]" / "page.tsx"
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn("GoogleSnippetPreviewer", content)
+        self.assertIn("initialCity={city.name}", content)
+
+        comp_file = WORKSPACE / "src" / "components" / "GoogleSnippetPreviewer.tsx"
+        comp_content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("initialCity?: string", comp_content)
+
 if __name__ == "__main__":
     unittest.main()

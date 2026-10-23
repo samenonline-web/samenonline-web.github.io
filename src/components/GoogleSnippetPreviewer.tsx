@@ -18,12 +18,20 @@ import {
 
 interface GoogleSnippetPreviewerProps {
   onRequestQuote?: () => void;
+  initialCity?: string;
+  initialBusinessName?: string;
+  initialService?: string;
 }
 
-export default function GoogleSnippetPreviewer({ onRequestQuote }: GoogleSnippetPreviewerProps) {
-  const [businessName, setBusinessName] = useState('Schildersbedrijf Van Dijk');
-  const [city, setCity] = useState('Utrecht');
-  const [service, setService] = useState('Schilderwerk & Kozijnen');
+export default function GoogleSnippetPreviewer({
+  onRequestQuote,
+  initialCity = 'Utrecht',
+  initialBusinessName = 'Schildersbedrijf Van Dijk',
+  initialService = 'Schilderwerk & Kozijnen',
+}: GoogleSnippetPreviewerProps) {
+  const [businessName, setBusinessName] = useState(initialBusinessName);
+  const [city, setCity] = useState(initialCity);
+  const [service, setService] = useState(initialService);
   const [customDescription, setCustomDescription] = useState('');
   const [viewMode, setViewMode] = useState<'mobile' | 'desktop'>('mobile');
   const [copied, setCopied] = useState(false);

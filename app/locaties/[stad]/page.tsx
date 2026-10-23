@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { CITIES_DATA } from '../../../src/data/cities';
 import { INITIAL_TEMPLATES } from '../../../src/data/templates';
 import InteractiveDemoPlayground, { DemoTabKey } from '../../../src/components/InteractiveDemoPlayground';
+import GoogleSnippetPreviewer from '../../../src/components/GoogleSnippetPreviewer';
 import { 
   MapPin, 
   ArrowLeft, 
@@ -345,6 +346,15 @@ export default async function LocationCityPage({
           </div>
 
           <InteractiveDemoPlayground initialTab={getCityInitialTab(city.id)} />
+        </section>
+
+        {/* GOOGLE SNIPPET PREVIEWER TOOL */}
+        <section className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200/90 dark:border-slate-800 shadow-lg">
+          <GoogleSnippetPreviewer
+            initialCity={city.name}
+            initialService={city.nicheFocus.split(',')[0]}
+            initialBusinessName={`${city.nicheFocus.split(',')[0]} ${city.name}`}
+          />
         </section>
 
         {/* 3 POPULAR PACKAGES */}
