@@ -76,22 +76,22 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         {/* Simulated Browser Viewport Mockup (Google Stitch Pattern) */}
         <div 
           onClick={() => onOpenLivePreview(template)}
-          className="rounded-2xl bg-slate-900 text-slate-100 p-3.5 mb-4 border border-slate-800 shadow-inner group/browser cursor-pointer hover:border-orange-500/50 dark:hover:border-blue-500/50 transition-all overflow-hidden relative"
+          className="rounded-2xl bg-slate-700 dark:bg-slate-900 text-slate-100 p-3.5 mb-4 border border-slate-600 dark:border-slate-800 shadow-inner group/browser cursor-pointer hover:border-orange-400/60 dark:hover:border-blue-500/50 transition-all overflow-hidden relative"
         >
           {/* Browser Address Bar Header */}
           <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-white/10 text-[11px]">
             <div className="flex items-center gap-1.5 shrink-0">
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-500/90 inline-block"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-400/90 inline-block"></span>
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400/90 inline-block"></span>
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/90 inline-block"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/90 inline-block"></span>
             </div>
             
-            <div className="flex-1 min-w-0 bg-slate-800/80 px-2 py-0.5 rounded-md flex items-center gap-1.5 text-slate-400 font-mono text-[10px] truncate">
+            <div className="flex-1 min-w-0 bg-slate-600/80 dark:bg-slate-800/80 px-2 py-0.5 rounded-md flex items-center gap-1.5 text-slate-300 dark:text-slate-400 font-mono text-[10px] truncate">
               <Lock className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
               <span className="truncate">{template.id}.samenonline.nl</span>
             </div>
 
-            <div className="shrink-0 flex items-center gap-1 text-[10px] text-orange-400 dark:text-blue-400 font-bold group-hover/browser:text-orange-300 dark:group-hover/browser:text-blue-300">
+            <div className="shrink-0 flex items-center gap-1 text-[10px] text-orange-300 dark:text-blue-400 font-bold group-hover/browser:text-orange-200 dark:group-hover/browser:text-blue-300">
               <span className="hidden sm:inline">Live</span>
               <ExternalLink className="w-2.5 h-2.5" />
             </div>
@@ -100,21 +100,21 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
           {/* Mini Viewport Preview Body */}
           <div className="h-20 flex flex-col justify-between py-0.5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-orange-400 dark:text-blue-400 flex items-center gap-1">
+              <span className="text-[11px] font-bold text-orange-300 dark:text-blue-400 flex items-center gap-1">
                 <span>⚡</span>
                 <span className="truncate">{template.category}</span>
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-400 text-[10px] font-bold border border-emerald-800/60 shrink-0">
+              <span className="px-1.5 py-0.5 rounded bg-emerald-900/80 dark:bg-emerald-950/80 text-emerald-400 text-[10px] font-bold border border-emerald-700/60 dark:border-emerald-800/60 shrink-0">
                 100/100 Vitals
               </span>
             </div>
 
             <div>
-              <span className="text-xs font-bold text-white line-clamp-1 group-hover/browser:text-orange-300 dark:group-hover/browser:text-blue-300 transition-colors">
+              <span className="text-xs font-bold text-white line-clamp-1 group-hover/browser:text-orange-200 dark:group-hover/browser:text-blue-300 transition-colors">
                 {highlight || subtitle}
               </span>
               <div className="w-full bg-white/10 rounded-full h-1.5 mt-2 overflow-hidden">
-                <div className="bg-gradient-to-r from-orange-500 to-amber-400 dark:from-blue-500 dark:to-cyan-400 h-1.5 rounded-full w-4/5 group-hover/browser:w-full transition-all duration-500"></div>
+                <div className="bg-gradient-to-r from-orange-400 to-amber-300 dark:from-blue-500 dark:to-cyan-400 h-1.5 rounded-full w-4/5 group-hover/browser:w-full transition-all duration-500"></div>
               </div>
             </div>
           </div>
