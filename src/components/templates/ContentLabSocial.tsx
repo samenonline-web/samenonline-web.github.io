@@ -19,6 +19,11 @@ import {
   Sparkles,
   Clock,
   ChevronDown,
+  Printer,
+  FileText,
+  X,
+  Sliders,
+  Calendar,
 } from 'lucide-react';
 
 // Minimal inline brand icons (not in this lucide-react version)
@@ -53,7 +58,43 @@ export const ContentLabSocial: React.FC<TemplateProps> = ({
   const [activeCase, setActiveCase] = useState(0);
   const [followerCount, setFollowerCount] = useState(12400);
   const [activePlatform, setActivePlatform] = useState<'instagram' | 'linkedin' | 'tiktok' | 'youtube'>('instagram');
+  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(['instagram', 'tiktok']);
+  const [includeVideoShoot, setIncludeVideoShoot] = useState(true);
+  const [includeAdsManagement, setIncludeAdsManagement] = useState(false);
+  const [showDossier, setShowDossier] = useState(false);
+  const [dossierToken, setDossierToken] = useState('CL-AUDIT-2026-7731');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const openDossier = () => {
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    setDossierToken(`CL-AUDIT-2026-${rand}`);
+    setShowDossier(true);
+  };
+
+  const togglePlatform = (key: string) => {
+    setSelectedPlatforms((prev) => {
+      if (prev.includes(key)) {
+        return prev.length > 1 ? prev.filter((p) => p !== key) : prev;
+      } else {
+        return [...prev, key];
+      }
+    });
+  };
+
+  const platformPriceMap: Record<string, number> = {
+    instagram: 495,
+    linkedin: 695,
+    tiktok: 595,
+    youtube: 895,
+  };
+
+  const rawPlatformsTotal = selectedPlatforms.reduce((sum, p) => sum + (platformPriceMap[p] || 0), 0);
+  const bundleDiscount = selectedPlatforms.length >= 2 ? rawPlatformsTotal * 0.20 : 0;
+  const discountedPlatformsTotal = rawPlatformsTotal - bundleDiscount;
+  const videoShootCost = includeVideoShoot ? 350 : 0;
+  const adsManagementCost = includeAdsManagement ? 250 : 0;
+  const grandTotalMonthly = discountedPlatformsTotal + videoShootCost + adsManagementCost;
+  const estimatedMonthlyReach = (selectedPlatforms.length * 75000) + (includeVideoShoot ? 50000 : 0) + (includeAdsManagement ? 120000 : 0);
 
   // Simulated live growth animation
   useEffect(() => {
@@ -346,6 +387,139 @@ export const ContentLabSocial: React.FC<TemplateProps> = ({
               ))}
             </div>
           </div>
+
+          {/* Multi-Platform Custom Package & ROI Builder */}
+          <div className={`mt-10 ${bgCard} border rounded-2xl p-6 sm:p-8 shadow-lg`}>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-200 dark:border-zinc-800">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Sliders className="w-4 h-4 text-pink-500" />
+                  <span className="text-xs font-black uppercase tracking-wider text-pink-600">Interactieve Pakket Samensteller</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black">Stel jouw ideale Social Media Mix samen</h3>
+                <p className={`text-xs ${textMuted} mt-1`}>
+                  Combineer 2 of meer kanalen voor automatisch 20% bundelkorting op jouw maandtarief
+                </p>
+              </div>
+              <div className="text-right sm:text-right">
+                <span className="text-[10px] uppercase font-black text-slate-400 block">Verwacht Maandelijks Bereik</span>
+                <span className="text-2xl font-black text-emerald-500">~{estimatedMonthlyReach.toLocaleString('nl-NL')} views</span>
+              </div>
+            </div>
+
+            {/* Platform Selection Checkboxes */}
+            <div className="mb-6">
+              <label className="text-xs font-black block mb-3">Selecteer Jouw Kanalen:</label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {[
+                  { key: 'instagram', label: 'Instagram', icon: <InstaIcon className="w-4 h-4" />, price: 495 },
+                  { key: 'tiktok', label: 'TikTok', icon: <Play className="w-4 h-4" />, price: 595 },
+                  { key: 'linkedin', label: 'LinkedIn', icon: <LinkedInIcon className="w-4 h-4" />, price: 695 },
+                  { key: 'youtube', label: 'YouTube', icon: <YoutubeIcon className="w-4 h-4" />, price: 895 },
+                ].map((item) => {
+                  const isSelected = selectedPlatforms.includes(item.key);
+                  return (
+                    <button
+                      key={item.key}
+                      type="button"
+                      onClick={() => togglePlatform(item.key)}
+                      className={`p-3 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                        isSelected
+                          ? 'border-pink-500 bg-pink-50/50 dark:bg-pink-950/20 ring-2 ring-pink-500/20'
+                          : `${bgCard} hover:border-slate-300`
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className={isSelected ? 'text-pink-600' : textMuted}>{item.icon}</div>
+                        <div className={`w-4 h-4 rounded-md flex items-center justify-center border text-[10px] ${
+                          isSelected ? 'bg-pink-500 text-white border-pink-500 font-bold' : 'border-slate-300'
+                        }`}>
+                          {isSelected && '✓'}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="font-extrabold text-xs block">{item.label}</span>
+                        <span className={`text-[10px] ${isSelected ? 'text-pink-600 font-bold' : textMuted}`}>€{item.price}/mnd</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Add-ons */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+              <button
+                type="button"
+                onClick={() => setIncludeVideoShoot(!includeVideoShoot)}
+                className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
+                  includeVideoShoot
+                    ? 'border-pink-500 bg-pink-50/50 dark:bg-pink-950/20'
+                    : `${bgCard} hover:border-slate-300`
+                }`}
+              >
+                <div>
+                  <span className="font-bold text-xs block">Videografie &amp; Shoot op locatie {city} (+€350/mnd)</span>
+                  <span className={`text-[11px] ${textMuted}`}>Maandelijkse opnamedag door professionele videograaf</span>
+                </div>
+                <div className={`w-4 h-4 rounded-md flex items-center justify-center border text-[10px] ${
+                  includeVideoShoot ? 'bg-pink-500 text-white border-pink-500 font-bold' : 'border-slate-300'
+                }`}>
+                  {includeVideoShoot && '✓'}
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIncludeAdsManagement(!includeAdsManagement)}
+                className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
+                  includeAdsManagement
+                    ? 'border-pink-500 bg-pink-50/50 dark:bg-pink-950/20'
+                    : `${bgCard} hover:border-slate-300`
+                }`}
+              >
+                <div>
+                  <span className="font-bold text-xs block">Meta &amp; LinkedIn Ads Beheer (+€250/mnd)</span>
+                  <span className={`text-[11px] ${textMuted}`}>Conversiecampagnes, doelgroeptargeting en wekelijkse split-tests</span>
+                </div>
+                <div className={`w-4 h-4 rounded-md flex items-center justify-center border text-[10px] ${
+                  includeAdsManagement ? 'bg-pink-500 text-white border-pink-500 font-bold' : 'border-slate-300'
+                }`}>
+                  {includeAdsManagement && '✓'}
+                </div>
+              </button>
+            </div>
+
+            {/* Price calculation bar & CTAs */}
+            <div className="pt-4 border-t border-slate-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <span className={`text-xs ${textMuted} font-bold block`}>
+                  Totaal Maandtarief {bundleDiscount > 0 && <span className="text-emerald-500 font-black">(-20% Bundelkorting)</span>}:
+                </span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-black text-pink-600">€{Math.round(grandTotalMonthly).toLocaleString('nl-NL')}</span>
+                  <span className={`text-xs ${textMuted} font-medium`}>/maand excl. BTW</span>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={openDossier}
+                  className={`w-full sm:w-auto px-4 py-3 rounded-xl border ${darkMode ? 'border-zinc-700 hover:bg-zinc-800 text-slate-200' : 'border-slate-300 hover:bg-slate-100 text-slate-800'} text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-colors`}
+                >
+                  <Printer className="w-4 h-4 text-pink-500" />
+                  <span>Print Groeiplan &amp; Audit (PDF)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={onRequestQuote}
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white font-black text-xs shadow-md cursor-pointer transition-all"
+                >
+                  Vraag Dit Groeiplan Aan
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -388,6 +562,129 @@ export const ContentLabSocial: React.FC<TemplateProps> = ({
       <footer className={`py-8 text-center text-xs border-t ${darkMode ? 'bg-zinc-950 border-zinc-800 text-zinc-600' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
         <p>© 2026 {brandName} Social Media Bureau · {city} · <span className="text-pink-500 font-bold">Fictief Demo Concept</span></p>
       </footer>
+
+      {/* Printable Social Media Groeiplan Modal */}
+      {showDossier && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white text-slate-900 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8">
+            <button
+              onClick={() => setShowDossier(false)}
+              className="absolute top-5 right-5 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Print Container */}
+            <div id="printable-groeiplan" className="space-y-6">
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-800 text-[10px] font-black tracking-wider uppercase">
+                      Social Media Groeiplan
+                    </span>
+                    <span className="text-[11px] font-bold text-slate-500">Regio {city}</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                    {brandName} • Strategisch Groeiplan &amp; Audit Dossier
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Content &amp; Community Studio • Dossier Referentie: <span className="font-mono font-bold text-slate-800">{dossierToken}</span>
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="inline-block p-2 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                    <FileText className="w-8 h-8 mx-auto text-pink-600" />
+                    <span className="text-[9px] font-mono text-slate-500 block mt-0.5">{dossierToken}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Channels Breakdown */}
+              <div className="border border-slate-200 rounded-2xl overflow-hidden">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="bg-slate-100 border-b border-slate-200 text-slate-700 font-black">
+                      <th className="py-2.5 px-4">Kanaal / Dienst</th>
+                      <th className="py-2.5 px-4">Frequentie &amp; Specificatie</th>
+                      <th className="py-2.5 px-4 text-right">Maandtarief</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {selectedPlatforms.map((p) => {
+                      const pkg = platformPackages[p as keyof typeof platformPackages];
+                      return (
+                        <tr key={p} className="font-medium text-slate-800">
+                          <td className="py-2.5 px-4 font-bold text-slate-900 capitalize">{p}</td>
+                          <td className="py-2.5 px-4 text-slate-600">{pkg ? pkg.services[0] : 'Volledig kanaalbeheer'}</td>
+                          <td className="py-2.5 px-4 text-right font-black">€{platformPriceMap[p]}/mnd</td>
+                        </tr>
+                      );
+                    })}
+                    {bundleDiscount > 0 && (
+                      <tr className="font-bold text-emerald-700 bg-emerald-50/50">
+                        <td className="py-2 px-4" colSpan={2}>Multikanaal Bundelkorting (-20%)</td>
+                        <td className="py-2 px-4 text-right">-€{bundleDiscount.toFixed(2)}/mnd</td>
+                      </tr>
+                    )}
+                    {includeVideoShoot && (
+                      <tr className="font-medium text-slate-800">
+                        <td className="py-2.5 px-4 font-bold text-slate-900">Shoot op locatie</td>
+                        <td className="py-2.5 px-4 text-slate-600">Professionele videograaf op locatie in {city}</td>
+                        <td className="py-2.5 px-4 text-right font-black">€350/mnd</td>
+                      </tr>
+                    )}
+                    {includeAdsManagement && (
+                      <tr className="font-medium text-slate-800">
+                        <td className="py-2.5 px-4 font-bold text-slate-900">Paid Ads Management</td>
+                        <td className="py-2.5 px-4 text-slate-600">Meta &amp; LinkedIn advertentiebeheer &amp; A/B testing</td>
+                        <td className="py-2.5 px-4 text-right font-black">€250/mnd</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Metrics & Scope Guarantee */}
+              <div className="bg-pink-50/60 border border-pink-200 rounded-2xl p-4 space-y-1.5 text-xs text-slate-800">
+                <span className="text-[10px] font-black uppercase tracking-wider text-pink-800 flex items-center gap-1.5">
+                  <TrendingUp className="w-3.5 h-3.5 text-pink-600" />
+                  Geprojecteerde Groei &amp; Voorwaarden
+                </span>
+                <p>• <strong>Verwacht Bereik:</strong> ~{estimatedMonthlyReach.toLocaleString('nl-NL')} impressies per maand in jouw doelgroep.</p>
+                <p>• <strong>Flexibele Voorwaarden:</strong> Na 3 maanden proefperiode maandelijks opzegbaar per de 1e van de maand.</p>
+                <p>• <strong>Transparante Rapportage:</strong> Live dashboard + maandelijks video-evaluatiegesprek.</p>
+              </div>
+
+              {/* Total & Action Buttons */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <span className="text-[11px] font-bold text-slate-500 block">Maandelijks Investeringstotaal:</span>
+                  <span className="text-2xl font-black text-pink-600">€{Math.round(grandTotalMonthly).toLocaleString('nl-NL')}</span>
+                  <span className="text-xs text-slate-400 block font-medium">Exclusief BTW · Maandelijks gefactureerd</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowDossier(false)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-xs hover:bg-slate-100 cursor-pointer"
+                  >
+                    Sluiten
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => window.print()}
+                    className="px-5 py-2.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-black text-xs shadow-md flex items-center gap-2 cursor-pointer"
+                  >
+                    <Printer className="w-4 h-4" />
+                    <span>Print Groeiplan (PDF)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

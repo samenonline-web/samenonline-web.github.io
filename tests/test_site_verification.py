@@ -778,5 +778,17 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("GWA-BRIEF-2026-", content)
         self.assertIn("Print Projectbriefing (PDF)", content)
 
+    # 73. ContentLabSocial Multi-Platform Package Builder & Printable Groeiplan Dossier
+    def test_content_lab_social_roi_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "ContentLabSocial.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("selectedPlatforms", content)
+        self.assertIn("includeVideoShoot", content)
+        self.assertIn("includeAdsManagement", content)
+        self.assertIn("bundleDiscount", content)
+        self.assertIn("grandTotalMonthly", content)
+        self.assertIn("CL-AUDIT-2026-", content)
+        self.assertIn("Print Groeiplan (PDF)", content)
+
 if __name__ == "__main__":
     unittest.main()
