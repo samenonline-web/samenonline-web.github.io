@@ -209,10 +209,10 @@ export default async function LocationCityPage({
           </nav>
 
           <Link
-            href="/#website-vragenlijst"
+            href="/vragenlijst"
             className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black transition-all shadow-xs"
           >
-            Vrijblijvend Advies
+            Start Keuzehulp
           </Link>
         </div>
       </header>
@@ -263,7 +263,7 @@ export default async function LocationCityPage({
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/#website-vragenlijst"
+              href="/vragenlijst"
               className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-orange-600 hover:bg-orange-500 text-white font-black text-sm transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
             >
               <Sparkles className="w-4 h-4" />

@@ -541,5 +541,11 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("onOpenIdealCheckout", content)
         self.assertIn("Reservering Bevestigen met iDEAL", content)
 
+    # 50. City Pages Direct Internal Links to /vragenlijst
+    def test_city_pages_link_to_dedicated_vragenlijst(self):
+        page_file = WORKSPACE / "app" / "locaties" / "[stad]" / "page.tsx"
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn('href="/vragenlijst"', content)
+
 if __name__ == "__main__":
     unittest.main()
