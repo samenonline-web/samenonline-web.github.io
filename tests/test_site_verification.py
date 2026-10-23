@@ -347,5 +347,20 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("/kennisbank", sitemap_content)
         self.assertIn("ARTICLES_DATA", sitemap_content)
 
+    # 32. City Pages Local FAQ, Reviews & Districts
+    def test_city_pages_local_faq_and_reviews(self):
+        page_file = WORKSPACE / "app" / "locaties" / "[stad]" / "page.tsx"
+        content = page_file.read_text(encoding="utf-8")
+        self.assertIn("city.districts", content)
+        self.assertIn("city.review", content)
+        self.assertIn("city.localFaqs", content)
+        self.assertIn("Geverifieerde Klant in", content)
+
+        data_file = WORKSPACE / "src" / "data" / "cities.ts"
+        data_content = data_file.read_text(encoding="utf-8")
+        self.assertIn("districts:", data_content)
+        self.assertIn("localFaqs:", data_content)
+        self.assertIn("review:", data_content)
+
 if __name__ == "__main__":
     unittest.main()

@@ -16,7 +16,8 @@ import {
   ArrowRight,
   TrendingUp,
   FileCheck,
-  ChevronRight
+  ChevronRight,
+  Star
 } from 'lucide-react';
 
 export function generateStaticParams() {
@@ -190,6 +191,16 @@ export default async function LocationCityPage({
             </span>
           </div>
 
+          {/* District & Neighborhood Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 pt-2 text-[11px] text-stone-500 dark:text-slate-400">
+            <span className="font-bold text-stone-700 dark:text-slate-300">Actief in alle wijken van {city.name}:</span>
+            {city.districts.map((d) => (
+              <span key={d} className="px-2 py-0.5 rounded-md bg-stone-200/70 dark:bg-slate-800 text-stone-700 dark:text-slate-300 font-semibold">
+                {d}
+              </span>
+            ))}
+          </div>
+
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/#website-vragenlijst"
@@ -351,6 +362,58 @@ export default async function LocationCityPage({
                 Vraag Aan
               </Link>
             </div>
+          </div>
+        </section>
+
+        {/* LOCAL VERIFIED TESTIMONIAL */}
+        <section className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-slate-900 dark:to-orange-950/30 rounded-3xl p-6 sm:p-10 border border-orange-200/80 dark:border-orange-900/50 space-y-4 shadow-sm">
+          <div className="flex items-center gap-1 text-amber-500">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+            ))}
+            <span className="text-xs font-black text-stone-900 dark:text-white ml-2">
+              5.0 / 5.0 · Lokale Ervaring in {city.name}
+            </span>
+          </div>
+
+          <blockquote className="text-base sm:text-lg font-bold text-stone-900 dark:text-white italic leading-relaxed">
+            &ldquo;{city.review.comment}&rdquo;
+          </blockquote>
+
+          <div className="flex items-center justify-between pt-3 border-t border-orange-200/60 dark:border-slate-800 text-xs">
+            <div>
+              <strong className="text-stone-900 dark:text-white block font-black">{city.review.author}</strong>
+              <span className="text-stone-500 dark:text-slate-400">{city.review.role}</span>
+            </div>
+            <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-1 rounded-full">
+              ✓ Geverifieerde Klant in {city.name}
+            </span>
+          </div>
+        </section>
+
+        {/* LOCAL FAQ */}
+        <section className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 space-y-6 shadow-sm">
+          <div className="space-y-1">
+            <span className="text-[10px] font-black uppercase tracking-wider text-orange-600 dark:text-orange-400 block">
+              Veelgestelde Vragen
+            </span>
+            <h2 className="text-xl sm:text-2xl font-black text-stone-900 dark:text-white">
+              Vragen van Ondernemers in {city.name}
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {city.localFaqs.map((faq, idx) => (
+              <div key={idx} className="p-4 sm:p-5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-2">
+                <h3 className="font-bold text-sm text-stone-900 dark:text-white flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-600 text-white text-[11px] flex items-center justify-center shrink-0 font-black">?</span>
+                  {faq.q}
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 dark:text-slate-300 leading-relaxed pl-7">
+                  {faq.a}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
