@@ -15,6 +15,8 @@ import {
   Award,
   Eye,
   Camera,
+  Printer,
+  Calculator,
 } from 'lucide-react';
 
 interface TattooStyle {
@@ -61,6 +63,8 @@ export const InktEnNaaldStudio: React.FC<TemplateProps> = ({
   const city = customCity || 'Eindhoven & Strijp-S';
 
   const [activeStyle, setActiveStyle] = useState<string>('fineline');
+  const [calcSize, setCalcSize] = useState<'klein' | 'medium' | 'groot' | 'sleeve'>('medium');
+  const [calcDetail, setCalcDetail] = useState<'lines' | 'shaded' | 'color'>('shaded');
   const [intakeSuccess, setIntakeSuccess] = useState(false);
   const [intakeData, setIntakeData] = useState({
     name: '',
@@ -70,6 +74,20 @@ export const InktEnNaaldStudio: React.FC<TemplateProps> = ({
     estimatedSize: 'Klein (tot 7 cm)',
     description: '',
   });
+
+  // Tattoo Price & Duration Estimator
+  const baseTattooPrice = calcSize === 'klein' ? 110 : calcSize === 'medium' ? 220 : calcSize === 'groot' ? 450 : 950;
+  const detailMultiplier = calcDetail === 'lines' ? 1 : calcDetail === 'shaded' ? 1.25 : 1.5;
+  const minEstPrice = Math.round(baseTattooPrice * detailMultiplier);
+  const maxEstPrice = Math.round(minEstPrice * 1.3);
+  const estimatedDuration =
+    calcSize === 'klein'
+      ? '1 - 1,5 uur'
+      : calcSize === 'medium'
+      ? '2 - 3,5 uur'
+      : calcSize === 'groot'
+      ? '4 - 6 uur'
+      : 'Dagsessie / Multi-sessie';
 
   const activeStyleObj = TATTOO_STYLES.find((s) => s.id === activeStyle) || TATTOO_STYLES[0];
 
@@ -176,20 +194,78 @@ export const InktEnNaaldStudio: React.FC<TemplateProps> = ({
               </div>
 
               {intakeSuccess ? (
-                <div className="py-8 text-center space-y-3">
-                  <div className="w-14 h-14 bg-emerald-950 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/30">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="py-4 space-y-4">
+                  <div className="text-center space-y-1.5">
+                    <div className="w-12 h-12 bg-emerald-950 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/30">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <h4 className="font-black text-base text-white">Tattoo Aanvraag Ontvangen!</h4>
+                    <p className="text-xs text-stone-400 max-w-xs mx-auto">
+                      Bedankt {intakeData.name}! Onze studio coördinator neemt binnen 48 uur contact op voor het intakegesprek.
+                    </p>
                   </div>
-                  <h4 className="font-black text-base text-white">Tattoo Aanvraag Ontvangen!</h4>
-                  <p className="text-xs text-stone-400 max-w-xs mx-auto">
-                    Thanks {intakeData.name}! Onze studio coördinator bekijkt jouw idee en neemt binnen 48 uur contact op met een richtprijs en beschikbare data.
-                  </p>
-                  <button
-                    onClick={() => setIntakeSuccess(false)}
-                    className="text-xs font-bold text-stone-400 underline cursor-pointer mt-2"
-                  >
-                    Nog een idee doorgeven
-                  </button>
+
+                  {/* Printable Studio Intake Dossier */}
+                  <div className="p-4 rounded-2xl border-2 border-dashed border-stone-700 bg-stone-950 space-y-3">
+                    <div className="flex justify-between items-start border-b pb-2 border-stone-800">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
+                          Tattoo Intake & Dossierbon
+                        </span>
+                        <span className="font-black text-sm text-white">{brandName}</span>
+                      </div>
+                      <span className="text-[10px] font-mono bg-stone-800 text-stone-300 px-2 py-0.5 rounded font-bold">
+                        INKT-EIN-2026-X
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs text-stone-300">
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Klant</span>
+                        <span className="font-bold text-white">{intakeData.name}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Plaatsing & Formaat</span>
+                        <span className="font-bold">{intakeData.placement} • {intakeData.estimatedSize}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Stijl</span>
+                        <span className="font-bold text-amber-400">{activeStyleObj.name}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-500 block">Studio Locatie</span>
+                        <span className="font-bold">{city}</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-stone-900 p-2.5 rounded-xl border border-stone-800 text-[11px] space-y-1">
+                      <span className="font-bold text-amber-400 block">Richtlijnen voor de tattoo-sessie:</span>
+                      <ul className="list-disc list-inside text-stone-300 text-[10px] space-y-0.5">
+                        <li>Geldig legitimatiebewijs (16+ wetgeving verplicht)</li>
+                        <li>Geen alcohol of bloedverdunners 24 uur vooraf</li>
+                        <li>Draag comfortabele, donkere kleding die los zit</li>
+                        <li>Eet een stevige maaltijd vooraf en neem wat zoets mee</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => window.print()}
+                      className="flex-1 py-2.5 rounded-xl bg-amber-500 text-stone-950 text-xs font-black flex items-center justify-center gap-1.5 shadow hover:bg-amber-400 cursor-pointer"
+                    >
+                      <Printer className="w-3.5 h-3.5" />
+                      <span>Print Intakebon (PDF)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIntakeSuccess(false)}
+                      className="px-3 py-2.5 rounded-xl border border-stone-700 text-stone-300 text-xs font-bold hover:bg-stone-800 cursor-pointer"
+                    >
+                      Nieuwe Aanvraag
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleIntakeSubmit} className="space-y-3">
@@ -315,6 +391,94 @@ export const InktEnNaaldStudio: React.FC<TemplateProps> = ({
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Tattoo Richtprijs & Sessieduur Calculator */}
+          <div className="mt-12 bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-8 max-w-4xl mx-auto shadow-2xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-800">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Calculator className="w-5 h-5 text-amber-500" />
+                  <h3 className="text-xl font-black text-white">Tattoo Richtprijs & Sessieduur Rekenmodule</h3>
+                </div>
+                <p className="text-xs text-stone-400">
+                  Transparante inschatting op basis van formaat en complexiteit van de uitwerking.
+                </p>
+              </div>
+
+              <div className="text-right sm:text-right">
+                <span className="text-[10px] font-bold text-stone-500 uppercase tracking-widest block">Geschatte Richtprijs:</span>
+                <span className="text-2xl sm:text-3xl font-black text-amber-400">
+                  €{minEstPrice} - €{maxEstPrice}
+                </span>
+                <span className="text-[10px] text-stone-400 block mt-0.5 font-bold">
+                  ⏱️ Geschatte duur: {estimatedDuration}
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <label className="text-xs font-bold text-stone-300 block mb-2">1. Kies gewenst formaat:</label>
+                <div className="grid grid-cols-2 gap-2 text-xs font-bold">
+                  {[
+                    { id: 'klein', label: 'Klein (tot 7 cm)' },
+                    { id: 'medium', label: 'Medium (7-15 cm)' },
+                    { id: 'groot', label: 'Groot (15-25 cm)' },
+                    { id: 'sleeve', label: 'Sleeve / Backpiece' },
+                  ].map((s) => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => setCalcSize(s.id as any)}
+                      className={`py-2 px-2 text-center rounded-xl border text-[11px] transition-all cursor-pointer ${
+                        calcSize === s.id
+                          ? 'border-amber-500 bg-amber-500/20 text-amber-300'
+                          : 'border-stone-700 bg-stone-800/80 text-stone-400 hover:text-white'
+                      }`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-stone-300 block mb-2">2. Niveau van detaillering:</label>
+                <div className="grid grid-cols-3 gap-2 text-xs font-bold">
+                  {[
+                    { id: 'lines', label: 'Enkel Lijnwerk' },
+                    { id: 'shaded', label: 'Shading & Dotwork' },
+                    { id: 'color', label: 'Full Realism / Kleur' },
+                  ].map((d) => (
+                    <button
+                      key={d.id}
+                      type="button"
+                      onClick={() => setCalcDetail(d.id as any)}
+                      className={`py-2 px-2 text-center rounded-xl border text-[11px] transition-all cursor-pointer ${
+                        calcDetail === d.id
+                          ? 'border-amber-500 bg-amber-500/20 text-amber-300'
+                          : 'border-stone-700 bg-stone-800/80 text-stone-400 hover:text-white'
+                      }`}
+                    >
+                      {d.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <span className="text-xs text-stone-400">
+                Inclusief ontwerp, medische nazorgfolie en 1 gratis touch-up binnen 3 maanden in {city}.
+              </span>
+              <button
+                onClick={onRequestQuote}
+                className={`w-full sm:w-auto px-6 py-2.5 rounded-xl text-white font-black text-xs shadow-md transition-all cursor-pointer ${theme.primary} hover:opacity-90`}
+              >
+                Vraag Dit Concept Aan
+              </button>
+            </div>
           </div>
         </div>
       </section>

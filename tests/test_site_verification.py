@@ -654,5 +654,17 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Print Draaiboek (PDF)", content)
         self.assertIn("Stel Jouw Ideale Fotosessie Samen", content)
 
+    # 62. InktEnNaaldStudio Tattoo Price & Duration Estimator and Printable Intake Dossier
+    def test_inkt_en_naald_calculator_and_dossier(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "InktEnNaaldStudio.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("minEstPrice", content)
+        self.assertIn("maxEstPrice", content)
+        self.assertIn("calcSize", content)
+        self.assertIn("calcDetail", content)
+        self.assertIn("INKT-EIN-2026-X", content)
+        self.assertIn("Print Intakebon (PDF)", content)
+        self.assertIn("Tattoo Richtprijs & Sessieduur Rekenmodule", content)
+
 if __name__ == "__main__":
     unittest.main()
