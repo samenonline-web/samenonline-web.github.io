@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Heart, Sparkles, Clock, Check, ArrowRight, MapPin, Globe, Lock, ExternalLink } from 'lucide-react';
+import { Heart, Sparkles, Clock, Check, MapPin, Globe, Lock, ExternalLink, Star } from 'lucide-react';
 import { WebTemplate, Language } from '../types/company';
 
 interface TemplateCardProps {
@@ -28,15 +28,29 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
   const features = lang === 'nl' ? template.featuresNl : template.features;
 
   return (
-    <div className="group bg-white dark:bg-slate-900/90 rounded-3xl p-6 border-2 border-orange-100/90 dark:border-slate-800 hover:border-orange-300 dark:hover:border-slate-700 hover:shadow-xl hover:shadow-orange-500/10 dark:hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col justify-between relative shadow-xs">
-      
+    <div
+      className={`group bg-white dark:bg-slate-900/90 rounded-3xl p-6 border-2 transition-all duration-300 flex flex-col justify-between relative hover:-translate-y-1.5 ${
+        template.isFeatured
+          ? 'border-orange-300 dark:border-blue-600/80 shadow-md ring-2 ring-orange-500/20 dark:ring-blue-500/25'
+          : 'border-orange-100/90 dark:border-slate-800 hover:border-orange-300 dark:hover:border-slate-700 shadow-xs hover:shadow-xl hover:shadow-orange-500/10 dark:hover:shadow-indigo-500/10'
+      }`}
+    >
+      {/* Featured ribbon pill */}
+      {template.isFeatured && (
+        <div className="absolute -top-3 left-6 z-10 px-3 py-0.5 rounded-full bg-gradient-to-r from-orange-600 to-amber-500 dark:from-blue-600 dark:to-cyan-500 text-white text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
+          <Sparkles className="w-2.5 h-2.5" />
+          <span>{lang === 'nl' ? 'Uitgelicht Concept' : 'Featured Concept'}</span>
+        </div>
+      )}
+
       {/* Top Header: Logo Avatar, Badges & Bookmark */}
       <div>
         <div className="flex items-start justify-between gap-3 mb-4">
-          
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            {/* Logo Avatar - strictly square, never squished by long titles */}
-            <div className={`w-14 h-14 min-w-[56px] min-h-[56px] shrink-0 aspect-square rounded-2xl ${template.logoBg} flex items-center justify-center text-white font-extrabold text-xl shadow-md select-none transform group-hover:scale-105 transition-transform`}>
+            {/* Logo Avatar */}
+            <div
+              className={`w-14 h-14 min-w-[56px] min-h-[56px] shrink-0 aspect-square rounded-2xl ${template.logoBg} flex items-center justify-center text-white font-extrabold text-xl shadow-md select-none transform group-hover:scale-105 transition-transform`}
+            >
               {template.logoText}
             </div>
 
@@ -48,11 +62,19 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
               </div>
               <div className="flex items-center gap-2 mt-1 flex-wrap">
                 <span className="text-xs font-bold text-orange-700 dark:text-blue-300 bg-orange-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md inline-block border border-orange-200/60 dark:border-blue-800/60 shrink-0">
-                  {template.priceTier} Concept
+                  {template.priceTier}
                 </span>
-                <span className="text-[11px] font-bold text-stone-600 dark:text-slate-300 bg-stone-100 dark:bg-slate-800 px-2 py-0.5 rounded-md border border-stone-200 dark:border-slate-700 flex items-center gap-1 shrink-0">
-                  Demo Concept
-                </span>
+
+                {/* Star rating pill */}
+                {template.rating > 0 && (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-md border border-amber-200 dark:border-amber-800/40 shrink-0">
+                    <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
+                    <span>{template.rating.toFixed(1)}</span>
+                    {template.reviewCount > 0 && (
+                      <span className="text-[10px] text-amber-600/80 dark:text-amber-400/80">({template.reviewCount})</span>
+                    )}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -74,7 +96,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         </div>
 
         {/* Simulated Browser Viewport Mockup (Google Stitch Pattern) */}
-        <div 
+        <div
           onClick={() => onOpenLivePreview(template)}
           className="rounded-2xl bg-slate-700 dark:bg-slate-900 text-slate-100 p-3.5 mb-4 border border-slate-600 dark:border-slate-800 shadow-inner group/browser cursor-pointer hover:border-orange-400/60 dark:hover:border-blue-500/50 transition-all overflow-hidden relative"
         >
@@ -85,7 +107,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400/90 inline-block"></span>
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/90 inline-block"></span>
             </div>
-            
+
             <div className="flex-1 min-w-0 bg-slate-600/80 dark:bg-slate-800/80 px-2 py-0.5 rounded-md flex items-center gap-1.5 text-slate-300 dark:text-slate-400 font-mono text-[10px] truncate">
               <Lock className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
               <span className="truncate">{template.id}.samenonline.nl</span>
@@ -130,6 +152,11 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
               {badge}
             </span>
           ))}
+          {template.idealReady && (
+            <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40">
+              iDEAL Ready
+            </span>
+          )}
         </div>
 
         {/* Subtitle */}
@@ -158,30 +185,35 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
 
       {/* Footer Info & Actions */}
       <div className="pt-4 border-t border-orange-100 dark:border-slate-800 flex flex-col gap-3">
-        
         {/* Build Days & Location */}
         <div className="flex items-center justify-between text-xs text-stone-600 dark:text-slate-400 font-semibold">
           <div className="flex items-center gap-1 text-stone-700 dark:text-slate-300">
             <Clock className="w-3.5 h-3.5 text-orange-600 dark:text-blue-400" />
-            <span>{template.estimatedBuildDays} {lang === 'nl' ? 'dagen bouwtijd' : 'days build'}</span>
+            <span>
+              {template.estimatedBuildDays} {lang === 'nl' ? 'dagen bouwtijd' : 'days build'}
+            </span>
           </div>
 
           <div className="flex items-center gap-1 text-stone-600 dark:text-slate-400">
             <MapPin className="w-3.5 h-3.5 text-orange-600 dark:text-blue-400" />
-            <span>{template.city}, {template.province}</span>
+            <span>
+              {template.city}, {template.province}
+            </span>
           </div>
         </div>
 
         {/* Actions */}
         <div className="grid grid-cols-2 gap-2">
           <button
+            type="button"
             onClick={() => onOpenDetails(template)}
             className="w-full py-2.5 rounded-xl bg-orange-50/70 dark:bg-slate-800/80 hover:bg-orange-100 dark:hover:bg-slate-700 text-stone-800 dark:text-slate-200 font-bold text-xs border border-orange-200/70 dark:border-slate-700 transition-colors cursor-pointer"
           >
             {lang === 'nl' ? 'Bekijk Details' : 'View Details'}
           </button>
-          
+
           <button
+            type="button"
             onClick={() => onOpenLivePreview(template)}
             className="w-full py-2.5 rounded-xl bg-orange-700 hover:bg-orange-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-orange-700/20 dark:shadow-blue-900/30 cursor-pointer"
           >
@@ -189,9 +221,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
             <span>{lang === 'nl' ? 'Bekijk Template' : 'View Template'}</span>
           </button>
         </div>
-
       </div>
-
     </div>
   );
 };

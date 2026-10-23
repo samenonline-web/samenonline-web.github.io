@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Navbar } from '@/src/components/Navbar';
 import { Hero } from '../src/components/Hero';
+import { StatsBar } from '../src/components/StatsBar';
 import { TemplateCarousel } from '../src/components/TemplateCarousel';
 import { FilterBar, QuickFilterType, SortByType } from '../src/components/FilterBar';
 import { TemplateCard } from '../src/components/TemplateCard';
@@ -321,6 +322,9 @@ export default function Home() {
         onSelectCategory={setSelectedCategory}
       />
 
+      {/* Trust Metrics Ribbon */}
+      <StatsBar lang={lang} />
+
       {/* Featured Templates Interactive Carousel */}
       <TemplateCarousel
         templates={templates}
@@ -608,6 +612,13 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Decorative Wave Divider */}
+        <div aria-hidden="true" className="w-full overflow-hidden leading-none my-10 pointer-events-none opacity-50 dark:opacity-30">
+          <svg viewBox="0 0 1200 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 text-orange-300 dark:text-blue-500 fill-current" preserveAspectRatio="none">
+            <path d="M0 16C150 28 350 4 500 16C650 28 850 4 1000 16C1100 24 1160 20 1200 16V32H0V16Z" />
+          </svg>
+        </div>
+
         {/* Section: Waarom Next.js? (Speed audit, CMS comparison & Before/After) */}
         <section id="waarom-nextjs" className="scroll-mt-28 space-y-10 mt-14">
           <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
@@ -666,18 +677,16 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section: Hoe Wij Werken & Checklist */}
-        <section id="hoe-het-werkt" className="scroll-mt-28 space-y-10 mt-14">
-          <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
-            <div className="text-center max-w-2xl mx-auto mb-6">
-              <span className="text-xs font-black uppercase tracking-wider text-orange-700 dark:text-blue-400 bg-orange-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-orange-200/60 dark:border-blue-800/60 inline-block mb-2">
-                📋 Duidelijke Werkwijze
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white">
-                {lang === 'nl' ? 'Van idee naar live website in 4 stappen' : 'From idea to live site in 4 steps'}
-              </h2>
-            </div>
+        {/* Decorative Wave Divider */}
+        <div aria-hidden="true" className="w-full overflow-hidden leading-none my-10 pointer-events-none opacity-50 dark:opacity-30">
+          <svg viewBox="0 0 1200 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 text-amber-300 dark:text-cyan-500 fill-current" preserveAspectRatio="none">
+            <path d="M0 16C200 4 400 28 600 16C800 4 1000 28 1200 16V32H0V16Z" />
+          </svg>
+        </div>
 
+        {/* Section: Hoe Wij Werken & Checklist */}
+        <section id="hoe-het-werkt" className="scroll-mt-28 space-y-10">
+          <div className="border-t border-orange-100 dark:border-slate-800 pt-8">
             {/* 4-Step "Hoe Wij Werken" Section */}
             <HowItWorksSection
               lang={lang}
