@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Heart, MapPin, ShieldCheck, Mail, Check, Copy, ArrowRight, Sparkles } from 'lucide-react';
 import { CategoryType, Language } from '../types/company';
+import { CITIES_DATA } from '../data/cities';
 
 interface FooterProps {
   lang: Language;
@@ -329,6 +331,45 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
             </ul>
+          </div>
+        </div>
+
+        {/* SEO Internal Link Mesh: 12 Cities & Kennisbank */}
+        <div className="pt-8 pb-8 border-t border-stone-800/80 dark:border-slate-800/80 grid grid-cols-1 md:grid-cols-2 gap-8 text-xs">
+          <div>
+            <p className="font-black text-white text-xs uppercase tracking-wider mb-3 flex items-center gap-2">
+              <MapPin className="w-3.5 h-3.5 text-orange-500 dark:text-blue-400" />
+              <span>Lokale Websites Laten Maken in Nederland</span>
+            </p>
+            <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-stone-400 dark:text-slate-400 font-medium">
+              {CITIES_DATA.map((city) => (
+                <Link
+                  key={city.id}
+                  href={`/locaties/${city.id}`}
+                  className="hover:text-orange-400 dark:hover:text-blue-400 transition-colors"
+                >
+                  Website {city.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="font-black text-white text-xs uppercase tracking-wider mb-3 flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-orange-500 dark:text-blue-400" />
+              <span>Kennisbank & Eerlijk Webdesign Advies</span>
+            </p>
+            <div className="flex flex-col gap-1.5 text-stone-400 dark:text-slate-400 font-medium">
+              <Link href="/kennisbank" className="hover:text-orange-400 dark:hover:text-blue-400 transition-colors font-bold text-white">
+                → Naar alle Kennisbank gidsen
+              </Link>
+              <Link href="/kennisbank/waarom-nextjs-sneller-is-dan-wordpress" className="hover:text-orange-400 dark:hover:text-blue-400 transition-colors">
+                Waarom Next.js Sneller Is Dan WordPress (Met Benchmark)
+              </Link>
+              <Link href="/kennisbank/wat-kost-een-website-laten-maken-in-2026" className="hover:text-orange-400 dark:hover:text-blue-400 transition-colors">
+                Wat Kost Een Website Laten Maken in 2026?
+              </Link>
+            </div>
           </div>
         </div>
 

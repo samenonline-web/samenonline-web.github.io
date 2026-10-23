@@ -403,5 +403,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         comp_content = comp_file.read_text(encoding="utf-8")
         self.assertIn("initialCity?: string", comp_content)
 
+    # 37. Footer SEO Internal Link Mesh to Cities and Kennisbank
+    def test_footer_seo_internal_links(self):
+        footer_file = WORKSPACE / "src" / "components" / "Footer.tsx"
+        content = footer_file.read_text(encoding="utf-8")
+        self.assertIn("CITIES_DATA.map", content)
+        self.assertIn("/locaties/${city.id}", content)
+        self.assertIn("href=\"/kennisbank\"", content)
+        self.assertIn("href=\"/kennisbank/waarom-nextjs-sneller-is-dan-wordpress\"", content)
+
 if __name__ == "__main__":
     unittest.main()
