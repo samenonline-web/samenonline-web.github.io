@@ -343,5 +343,53 @@ class TestMobileViewports(unittest.TestCase):
 
         context.close()
 
+    def test_17_kennisbank_article_responsive_and_questionnaire_routing(self):
+        context = self.browser.new_context(viewport={"width": 375, "height": 667})
+        page = context.new_page()
+        res = page.goto("http://localhost:3000/kennisbank/waarom-nextjs-sneller-is-dan-wordpress", wait_until="networkidle")
+        self.assertIsNotNone(res)
+        self.assertEqual(res.status, 200)
+
+        # Assert no horizontal overflow at 375px iPhone SE
+        scroll_width = page.evaluate("() => document.documentElement.scrollWidth")
+        inner_width = page.evaluate("() => window.innerWidth")
+        self.assertLessEqual(scroll_width, inner_width + 1, f"Horizontal overflow on Kennisbank article at 375px: scrollWidth={scroll_width}")
+
+        # Check questionnaire CTA button exists
+        cta_btn = page.locator("a:has-text('Start Vragenlijst voor Dit Thema')")
+        self.assertTrue(cta_btn.count() > 0, "Kennisbank CTA button for questionnaire missing")
+        href = cta_btn.first.get_attribute("href") or ""
+        self.assertIn("/vragenlijst?onderwerp=", href)
+        context.close()
+
+    def test_18_client_portal_persistence_and_agreement_modal(self):
+        context = self.browser.new_context(viewport={"width": 390, "height": 844})
+        page = context.new_page()
+        page.goto("http://localhost:3000", wait_until="networkidle")
+
+        portal_sec = page.locator("#klantenportaal-simulator")
+        self.assertTrue(portal_sec.count() > 0, "Client portal section must exist")
+
+        # Click agreement trigger
+        agreement_btn = page.locator("button:has-text('Bekijk & Print 5-Dagen Garantieovereenkomst')")
+        self.assertTrue(agreement_btn.count() > 0, "Agreement trigger button must exist")
+        agreement_btn.click()
+        page.wait_for_timeout(300)
+
+        # Verify modal content
+        modal_header = page.locator("text=5-Dagen Samenwerkingsovereenkomst")
+        self.assertTrue(modal_header.is_visible(), "Agreement modal should be visible")
+
+        token_badge = page.locator("text=SO-GARANTIE-2026")
+        self.assertTrue(token_badge.is_visible(), "Guarantee token badge should be visible")
+
+        # Close modal
+        close_btn = page.locator("button:has-text('Sluiten')")
+        self.assertTrue(close_btn.is_visible())
+        close_btn.click()
+        page.wait_for_timeout(200)
+        self.assertFalse(modal_header.is_visible(), "Modal should close on button click")
+        context.close()
+
 if __name__ == "__main__":
     unittest.main()
