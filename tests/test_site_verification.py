@@ -576,5 +576,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("Print Werkprogramma (PDF)", content)
         self.assertIn("VSR-KMS normering", content)
 
+    # 54. FietsCraft Configurator City Props, WKR Lease Breakdown, and Printable Spec
+    def test_fietscraft_configurator_city_and_lease(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "FietsCraftConfigurator.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("Zakelijke Lease & WKR Fietsplan", content)
+        self.assertIn("Print Specificatie", content)
+
 if __name__ == "__main__":
     unittest.main()

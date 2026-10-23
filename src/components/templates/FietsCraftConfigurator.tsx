@@ -17,6 +17,8 @@ import {
   Calendar,
   X,
   Star,
+  Printer,
+  FileText,
 } from 'lucide-react';
 
 interface FrameColorOption {
@@ -71,7 +73,11 @@ export const FietsCraftConfigurator: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
 }) => {
+  const brandName = customBrandName || 'FietsCraft B.V.';
+  const city = customCity || 'Rotterdam • Handgemaakte E-Bikes';
   const [frameColor, setFrameColor] = useState<FrameColorOption['id']>('matzwart');
   const [motorType, setMotorType] = useState<'city' | 'sport' | 'cargo'>('sport');
   const [batterySize, setBatterySize] = useState<'standard' | 'extra'>('standard');
@@ -125,7 +131,7 @@ export const FietsCraftConfigurator: React.FC<TemplateProps> = ({
       {/* Top Banner */}
       <div className={`py-1.5 px-4 text-center text-xs font-bold text-white ${theme.primary} flex items-center justify-center gap-2 shadow-xs`}>
         <Wrench className="w-3.5 h-3.5" />
-        <span>Handgemaakt in Rotterdam • Rijklaar binnen 14 dagen aan huis geleverd met 5 jaar garantie</span>
+        <span>Vakmanschap uit {city} • Rijklaar binnen 14 dagen aan huis geleverd met 5 jaar garantie</span>
       </div>
 
       {/* Header */}
@@ -135,8 +141,8 @@ export const FietsCraftConfigurator: React.FC<TemplateProps> = ({
             FC
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">FietsCraft B.V.</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Rotterdam • Handgemaakte E-Bikes</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandName}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{city}</span>
           </div>
         </div>
 
@@ -415,6 +421,17 @@ export const FietsCraftConfigurator: React.FC<TemplateProps> = ({
                 </span>
               </div>
 
+              {/* Lease / WKR Fietsplan Callout */}
+              <div className="mb-4 p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-[11px] flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-amber-900 dark:text-amber-300 block">Zakelijke Lease & WKR Fietsplan:</span>
+                  <span className="text-amber-800 dark:text-amber-400">Vanaf €{Math.round(totalPrice / 36)} / mnd (36 mnd lease)</span>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 font-bold text-[10px]">
+                  Tot 40% Voordeel
+                </span>
+              </div>
+
               <div className="space-y-2">
                 <button
                   onClick={onRequestQuote}
@@ -422,12 +439,21 @@ export const FietsCraftConfigurator: React.FC<TemplateProps> = ({
                 >
                   Vraag Vrijblijvende Offerte Aan
                 </button>
-                <button
-                  onClick={() => setIsTestRideModalOpen(true)}
-                  className="w-full py-2.5 rounded-xl bg-white border border-stone-300 text-stone-800 font-extrabold text-xs hover:bg-stone-50 cursor-pointer shadow-xs"
-                >
-                  Plan Gratis Proefrit Aan Huis
-                </button>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => window.print()}
+                    className="w-full py-2.5 rounded-xl bg-white border border-stone-300 text-stone-800 font-bold text-xs hover:bg-stone-50 cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
+                  >
+                    <Printer className="w-3.5 h-3.5 text-stone-600" />
+                    <span>Print Specificatie</span>
+                  </button>
+                  <button
+                    onClick={() => setIsTestRideModalOpen(true)}
+                    className="w-full py-2.5 rounded-xl bg-white border border-stone-300 text-stone-800 font-bold text-xs hover:bg-stone-50 cursor-pointer shadow-xs"
+                  >
+                    Gratis Proefrit
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-center justify-center gap-4 text-[10px] font-bold text-stone-500 mt-4">
