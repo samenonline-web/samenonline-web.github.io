@@ -23,7 +23,12 @@ export const ZonnePionierSolar: React.FC<TemplateProps> = ({
   isDarkMode,
   onToggleDarkMode,
   onRequestQuote,
+  customBrandName,
+  customCity,
 }) => {
+  const brandTitle = customBrandName || 'ZonnePionier Solar';
+  const cityName = customCity || 'Arnhem & Utrecht';
+
   const [panelCount, setPanelCount] = useState(12);
   const [roofType, setRoofType] = useState<'schuin' | 'plat'>('schuin');
   const [includeBattery, setIncludeBattery] = useState(true);
@@ -72,7 +77,7 @@ export const ZonnePionierSolar: React.FC<TemplateProps> = ({
       {/* Top Banner */}
       <div className={`py-1.5 px-4 text-center text-xs font-bold text-white ${theme.primary} flex items-center justify-center gap-2 shadow-xs`}>
         <Sun className="w-3.5 h-3.5 text-amber-200" />
-        <span>Erkend Installateur Zonnekeur & InstallQ • Montage binnen 14 dagen in heel Nederland</span>
+        <span>Erkend Installateur Zonnekeur & InstallQ • Montage binnen 14 dagen in regio {cityName}</span>
       </div>
 
       {/* Header */}
@@ -82,8 +87,8 @@ export const ZonnePionierSolar: React.FC<TemplateProps> = ({
             ZP
           </div>
           <div>
-            <span className="font-black text-base sm:text-lg tracking-tight block">ZonnePionier Solar</span>
-            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">Arnhem & Utrecht • Erkende Zonne-installaties</span>
+            <span className="font-black text-base sm:text-lg tracking-tight block">{brandTitle}</span>
+            <span className="text-[10px] text-stone-500 font-medium hidden sm:block">{cityName} • Erkende Zonne-installaties</span>
           </div>
         </div>
 
@@ -294,12 +299,24 @@ export const ZonnePionierSolar: React.FC<TemplateProps> = ({
                 </div>
               </div>
 
-              <button
-                onClick={onRequestQuote}
-                className={`w-full py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md mt-6 cursor-pointer`}
-              >
-                Ontvang Vrijblijvende Dakscan & Offerte
-              </button>
+              <div className="flex flex-col sm:flex-row gap-2 mt-6">
+                <button
+                  type="button"
+                  onClick={onRequestQuote}
+                  className={`flex-1 py-3.5 px-4 rounded-xl ${theme.primary} ${theme.primaryHover} text-white font-black text-xs shadow-md cursor-pointer text-center`}
+                >
+                  Ontvang Vrijblijvende Dakscan & Offerte
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== 'undefined') window.print();
+                  }}
+                  className="py-3.5 px-4 rounded-xl bg-white border border-stone-300 hover:bg-stone-50 text-stone-800 font-extrabold text-xs shadow-xs cursor-pointer text-center"
+                >
+                  📄 Bewaar Zonneplan
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -513,5 +513,14 @@ class TestSamenOnlineVerification(unittest.TestCase):
         footer_content = footer_file.read_text(encoding="utf-8")
         self.assertIn('href="/vragenlijst"', footer_content)
 
+    # 47. ZonnePionier Solar Calculator with City Props and Printable Specification
+    def test_zonne_pionier_solar_calculator(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "ZonnePionierSolar.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("Bewaar Zonneplan", content)
+        self.assertIn("runDakscan", content)
+
 if __name__ == "__main__":
     unittest.main()
