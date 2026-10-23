@@ -23,6 +23,7 @@ import {
   X,
   Clock,
   Calculator,
+  Printer,
 } from 'lucide-react';
 
 interface PropertyItem {
@@ -258,20 +259,68 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
               </div>
 
               {valuationSubmitted ? (
-                <div className="py-8 text-center space-y-3">
-                  <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="py-4 space-y-4">
+                  <div className="text-center space-y-1.5">
+                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <h4 className="font-black text-base text-stone-900 dark:text-white">Aanvraag Waardebepaling Ontvangen!</h4>
+                    <p className="text-xs text-stone-500 max-w-xs mx-auto">
+                      Bedankt {valuationData.name}! Onze NVM-makelaar neemt binnen 24 uur contact op voor een gratis waardebepaling op locatie.
+                    </p>
                   </div>
-                  <h4 className="font-black text-base">Aanvraag Ontvangen!</h4>
-                  <p className="text-xs text-stone-500 max-w-xs mx-auto">
-                    Bedankt {valuationData.name}! Onze NVM-makelaar neemt binnen 24 uur contact op voor een gratis waardebepaling op locatie aan {valuationData.postcode} {valuationData.houseNumber}.
-                  </p>
-                  <button
-                    onClick={() => setValuationSubmitted(false)}
-                    className="text-xs font-bold text-stone-500 underline cursor-pointer mt-2"
-                  >
-                    Nieuwe aanvraag doen
-                  </button>
+
+                  {/* Printable Valuation Dossier Card */}
+                  <div className="p-4 rounded-2xl border-2 border-dashed border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-850 space-y-3">
+                    <div className="flex justify-between items-start border-b pb-2 border-stone-200 dark:border-stone-700">
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-orange-600 block">
+                          NVM Waardebepaling & Dossierbewijs
+                        </span>
+                        <span className="font-black text-sm text-stone-900 dark:text-white">{brandName}</span>
+                      </div>
+                      <span className="text-[10px] font-mono bg-stone-900 text-orange-400 px-2 py-0.5 rounded font-bold">
+                        NVM-TAX-2026-X
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs text-stone-700 dark:text-stone-300">
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Aanvrager</span>
+                        <span className="font-bold text-stone-900 dark:text-white">{valuationData.name}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Adres</span>
+                        <span className="font-bold">{valuationData.postcode} {valuationData.houseNumber}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Regio</span>
+                        <span className="font-bold">{city}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-stone-400 block">Certificering</span>
+                        <span className="font-bold text-emerald-600">NVM & VastgoedPRO</span>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => window.print()}
+                        className="flex-1 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+                      >
+                        <Printer className="w-3.5 h-3.5" />
+                        <span>Print Waardebepaling Dossier (PDF)</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setValuationSubmitted(false)}
+                        className="px-3 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300 text-xs font-bold hover:bg-stone-100 dark:hover:bg-stone-800 cursor-pointer"
+                      >
+                        Nieuw
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleValuationSubmit} className="space-y-3">
@@ -618,23 +667,69 @@ export const MakelaardijVastgoed: React.FC<TemplateProps> = ({
             </button>
 
             {viewingConfirmed ? (
-              <div className="text-center py-6 space-y-3">
-                <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                  <CheckCircle2 className="w-8 h-8" />
+              <div className="text-center py-4 space-y-4">
+                <div className="space-y-1.5">
+                  <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-black text-stone-900 dark:text-white">
+                    Bezichtiging Gereserveerd!
+                  </h3>
+                  <p className="text-xs text-stone-600 dark:text-stone-400 max-w-sm mx-auto leading-relaxed">
+                    Beste <strong>{viewingData.name}</strong>, je tijdslot staat vast. We sturen de brochure naar <strong>{viewingData.email}</strong>.
+                  </p>
                 </div>
-                <h3 className="text-xl font-black text-stone-900 dark:text-white">
-                  Bezichtiging Gereserveerd!
-                </h3>
-                <p className="text-xs text-stone-600 dark:text-stone-400 max-w-sm mx-auto leading-relaxed">
-                  Beste <strong>{viewingData.name}</strong>, je tijdslot op <strong>{viewingTime}</strong> voor <strong>{selectedViewingProperty.title}</strong> staat voorlopig vast. Onze makelaar stuurt de Funda-verkoopbrochure naar <strong>{viewingData.email}</strong>.
-                </p>
-                <div className="pt-4">
-                  <button
-                    onClick={() => setSelectedViewingProperty(null)}
-                    className="px-6 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
-                  >
-                    Venster Sluiten
-                  </button>
+
+                {/* Printable Viewing Voucher Card */}
+                <div className="p-4 rounded-2xl border-2 border-dashed border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-850 space-y-3 text-left">
+                  <div className="flex justify-between items-start border-b pb-2 border-stone-200 dark:border-stone-700">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-orange-600 block">
+                        NVM Bezichtigingspas
+                      </span>
+                      <span className="font-black text-sm text-stone-900 dark:text-white">{brandName}</span>
+                    </div>
+                    <span className="text-[10px] font-mono bg-stone-900 text-orange-400 px-2 py-0.5 rounded font-bold">
+                      NVM-BEZ-2026-X
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-xs text-stone-700 dark:text-stone-300">
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Woning</span>
+                      <span className="font-bold text-stone-900 dark:text-white truncate block">{selectedViewingProperty.title}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Vraagprijs</span>
+                      <span className="font-bold text-orange-600">€{selectedViewingProperty.price.toLocaleString('nl-NL')} k.k.</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Tijdslot</span>
+                      <span className="font-bold text-stone-900 dark:text-white">{viewingTime}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-stone-400 block">Kandidaat</span>
+                      <span className="font-bold">{viewingData.name}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => window.print()}
+                      className="flex-1 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+                    >
+                      <Printer className="w-3.5 h-3.5" />
+                      <span>Print Bezichtigingsbewijs (PDF)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedViewingProperty(null)}
+                      className="px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300 text-xs font-bold hover:bg-stone-100 dark:hover:bg-stone-800 cursor-pointer"
+                    >
+                      Sluiten
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (

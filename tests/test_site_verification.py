@@ -743,5 +743,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("customCity", content)
         self.assertIn("Afhaaltijd in", content)
 
+    # 70. MakelaardijVastgoed NVM Valuation & Viewing Printable Passports
+    def test_makelaardij_vastgoed_dossiers_and_viewing(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "MakelaardijVastgoed.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("NVM-TAX-2026-X", content)
+        self.assertIn("Print Waardebepaling Dossier (PDF)", content)
+        self.assertIn("NVM-BEZ-2026-X", content)
+        self.assertIn("Print Bezichtigingsbewijs (PDF)", content)
+        self.assertIn("NVM & VastgoedPRO", content)
+
 if __name__ == "__main__":
     unittest.main()
