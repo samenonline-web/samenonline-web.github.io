@@ -17,6 +17,7 @@ import {
   Minus,
   MapPin,
   Flame,
+  Printer,
 } from 'lucide-react';
 
 interface BakeryItem {
@@ -512,8 +513,14 @@ export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({
 
             <div className="pt-4 border-t border-stone-200 space-y-3">
               <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs font-bold text-amber-950 flex items-center justify-between">
-                <span>Afhaaltijd morgen:</span>
+                <span>Afhaaltijd in {cityName}:</span>
                 <span className="font-black">{selectedSlot}</span>
+              </div>
+
+              {/* Order token reference */}
+              <div className="flex justify-between items-center text-[11px] text-stone-500 font-bold px-1">
+                <span>Afhaalcode:</span>
+                <span className="font-mono bg-stone-100 text-stone-800 px-2 py-0.5 rounded font-black">BAK-ORD-2026-X</span>
               </div>
 
               <div className="flex justify-between text-base font-black text-stone-900">
@@ -521,24 +528,40 @@ export const AmbachtBakkerijDemo: React.FC<TemplateProps> = ({
                 <span>€{totalPrice.toFixed(2)}</span>
               </div>
 
-              <button
-                onClick={() => {
-                  if (onOpenIdealCheckout) {
-                    onOpenIdealCheckout(totalPrice, brandTitle);
-                  } else {
-                    onRequestQuote();
-                  }
-                }}
-                disabled={cart.length === 0}
-                className={`w-full py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} disabled:bg-stone-300 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2`}
-              >
-                <span>Reservering Bevestigen met iDEAL</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              <div className="space-y-2">
+                <button
+                  onClick={() => {
+                    if (onOpenIdealCheckout) {
+                      onOpenIdealCheckout(totalPrice, brandTitle);
+                    } else {
+                      onRequestQuote();
+                    }
+                  }}
+                  disabled={cart.length === 0}
+                  className={`w-full py-3.5 rounded-xl ${theme.primary} ${theme.primaryHover} disabled:bg-stone-300 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2`}
+                >
+                  <span>Reservering Bevestigen met iDEAL</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  disabled={cart.length === 0}
+                  className="w-full py-2.5 rounded-xl bg-white hover:bg-stone-50 border border-stone-300 text-stone-700 font-bold text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-xs disabled:opacity-50"
+                >
+                  <Printer className="w-3.5 h-3.5" />
+                  <span>Print Afhaalbon & Besteloverzicht (PDF)</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
+
+      {/* Footer Demo Note */}
+      <footer className="py-8 px-4 text-center text-xs text-stone-500 border-t border-stone-200 bg-white">
+        <p>© 2026 {brandTitle} • Ambachtelijke Bakkerij & Zuurdesem • {cityName} • Fictief Demo Concept</p>
+      </footer>
     </div>
   );
 };

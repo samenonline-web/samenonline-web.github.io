@@ -733,5 +733,15 @@ class TestSamenOnlineVerification(unittest.TestCase):
         self.assertIn("customBrandName", content)
         self.assertIn("customCity", content)
 
+    # 69. AmbachtBakkerijDemo Order Drawer, City Props, and Printable Afhaalbon
+    def test_ambacht_bakkerij_order_and_afhaalbon(self):
+        comp_file = WORKSPACE / "src" / "components" / "templates" / "AmbachtBakkerijDemo.tsx"
+        content = comp_file.read_text(encoding="utf-8")
+        self.assertIn("BAK-ORD-2026-X", content)
+        self.assertIn("Print Afhaalbon & Besteloverzicht (PDF)", content)
+        self.assertIn("customBrandName", content)
+        self.assertIn("customCity", content)
+        self.assertIn("Afhaaltijd in", content)
+
 if __name__ == "__main__":
     unittest.main()
